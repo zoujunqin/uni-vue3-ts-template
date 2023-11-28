@@ -1,5 +1,5 @@
 <template>
-  <view class="hx-flex">
+  <view class="hx-flex" @click="emitClick">
     <view class="hx-w-[146px] hx-flex hx-items-center">
       <slot name="icon">
         <image :src="data.icon" class="hx-w-[20px] hx-h-[20px] hx-mr-[4px]" />
@@ -38,6 +38,11 @@ defineProps({
     default: () => ({})
   }
 });
+const emits = defineEmits('click');
+
+const emitClick = () => {
+  emits('click');
+};
 </script>
 
 <script lang="ts">

@@ -10,7 +10,7 @@
       </slot>
 
       <slot name="content">
-        <view class="hx-mb-[24px] hx-text-[15px hx-leading-[24px]">
+        <view class="hx-mb-[24px] hx-text-[15px] hx-leading-[24px]">
           {{ content }}
         </view>
       </slot>
@@ -70,14 +70,16 @@ const uniPopupRef = shallowRef();
 const open = () => {
   uniPopupRef.value.open();
 };
+const close = () => {
+  uniPopupRef.value.close();
+};
 
 const handleCancel = () => {
-  uniPopupRef.value.close();
+  close();
   emits('cancel');
 };
 
 const handleConfirm = () => {
-  uniPopupRef.value.close();
   emits('confirm');
 };
 

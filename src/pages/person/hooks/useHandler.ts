@@ -1,7 +1,8 @@
 import { shallowRef } from 'vue';
 
 export const useHandler = () => {
-  const proModalRef = shallowRef();
+  const contactModalRef = shallowRef();
+  const logoutModalRef = shallowRef();
 
   const panelItemMap = {
     personInfo: {
@@ -39,18 +40,30 @@ export const useHandler = () => {
     },
     contact: {
       type: 'contact',
-      handler: () => {}
+      handler: () => {
+        contactModalRef.value.open();
+      }
     }
   } as const;
 
   const logout = () => {
-    proModalRef.value.open();
-    // uni.showModal({ icon: 'none', mask: true, showCancel: false });
+    logoutModalRef.value.open();
+  };
+
+  /* 确认退出登录 */
+  const handleLogoutConfirm = () => {};
+
+  /* 联系我们 - 拨打电话 */
+  const handleContactConfirm = (phoneNumber: string) => {
+    uni.makePhoneCall({ phoneNumber });
   };
 
   return {
     logout,
-    proModalRef,
+    handleLogoutConfirm,
+    handleContactConfirm,
+    contactModalRef,
+    logoutModalRef,
     panelItemMap,
     verticalListItemMap
   };

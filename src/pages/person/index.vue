@@ -1,5 +1,18 @@
 <template>
-  <pro-modal ref="proModalRef" />
+  <pro-modal
+    ref="logoutModalRef"
+    title="退出登录"
+    content="确认退出登录?"
+    confirm-button-text="确认"
+    @confirm="handleLogoutConfirm"
+  />
+  <pro-modal
+    ref="contactModalRef"
+    title="联系我们"
+    content="(0591) - 40006464"
+    confirm-button-text="联系我们"
+    @confirm="handleContactConfirm('(0591) - 40006464')"
+  />
   <pro-page
     show-navbar
     show-tabbar
@@ -15,7 +28,7 @@
       <view class="hx-flex hx-flex-1">
         <image
           class="hx-w-[60px] hx-h-[60px] hx-mr-[12px]"
-          :src="import('@@static/person/avatar-default.png')"
+          src="@/static/local/person/avatar-default.png"
         />
         <view class="hx-flex hx-flex-col hx-justify-center">
           <text
@@ -36,7 +49,7 @@
       >
         <image
           class="hx-w-[14px] hx-h-[14px] hx-mr-[4px]"
-          :src="import('@@static/person/exit.png')"
+          src="@/static/local/person/exit.png"
         />
         <text class="hx-text-font-size-sm hx-leading-[20px] hx-text-text-color">
           退出登录
@@ -81,6 +94,7 @@
         :key="index"
         :data="item"
         class="hx-pt-[16px] hx-pb-[16px]"
+        @click="verticalListItemMap[item.type]?.handler"
       />
     </view>
   </pro-page>
@@ -98,7 +112,15 @@ import ContactIcon from '@/static/local/person/contact-icon.png';
 import VerticalListItem from './components/vertical-list-item.vue';
 
 import { useHandler } from './hooks/useHandler';
-const { proModalRef, logout, panelItemMap, verticalListItemMap } = useHandler();
+const {
+  contactModalRef,
+  logoutModalRef,
+  logout,
+  handleLogoutConfirm,
+  handleContactConfirm,
+  panelItemMap,
+  verticalListItemMap
+} = useHandler();
 
 const panelItemList = [
   {
