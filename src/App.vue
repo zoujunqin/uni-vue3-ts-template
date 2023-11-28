@@ -8,7 +8,7 @@ onLaunch(() => {
     setSystemInfo(data);
   });
 
-  uni.hideTabBar();
+  uni.hideTabBar({ animation: false });
 });
 
 onShow(() => {});

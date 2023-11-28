@@ -3,7 +3,7 @@
     class="tabbar hx-w-full hx-fixed hx-bottom-0 hx-left-0 hx-flex hx-items-center hx-justify-center hx-pt-[4px] hx-pb-4px] hx-bg-white"
   >
     <view
-      v-for="(item, index) in tabbarInfo.list"
+      v-for="(item, index) in tabbarList"
       :key="index"
       class="hx-flex-1 hx-flex hx-flex-col hx-items-center hx-pl-[19px] hx-pr-[19px]"
       @click="switchTabbar(item.pagePath)"
@@ -23,13 +23,14 @@
 </template>
 <script setup lang="ts">
 import { ITabbar, useTabbarStore } from '@/pinia/modules/tabbar';
+import { storeToRefs } from 'pinia';
 
-const { tabbarInfo, switchTabbar, initTabbar } = useTabbarStore();
+const tabbarStore = useTabbarStore();
+const { switchTabbar, initTabbar } = tabbarStore;
+const { tabbarList, currentTabbar } = storeToRefs(tabbarStore);
 
 const getSelectedConfig = (data: ITabbar) => {
-  const {
-    current: { pagePath, selectedIcon }
-  } = tabbarInfo;
+  const { pagePath, selectedIcon } = currentTabbar.value;
 
   return {
     icon: data.pagePath === pagePath ? selectedIcon : data.icon,

@@ -1,14 +1,9 @@
 <template>
   <view class="hx-h-full hx-overflow-auto" :class="pageClass">
-    <slot name="navbar">
-      <pro-navbar v-if="showNavbar" :style="navbarStyle" :text="navbarTitle" />
-    </slot>
+    <pro-navbar v-if="showNavbar" :style="navbarStyle" :text="navbarTitle" />
+    <pro-tabbar v-if="showTabbar" />
 
     <slot />
-
-    <slot name="tabbar">
-      <pro-tabbar v-if="showTabbar" />
-    </slot>
   </view>
 </template>
 <script setup lang="ts">

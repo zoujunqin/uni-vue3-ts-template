@@ -1,10 +1,3 @@
-import TaskIcon from '@/static/local/tab-bar/task.png';
-import TaskHighlightIcon from '@/static/local/tab-bar/task-hl.png';
-import DividIcon from '@/static/local/tab-bar/divide.png';
-import DividHighlightIcon from '@/static/local/tab-bar/divide-hl.png';
-import PersonIcon from '@/static/local/tab-bar/person.png';
-import PersonHighlightIcon from '@/static/local/tab-bar/person-hl.png';
-
 import { defineStore } from 'pinia';
 import { Ref, ref } from 'vue';
 import PageInstance = Page.PageInstance;
@@ -16,43 +9,36 @@ export interface ITabbar {
   text: string;
 }
 
-interface ITabbarInfo {
-  current: ITabbar;
-  list: Array<ITabbar>;
-}
-
 export const useTabbarStore = defineStore('user', () => {
-  const tabbarInfo: Ref<ITabbarInfo> = ref({
-    current: {} as any,
-    list: [
-      {
-        pagePath: 'pages/task/index',
-        icon: TaskIcon,
-        selectedIcon: TaskHighlightIcon,
-        text: '任务中心'
-      },
-      {
-        pagePath: 'pages/divide/index',
-        icon: DividIcon,
-        selectedIcon: DividHighlightIcon,
-        text: '推荐任务'
-      },
-      {
-        pagePath: 'pages/person/index',
-        icon: PersonIcon,
-        selectedIcon: PersonHighlightIcon,
-        text: '个人中心'
-      }
-    ]
-  });
+  const currentTabbar: Ref<ITabbar> = ref({} as any);
+  const tabbarList: Ref<ITabbar[]> = ref([
+    {
+      pagePath: 'pages/task/index',
+      icon: '../../static/local/tab-bar/task.png',
+      selectedIcon: '../../static/local/tab-bar/task-hl.png',
+      text: '任务中心'
+    },
+    {
+      pagePath: 'pages/divide/index',
+      icon: '../../static/local/tab-bar/divide.png',
+      selectedIcon: '../../static/local/tab-bar/divide-hl.png',
+      text: '推荐任务'
+    },
+    {
+      pagePath: 'pages/person/index',
+      icon: '../../static/local/tab-bar/person.png',
+      selectedIcon: '../../static/local/tab-bar/person-hl.png',
+      text: '个人中心'
+    }
+  ]);
 
   const switchTabbar = (path: string) => {
     return new Promise((resolve, reject) => {
-      const tabbar = tabbarInfo.value.list.find(item => item.pagePath === path);
+      const tabbar = tabbarList.value.find(item => item.pagePath === path);
 
       if (!tabbar) reject();
       else {
-        tabbarInfo.value.current = tabbar;
+        currentTabbar.value = tabbar;
         uni.switchTab({ url: '/' + tabbar.pagePath });
         resolve(true);
       }
@@ -61,12 +47,12 @@ export const useTabbarStore = defineStore('user', () => {
 
   const initTabbar = () => {
     const firstPage: PageInstance<{ route: string }> = getCurrentPages()[0];
-    const tabbar = tabbarInfo.value.list.find(
+    const tabbar = tabbarList.value.find(
       item => item.pagePath === firstPage?.route
     );
-    if (JSON.stringify(tabbarInfo.value.current) === '{}' && !!tabbar)
-      tabbarInfo.value.current = tabbar;
+    if (JSON.stringify(currentTabbar.value) === '{}' && !!tabbar)
+      currentTabbar.value = tabbar;
   };
 
-  return { tabbarInfo, switchTabbar, initTabbar };
+  return { currentTabbar, tabbarList, switchTabbar, initTabbar };
 });
