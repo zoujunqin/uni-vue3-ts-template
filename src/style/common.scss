@@ -1,0 +1,20 @@
+page {
+  height: 100%;
+  background: linear-gradient(180deg, #fff 18.25%, #f7f8fa 92.19%);
+}
+
+button {
+  font-weight: 500;
+  color: #fff !important;
+  border: unset !important;
+}
+
+.page-pt-with-navbar {
+  padding-top: 88PX;
+}
+
+/*  覆盖 uni-ui 样式 */
+
+.tabbar {
+  z-index: 888;
+}

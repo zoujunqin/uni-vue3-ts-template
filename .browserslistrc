@@ -1,0 +1,17 @@
+# Browsers that we support
+
+last 1 version
+> 1%
+maintained node versions
+not dead
+
+# > 1%	全球超过1%人使用的浏览器
+# > 5% in US	指定国家使用率覆盖
+# last 2 versions	所有浏览器兼容到最后两个版本根据 CanIUse.com 追踪的版本
+# Firefox ESR	火狐最新版本
+# Firefox > 20	指定浏览器的版本范围
+# not ie <=8	方向排除部分版本
+# Firefox 12.1	指定浏览器的兼容到指定版本
+# unreleased versions	所有浏览器的beta测试版本
+# unreleased Chrome versions	指定浏览器的测试版本
+# since 2013	2013年之后发布的所有版本

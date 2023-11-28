@@ -1,0 +1,89 @@
+:root {
+  /* 行为相关颜色 */
+  --hx-color-primary: #0c88fa;
+  --hx-color-primary-disable: #baddff;
+  --hx-color-primary-hover: #69aaff;
+  --hx-color-primary-active: #2662c9;
+  --hx-color-success: #00b42a;
+  --hx-color-success-disable: #4cd263;
+  --hx-color-success-hover: #23c343;
+  --hx-color-success-active: #009a29;
+  --hx-color-warning: #ff7d00;
+  --hx-color-warning-disable: #faac7b;
+  --hx-color-warning-hover: #ff9a2e;
+  --hx-color-warning-active: #cc5120;
+  --hx-color-error: #e51a1a;
+  --hx-color-error-disable: #fba399;
+  --hx-color-error-hover: #f8524d;
+  --hx-color-error-active: #cc181e;
+
+  /* 文字基本颜色 */
+  --hx-text-color: #595865; // 基本色
+  --hx-text-color-regular: #636363;
+  --hx-text-color-inverse: #fff; // 反色
+  --hx-text-color-grey: #999; // 辅助灰色，
+  --hx-text-color-placeholder: #c0c4cc;
+  --hx-text-color-disable: #c0c0c0;
+  --hx-text-color-tip: #909399; // 提示文本颜色
+
+  /* 背景颜色 */
+  --hx-bg-color: #fff;
+  --hx-bg-color-grey: #dadfe9;
+  --hx-bg-color-hover: #f1f1f1; // 点击状态颜色
+  --hx-bg-color-mask: rgb(33 33 33 / 50%); // 遮罩颜色
+  --hx-bg-color-primary: rgb(61 134 242 / 10%);
+  --hx-bg-color-success: rgb(0 183 0 / 10%);
+  --hx-bg-color-warning: rgb(255 50 50 / 10%);
+  --hx-bg-color-error: rgb(255 50 50 / 10%);
+
+  /* 边框颜色 */
+  --hx-border-color: #f2f2f2;
+
+  /* 阴影颜色 */
+  --hx-shadow-button-color: rgb(0 72 157 / 10%);
+  --hx-shadow-card-color: rgb(0 60 116 / 6%);
+
+  /* 尺寸变量 */
+
+  /* 文字尺寸 */
+  --hx-font-size-sm: 12px;
+  --hx-font-size-base: 14px;
+  --hx-font-size-regular: 16px;
+  --hx-font-size-lg: 18px;
+
+  /* 图片尺寸 */
+  --hx-img-size-sm: 20px;
+  --hx-img-size-base: 26px;
+  --hx-img-size-lg: 40px;
+
+  /* Border Radius */
+  --hx-border-radius-sm: 2px;
+  --hx-border-radius-base: 3px;
+  --hx-border-radius-lg: 6px;
+  --hx-border-radius-circle: 50%;
+
+  /* 水平间距 */
+  --hx-spacing-row-sm: 5px;
+  --hx-spacing-row-base: 10px;
+  --hx-spacing-row-lg: 15px;
+
+  /* 垂直间距 */
+  --hx-spacing-col-sm: 4px;
+  --hx-spacing-col-base: 8px;
+  --hx-spacing-col-lg: 12px;
+
+  /* 透明度 */
+  --hx-opacity-disabled: 0.3; // 组件禁用态的透明度
+
+  /* 文章场景相关 */
+  --hx-color-title: #141731; // 文章标题颜色
+  --hx-font-size-title: 22px;
+  --hx-color-subtitle: #555; // 二级标题颜色
+  --hx-font-size-subtitle: 18px;
+  --hx-color-paragraph: #3f536e; // 文章段落颜色
+  --hx-font-size-paragraph: 16px;
+
+  /* -------------------- 以上变量兼容 uni-ui ------------------- */
+
+  --hx-navbar-height: 44px;
+}

@@ -1,0 +1,58 @@
+{
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      // uni-ui 规则如下配置
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue",
+      "^pro-(.*)": "@/components/pro-$1/pro-$1.vue"
+    }
+  },
+  "pages": [
+    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    {
+      "path": "pages/person/index"
+    },
+    {
+      "path": "pages/task/index"
+    },
+    {
+      "path": "pages/divide/index"
+    },
+    {
+      "path": "pages/login/index"
+    }
+  ],
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#007AFF",
+    "borderStyle": "white",
+    "backgroundColor": "#FFF",
+    "list": [
+      {
+        "pagePath": "pages/task/index",
+        "iconPath": "static/tab-bar/task.png",
+        "selectedIconPath": "static/tab-bar/task-hl.png",
+        "text": "任务中心"
+      },
+      {
+        "pagePath": "pages/divide/index",
+        "iconPath": "static/tab-bar/divide.png",
+        "selectedIconPath": "static/tab-bar/divide-hl.png",
+        "text": "推荐任务"
+      },
+      {
+        "pagePath": "pages/person/index",
+        "iconPath": "static/tab-bar/person.png",
+        "selectedIconPath": "static/tab-bar/person-hl.png",
+        "text": "个人中心"
+      }
+    ]
+  },
+  "globalStyle": {
+    "navigationStyle": "custom",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  }
+}

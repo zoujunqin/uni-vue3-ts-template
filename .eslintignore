@@ -1,0 +1,16 @@
+.husky
+docs
+dist
+/src/static
+
+*.d.ts
+
+package.json
+index.html
+
+.eslintrc.js
+.prettierrc.js
+.commitlintrc.js
+.stylelintrc.js
+postcss.config.js
+tailwind.config.js
