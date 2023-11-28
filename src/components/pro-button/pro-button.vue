@@ -3,7 +3,7 @@
     plain
     :hover-class="`${props.type}-button-hover`"
     :class="[`${props.type}-button`, `${props.size}-button`]"
-    class="hx-pt-[13px] hx-pb-[13px]"
+    class="hx-pt-[13px] hx-pb-[13px] hx-font-bold"
     @click="handleClick"
   >
     <slot />

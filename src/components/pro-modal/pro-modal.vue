@@ -18,15 +18,14 @@
       <view class="hx-flex">
         <pro-button
           v-if="showCancel"
-          type="primary"
-          class="hx-w-[122px] hx-mr-[10px]"
+          class="hx-w-[122px] hx-mr-[10px] !hx-text-color-primary"
+          style="background-color: rgb(61 134 242 / 10%)"
           @click="handleCancel"
         >
           {{ cancelButtonText }}
         </pro-button>
         <pro-button
           v-if="showConfirm"
-          type="error"
           class="hx-w-[122px]"
           @click="handleConfirm"
         >
