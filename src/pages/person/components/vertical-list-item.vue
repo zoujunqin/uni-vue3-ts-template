@@ -1,5 +1,5 @@
 <template>
-  <div class="hx-flex">
+  <view class="hx-flex">
     <view class="hx-w-[146px] hx-flex hx-items-center">
       <slot name="icon">
         <image :src="data.icon" class="hx-w-[20px] hx-h-[20px] hx-mr-[4px]" />
@@ -20,7 +20,7 @@
       </slot>
       <image :src="ArrowIcon" class="hx-w-[14px] hx-h-[14px]" />
     </view>
-  </div>
+  </view>
 </template>
 <script setup lang="ts">
 import ArrowIcon from '@/static/local/arrow-right.png';

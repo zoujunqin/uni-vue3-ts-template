@@ -1,6 +1,7 @@
 <template>
-  <pro-navbar text="任务中心" />
-  <div class="page" />
+  <pro-page show-tabbar show-navbar navbar-visibility="hidden">
+    <div class="page">2344</div>
+  </pro-page>
 </template>
 <script setup lang="ts">
 import { onShow } from '@dcloudio/uni-app';

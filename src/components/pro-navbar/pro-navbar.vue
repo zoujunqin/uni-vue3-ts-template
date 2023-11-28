@@ -1,12 +1,12 @@
 <template>
   <view
-    class="hx-flex hx-items-center hx-justify-between hx-fixed hx-w-full hx-pl-[12px] hx-pr-[12px]"
+    class="hx-flex hx-items-center hx-justify-between hx-fixed hx-top-0 hx-left-0 hx-w-full hx-pl-[12px] hx-pr-[12px]"
     :style="style"
   >
     <image
       v-if="showBackIcon"
       class="hx-w-[18PX] hx-h-[18PX]"
-      :src="import('@@static/tab-bar/back-icon.png')"
+      :src="import('@/static/local/tab-bar/back-icon.png')"
       @click="handleBack"
     />
     <text v-else />
@@ -38,5 +38,13 @@ const showBackIcon = currentPages.length > 1;
 
 const handleBack = () => {
   uni.navigateBack();
+};
+</script>
+
+<script lang="ts">
+export default {
+  options: {
+    virtualHost: true
+  }
 };
 </script>

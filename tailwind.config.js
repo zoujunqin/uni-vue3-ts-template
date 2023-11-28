@@ -80,6 +80,7 @@ module.exports = {
       },
       height: {
         'navbar-height': 'var(--hx-navbar-height)',
+        'tabbar-height': 'var(--hx-tabbar-height)',
       }
     },
     boxShadow: {

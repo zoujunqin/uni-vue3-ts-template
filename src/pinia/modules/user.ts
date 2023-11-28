@@ -1,11 +1,10 @@
 import { defineStore } from 'pinia';
-import { ShallowRef, shallowRef } from 'vue';
-import SystemInfo = UniNamespace.SystemInfo;
+import { shallowRef } from 'vue';
 
 export const useUserStore = defineStore('user', () => {
-  const userInfo: ShallowRef<SystemInfo> = shallowRef({} as any);
+  const userInfo = shallowRef({} as any);
 
-  const setUserInfo = (info: SystemInfo) => {
+  const setUserInfo = info => {
     userInfo.value = info;
   };
 

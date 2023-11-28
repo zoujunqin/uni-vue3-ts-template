@@ -1,7 +1,3 @@
-<template>
-  <view>1123</view>
-</template>
-
 <script setup lang="ts">
 import { onHide, onLaunch, onShow } from '@dcloudio/uni-app';
 import { useSystemStore } from '@/pinia/modules/system';
@@ -11,6 +7,8 @@ onLaunch(() => {
   uni.getSystemInfo().then(data => {
     setSystemInfo(data);
   });
+
+  uni.hideTabBar();
 });
 
 onShow(() => {});

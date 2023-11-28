@@ -1,8 +1,10 @@
 <template>
-  <!--  <pro-navbar text="个人中心" />-->
   <pro-modal ref="proModalRef" />
-  <view
-    class="page-pt-with-navbar hx-h-full hx-pl-[8px] hx-pr-[8px] hx-bg-[length:100%_432px] hx-bg-no-repeat"
+  <pro-page
+    show-navbar
+    show-tabbar
+    navbar-visibility="hidden"
+    class="hx-pl-[8px] hx-pr-[8px] hx-bg-[length:100%_432px] hx-bg-no-repeat"
     :style="`background-image: url(${import(
       '@@static/person/nav-bar-bg.png'
     )})`"
@@ -81,7 +83,7 @@
         class="hx-pt-[16px] hx-pb-[16px]"
       />
     </view>
-  </view>
+  </pro-page>
 </template>
 
 <script setup lang="ts">
