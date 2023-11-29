@@ -40,6 +40,7 @@
             class="hx-text-text-color hx-text-font-size-base hx-leading-[20px] hx-font-[500]"
           >
             点击登录，查看更多信息
+            <uv-button text="111" />
           </text>
         </view>
       </view>
@@ -66,9 +67,11 @@
         :key="index"
         @click="panelItemMap[item.type]?.handler"
       >
-        <uni-badge :text="item.badge" absolute="rightTop" size="normal">
+        <view class="hx-relative">
           <image class="hx-w-[28px] hx-h-[28px] hx-mb-[8px]" :src="item.icon" />
-        </uni-badge>
+          <uv-badge :value="item.badge" absolute />
+        </view>
+
         <text
           class="hx-text-font-size-base hx-text-color-title hx-font-[500] hx-leading-[20px]"
         >
@@ -178,7 +181,7 @@ const secondVerticalList = [
 </script>
 
 <style scoped>
-:deep(.uni-badge) {
+:deep(.hx-relative .uv-badge) {
   top: 0 !important;
   right: 0 !important;
   height: unset;
@@ -187,7 +190,7 @@ const secondVerticalList = [
   line-height: 8px;
   white-space: nowrap;
   background-color: #f7534f;
-  border-radius: 6px 0 4px;
+  border-radius: 6px 0 4px !important;
   transform: translate(80%, -50%);
 }
 </style>

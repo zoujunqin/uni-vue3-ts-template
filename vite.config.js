@@ -9,7 +9,8 @@ import { getAlias } from './build/getAlias';
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
-    alias: getAlias()
+    alias: getAlias(),
+    extensions: ['js', 'ts', 'vue', 'nvue', 'css', 'scss']
   },
   plugins: [
     uni(),

@@ -1,5 +1,5 @@
 <template>
-  <uni-popup ref="uniPopupRef">
+  <uv-popup ref="uniPopupRef" bg-color="none" :safe-area-inset-bottom="false">
     <view
       class="modal-content hx-flex hx-flex-col hx-justify-between hx-items-center hx-w-[302px] hx-p-[29px_24px] hx-rounded-[8px]"
     >
@@ -16,24 +16,25 @@
       </slot>
 
       <view class="hx-flex">
-        <pro-button
+        <uv-button
+          class="hx-w-[122px] hx-mr-[10px]"
           v-if="showCancel"
-          class="hx-w-[122px] hx-mr-[10px] !hx-text-color-primary"
-          style="background-color: rgb(61 134 242 / 10%)"
+          type="primary"
+          color="rgb(61 134 242 / 10%)"
+          :text="cancelButtonText"
+          :custom-text-style="{ color: 'var(--hx-color-primary)' }"
           @click="handleCancel"
-        >
-          {{ cancelButtonText }}
-        </pro-button>
-        <pro-button
-          v-if="showConfirm"
+        />
+        <uv-button
           class="hx-w-[122px]"
+          v-if="showConfirm"
+          type="primary"
+          :text="confirmButtonText"
           @click="handleConfirm"
-        >
-          {{ confirmButtonText }}
-        </pro-button>
+        />
       </view>
     </view>
-  </uni-popup>
+  </uv-popup>
 </template>
 <script setup lang="ts">
 import { shallowRef } from 'vue';

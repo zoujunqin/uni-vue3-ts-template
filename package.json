@@ -48,6 +48,7 @@
     "lint:lint-staged": "lint-staged"
   },
   "dependencies": {
+    "@climblee/uv-ui": "1.1.17",
     "@dcloudio/uni-app": "3.0.0-3090620231104002",
     "@dcloudio/uni-app-plus": "3.0.0-3090620231104002",
     "@dcloudio/uni-components": "3.0.0-3090620231104002",
@@ -62,9 +63,7 @@
     "@dcloudio/uni-mp-weixin": "3.0.0-3090620231104002",
     "@dcloudio/uni-mp-xhs": "3.0.0-3090620231104002",
     "@dcloudio/uni-quickapp-webview": "3.0.0-3090620231104002",
-    "@dcloudio/uni-ui": "1.4.28",
     "@uni-helper/axios-adapter": "1.5.2",
-    "@vueuse/core": "10.6.1",
     "axios": "1.4.0",
     "crypto-js": "4.1.1",
     "lodash-es": "4.17.21",
