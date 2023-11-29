@@ -1,4 +1,4 @@
 <template>
-  <div />
+  <view />
 </template>
 <script setup lang="ts"></script>

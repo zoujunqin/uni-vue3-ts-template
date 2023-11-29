@@ -2,7 +2,6 @@
   "easycom": {
     "autoscan": true,
     "custom": {
-      // uni-ui 规则如下配置
       "^uv-(.*)": "@climblee/uv-ui/components/uv-$1/uv-$1.vue",
       "^pro-(.*)": "@/components/pro-$1/pro-$1.vue"
     }
@@ -10,10 +9,10 @@
   "pages": [
     //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
     {
-      "path": "pages/person/index"
+      "path": "pages/task/index"
     },
     {
-      "path": "pages/task/index"
+      "path": "pages/person/index"
     },
     {
       "path": "pages/divide/index"

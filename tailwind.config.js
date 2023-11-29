@@ -1,4 +1,4 @@
-const cssMacro = require('weapp-tailwindcss/css-macro')
+const cssMacro = require('weapp-tailwindcss/css-macro');
 
 module.exports = {
   prefix: 'hx-',
@@ -65,22 +65,22 @@ module.exports = {
         'border-color': 'var(--hx-border-color)',
         'shadow-button-color': 'var(--hx-shadow-button-color)',
         'shadow-card-color': 'var(--hx-shadow-card-color)',
-        'color-title':'var(--hx-color-title)',
-        'color-subtitle':'var(--hx-color-subtitle)',
-        'color-paragraph:':'var(--hx-color-paragraph:)',
+        'color-title': 'var(--hx-color-title)',
+        'color-subtitle': 'var(--hx-color-subtitle)',
+        'color-paragraph:': 'var(--hx-color-paragraph:)'
       },
-      fontSize:  {
+      fontSize: {
         'font-size-sm': 'var(--hx-font-size-sm)',
         'font-size-base': 'var(--hx-font-size-base)',
         'font-size-regular': 'var(--hx-font-size-regular)',
         'font-size-lg': 'var(--hx-font-size-lg)',
         'font-size-title': 'var(--hx-font-size-title)',
         'font-size-subtitle': 'var(--hx-font-size-subtitle)',
-        'font-size-paragraph': 'var(--hx-font-size-paragraph)',
+        'font-size-paragraph': 'var(--hx-font-size-paragraph)'
       },
       height: {
         'navbar-height': 'var(--hx-navbar-height)',
-        'tabbar-height': 'var(--hx-tabbar-height)',
+        'tabbar-height': 'var(--hx-tabbar-height)'
       }
     },
     boxShadow: {

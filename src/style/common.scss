@@ -1,6 +1,22 @@
 page {
   height: 100%;
-  background: linear-gradient(180deg, #fff 18.25%, #f7f8fa 92.19%);
+  background-color: #F7F8FA;
+}
+
+.page-pt-with-navbar {
+  /* 状态栏高度 + 导航栏高度 */
+  padding-top: 88PX;
+}
+
+.page-pb-with-tabbar {
+  /* 安全区 + tabbar高度 */
+  padding-bottom: calc(var(--hx-tabbar-height) + env(safe-area-inset-bottom));
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 /*  覆盖 uv-ui 样式 */

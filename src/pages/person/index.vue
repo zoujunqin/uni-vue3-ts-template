@@ -14,13 +14,11 @@
     @confirm="handleContactConfirm('(0591) - 40006464')"
   />
   <pro-page
-    show-navbar
     show-tabbar
-    navbar-visibility="hidden"
-    class="hx-pl-[8px] hx-pr-[8px] hx-bg-[length:100%_432px] hx-bg-no-repeat"
+    class="page-pt-with-navbar hx-pl-[8px] hx-pr-[8px] hx-bg-[length:100%_432px] hx-bg-no-repeat"
     :style="`background-image: url(${import(
       '@@static/person/nav-bar-bg.png'
-    )})`"
+    )});`"
   >
     <view
       class="hx-flex hx-items-center hx-justify-between hx-pl-[8px] hx-pr-[8px] hx-mt-[12px] hx-mb-[20px]"
@@ -192,5 +190,11 @@ const secondVerticalList = [
   background-color: #f7534f;
   border-radius: 6px 0 4px !important;
   transform: translate(80%, -50%);
+}
+</style>
+
+<style>
+page {
+  background: linear-gradient(180deg, #fff 18.25%, #f7f8fa 92.19%);
 }
 </style>

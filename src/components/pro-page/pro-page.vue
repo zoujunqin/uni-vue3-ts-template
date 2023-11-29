@@ -24,7 +24,6 @@ const props = defineProps({
 
 const pageClass = computed(() => {
   return {
-    'page-pt-with-navbar': props.showNavbar,
     'page-pb-with-tabbar': props.showTabbar
   };
 });
@@ -43,15 +42,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.page-pt-with-navbar {
-  /* 状态栏高度 + 导航栏高度 */
-  padding-top: 88px;
-}
-
-.page-pb-with-tabbar {
-  /* 安全区 + tabbar高度 */
-  padding-bottom: calc(var(--hx-tabbar-height) + env(safe-area-inset-bottom));
-}
-</style>
