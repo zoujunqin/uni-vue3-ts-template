@@ -31,7 +31,7 @@
   </pro-page>
 </template>
 <script setup lang="ts">
-import { useHandler } from './hooks/useHandler';
+import { useHandler } from '@/pages/task/task-center/hooks/useHandler';
 
 const { tabIndex, handleTabChange } = useHandler();
 const tabList = [
