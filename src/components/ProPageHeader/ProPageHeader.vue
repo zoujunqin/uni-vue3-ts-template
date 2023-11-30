@@ -5,13 +5,13 @@
   >
     <slot>
       <view v-if="showInput" class="hx-pl-[16px] hx-pr-[16px] hx-mb-[4px]">
-        <pro-input prefix-icon="/static/local/search-icon.png" />
+        <ProInput prefix-icon="/static/local/search-icon.png" />
       </view>
     </slot>
 
     <slot name="bottom">
       <view v-if="showTabList" class="hx-p-[2px_4px]">
-        <pro-tabs
+        <ProTabs
           :current="tabIndex"
           :list="tabList"
           @change="handleTabChange"

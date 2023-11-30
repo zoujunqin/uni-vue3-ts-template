@@ -1,19 +1,19 @@
 <template>
-  <pro-modal
+  <ProModal
     ref="logoutModalRef"
     title="退出登录"
     content="确认退出登录?"
     confirm-button-text="确认"
     @confirm="handleLogoutConfirm"
   />
-  <pro-modal
+  <ProModal
     ref="contactModalRef"
     title="联系我们"
     content="(0591) - 40006464"
     confirm-button-text="联系我们"
     @confirm="handleContactConfirm('(0591) - 40006464')"
   />
-  <pro-page
+  <ProPage
     show-tabbar
     class="page-pt-with-navbar hx-pl-[8px] hx-pr-[8px] hx-bg-[length:100%_432px] hx-bg-no-repeat"
     :style="`background-image: url(${import(
@@ -98,7 +98,7 @@
         @click="verticalListItemMap[item.type]?.handler"
       />
     </view>
-  </pro-page>
+  </ProPage>
 </template>
 
 <script setup lang="ts">
@@ -110,7 +110,7 @@ import RemunerationIcon from '@/static/local/person/remuneration-icon.png';
 import AgreementIcon from '@/static/local/person/agreement-icon.png';
 import ShareIcon from '@/static/local/person/share-icon.png';
 import ContactIcon from '@/static/local/person/contact-icon.png';
-import VerticalListItem from './components/vertical-list-item.vue';
+import VerticalListItem from './components/VerticalListItem.vue';
 
 import { useHandler } from './hooks/useHandler';
 const {

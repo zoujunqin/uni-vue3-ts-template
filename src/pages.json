@@ -3,25 +3,25 @@
     "autoscan": true,
     "custom": {
       "^uv-(.*)": "@climblee/uv-ui/components/uv-$1/uv-$1.vue",
-      "^pro-(.*)": "@/components/pro-$1/pro-$1.vue"
+      "^Pro(.*)": "@/components/Pro$1/Pro$1.vue"
     }
   },
   "pages": [
     //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
     {
-      "path": "pages/task/task-center/index",
+      "path": "pages/task/taskCenter/index",
       "style": {
         "enablePullDownRefresh": true
       }
     },
     {
-      "path": "pages/task/task-detail/index"
+      "path": "pages/task/taskDetail/index"
     },
     {
-      "path": "pages/person/person-center/index"
+      "path": "pages/person/personCenter/index"
     },
     {
-      "path": "pages/divide/divide-task/index"
+      "path": "pages/divide/divideTask/index"
     },
     {
       "path": "pages/login/index"
@@ -31,13 +31,13 @@
     "height": 0,
     "list": [
       {
-        "pagePath": "pages/task/task-center/index"
+        "pagePath": "pages/task/taskCenter/index"
       },
       {
-        "pagePath": "pages/divide/divide-task/index"
+        "pagePath": "pages/divide/divideTask/index"
       },
       {
-        "pagePath": "pages/person/person-center/index"
+        "pagePath": "pages/person/personCenter/index"
       }
     ]
   },

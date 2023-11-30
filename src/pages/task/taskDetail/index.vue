@@ -1,6 +1,6 @@
 <template>
-  <pro-page show-navbar>
+  <ProPage show-navbar>
     <view>11</view>
-  </pro-page>
+  </ProPage>
 </template>
 <script setup lang="ts"></script>

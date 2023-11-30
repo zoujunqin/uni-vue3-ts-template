@@ -14,7 +14,7 @@
     </view>
 
     <slot name="tag">
-      <pro-tags
+      <ProTags
         v-if="cardInfo.tag"
         :text="cardInfo.tag"
         size="medium"

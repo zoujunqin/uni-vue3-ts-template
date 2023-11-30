@@ -14,10 +14,10 @@ eg: fix: xxxx
 * git commit 之前会做 eslint + stylelint 校验及格式化.
 
 ### component
-* uni-ui 使用 npm + easycom 方式自动注册组件，页面可以直接使用 kebab-case 的形式   </br>
-eg: <uni-badge />
-* 自定义组件放在 components 文件夹下都以 pro- 开头，且要符合 [easycom](./src/pages.json) 的方式,无需引入可直接使用  </br>
-eg: <pro-text />
+* uv-ui 使用 npm + easycom 方式自动注册组件，页面可以直接使用 kebab-case 的形式   </br>
+eg: <uv-badge />
+* 自定义组件放在 components 文件夹下都以 Pro 开头，且要符合 [easycom](./src/pages.json) 的方式,无需引入可直接使用  </br>
+eg: <ProPage />
 
 ### unit
 * 基准宽度为 750, 目前设计稿宽度为 375.内部已经做了转换，可直接用 px 单位，会自动转为 rpx, 若不想转为 rpx，使用大写px（PX）

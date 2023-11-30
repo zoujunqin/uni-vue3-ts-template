@@ -1,7 +1,7 @@
 <template>
   <view class="hx-h-full hx-overflow-auto" :class="pageClass">
-    <pro-navbar v-if="showNavbar" :style="navbarStyle" :text="navbarTitle" />
-    <pro-tabbar v-if="showTabbar" />
+    <ProNavbar v-if="showNavbar" :style="navbarStyle" :text="navbarTitle" />
+    <ProTabbar v-if="showTabbar" />
 
     <slot />
   </view>
