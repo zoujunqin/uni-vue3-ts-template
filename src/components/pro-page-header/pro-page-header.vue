@@ -1,6 +1,6 @@
 <template>
   <view
-    class="hx-page-header page-pt-with-navbar hx-h-[176px] hx-bg-[length:100%_100%] hx-bg-no-repeat"
+    class="hx-page-header page-pt-with-navbar hx-z-[1] hx-h-[176px] hx-bg-[length:100%_100%] hx-bg-no-repeat"
     :style="headerStyle"
   >
     <slot>
@@ -11,7 +11,11 @@
 
     <slot name="bottom">
       <view v-if="showTabList" class="hx-p-[2px_4px]">
-        <pro-tabs :list="tabList" @change="handleTabChange" />
+        <pro-tabs
+          :current="tabIndex"
+          :list="tabList"
+          @change="handleTabChange"
+        />
       </view>
     </slot>
   </view>
@@ -21,12 +25,16 @@
 import { computed, PropType } from 'vue';
 
 const props = defineProps({
+  tabIndex: {
+    type: Number,
+    default: 0
+  },
   tabList: {
     type: Array as PropType<{ name: string }[]>,
     default: () => []
   },
   bgImgUrl: {
-    type: Object as PropType<unknown>,
+    type: String,
     default: null
   },
   showInput: {

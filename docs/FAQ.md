@@ -9,3 +9,4 @@
   };
   </script>
   ```
+- swiper 和 tab 的 current 属性不要用同一个变量，内部机制问题

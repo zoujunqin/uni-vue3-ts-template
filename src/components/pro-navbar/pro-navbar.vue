@@ -1,6 +1,6 @@
 <template>
   <view
-    class="hx-flex hx-items-center hx-justify-between hx-fixed hx-top-0 hx-left-0 hx-w-full hx-pl-[12px] hx-pr-[12px]"
+    class="hx-flex hx-items-center hx-justify-between hx-absolute hx-z-10 hx-top-0 hx-left-0 hx-w-full hx-pl-[12px] hx-pr-[12px]"
     :style="style"
   >
     <image

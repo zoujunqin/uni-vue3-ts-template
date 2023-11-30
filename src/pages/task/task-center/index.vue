@@ -6,22 +6,29 @@
     class="hx-bg-[#F7F8FA] hx-flex hx-flex-col"
   >
     <pro-page-header
-      class="hx-relative hx-z-10"
+      class="hx-relative hx-z-1"
+      :tab-index="tabIndex"
       :tab-list="tabList"
       :bg-img-url="import('@@static/task/task-bg.png')"
-      @tab-change="handleTabChange"
+      @change="handleTabChange"
     />
 
-    <swiper :current="tabIndex" class="hx-flex-1">
+    <swiper
+      :current="swiperIndex"
+      class="hx-flex-1"
+      @change="handleSwiperChange"
+    >
       <swiper-item v-for="(taskList, index) in swiperList" :key="index">
         <scroll-view
           scroll-y="true"
           class="hx-h-full hx-pb-[10px] hx-box-border"
           @scrolltolower="() => {}"
+          @click="navToTaskDetail"
         >
           <pro-task-card
             class="hx-mt-[10px]"
             v-for="(item, index) in taskList"
+            :data-index="index"
             :key="index"
             :card-info="item"
           />
@@ -31,9 +38,24 @@
   </pro-page>
 </template>
 <script setup lang="ts">
+import { onPullDownRefresh } from '@dcloudio/uni-app';
 import { useHandler } from '@/pages/task/task-center/hooks/useHandler';
+import { useTabLinkSwiper } from '@/hooks/useTabLinkSwiper';
 
-const { tabIndex, handleTabChange } = useHandler();
+const {
+  tabIndex,
+  swiperIndex,
+  handleTabChange,
+  handleSwiperChange,
+  resetIndex
+} = useTabLinkSwiper();
+
+const { navToTaskDetail } = useHandler();
+
+onPullDownRefresh(() => {
+  resetIndex();
+});
+
 const tabList = [
   {
     name: '待确认'

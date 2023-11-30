@@ -1,13 +1,9 @@
-import { shallowRef } from 'vue';
-
 export const useHandler = () => {
-  const tabIndex = shallowRef(0);
-  const handleTabChange = tab => {
-    tabIndex.value = tab.index;
+  const navToTaskDetail = (e, a) => {
+    console.log(e, a);
   };
 
   return {
-    tabIndex,
-    handleTabChange
+    navToTaskDetail
   };
 };

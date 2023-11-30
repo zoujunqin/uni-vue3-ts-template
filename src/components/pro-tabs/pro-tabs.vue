@@ -2,7 +2,7 @@
   <uv-tabs
     v-bind="$attrs"
     class="pro-tabs"
-    lineWidth="32 rpx"
+    lineWidth="32rpx"
     lineColor="var(--hx-color-primary)"
     :activeStyle="{
       color: 'var(--hx-text-color-title)',
@@ -19,7 +19,7 @@
 <script setup lang="ts">
 const emits = defineEmits(['change']);
 
-const emitChange = (...args) => {
+const emitChange = (...args: unknown[]) => {
   emits('change', ...args);
 };
 </script>
