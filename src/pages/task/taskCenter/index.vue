@@ -11,6 +11,7 @@
       :tab-list="tabList"
       :bg-img-url="import('@@static/task/task-bg.png')"
       @tab-change="handleTabChange"
+      @input-confirm="handleInputConfirm"
     />
 
     <swiper
@@ -18,28 +19,30 @@
       class="hx-flex-1"
       @change="handleSwiperChange"
     >
-      <swiper-item v-for="(taskList, index) in swiperList" :key="index">
-        <scroll-view
-          scroll-y="true"
+      <swiper-item v-for="(item, index) in tabList" :key="index">
+        <ProScrollList
+          :key="componentKey + index"
+          :fetch="item.fetch"
+          :initial-index="index"
+          :current-index="swiperIndex"
           class="hx-h-full hx-pb-[10px] hx-box-border"
-          @scrolltolower="() => {}"
-          @click="navToTaskDetail"
         >
-          <ProTaskCard
-            class="hx-mt-[10px]"
-            v-for="(item, index) in taskList"
-            :data-index="index"
-            :key="index"
-            :card-info="item"
-          />
-        </scroll-view>
+          <template #default="{ row }">
+            <ProTaskCard
+              id="card"
+              class="hx-mt-[10px]"
+              :card-info="getRow(row)"
+              @tap="navToTaskDetail(row)"
+            />
+          </template>
+        </ProScrollList>
       </swiper-item>
     </swiper>
   </ProPage>
 </template>
 <script setup lang="ts">
 import { onPullDownRefresh } from '@dcloudio/uni-app';
-import { useHandler } from '@/pages/task/taskCenter/hooks/useHandler';
+import { useHandler } from './hooks/useHandler';
 import { useTabLinkSwiper } from '@/hooks/useTabLinkSwiper';
 
 const {
@@ -50,134 +53,18 @@ const {
   resetIndex
 } = useTabLinkSwiper();
 
-const { navToTaskDetail } = useHandler();
+const { componentKey, tabList, navToTaskDetail, handleInputConfirm } =
+  useHandler();
 
-onPullDownRefresh(() => {
-  resetIndex();
-});
+const getRow = row => {
+  return {
+    ...row,
+    cost: row.addMonth,
+    title: row.serviceContract,
+    desc: row.supplierName,
+    tag: row.name
+  };
+};
 
-const tabList = [
-  {
-    name: '待确认'
-  },
-  {
-    name: '承接中'
-  },
-  {
-    name: '已完结'
-  }
-];
-const willCardList = [
-  {
-    title: '信息软件开发',
-    desc: '专业技能go语言、相关经验0-3年、性格特点开朗活泼专业专业技能go语言、相关经验0-3年、性格特点开朗活泼专业',
-    cost: '100.00元/天'
-  },
-  {
-    title: '信息软件开发',
-    tag: '软件和信息技术行业',
-    desc: '专业技能go语言、相关经验0-3年、性格特点开朗活泼专业专业技能go语言、相关经验0-3年、性格特点开朗活泼专业',
-    cost: '100.00元/天'
-  },
-  {
-    title: '信息软件开发',
-    tag: '软件和信息技术行业',
-    desc: '专业技能go语言、相关经验0-3年、性格特点开朗活泼专业专业技能go语言、相关经验0-3年、性格特点开朗活泼专业',
-    cost: '100.00元/天'
-  },
-  {
-    title: '信息软件开发',
-    tag: '软件和信息技术行业',
-    desc: '专业技能go语言、相关经验0-3年、性格特点开朗活泼专业专业技能go语言、相关经验0-3年、性格特点开朗活泼专业',
-    cost: '100.00元/天'
-  },
-  {
-    title: '信息软件开发',
-    tag: '软件和信息技术行业',
-    desc: '专业技能go语言、相关经验0-3年、性格特点开朗活泼专业专业技能go语言、相关经验0-3年、性格特点开朗活泼专业',
-    cost: '100.00元/天'
-  },
-  {
-    title: '信息软件开发',
-    tag: '软件和信息技术行业',
-    desc: '专业技能go语言、相关经验0-3年、性格特点开朗活泼专业专业技能go语言、相关经验0-3年、性格特点开朗活泼专业',
-    cost: '100.00元/天'
-  }
-];
-const processingCardList = [
-  {
-    title: '信息软件开发423',
-    desc: '专业技能go语言、相关经验0-3年、性格特点开朗活泼专业专业技能go语言、相关经验0-3年、性格特点开朗活泼专业',
-    cost: '100.00元/天'
-  },
-  {
-    title: '信息软件开发423',
-    tag: '软件和信息技术行业',
-    desc: '专业技能go语言、相关经验0-3年、性格特点开朗活泼专业专业技能go语言、相关经验0-3年、性格特点开朗活泼专业',
-    cost: '100.00元/天'
-  },
-  {
-    title: '信息软件开发423',
-    tag: '软件和信息技术行业',
-    desc: '专业技能go语言、相关经验0-3年、性格特点开朗活泼专业专业技能go语言、相关经验0-3年、性格特点开朗活泼专业',
-    cost: '100.00元/天'
-  },
-  {
-    title: '信息软件开发423',
-    tag: '软件和信息技术行业',
-    desc: '专业技能go语言、相关经验0-3年、性格特点开朗活泼专业专业技能go语言、相关经验0-3年、性格特点开朗活泼专业',
-    cost: '100.00元/天'
-  },
-  {
-    title: '信息软件开发423',
-    tag: '软件和信息技术行业',
-    desc: '专业技能go语言、相关经验0-3年、性格特点开朗活泼专业专业技能go语言、相关经验0-3年、性格特点开朗活泼专业',
-    cost: '100.00元/天'
-  },
-  {
-    title: '信息软件开发423',
-    tag: '软件和信息技术行业',
-    desc: '专业技能go语言、相关经验0-3年、性格特点开朗活泼专业专业技能go语言、相关经验0-3年、性格特点开朗活泼专业',
-    cost: '100.00元/天'
-  }
-];
-const completedCardList = [
-  {
-    title: '787',
-    desc: '专业技能go语言、相关经验0-3年、性格特点开朗活泼专业专业技能go语言、相关经验0-3年、性格特点开朗活泼专业',
-    cost: '100.00元/天'
-  },
-  {
-    title: '787',
-    tag: '软件和信息技术行业',
-    desc: '专业技能go语言、相关经验0-3年、性格特点开朗活泼专业专业技能go语言、相关经验0-3年、性格特点开朗活泼专业',
-    cost: '100.00元/天'
-  },
-  {
-    title: '787',
-    tag: '软件和信息技术行业',
-    desc: '专业技能go语言、相关经验0-3年、性格特点开朗活泼专业专业技能go语言、相关经验0-3年、性格特点开朗活泼专业',
-    cost: '100.00元/天'
-  },
-  {
-    title: '787',
-    tag: '软件和信息技术行业',
-    desc: '专业技能go语言、相关经验0-3年、性格特点开朗活泼专业专业技能go语言、相关经验0-3年、性格特点开朗活泼专业',
-    cost: '100.00元/天'
-  },
-  {
-    title: '787',
-    tag: '软件和信息技术行业',
-    desc: '专业技能go语言、相关经验0-3年、性格特点开朗活泼专业专业技能go语言、相关经验0-3年、性格特点开朗活泼专业',
-    cost: '100.00元/天'
-  },
-  {
-    title: '787',
-    tag: '软件和信息技术行业',
-    desc: '专业技能go语言、相关经验0-3年、性格特点开朗活泼专业专业技能go语言、相关经验0-3年、性格特点开朗活泼专业',
-    cost: '100.00元/天'
-  }
-];
-
-const swiperList = [willCardList, processingCardList, completedCardList];
+onPullDownRefresh(resetIndex);
 </script>

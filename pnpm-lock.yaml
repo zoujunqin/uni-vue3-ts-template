@@ -74,6 +74,9 @@ dependencies:
   vue-i18n:
     specifier: 9.6.5
     version: 9.6.5(vue@3.3.8)
+  z-paging:
+    specifier: 2.6.3
+    version: 2.6.3
 
 devDependencies:
   '@commitlint/cli':
@@ -10266,3 +10269,8 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /z-paging@2.6.3:
+    resolution: {integrity: sha512-8SdyASRPhjxvklPKSIuxt8i4PdAkidR8i+55lK8clqak3GFPom4uuWWeY9EgzXMq2Q+je6FzJpZtLqs5To75ug==}
+    engines: {HBuilderX: ^3.0.7}
+    dev: false

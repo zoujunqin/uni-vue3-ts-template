@@ -17,7 +17,7 @@
     "dev:mp-lark": "uni -p mp-lark",
     "dev:mp-qq": "uni -p mp-qq",
     "dev:mp-toutiao": "uni -p mp-toutiao",
-    "dev:mp-weixin": "node build/npm/dev-mp-weixin.js",
+    "dev:mp-weixin": "node build/npm/devWeixin.js",
     "dev:mp-xhs": "uni -p mp-xhs",
     "dev:quickapp-webview": "uni -p quickapp-webview",
     "dev:quickapp-webview-huawei": "uni -p quickapp-webview-huawei",
@@ -70,7 +70,8 @@
     "pinia": "2.0.36",
     "qs": "6.11.2",
     "vue": "3.3.8",
-    "vue-i18n": "9.6.5"
+    "vue-i18n": "9.6.5",
+    "z-paging": "2.6.3"
   },
   "devDependencies": {
     "@commitlint/cli": "17.8.1",

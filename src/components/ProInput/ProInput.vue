@@ -1,6 +1,7 @@
 <template>
   <uv-input
-    v-bind="$attrs"
+    v-model="inputValue"
+    v-bind="{ ...$attrs, ...bridgedEvents }"
     border="none"
     placeholder="请输入关键词"
     class="!hx-p-[6px_16px] hx-bg-[#f7f8fa] hx-rounded-[6px] hx-h-[36px] hx-text-font-size-regular"
@@ -8,14 +9,17 @@
   />
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useVModel } from '@/hooks/useVModel';
+import { useBridgedEmits } from '@/hooks/useBridgedEmits';
+import { inputEvents, uvEvents } from './events';
+import { inputProps } from './props';
 
-<script lang="ts">
-export default {
-  options: {
-    virtualHost: true
-  }
-};
+const emits = defineEmits(inputEvents);
+const props = defineProps(inputProps);
+const { bridgedEvents } = useBridgedEmits(uvEvents);
+
+const inputValue = useVModel(props, 'modelValue', emits);
 </script>
 
 <style scoped>
@@ -26,3 +30,7 @@ export default {
   @apply hx-text-font-size-regular hx-text-text-color-placeholder hx-font-[400] hx-leading-[24px];
 }
 </style>
+
+<script lang="ts">
+export default { options: { virtualHost: true } };
+</script>

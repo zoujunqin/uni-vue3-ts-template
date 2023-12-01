@@ -1,6 +1,6 @@
 <template>
   <uv-tabs
-    v-bind="$attrs"
+    v-bind="{ ...$attrs, ...bridgedEvents }"
     class="pro-tabs"
     lineWidth="32rpx"
     lineColor="var(--hx-color-primary)"
@@ -13,15 +13,13 @@
       color: 'var(--hx-text-text-color-regular)'
     }"
     itemStyle="padding: 12px 14px; height: 40px; line-height: 21px;"
-    @change="emitChange"
   />
 </template>
 <script setup lang="ts">
-const emits = defineEmits(['change']);
+import { useBridgedEmits } from '@/hooks/useBridgedEmits';
+import { uvEvents } from './events';
 
-const emitChange = (...args: unknown[]) => {
-  emits('change', ...args);
-};
+const { bridgedEvents } = useBridgedEmits(uvEvents);
 </script>
 
 <style scoped>

@@ -1,5 +1,5 @@
 const { resolve } = require('path');
-const { ip, port } = require('./http-server');
+const { ip, port } = require('./httpServer');
 const { isMpWeixin } = require('./platform');
 
 const resolvePath = dir => {

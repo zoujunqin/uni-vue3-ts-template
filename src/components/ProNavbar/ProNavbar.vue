@@ -6,7 +6,7 @@
     <image
       v-if="showBackIcon"
       class="hx-w-[18PX] hx-h-[18PX]"
-      :src="import('@/static/local/tab-bar/back-icon.png')"
+      src="@/static/local/tab-bar/back-icon.png"
       @click="handleBack"
     />
     <text v-else />

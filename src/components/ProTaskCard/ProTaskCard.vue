@@ -33,27 +33,10 @@
   </view>
 </template>
 <script setup lang="ts">
-import { PropType } from 'vue';
-
-interface ICardInfo {
-  title: string;
-  tag: string;
-  desc: string;
-  cost: string;
-}
-
-defineProps({
-  cardInfo: {
-    type: Object as PropType<ICardInfo>,
-    default: () => ({})
-  }
-});
+import { taskCardProps } from './props';
+defineProps(taskCardProps);
 </script>
 
 <script lang="ts">
-export default {
-  options: {
-    virtualHost: true
-  }
-};
+export default { options: { virtualHost: true } };
 </script>
