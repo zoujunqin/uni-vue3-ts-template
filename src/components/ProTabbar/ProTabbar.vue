@@ -43,11 +43,7 @@ initTabbar();
 </script>
 
 <script lang="ts">
-export default {
-  options: {
-    virtualHost: true
-  }
-};
+export default { options: { virtualHost: true } };
 </script>
 
 <style scoped>

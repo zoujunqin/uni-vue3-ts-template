@@ -10,6 +10,9 @@
   "pages": [
     //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
     {
+      "path": "pages/login/index"
+    },
+    {
       "path": "pages/task/taskCenter/index",
       "style": {
         "enablePullDownRefresh": true
@@ -24,9 +27,6 @@
     {
       "path": "pages/divide/divideTask/index"
     },
-    {
-      "path": "pages/login/index"
-    }
   ],
   "tabBar": {
     "height": "0",

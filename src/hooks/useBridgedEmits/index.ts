@@ -1,4 +1,4 @@
-import { capitalize } from 'lodash-es';
+import { upperFirst } from 'lodash-es';
 import { ComponentInternalInstance, getCurrentInstance } from 'vue';
 
 interface VM extends ComponentInternalInstance {
@@ -16,11 +16,11 @@ export const useBridgedEmits = (
 
   const bridgedEvents = eventNames.reduce(
     (eventAttrs: Record<string, any>, eventName: string) => {
-      emitsOptions[onPrefix ? onPrefix + capitalize(eventName) : eventName] =
+      emitsOptions[onPrefix ? onPrefix + upperFirst(eventName) : eventName] =
         null;
 
-      eventAttrs['on' + capitalize(eventName)] = (...args: unknown[]) => {
-        _emit(onPrefix ? onPrefix + capitalize(eventName) : eventName, ...args);
+      eventAttrs['on' + upperFirst(eventName)] = (...args: unknown[]) => {
+        _emit(onPrefix ? onPrefix + upperFirst(eventName) : eventName, ...args);
       };
       return eventAttrs;
     },

@@ -1,5 +1,5 @@
 <template>
-  <uv-popup ref="uniPopupRef" bg-color="none" :safe-area-inset-bottom="false">
+  <ProPopup ref="uniPopupRef" bg-color="none" :safe-area-inset-bottom="false">
     <view
       class="modal-content hx-flex hx-flex-col hx-justify-between hx-items-center hx-w-[302px] hx-p-[29px_24px] hx-rounded-[8px]"
     >
@@ -34,7 +34,7 @@
         />
       </view>
     </view>
-  </uv-popup>
+  </ProPopup>
 </template>
 <script setup lang="ts">
 import { shallowRef } from 'vue';
