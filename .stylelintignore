@@ -1,3 +1,7 @@
-/dist/*
-/public/*
+dist/*
 public/*
+
+/src/components/ProForm/*
+/src/components/ProFormItem/*
+/src/components/ProCheckbox/*
+/src/components/ProCheckboxGroup/*

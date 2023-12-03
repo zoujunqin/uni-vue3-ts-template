@@ -16,7 +16,7 @@
     "lib": ["esnext", "dom"],
     "paths": {
       "@/*": ["src/*"],
-      "@@static/*": ["src/static/*"]
+      "@http/*": ["src/static/*"]
     },
     "types": [
       "@dcloudio/types",
@@ -36,6 +36,11 @@
     "node_modules",
     "unpackage",
     "src/**/*.nvue",
+    "src/components/ProForm/*",
+    "src/components/ProFormItem/*",
+    "src/components/ProCheckbox/*",
+    "src/components/ProCheckboxGroup/*",
+    "src/pages.json",
     "**/*.js",
     "**/__tests__/**/*"
   ]

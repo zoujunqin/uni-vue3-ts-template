@@ -5,6 +5,7 @@ import uniAxiosAdapter from '@uni-helper/axios-adapter/vite';
 import { plugins as postcssPlugins } from './postcss.config';
 import { weAppTailwindcssDisabled } from './build/platform';
 import { getAlias } from './build/getAlias';
+import { ip, port } from './build/httpServer';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -26,7 +27,10 @@ export default defineConfig({
     },
     preprocessorOptions: {
       scss: {
-        additionalData: `@use "@/style/index.scss" as *;`
+        additionalData: `
+        @use "@/style/index.scss" as *;
+        $http: 'http://${ip}:${port}';
+        `
       }
     }
   }

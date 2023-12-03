@@ -13,6 +13,9 @@
       "path": "pages/login/index"
     },
     {
+      "path": "pages/login/mobileLogin"
+    },
+    {
       "path": "pages/task/taskCenter/index",
       "style": {
         "enablePullDownRefresh": true
@@ -26,7 +29,7 @@
     },
     {
       "path": "pages/divide/divideTask/index"
-    },
+    }
   ],
   "tabBar": {
     "height": "0",

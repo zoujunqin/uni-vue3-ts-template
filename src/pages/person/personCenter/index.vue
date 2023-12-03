@@ -16,9 +16,7 @@
   <ProPage
     show-tabbar
     class="page-pt-with-navbar hx-pl-[8px] hx-pr-[8px] hx-bg-[length:100%_432px] hx-bg-no-repeat"
-    :style="`background-image: url(${import(
-      '@@static/person/nav-bar-bg.png'
-    )});`"
+    :style="`background-image: url(${import('@http/person/nav-bar-bg.png')});`"
   >
     <view
       class="hx-flex hx-items-center hx-justify-between hx-pl-[8px] hx-pr-[8px] hx-mt-[12px] hx-mb-[20px]"

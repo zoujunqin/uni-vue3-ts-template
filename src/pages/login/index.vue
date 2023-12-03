@@ -1,5 +1,8 @@
 <template>
-  <view class="login hx-p-[128px_24px_0_24px] hx-h-full hx-flex hx-flex-col">
+  <view
+    class="login hx-p-[128px_24px_0_24px] hx-h-full hx-flex hx-flex-col"
+    @tap.stop="closeTooltip"
+  >
     <text
       class="hx-text-[26px] hx-leading-[30px] hx-font-[600] hx-text-color-title"
     >
@@ -11,13 +14,38 @@
       未注册的手机号将自动注册
     </text>
 
-    <ProButton class="hx-mt-[56px]" type="success" text="微信授权登录" />
-    <ProButton class="hx-mt-[18px]" type="primary" text="使用手机号码登录" />
+    <view
+      class="hx-text-[white] hx-mt-[56px] hx-bg-color-success hx-h-[44px] hx-flex hx-items-center hx-justify-center hx-rounded-[6px]"
+      @tap.stop="handleWeXinLogin"
+    >
+      <image
+        src="@/static/local/login/weixin-white-icon.png"
+        class="hx-w-[24px] hx-h-[24px] hx-mr-[2px]"
+      />
+      <text> 微信授权登录 </text>
+    </view>
+
+    <view
+      class="hx-text-[white] hx-mt-[18px] hx-bg-color-primary hx-h-[44px] hx-flex hx-items-center hx-justify-center hx-rounded-[6px]"
+      @tap.stop="navToMobileLogin"
+    >
+      <image
+        src="@/static/local/login/phone-icon.png"
+        class="hx-w-[24px] hx-h-[24px] hx-mr-[2px]"
+      />
+      <text> 使用手机号码登录 </text>
+    </view>
 
     <view class="hx-mt-[24px] hx-flex hx-items-center hx-justify-center">
       <ProCheckboxGroup v-model="isAgree" class="!hx-flex-none">
-        <ProCheckbox name="true" shape="circle" />
+        <ProCheckbox name="true" shape="circle" size="mini" />
       </ProCheckboxGroup>
+      <ProTooltip
+        ref="proTooltipRef"
+        bg-color="transparent"
+        :show-copy="false"
+        :buttons="['请阅读并勾选用户协议']"
+      />
       <text
         class="hx-text-font-size-base hx-leading-[24px] hx-text-text-color-tip"
       >
@@ -53,17 +81,40 @@
     </view>
   </ProPopup>
 </template>
+
 <script setup lang="ts">
-import { shallowRef } from 'vue';
+import { computed, shallowRef } from 'vue';
 
 const isAgree = shallowRef([]);
 const proPopupRef = shallowRef();
+const proTooltipRef = shallowRef();
+const valid = computed(() => isAgree.value.length === 1);
+
 const openPopup = () => {
   proPopupRef.value.open();
 };
+
+const handleWeXinLogin = () => {
+  if (!validate()) return;
+};
+
+const navToMobileLogin = () => {
+  if (!validate()) return;
+  uni.navigateTo({ url: '/pages/login/mobileLogin' });
+};
+
+const validate = () => {
+  if (!valid.value) proTooltipRef.value.open();
+
+  return valid.value;
+};
+
+const closeTooltip = () => {
+  !valid.value && proTooltipRef.value.close();
+};
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .login {
   background: linear-gradient(
     180deg,
@@ -72,5 +123,30 @@ const openPopup = () => {
     #e8efff 73.17%,
     #e7e6fd 100%
   );
+}
+
+:deep(.uv-tooltip__wrapper__popup__list) {
+  width: 154px;
+  height: 42px;
+  align-items: unset !important;
+  justify-content: center;
+  background-color: unset !important;
+  background-image: url($http + '/login/login-tip-bg.png');
+  background-size: 169px 57px;
+  background-repeat: no-repeat;
+  background-position: -7px -5px;
+}
+:deep(.uv-tooltip__wrapper__popup__list__btn) {
+  padding: 8px 0 0 0 !important;
+  display: unset !important;
+}
+:deep(.uv-tooltip__wrapper__popup__list__btn__text) {
+  color: var(--hx-text-color) !important;
+  font-size: 13px !important;
+  line-height: 14px !important;
+  font-weight: 400 !important;
+}
+:deep(.uv-tooltip__wrapper__popup__indicator) {
+  background-color: unset !important;
 }
 </style>

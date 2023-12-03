@@ -1,7 +1,6 @@
 .husky
 docs
 dist
-/src/static
 
 *.d.ts
 
@@ -14,3 +13,9 @@ index.html
 .stylelintrc.js
 postcss.config.js
 tailwind.config.js
+
+/src/static
+/src/components/ProForm/*
+/src/components/ProFormItem/*
+/src/components/ProCheckbox/*
+/src/components/ProCheckboxGroup/*

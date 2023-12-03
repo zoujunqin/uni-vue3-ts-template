@@ -9,7 +9,7 @@ const resolvePath = dir => {
 const getAlias = () => {
   return {
     '@': resolvePath('src'),
-    '@@static': isMpWeixin
+    '@http': isMpWeixin
       ? process.env.NODE_ENV === 'development'
         ? `http://${ip}:${port}`
         : ''

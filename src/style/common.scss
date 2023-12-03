@@ -4,6 +4,10 @@ page {
   background-color: #F7F8FA;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .page-pt-with-navbar {
   /* 状态栏高度 + 导航栏高度 */
   padding-top: 88PX;
@@ -14,6 +18,7 @@ page {
   padding-bottom: calc(var(--hx-tabbar-height) + env(safe-area-inset-bottom));
 }
 
+/* 文字超出显示省略号 */
 .text-ellipsis {
   overflow: hidden;
   white-space: nowrap;
