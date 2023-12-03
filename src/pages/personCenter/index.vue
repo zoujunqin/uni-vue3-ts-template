@@ -100,14 +100,14 @@
 </template>
 
 <script setup lang="ts">
-import InfoIcon from '@/static/local/person/info-icon.png';
-import BankCardIcon from '@/static/local/person/bank-card-icon.png';
-import ContractIcon from '@/static/local/person/contract-icon.png';
-import SecurityIcon from '@/static/local/person/security-icon.png';
-import RemunerationIcon from '@/static/local/person/remuneration-icon.png';
-import AgreementIcon from '@/static/local/person/agreement-icon.png';
-import ShareIcon from '@/static/local/person/share-icon.png';
-import ContactIcon from '@/static/local/person/contact-icon.png';
+import InfoIcon from '@http/local/person/info-icon.png';
+import BankCardIcon from '@http/local/person/bank-card-icon.png';
+import ContractIcon from '@http/local/person/contract-icon.png';
+import SecurityIcon from '@http/local/person/security-icon.png';
+import RemunerationIcon from '@http/local/person/remuneration-icon.png';
+import AgreementIcon from '@http/local/person/agreement-icon.png';
+import ShareIcon from '@http/local/person/share-icon.png';
+import ContactIcon from '@http/local/person/contact-icon.png';
 import VerticalListItem from './components/VerticalListItem.vue';
 
 import { useHandler } from './hooks/useHandler';

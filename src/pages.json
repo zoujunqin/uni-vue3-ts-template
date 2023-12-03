@@ -16,32 +16,46 @@
       "path": "pages/login/mobileLogin"
     },
     {
-      "path": "pages/task/taskCenter/index",
+      "path": "pages/taskCenter/index",
       "style": {
         "enablePullDownRefresh": true
       }
     },
     {
-      "path": "pages/task/taskDetail/index"
+      "path": "pages/divideTask/index"
     },
     {
-      "path": "pages/person/personCenter/index"
-    },
-    {
-      "path": "pages/divide/divideTask/index"
+      "path": "pages/personCenter/index"
     }
   ],
+  "subPackages": [
+    {
+      "root": "pagesTask",
+      "name": "pagesTask",
+      "pages": [
+        {
+          "path": "taskDetail/index"
+        }
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/taskCenter/index": {
+      "network": "all",
+      "packages": ["pagesTask"]
+    }
+  },
   "tabBar": {
     "height": "0",
     "list": [
       {
-        "pagePath": "pages/task/taskCenter/index"
+        "pagePath": "pages/taskCenter/index"
       },
       {
-        "pagePath": "pages/divide/divideTask/index"
+        "pagePath": "pages/divideTask/index"
       },
       {
-        "pagePath": "pages/person/personCenter/index"
+        "pagePath": "pages/personCenter/index"
       }
     ]
   },
