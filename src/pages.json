@@ -10,6 +10,9 @@
   "pages": [
     //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
     {
+      "path": "pagesTask/taskDetail/index"
+    },
+    {
       "path": "pages/login/index"
     },
     {
@@ -28,17 +31,17 @@
       "path": "pages/personCenter/index"
     }
   ],
-  "subPackages": [
-    {
-      "root": "pagesTask",
-      "name": "pagesTask",
-      "pages": [
-        {
-          "path": "taskDetail/index"
-        }
-      ]
-    }
-  ],
+//  "subPackages": [
+//    {
+//      "root": "pagesTask",
+//      "name": "pagesTask",
+//      "pages": [
+//        {
+//          "path": "taskDetail/index"
+//        }
+//      ]
+//    }
+//  ],
   "preloadRule": {
     "pages/taskCenter/index": {
       "network": "all",
