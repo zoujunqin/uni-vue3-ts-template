@@ -1,7 +1,10 @@
 dist/*
 public/*
 
+/src/App.vue
 /src/components/ProForm/*
 /src/components/ProFormItem/*
 /src/components/ProCheckbox/*
 /src/components/ProCheckboxGroup/*
+/src/components/ProSteps/*
+/src/components/ProStepsItem/*

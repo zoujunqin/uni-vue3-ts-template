@@ -3,7 +3,7 @@
     v-model="inputValue"
     border="none"
     placeholder="请输入关键词"
-    class="!hx-p-[6px_16px] hx-bg-[#f7f8fa] hx-rounded-[6px] hx-h-[36px] hx-text-font-size-regular"
+    class="!hx-p-[6px_16px] hx-rounded-[6px] hx-h-[36px] hx-text-font-size-regular"
     placeholder-class="input-placeholder"
     v-bind="{ ...$attrs, ...bridgedEvents }"
   >

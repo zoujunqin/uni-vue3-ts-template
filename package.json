@@ -64,6 +64,7 @@
     "@dcloudio/uni-mp-xhs": "3.0.0-3090620231104002",
     "@dcloudio/uni-quickapp-webview": "3.0.0-3090620231104002",
     "@uni-helper/axios-adapter": "1.5.2",
+    "ali-oss": "6.18.0",
     "axios": "1.4.0",
     "crypto-js": "4.1.1",
     "lodash-es": "4.17.21",

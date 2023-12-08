@@ -25,19 +25,14 @@
         >
           <!-- 为了块对齐 -->
           <view class="uv-form-item__body__left__content">
-            <!-- nvue不支持伪元素before -->
-            <text
-              v-if="required"
-              class="uv-form-item__body__left__content__required"
-              >*</text
-            >
+
             <view
               class="uv-form-item__body__left__content__icon"
               v-if="leftIcon"
             >
               <uv-icon :name="leftIcon" :custom-style="leftIconStyle" />
             </view>
-            <text
+            <view
               class="uv-form-item__body__left__content__label"
               :style="[
                 parentData.labelStyle,
@@ -50,7 +45,18 @@
                         : 'flex-end'
                 }
               ]"
-              >{{ label }}</text
+              >
+
+              <text>
+                {{ label }}
+              </text>
+              <!-- nvue不支持伪元素before -->
+              <text
+                  v-if="required"
+                  class="hx-text-color-error"
+              >*</text
+              >
+            </view
             >
           </view>
         </view>
@@ -208,7 +214,7 @@ export default {
           @include flex;
           align-items: center;
           flex: 1;
-          color: $uv-main-color;
+          color: $uv-content-color;
           font-size: 15px;
         }
       }

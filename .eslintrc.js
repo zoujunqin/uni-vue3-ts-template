@@ -4,6 +4,7 @@ module.exports = {
     node: true
   },
   globals: {
+    uni: true,
     // Ref sugar (take 2)
     $: 'readonly',
     $$: 'readonly',
@@ -73,6 +74,7 @@ module.exports = {
     }
   ],
   rules: {
+    'no-async-promise-executor': 'off',
     'vue/no-v-html': 'off',
     'vue/no-setup-props-destructure': 'off',
     'vue/require-default-prop': 'off',
@@ -116,7 +118,7 @@ module.exports = {
       'error',
       {
         endOfLine: 'auto',
-        singleQuote: true
+        singleQuote: true,
       }
     ]
   }

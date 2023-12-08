@@ -1,5 +1,5 @@
 <template>
-  <view class="section-title"> 基本需求 </view>
+  <view class="section-title hx-mb-[10px]"> 基本需求 </view>
   <view
     class="section-content hx-mb-[16px] hx-rounded-[6px] hx-p-[12px] hx-text-text-color hx-text-[13px] hx-font-[400] hx-leading-[18px]"
   >

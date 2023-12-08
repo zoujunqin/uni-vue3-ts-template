@@ -73,7 +73,7 @@ class PureHttp {
   private httpInterceptorsRequest(): void {
     PureHttp.axiosInstance.interceptors.request.use(
       async (config: PureHttpRequestConfig): Promise<any> => {
-        uni.showLoading({ title: '加载中...' });
+        config.loading && uni.showLoading({ title: '加载中...' });
         // 验签步骤
         const formData = config.params || '';
         const requestBody = config.data || '';

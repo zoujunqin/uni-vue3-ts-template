@@ -27,11 +27,64 @@ page {
 
 /* 模块标题 */
 .section-title {
-  margin-bottom: 10px;
+  display: block;
   font-size: 18px;
   font-weight: 500;
   line-height: 27px;
-  color: var(--hx-text-color);
+  color: var(--hx-color-title);
 }
 
-/*  覆盖 uv-ui 样式 */
+/* 固定提示 */
+.fixed-tip {
+  position: relative;
+  display: block;
+  padding: 8px 12px 8px 32px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 27px;
+  white-space: pre-wrap;
+  border-radius: 6px;
+}
+
+.fixed-tip__before {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  width: 16px;
+  height: 16px;
+  content: "";
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  transform: translateY(-50%);
+}
+
+.error-fixed-tip {
+  @extend .fixed-tip;
+
+  color: var(--hx-color-error);
+  background-color: rgb(255 50 50 / 10%);
+
+  &::before {
+    @extend .fixed-tip__before;
+
+    background-image: url("@/static/local/warning-icon.png");
+  }
+}
+
+.warning-fixed-tip {
+  @extend .fixed-tip;
+
+  color: var(--hx-color-warning);
+  background-color: rgb(255 115 0 / 10%);
+
+  &::before {
+    @extend .fixed-tip__before;
+
+    background-image: url("@/static/local/info-icon.png");
+  }
+}
+
+/* pro-count-down */
+.pro-count-down > text {
+  color: var(--hx-color-primary);
+}

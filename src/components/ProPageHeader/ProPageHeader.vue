@@ -6,6 +6,7 @@
     <slot>
       <view v-if="showInput" class="hx-pl-[16px] hx-pr-[16px] hx-mb-[4px]">
         <ProInput
+          class="hx-bg-[#f7f8fa]"
           v-model="inputValue"
           prefix-icon="/static/local/search-icon.png"
           v-bind="{ ...$attrs, ...inputBridgedEvents }"

@@ -1,5 +1,5 @@
 $uv-main-color: #303133;
-$uv-content-color: #606266;
+$uv-content-color: var(--hx-text-color-content);
 $uv-tips-color: #909193;
 $uv-light-color: #c0c4cc;
 $uv-border-color: #dadbde;
@@ -18,7 +18,7 @@ $uv-warning-light: #fdf6ec;
 
 $uv-success: var(--hx-color-success);
 $uv-success-dark: #53c21d;
-$uv-success-disabled: #var(--hx-color-primary-disable);
+$uv-success-disabled: var(--hx-color-primary-disable);
 $uv-success-light: #f5fff0;
 
 $uv-error: var(--hx-color-error);

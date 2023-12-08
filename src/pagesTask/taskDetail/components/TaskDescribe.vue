@@ -1,5 +1,5 @@
 <template>
-  <view class="section-title"> 任务描述 </view>
+  <view class="section-title hx-mb-[10px]"> 任务描述 </view>
   <ProReadMore
     show-height="313px"
     :toggle="true"

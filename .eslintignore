@@ -19,3 +19,5 @@ tailwind.config.js
 /src/components/ProFormItem/*
 /src/components/ProCheckbox/*
 /src/components/ProCheckboxGroup/*
+/src/components/ProSteps/*
+/src/components/ProStepsItem/*

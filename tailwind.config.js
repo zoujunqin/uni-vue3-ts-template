@@ -54,6 +54,7 @@ module.exports = {
         'text-color-placeholder': 'var(--hx-text-color-placeholder)',
         'text-color-disable': 'var(--hx-text-color-disable)',
         'text-color-tip': 'var(--hx-text-color-tip)',
+        'text-color-content': 'var(  --hx-text-color-content)',
         'bg-color': 'var(--hx-bg-color)',
         'bg-color-grey': 'var(--hx-bg-color-grey)',
         'bg-color-hover': 'var(--hx-bg-color-hover)',

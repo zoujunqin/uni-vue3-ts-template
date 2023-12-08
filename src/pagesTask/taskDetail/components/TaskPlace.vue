@@ -1,5 +1,5 @@
 <template>
-  <view class="section-title"> 任务地点 </view>
+  <view class="section-title hx-mb-[10px]"> 任务地点 </view>
   <view class="section-content hx-h-[186px] hx-rounded-[6px] hx-mb-[16px]" />
 </template>
 

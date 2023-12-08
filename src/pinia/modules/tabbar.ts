@@ -46,6 +46,8 @@ export const useTabbarStore = defineStore('user', () => {
   };
 
   const initTabbar = () => {
+    uni.hideTabBar({ animation: false });
+
     const firstPage: PageInstance<{ route: string }> = getCurrentPages()[0];
     const tabbar = tabbarList.value.find(
       item => item.pagePath === firstPage?.route

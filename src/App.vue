@@ -7,8 +7,6 @@ onLaunch(() => {
   uni.getSystemInfo().then(data => {
     setSystemInfo(data);
   });
-
-  uni.hideTabBar({ animation: false });
 });
 
 onShow(() => {});
@@ -17,7 +15,7 @@ onHide(() => {});
 </script>
 
 <style lang="scss">
-@import url('tailwindcss/base');
-@import url('tailwindcss/components');
-@import url('tailwindcss/utilities');
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 </style>
