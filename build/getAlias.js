@@ -12,8 +12,8 @@ const getAlias = () => {
     '@http': isMpWeixin
       ? process.env.NODE_ENV === 'development'
         ? `http://${ip}:${port}`
-        : ''
-      : resolvePath('src/static')
+        : 'http://0.0.0.0:9999'
+      : resolvePath('src/static@http')
   };
 };
 

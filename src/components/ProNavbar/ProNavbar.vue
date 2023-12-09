@@ -6,7 +6,7 @@
     <image
       v-if="showBackIcon"
       class="hx-w-[18PX] hx-h-[18PX]"
-      src="@/static/local/navbar/back-icon.png"
+      src="@/static/navbar/back-icon.png"
       @click="handleBack"
     />
     <text v-else />

@@ -22,7 +22,7 @@
     <view class="hx-flex hx-items-center hx-mr-[16px]">
       <image
         class="hx-w-[16px] hx-h-[16px] hx-mr-[4px] hx-mb-[1px]"
-        src="@/static/local/task-detail/position.png"
+        src="@/static/task-detail/position.png"
       />
       <text
         class="hx-text-[14px] hx-font-[400] hx-leading-[14px] hx-text-text-color"
@@ -33,7 +33,7 @@
     <view class="hx-flex hx-items-center hx-mr-[16px]">
       <image
         class="hx-w-[16px] hx-h-[16px] hx-mr-[4px] hx-mb-[2px]"
-        src="@/static/local/task-detail/experience.png"
+        src="@/static/task-detail/experience.png"
       />
       <text
         class="hx-text-[14px] hx-font-[400] hx-leading-[14px] hx-text-text-color"
@@ -44,7 +44,7 @@
     <view class="hx-flex hx-items-center">
       <image
         class="hx-w-[16px] hx-h-[16px] hx-mr-[4px] hx-mb-[1px]"
-        src="@/static/local/task-detail/education.png"
+        src="@/static/task-detail/education.png"
       />
       <text
         class="hx-text-[14px] hx-font-[400] hx-leading-[14px] hx-text-text-color"

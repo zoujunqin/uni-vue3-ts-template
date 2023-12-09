@@ -16,7 +16,7 @@
         <image
           v-else
           class="hx-w-[16px] hx-h-[16px]"
-          :src="import('@http/real-name/step-inactive-icon.png')"
+          :src="import('@/static@http/real-name/step-inactive-icon.png')"
         />
       </template>
     </ProStepsItem>

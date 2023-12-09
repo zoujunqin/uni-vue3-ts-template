@@ -78,7 +78,7 @@
       class="hx-flex hx-items-center hx-justify-center hx-mt-[24px] hx-text-text-color-tip"
     >
       <image
-        src="@/static/local/login/weixin-gray-icon.png"
+        src="@/static/login/weixin-gray-icon.png"
         class="hx-w-[24px] hx-h-[24px] hx-mr-[4px]"
       />
       <text class="hx-text-[15px] hx-font-[400] hx-leading-[24px]">
@@ -145,7 +145,7 @@ const fetchMobileLogin = () => {
 }
 
 :deep(.pro-count-down text) {
-  color: var(--hx-color-primary) !important;
   font-size: var(--hx-font-size-base) !important;
+  color: var(--hx-color-primary) !important;
 }
 </style>

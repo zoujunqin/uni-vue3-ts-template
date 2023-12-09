@@ -19,7 +19,7 @@
       @tap.stop="handleWeXinLogin"
     >
       <image
-        src="@/static/local/login/weixin-white-icon.png"
+        src="@/static/login/weixin-white-icon.png"
         class="hx-w-[24px] hx-h-[24px] hx-mr-[2px]"
       />
       <text> 微信授权登录 </text>
@@ -30,7 +30,7 @@
       @tap.stop="navToMobileLogin"
     >
       <image
-        src="@/static/local/login/phone-icon.png"
+        src="@/static/login/phone-icon.png"
         class="hx-w-[24px] hx-h-[24px] hx-mr-[2px]"
       />
       <text> 使用手机号码登录 </text>
@@ -126,26 +126,29 @@ const closeTooltip = () => {
 }
 
 :deep(.uv-tooltip__wrapper__popup__list) {
-  width: 154px;
-  height: 42px;
   align-items: unset !important;
   justify-content: center;
+  width: 154px;
+  height: 42px;
   background-color: unset !important;
   background-image: url($http + '/login/login-tip-bg.png');
-  background-size: 169px 57px;
   background-repeat: no-repeat;
   background-position: -7px -5px;
+  background-size: 169px 57px;
 }
+
 :deep(.uv-tooltip__wrapper__popup__list__btn) {
-  padding: 8px 0 0 0 !important;
   display: unset !important;
+  padding: 8px 0 0 !important;
 }
+
 :deep(.uv-tooltip__wrapper__popup__list__btn__text) {
-  color: var(--hx-text-color) !important;
   font-size: 13px !important;
-  line-height: 14px !important;
   font-weight: 400 !important;
+  line-height: 14px !important;
+  color: var(--hx-text-color) !important;
 }
+
 :deep(.uv-tooltip__wrapper__popup__indicator) {
   background-color: unset !important;
 }

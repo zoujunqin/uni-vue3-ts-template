@@ -1,3 +1,4 @@
+/* stylelint-disable-next-line */
 page {
   position: relative;
   height: 100%;
@@ -67,7 +68,7 @@ page {
   &::before {
     @extend .fixed-tip__before;
 
-    background-image: url("@/static/local/warning-icon.png");
+    background-image: url("@/static/warning-icon.png");
   }
 }
 
@@ -80,7 +81,7 @@ page {
   &::before {
     @extend .fixed-tip__before;
 
-    background-image: url("@/static/local/info-icon.png");
+    background-image: url("@/static/info-icon.png");
   }
 }
 

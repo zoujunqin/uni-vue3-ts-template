@@ -1,5 +1,4 @@
-dist/*
-public/*
+!src/**
 
 /src/App.vue
 /src/components/ProForm/*

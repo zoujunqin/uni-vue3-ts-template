@@ -7,7 +7,7 @@
     <view class="hx-flex hx-items-center hx-justify-center hx-mb-[20px]">
       <image
         class="hx-w-[32px] hx-h-[32px] hx-mr-[8px] hx-mt-[8px]"
-        :src="import('@http/real-name-success/success-icon-blue.png')"
+        :src="import('@/static@http/real-name-success/success-icon-blue.png')"
       />
       <text
         class="hx-text-[30px] hx-font-[600] hx-text-[30px] hx-leading-[30px]"
@@ -19,7 +19,7 @@
     <view class="hx-flex hx-items-center hx-justify-center hx-mb-[45px]">
       <image
         class="hx-w-[16px] hx-h-[16px] hx-mr-[4px]"
-        :src="import('@http/real-name-success/success-icon-green.png')"
+        :src="import('@/static@http/real-name-success/success-icon-green.png')"
       />
       <text
         class="hx-text-text-color-tip hx-font-[600] hx-text-[14px] hx-leading-[14px]"

@@ -2,7 +2,7 @@
   <view class="section-title hx-mb-[10px] hx-flex hx-items-center">
     <image
       class="hx-w-[18px] hx-h-[18px] hx-mr-[3px] hx-mb-[1px]"
-      src="@/static/local/task-detail/security-shield.png"
+      src="@/static/task-detail/security-shield.png"
     />
     <text> 安全提示 </text>
   </view>

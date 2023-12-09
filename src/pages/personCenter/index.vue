@@ -16,7 +16,9 @@
   <ProPage
     show-tabbar
     class="page-pt-with-navbar hx-pl-[8px] hx-pr-[8px] hx-bg-[length:100%_432px] hx-bg-no-repeat"
-    :style="`background-image: url(${import('@http/person/nav-bar-bg.png')});`"
+    :style="`background-image: url(${import(
+      '@/static@http/person/nav-bar-bg.png'
+    )});`"
   >
     <view
       class="hx-flex hx-items-center hx-justify-between hx-pl-[8px] hx-pr-[8px] hx-mt-[12px] hx-mb-[20px]"
@@ -24,7 +26,7 @@
       <view class="hx-flex hx-flex-1">
         <image
           class="hx-w-[60px] hx-h-[60px] hx-mr-[12px]"
-          src="@/static/local/person/avatar-default.png"
+          src="@/static/person/avatar-default.png"
         />
         <view class="hx-flex hx-flex-col hx-justify-center">
           <text
@@ -46,7 +48,7 @@
       >
         <image
           class="hx-w-[14px] hx-h-[14px] hx-mr-[4px]"
-          src="@/static/local/person/exit.png"
+          src="@/static/person/exit.png"
         />
         <text class="hx-text-font-size-sm hx-leading-[20px] hx-text-text-color">
           退出登录
@@ -100,14 +102,14 @@
 </template>
 
 <script setup lang="ts">
-import InfoIcon from '@/static/local/person/info-icon.png';
-import BankCardIcon from '@/static/local/person/bank-card-icon.png';
-import ContractIcon from '@/static/local/person/contract-icon.png';
-import SecurityIcon from '@/static/local/person/security-icon.png';
-import RemunerationIcon from '@/static/local/person/remuneration-icon.png';
-import AgreementIcon from '@/static/local/person/agreement-icon.png';
-import ShareIcon from '@/static/local/person/share-icon.png';
-import ContactIcon from '@/static/local/person/contact-icon.png';
+import InfoIcon from '@/static/person/info-icon.png';
+import BankCardIcon from '@/static/person/bank-card-icon.png';
+import ContractIcon from '@/static/person/contract-icon.png';
+import SecurityIcon from '@/static/person/security-icon.png';
+import RemunerationIcon from '@/static/person/remuneration-icon.png';
+import AgreementIcon from '@/static/person/agreement-icon.png';
+import ShareIcon from '@/static/person/share-icon.png';
+import ContactIcon from '@/static/person/contact-icon.png';
 import VerticalListItem from './components/VerticalListItem.vue';
 
 import { useHandler } from './hooks/useHandler';
@@ -192,6 +194,7 @@ const secondVerticalList = [
 </style>
 
 <style>
+/* stylelint-disable-next-line */
 page {
   background: linear-gradient(180deg, #fff 18.25%, #f7f8fa 92.19%);
 }

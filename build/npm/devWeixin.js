@@ -6,9 +6,13 @@ const cmd = /^win/.test(process.platform) ? 'pnpm.cmd' : 'pnpm';
 
 const assetsServerController = new AbortController();
 const { signal: assetsServerSignal } = assetsServerController;
-spawn(cmd, ['node_modules/.bin/http-server', './src/static', `-p=${port}`], {
-  signal: assetsServerSignal
-});
+spawn(
+  cmd,
+  ['node_modules/.bin/http-server', './src/static@http', `-p=${port}`],
+  {
+    signal: assetsServerSignal
+  }
+);
 console.log(
   chalk.green('[http-server] ') +
     chalk.yellow(`assetsServer available on ${ip}`)

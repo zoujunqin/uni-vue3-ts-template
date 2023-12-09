@@ -23,7 +23,7 @@
   </view>
 </template>
 <script setup lang="ts">
-import ArrowIcon from '@/static/local/arrow-right.png';
+import ArrowIcon from '@/static/arrow-right.png';
 import { PropType } from 'vue';
 
 interface IDataType {
