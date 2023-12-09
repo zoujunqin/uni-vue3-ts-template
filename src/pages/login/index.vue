@@ -41,6 +41,7 @@
         <ProCheckbox name="true" shape="circle" size="mini" />
       </ProCheckboxGroup>
       <ProTooltip
+        class="hx-pointer-events-none"
         ref="proTooltipRef"
         bg-color="transparent"
         :show-copy="false"
