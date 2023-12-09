@@ -11,7 +11,13 @@ const module = 'fe';
 type UploadParam = {
   chooseSuccess?: ChooseMediaSuccessCallback;
   chooseFail?: ChooseMediaFailCallback;
-  uploadSuccess?: ({ filePath: string, previewUrl: string }) => void;
+  uploadSuccess?: ({
+    filePath,
+    previewUrl
+  }: {
+    filePath: string;
+    previewUrl: string;
+  }) => void;
   uploadFail?: (err: unknown) => void;
 };
 
@@ -30,13 +36,13 @@ export function useOssUploadImage(options: ChooseMediaOption) {
       mediaType: ['image'],
       success: (res: ChooseMediaSuccessCallbackResult) => {
         const { tempFilePath } = res.tempFiles[0];
-        chooseSuccess(res);
+        chooseSuccess?.(res);
 
         loading.value = true;
         uploadFile(module, tempFilePath)
           .then(async filePath => {
-            const previewUrl = await getPreviewUrl(filePath as string);
-            uploadSuccess({ filePath, previewUrl });
+            const previewUrl = await getPreviewUrl(filePath);
+            uploadSuccess?.({ filePath, previewUrl });
           })
           .catch(uploadFail)
           .finally(() => {

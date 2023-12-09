@@ -13,7 +13,7 @@ export const useOss = () => {
     module: ModuleType,
     filePath: string,
     fileName?: string
-  ) => {
+  ): Promise<string> => {
     return new Promise(async (resolve, reject) => {
       const type = getFileSuffix(filePath);
       const ossConfig: OssUploadConfig = await getOssPolicy({
