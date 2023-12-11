@@ -34,7 +34,7 @@ pnpm >=8.x
 - 使用 http 图片：
 
 ```vue
-// @http 指向 static 文件夹
+// @http 指向 static@http 文件夹
 <image :src="import('@http/person/xxx.png')" ></image>
 ```
 
