@@ -4,6 +4,7 @@
     v-bind="$attrs"
     v-model="dataList"
     loading-more-enabled
+    :fixed="false"
     :auto="false"
     :refresher-enabled="false"
     :use-virtual-list="true"
@@ -29,5 +30,12 @@ defineExpose({
 </script>
 
 <script lang="ts">
-export default { options: { virtualHost: true } };
+export default { options: { name: 'ProScrollList', virtualHost: true } };
 </script>
+
+<style>
+:deep(.z-paging-content) {
+  position: unset !important;
+  height: unset !important;
+}
+</style>

@@ -60,7 +60,7 @@ const handleUpload = () => {
 </script>
 
 <script lang="ts">
-export default { options: { virtualHost: true } };
+export default { options: { name: 'ProUpload', virtualHost: true } };
 </script>
 
 <style scoped lang="scss">

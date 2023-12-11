@@ -16,21 +16,21 @@
       </slot>
 
       <view class="hx-flex">
-        <uv-button
+        <ProButton
           class="hx-w-[122px] hx-mr-[10px]"
           v-if="showCancel"
           type="primary"
           color="rgb(61 134 242 / 10%)"
           :text="cancelButtonText"
           :custom-text-style="{ color: 'var(--hx-color-primary)' }"
-          @click="handleCancel"
+          @tap.stop="handleCancel"
         />
-        <uv-button
+        <ProButton
           class="hx-w-[122px]"
           v-if="showConfirm"
           type="primary"
           :text="confirmButtonText"
-          @click="handleConfirm"
+          @tap.stop="handleConfirm"
         />
       </view>
     </view>

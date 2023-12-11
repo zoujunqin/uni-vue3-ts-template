@@ -48,25 +48,25 @@ import { nextTick, onMounted, shallowRef } from 'vue';
 
 const examples = [
   {
-    backgroundImage: import('@/static@http/real-name/standard-id-card.png'),
+    backgroundImage: import('@http/real-name/standard-id-card.png'),
     title: '标准',
     iconName: 'checkmark-circle-fill',
     iconColor: 'primary'
   },
   {
-    backgroundImage: import('@/static@http/real-name/miss-border-id-card.png'),
+    backgroundImage: import('@http/real-name/miss-border-id-card.png'),
     title: '边框缺失',
     iconName: 'close-circle-fill',
     iconColor: 'error'
   },
   {
-    backgroundImage: import('@/static@http/real-name/blurry-id-card.png'),
+    backgroundImage: import('@http/real-name/blurry-id-card.png'),
     title: '照片模糊',
     iconName: 'close-circle-fill',
     iconColor: 'error'
   },
   {
-    backgroundImage: import('@/static@http/real-name/strong-flash-id-card.png'),
+    backgroundImage: import('@http/real-name/strong-flash-id-card.png'),
     title: '闪光强烈',
     iconName: 'close-circle-fill',
     iconColor: 'error'
