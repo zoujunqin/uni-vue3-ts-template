@@ -38,7 +38,8 @@ pnpm >=8.x
 <image :src="import('@http/person/xxx.png')" ></image>
 ```
 
-- 使用 http 背景图：
+- 使用 http 背景图：<br>
+  **_<text style="color: red;">tip: 放在 static@http 文件夹下</text>_**
 
 ```vue
 <view :style="`background-image: ${import('@http/person/xxx.png')}`"></view>
@@ -52,7 +53,7 @@ page {
 ```
 
 - 使用本地图片<br>
-  **_<text style="color: red;">tip: 一定要放在 static/local 文件夹下，其他文件夹在生产环境会被删除</text>_**
+  **_<text style="color: red;">tip: 放在 static 文件夹下</text>_**
 
 ### 手机预览和调试
 
