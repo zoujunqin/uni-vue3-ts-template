@@ -27,7 +27,7 @@
         <ProTaskCard
           id="card"
           class="hx-mt-[10px]"
-          :card-info="getRow(row)"
+          :card-info="row"
           @tap="navToTaskDetail(row)"
         />
       </template>
@@ -35,13 +35,12 @@
   </ProPage>
 
   <!--  任务类型  -->
-  <ProDropDownPopupWrapper
-    ref="proDropDownPopupRef"
+  <IndustryDropDownPopup
+    ref="industryDropDownPopupRef"
     sign="sign"
+    v-model="industryList"
     @popup-change="handlePopupChange"
-  >
-    <IndustrySelect v-model="industryList" />
-  </ProDropDownPopupWrapper>
+  />
 
   <!-- 地点选择 -->
   <ProAreaPicker
@@ -52,45 +51,23 @@
 </template>
 
 <script setup lang="ts">
-import { shallowRef } from 'vue';
-import { onPullDownRefresh } from '@dcloudio/uni-app';
-import { getAddedMemberList } from '@/api/test';
 import { useHandler } from './hooks/useHandler';
-import IndustrySelect from './components/IndustrySelect.vue';
+import IndustryDropDownPopup from './components/IndustryDropDownPopup.vue';
 
-const { navToTaskDetail, handleInputConfirm } = useHandler();
+const {
+  industryList,
+  industryDropDownPopupRef,
+  openIndustryPopup,
 
-const proDropDownPopupRef = shallowRef();
-const openIndustryPopup = (val: boolean) => {
-  proDropDownPopupRef.value[val ? 'open' : 'close']();
-  proAreaPickerRef.value.close();
-};
-const industryList = shallowRef([]);
+  areaList,
+  proAreaPickerRef,
+  openAreaPicker,
 
-const proAreaPickerRef = shallowRef();
-const openAreaPicker = (val: boolean) => {
-  proAreaPickerRef.value[val ? 'open' : 'close']();
-  proDropDownPopupRef.value.close();
-};
-const areaList = shallowRef([150000, 150100, 150102]);
+  conditionActive,
+  handlePopupChange,
+  handleAreaPickerClose,
 
-const conditionActive = shallowRef('');
-const handlePopupChange = ({ show }: { show: boolean }) => {
-  !show && (conditionActive.value = '');
-};
-const handleAreaPickerClose = () => {
-  conditionActive.value = '';
-};
-
-const getRow = row => {
-  return {
-    ...row,
-    cost: row.addMonth,
-    title: row.serviceContract,
-    desc: row.supplierName,
-    tag: row.name
-  };
-};
-
-onPullDownRefresh(() => {});
+  navToTaskDetail,
+  handleInputConfirm
+} = useHandler();
 </script>

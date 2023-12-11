@@ -1,5 +1,5 @@
 <template>
-  <template v-for="(item, index) in dataList" :key="index">
+  <template v-for="(item, index) in list" :key="index">
     <view class="section-title hx-leading-[19px] hx-mb-[16px]">
       {{ item.title }}
     </view>
@@ -25,108 +25,31 @@
 <script setup lang="ts">
 import { PropType, computed } from 'vue';
 
+interface IDataItem {
+  title: string;
+  id: number;
+  children: Array<IDataItem>;
+}
+
 const props = defineProps({
   modelValue: {
-    type: Array as PropType<Array<number | string>>,
+    type: Array as PropType<Array<number>>,
+    default: () => []
+  },
+  list: {
+    type: Array as PropType<Array<IDataItem>>,
     default: () => []
   }
 });
 const emit = defineEmits(['update:modelValue']);
 
-const dataList = [
-  {
-    title: '软件和信息技术行业',
-    children: [
-      {
-        id: 1,
-        title: '软件1开发'
-      },
-      {
-        id: 2,
-        title: '前端'
-      },
-      {
-        id: 5,
-        title: '软件1开发'
-      },
-      {
-        id: 6,
-        title: '前端'
-      },
-      {
-        id: 7,
-        title: '软件1开发'
-      },
-      {
-        id: 8,
-        title: '前端'
-      }
-    ]
-  },
-  {
-    title: '软件和信息技术行业',
-    children: [
-      {
-        id: 3,
-        title: '软件开发'
-      },
-      {
-        id: 4,
-        title: '前端'
-      }
-    ]
-  },
-  {
-    title: '软件和信息技术行业',
-    children: [
-      {
-        id: 1,
-        title: '软件1开发'
-      },
-      {
-        id: 2,
-        title: '前端'
-      },
-      {
-        id: 5,
-        title: '软件1开发'
-      },
-      {
-        id: 6,
-        title: '前端'
-      },
-      {
-        id: 7,
-        title: '软件1开发'
-      },
-      {
-        id: 8,
-        title: '前端'
-      }
-    ]
-  },
-  {
-    title: '软件和信息技术行业',
-    children: [
-      {
-        id: 3,
-        title: '软件开发'
-      },
-      {
-        id: 4,
-        title: '前端'
-      }
-    ]
-  }
-];
-
 const selectIdList = computed({
   get: () => props.modelValue,
-  set: (val: Array<number | string>) => {
+  set: (val: Array<number>) => {
     emit('update:modelValue', val);
   }
 });
-const handleSelect = (id: number | string) => {
+const handleSelect = (id: number) => {
   if (selectIdList.value.includes(id)) {
     selectIdList.value = selectIdList.value.filter(item => item !== id);
   } else {
@@ -134,12 +57,16 @@ const handleSelect = (id: number | string) => {
   }
 };
 
-const getClass = subItem => {
+const getClass = (subItem: IDataItem) => {
   return [
     subItem.title.length <= 4 ? 'hx-w-[80px]' : 'hx-w-[108px]',
     selectIdList.value.includes(subItem.id) ? 'active' : null
   ];
 };
+</script>
+
+<script lang="ts">
+export default { options: { name: 'IndustrySelect', virtualHost: true } };
 </script>
 
 <style scoped>
