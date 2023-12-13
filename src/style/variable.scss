@@ -26,10 +26,11 @@
   --hx-text-color-disable: #c0c0c0;
   --hx-text-color-tip: #909399; // 提示文本颜色
   --hx-text-color-content: #606266;
+  --hx-text-color-main: #141731; //文字加重色
 
   /* 背景颜色 */
   --hx-bg-color: #fff;
-  --hx-bg-color-grey: #dadfe9;
+  --hx-bg-color-grey: #F7F8FA; //页面背景色
   --hx-bg-color-hover: #f1f1f1; // 点击状态颜色
   --hx-bg-color-mask: rgb(33 33 33 / 50%); // 遮罩颜色
   --hx-bg-color-primary: rgb(61 134 242 / 10%);
@@ -51,6 +52,7 @@
   --hx-font-size-base: 14px;
   --hx-font-size-regular: 16px;
   --hx-font-size-lg: 18px;
+  --hx-font-size-20: 20px;
 
   /* 透明度 */
   --hx-opacity-disabled: 0.3; // 组件禁用态的透明度

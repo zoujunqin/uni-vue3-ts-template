@@ -1,5 +1,5 @@
 <template>
-  <view class="hx-flex hx-flex-col hx-justify-center hx-items-center">
+  <view class="hx-flex hx-flex-col hx-items-center hx-mt-[30%]">
     <image :src="data.image" class="hx-w-[140px] hx-h-[140px]" />
     <text
       class="hx-mt-[20px] hx-text-text-color hx-text-font-size-regular hx-font-[500] hx-leading-[16px]"
