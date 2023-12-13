@@ -26,6 +26,7 @@ import { ITabbar, useTabbarStore } from '@/pinia/modules/tabbar';
 import { storeToRefs } from 'pinia';
 
 const tabbarStore = useTabbarStore();
+
 const { switchTabbar, initTabbar } = tabbarStore;
 const { tabbarList, currentTabbar } = storeToRefs(tabbarStore);
 

@@ -89,8 +89,8 @@
 <script setup lang="ts">
 import { loginWithSms } from '@/api/fe/wechat';
 import { sms } from '@/api/system/sms';
-import { ref, shallowRef } from 'vue';
 import { useUserStore } from '@/pinia/modules/user';
+import { ref, shallowRef } from 'vue';
 
 const proFormRef = shallowRef();
 const formData = ref({
@@ -140,6 +140,7 @@ const fetchMobileLogin = () => {
       const param = { mobile, smsCode: captcha };
       loginWithSms(param).then(res => {
         useUserStore().setToken(res.token);
+        // switchFirstTab();
         uni.switchTab({ url: '/pages/taskCenter/index' });
       });
     }
