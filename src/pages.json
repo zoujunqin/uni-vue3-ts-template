@@ -49,12 +49,36 @@
           "path": "realNameSuccess/index"
         }
       ]
+    },
+    {
+      "root": "pagesPerson",
+      "name": "pagesPerson",
+      "pages": [
+        {
+          "path": "personMessage/index"
+        },
+        {
+          "path": "bankCard/index"
+        },
+        {
+          "path": "myContract/index"
+        },
+        {
+          "path": "myInsurance/index"
+        },
+        {
+          "path": "remuneration/index"
+        },
+        {
+          "path": "agreement/index"
+        }
+      ]
     }
   ],
   "preloadRule": {
     "pages/taskCenter/index": {
       "network": "all",
-      "packages": ["pagesTask"]
+      "packages": ["pagesTask", "pagesPerson"]
     }
   },
   "tabBar": {

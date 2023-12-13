@@ -38,7 +38,7 @@ defineProps({
     default: () => ({})
   }
 });
-const emits = defineEmits('click');
+const emits = defineEmits(['click']);
 
 const emitClick = () => {
   emits('click');
