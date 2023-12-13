@@ -1,14 +1,15 @@
 // @ts-nocheck
+import { useUserStore } from '@/pinia/modules/user';
+import { getUUID } from '@/utils';
+import { formatToken } from '@/utils/auth';
+import { decryptString, encryptString } from '@/utils/crypto';
+import { createUniAppAxiosAdapter } from '@uni-helper/axios-adapter';
 import Axios, {
   AxiosInstance,
   AxiosRequestConfig,
   CustomParamsSerializer
 } from 'axios';
 import { stringify } from 'qs';
-import { createUniAppAxiosAdapter } from '@uni-helper/axios-adapter';
-import { getUUID } from '@/utils';
-import { formatToken, getToken, removeToken } from '@/utils/auth';
-import { decryptString, encryptString } from '@/utils/crypto';
 import {
   PureHttpError,
   PureHttpRequestConfig,
@@ -16,15 +17,13 @@ import {
   RequestMethods
 } from './types.d';
 
+const { getToken, removeToken } = useUserStore();
+
+const baseURL = 'http://192.168.117.87:8100'; // 林伦
+
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {
-  baseURL: 'http://218.104.230.173:17054',
-  // baseURL: 'http://192.168.117.30:8100', // 邵航
-  // baseURL: 'http://192.168.117.32:8100', // 金灿
-  // baseURL: 'http://192.168.117.36:8100', // 光明
-  // baseURL: 'http://192.168.117.45:8100', // 大立
-  // baseURL: 'http://192.168.117.8:8100', // 志超
-  // baseURL: 'http://192.168.117.87:8100', // 林伦
+  baseURL,
   // 请求超时时间
   timeout: 30 * 1000,
   headers: {
@@ -169,13 +168,14 @@ class PureHttp {
         // 跳转到登录页面 401、40102、40103、40104
         const loginFailureCodeList = ['401', '40102', '40103', '40104'];
         if (loginFailureCodeList.includes(responseData.code)) {
-          uni.showToast({ title: '授权过期，请重新登录' });
+          uni.showToast({ title: '授权过期，请重新登录', icon: 'none' });
           removeToken();
           /* TODO: 暂时注释 */
           // uni.reLaunch({ url: '/pages/login/index' });
         } else if (!customDealCodes.includes(responseData.code)) {
           uni.showToast({
-            title: responseData.message || '接口异常'
+            title: responseData.message || '接口异常',
+            icon: 'none'
           });
         }
 

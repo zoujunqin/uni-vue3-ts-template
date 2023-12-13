@@ -1,12 +1,29 @@
+import {
+  getToken as getPersistenceToken,
+  removeToken as removeTokenForever,
+  setToken as setTokenPersist
+} from '@/utils/auth';
 import { defineStore } from 'pinia';
 import { shallowRef } from 'vue';
 
 export const useUserStore = defineStore('user', () => {
-  const userInfo = shallowRef({} as any);
-
-  const setUserInfo = info => {
+  const userInfo = shallowRef<Record<string, string | number>>({});
+  const setUserInfo = (info: Record<string, string | number>) => {
     userInfo.value = info;
   };
 
-  return { userInfo, setUserInfo };
+  const token = shallowRef('');
+  const setToken = (val: string) => {
+    token.value = val;
+    setTokenPersist(val);
+  };
+  const getToken = () => {
+    return token.value || getPersistenceToken();
+  };
+  const removeToken = () => {
+    token.value = '';
+    removeTokenForever();
+  };
+
+  return { userInfo, setUserInfo, token, setToken, getToken, removeToken };
 });

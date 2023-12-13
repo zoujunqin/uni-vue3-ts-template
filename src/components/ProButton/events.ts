@@ -1,4 +1,5 @@
 export const uvEvents = [
+  'click',
   'getphonenumber',
   'getuserinfo',
   'error',

@@ -1,4 +1,4 @@
-import { http } from '@/utils/http';
+import { hroBaseURL, http } from '@/utils/http';
 
 const baseApi = '/system/sms';
 
@@ -10,5 +10,7 @@ interface ISmsParam {
 }
 /* 发送短信验证码 */
 export const sms = (data: ISmsParam) => {
-  return http.request('post', `${baseApi}/policy`, { data });
+  return http.request('post', `${baseApi}`, {
+    data
+  });
 };

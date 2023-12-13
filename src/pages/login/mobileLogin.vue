@@ -19,6 +19,7 @@
       ref="proFormRef"
       :model="formData"
       :rules="formRules"
+      error-type="border-bottom"
       class="hx-mt-[24px]"
     >
       <ProFormItem prop="mobile">
@@ -86,12 +87,16 @@
 </template>
 
 <script setup lang="ts">
+import { loginWithSms } from '@/api/fe/wechat';
+import { sms } from '@/api/system/sms';
 import { ref, shallowRef } from 'vue';
+import { useUserStore } from '@/pinia/modules/user';
 
 const proFormRef = shallowRef();
 const formData = ref({
-  mobile: '',
-  captcha: ''
+  /* TODO: 写死测试。 验证码接口没开，先使用手机号后6位 */
+  mobile: '18650209502',
+  captcha: '209502'
 });
 const formRules = {
   mobile: {
@@ -110,20 +115,32 @@ const formRules = {
 
 const captchaIsValid = shallowRef(false);
 
+/* 获取验证码 */
 const fetchCaptcha = () => {
-  captchaIsValid.value = true;
+  const { mobile } = formData.value;
+  if (!mobile) return uni.showToast({ title: '请输入手机号码', icon: 'none' });
+
+  const param = { mobile, type: 'fe_login' };
+  sms(param).then(() => {
+    uni.showToast({ title: '获取验证码成功', icon: 'none' });
+    captchaIsValid.value = true;
+  });
 };
 
+/* 验证码过期 */
 const handleFinish = () => {
   captchaIsValid.value = false;
 };
 
+/* 调用登录接口 */
 const fetchMobileLogin = () => {
   proFormRef.value.validate().then((valid: boolean) => {
     if (valid) {
-      uni.showToast({
-        icon: 'success',
-        title: '校验通过'
+      const { mobile, captcha } = formData.value;
+      const param = { mobile, smsCode: captcha };
+      loginWithSms(param).then(res => {
+        useUserStore().setToken(res.token);
+        uni.switchTab({ url: '/pages/taskCenter/index' });
       });
     }
   });

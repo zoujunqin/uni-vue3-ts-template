@@ -17,6 +17,6 @@ interface ISmsParam {
   smsCode: string;
 }
 /* 手机号验证码登录 */
-export const loginWithSms = (data: ISmsParam) => {
+export const loginWithSms = (data: ISmsParam): Promise<{ token: string }> => {
   return http.request('post', `${baseApi}/sms_login`, { data });
 };
