@@ -11,3 +11,5 @@ export const getUUID = (len = 32) => {
 
   return randomString;
 };
+
+export const isDef = <T = any>(val?: T): val is T => typeof val !== 'undefined';

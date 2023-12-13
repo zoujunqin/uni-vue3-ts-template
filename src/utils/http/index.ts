@@ -171,7 +171,8 @@ class PureHttp {
         if (loginFailureCodeList.includes(responseData.code)) {
           uni.showToast({ title: '授权过期，请重新登录' });
           removeToken();
-          uni.reLaunch({ url: 'pages/login/index' });
+          /* TODO: 暂时注释 */
+          // uni.reLaunch({ url: '/pages/login/index' });
         } else if (!customDealCodes.includes(responseData.code)) {
           uni.showToast({
             title: responseData.message || '接口异常'

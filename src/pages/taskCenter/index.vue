@@ -9,7 +9,7 @@
       class="hx-relative hx-z-1"
       :tab-index="tabIndex"
       :tab-list="tabList"
-      :bg-img-url="import('@/static@http/task/task-bg.png')"
+      :bg-img-url="import('@http/task/task-bg.png')"
       @tab-change="handleTabChange"
       @input-confirm="handleInputConfirm"
     />

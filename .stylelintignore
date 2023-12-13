@@ -1,5 +1,6 @@
 !src/**
 
+/src/static/*
 /src/App.vue
 /src/components/ProForm/*
 /src/components/ProFormItem/*

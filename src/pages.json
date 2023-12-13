@@ -13,6 +13,9 @@
       "path": "pages/login/index"
     },
     {
+      "path": "pages/divideTask/index"
+    },
+    {
       "path": "pages/login/mobileLogin"
     },
     {
@@ -20,9 +23,6 @@
       "style": {
         "enablePullDownRefresh": true
       }
-    },
-    {
-      "path": "pages/divideTask/index"
     },
     {
       "path": "pages/personCenter/index"

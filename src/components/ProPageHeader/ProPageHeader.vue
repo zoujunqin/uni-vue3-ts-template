@@ -8,9 +8,15 @@
         <ProInput
           class="hx-bg-[#f7f8fa]"
           v-model="inputValue"
-          prefix-icon="/static/local/search-icon.png"
           v-bind="{ ...$attrs, ...inputBridgedEvents }"
-        />
+        >
+          <template #prefix>
+            <image
+              class="hx-w-[18px] hx-h-[18px] hx-mt-[4px]"
+              src="/static/search-icon.png"
+            />
+          </template>
+        </ProInput>
       </view>
     </slot>
 
@@ -59,5 +65,5 @@ const headerStyle = computed(() => {
 </style>
 
 <script lang="ts">
-export default { options: { virtualHost: true } };
+export default { options: { name: 'ProPageHeader', virtualHost: true } };
 </script>
