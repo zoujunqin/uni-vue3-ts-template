@@ -8,31 +8,53 @@ export const useHandler = () => {
     personInfo: {
       type: 'personInfo',
       handler: () => {
-        uni.showToast({ title: '功能待开发', icon: 'none' });
+        uni.navigateTo({
+          url: '/pagesPerson/personMessage/index'
+        });
       }
     },
     bankCard: {
       type: 'bankCard',
-      handler: () => {}
+      handler: () => {
+        uni.navigateTo({
+          url: '/pagesPerson/bankCard/index'
+        });
+      }
     },
     contract: {
       type: 'contract',
-      handler: () => {}
+      handler: () => {
+        uni.navigateTo({
+          url: '/pagesPerson/myContract/index'
+        });
+      }
     },
     myInsurance: {
       type: 'myInsurance',
-      handler: () => {}
+      handler: () => {
+        uni.navigateTo({
+          url: '/pagesPerson/myInsurance/index'
+        });
+      }
     }
   } as const;
 
   const verticalListItemMap = {
     remuneration: {
       type: 'remuneration',
-      handler: () => {}
+      handler: () => {
+        uni.navigateTo({
+          url: '/pagesPerson/remuneration/index'
+        });
+      }
     },
     agreement: {
       type: 'agreement',
-      handler: () => {}
+      handler: () => {
+        uni.navigateTo({
+          url: '/pagesPerson/agreement/index'
+        });
+      }
     },
     share: {
       type: 'share',

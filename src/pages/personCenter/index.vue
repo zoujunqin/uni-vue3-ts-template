@@ -36,7 +36,6 @@
             class="hx-text-text-color hx-text-font-size-base hx-leading-[20px] hx-font-[500]"
           >
             点击登录，查看更多信息
-            <uv-button text="111" />
           </text>
         </view>
       </view>
