@@ -9,7 +9,7 @@ export interface ITabbar {
   text: string;
 }
 
-export const useTabbarStore = defineStore('user', () => {
+export const useTabbarStore = defineStore('tabbar', () => {
   const currentTabbar: Ref<ITabbar> = ref({} as any);
   const tabbarList: Ref<ITabbar[]> = ref([
     {

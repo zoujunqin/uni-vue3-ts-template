@@ -101,9 +101,8 @@ const openPopup = () => {
 
 const getPhoneNumber = () => {};
 
+// TODO:
 // const handleWeXinLogin = () => {
-//   /* TODO: 跳过登录，直接跳转到任务中心 */
-//   // uni.switchTab({ url: '/pages/taskCenter/index' });
 //   if (!validate()) return;
 //   uni.login().then(res => {
 //     console.log(res);
