@@ -11,7 +11,7 @@ page {
 
 .page-pt-with-navbar {
   /* 状态栏高度 + 导航栏高度 */
-  padding-top: 88PX;
+  padding-top: 88px;
 }
 
 .page-pb-with-tabbar {
@@ -53,7 +53,7 @@ page {
   left: 12px;
   width: 16px;
   height: 16px;
-  content: "";
+  content: '';
   background-repeat: no-repeat;
   background-size: 100% 100%;
   transform: translateY(-50%);
@@ -68,7 +68,7 @@ page {
   &::before {
     @extend .fixed-tip__before;
 
-    background-image: url("@/static/warning-icon.png");
+    background-image: url('@/static/warning-icon.png');
   }
 }
 
@@ -81,9 +81,11 @@ page {
   &::before {
     @extend .fixed-tip__before;
 
-    background-image: url("@/static/info-icon.png");
+    background-image: url('@/static/info-icon.png');
   }
 }
+
+/* --------------------------- 覆盖组件样式 ------------------------------ */
 
 /* pro-count-down */
 .pro-count-down > text {

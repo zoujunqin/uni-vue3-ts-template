@@ -44,7 +44,7 @@
               <text
                 v-if="!captchaIsValid"
                 class="hx-text-color-primary hx-text-font-size-base hx-font-[400] hx-leading-[21px]"
-                @tap.stop="fetchCaptcha"
+                @click="fetchCaptcha"
               >
                 获取验证码
               </text>
@@ -67,12 +67,9 @@
       </ProFormItem>
     </ProForm>
 
-    <ProButton
-      class="hx-mt-[40px]"
-      type="primary"
-      text="立即登录"
-      @tap.stop="fetchMobileLogin"
-    />
+    <ProButton class="hx-mt-[40px]" type="primary" @click="fetchMobileLogin">
+      立即登录
+    </ProButton>
 
     <view
       class="hx-flex hx-items-center hx-justify-center hx-mt-[24px] hx-text-text-color-tip"

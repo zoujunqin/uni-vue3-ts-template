@@ -1,7 +1,7 @@
 <template>
   <view
     class="login hx-p-[128px_24px_0_24px] hx-h-full hx-flex hx-flex-col"
-    @tap.stop="closeTooltip"
+    @click="closeTooltip"
   >
     <text
       class="hx-text-[26px] hx-leading-[30px] hx-font-[600] hx-text-color-title"
@@ -14,27 +14,31 @@
       未注册的手机号将自动注册
     </text>
 
-    <view
+    <ProButton
+      type="success"
+      open-type="getPhoneNumber"
+      :hairline="false"
       class="hx-text-[white] hx-mt-[56px] hx-bg-color-success hx-h-[44px] hx-flex hx-items-center hx-justify-center hx-rounded-[6px]"
-      @tap.stop="handleWeXinLogin"
+      @getphonenumber="getPhoneNumber"
     >
       <image
         src="@/static/login/weixin-white-icon.png"
         class="hx-w-[24px] hx-h-[24px] hx-mr-[2px]"
       />
       <text> 微信授权登录 </text>
-    </view>
+    </ProButton>
 
-    <view
+    <ProButton
+      type="primary"
       class="hx-text-[white] hx-mt-[18px] hx-bg-color-primary hx-h-[44px] hx-flex hx-items-center hx-justify-center hx-rounded-[6px]"
-      @tap.stop="navToMobileLogin"
+      @tap="navToMobileLogin"
     >
       <image
         src="@/static/login/phone-icon.png"
         class="hx-w-[24px] hx-h-[24px] hx-mr-[2px]"
       />
       <text> 使用手机号码登录 </text>
-    </view>
+    </ProButton>
 
     <view class="hx-mt-[24px] hx-flex hx-items-center hx-justify-center">
       <ProCheckboxGroup v-model="isAgree" class="!hx-flex-none">
@@ -87,18 +91,25 @@
 import { computed, shallowRef } from 'vue';
 
 const isAgree = shallowRef([]);
-const proPopupRef = shallowRef();
 const proTooltipRef = shallowRef();
 const valid = computed(() => isAgree.value.length === 1);
 
+const proPopupRef = shallowRef();
 const openPopup = () => {
   proPopupRef.value.open();
 };
 
+const getPhoneNumber = res => {
+  console.log(res);
+};
+
 const handleWeXinLogin = () => {
   /* TODO: 跳过登录，直接跳转到任务中心 */
-  uni.switchTab({ url: '/pages/taskCenter/index' });
-  // if (!validate()) return;
+  // uni.switchTab({ url: '/pages/taskCenter/index' });
+  if (!validate()) return;
+  uni.login().then(res => {
+    console.log(res);
+  });
 };
 
 const navToMobileLogin = () => {
@@ -154,5 +165,9 @@ const closeTooltip = () => {
 
 :deep(.uv-tooltip__wrapper__popup__indicator) {
   background-color: unset !important;
+}
+
+:deep(.uv-button) {
+  height: 100% !important;
 }
 </style>
