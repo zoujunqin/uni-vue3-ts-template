@@ -1,8 +1,7 @@
 // @ts-nocheck
-import { useUserStore } from '@/pinia/modules/user';
 import { getUUID } from '@/utils';
-import { formatToken } from '@/utils/auth';
 import { decryptString, encryptString } from '@/utils/crypto';
+import { formatToken, getToken, removeToken } from '@/utils/user';
 import { createUniAppAxiosAdapter } from '@uni-helper/axios-adapter';
 import Axios, {
   AxiosInstance,
@@ -16,8 +15,6 @@ import {
   PureHttpResponse,
   RequestMethods
 } from './types.d';
-
-const { getToken, removeToken } = useUserStore();
 
 const baseURL = 'http://192.168.117.87:8100'; // 林伦
 
@@ -159,6 +156,8 @@ class PureHttp {
         return responseData;
       },
       (error: PureHttpError) => {
+        console.log(error);
+
         const $error = error;
         let responseData: any = $error.response.data;
         if (isNeedDecrypt($error.response)) {

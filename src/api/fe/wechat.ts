@@ -7,7 +7,9 @@ interface IWeChatParma {
   invitationCodeId?: number;
 }
 /* 手机号获取凭证登录 - 微信登录 */
-export const loginWithWeChat = (data: IWeChatParma) => {
+export const loginWithWeChat = (
+  data: IWeChatParma
+): Promise<{ token: string }> => {
   return http.request('post', `${baseApi}/code_login`, { data });
 };
 

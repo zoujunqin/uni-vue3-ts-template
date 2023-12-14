@@ -72,17 +72,23 @@
       立即登录
     </ProButton>
 
-    <view
-      class="hx-flex hx-items-center hx-justify-center hx-mt-[24px] hx-text-text-color-tip"
+    <ProButton
+      :hairline="false"
+      hover-start-time="50000"
+      open-type="getPhoneNumber"
+      class="login-with-wechat hx-mt-[24px]"
+      @getphonenumber="loginUnderWeChatAuth"
     >
       <image
         src="@/static/login/weixin-gray-icon.png"
         class="hx-w-[24px] hx-h-[24px] hx-mr-[4px]"
       />
-      <text class="hx-text-[15px] hx-font-[400] hx-leading-[24px]">
+      <text
+        class="hx-text-[15px] hx-font-[400] hx-leading-[24px] hx-text-text-color-tip"
+      >
         微信授权登录
       </text>
-    </view>
+    </ProButton>
   </ProPage>
 </template>
 
@@ -90,7 +96,9 @@
 import { loginWithSms } from '@/api/fe/wechat';
 import { sms } from '@/api/system/sms';
 import { useUserStore } from '@/pinia/modules/user';
+import { switchFirstTab } from '@/utils/switchTab';
 import { ref, shallowRef } from 'vue';
+import { loginUnderWeChatAuth } from './utils/weChat';
 
 const proFormRef = shallowRef();
 const formData = ref({
@@ -122,7 +130,7 @@ const fetchCaptcha = () => {
 
   const param = { mobile, type: 'fe_login' };
   sms(param).then(() => {
-    uni.showToast({ title: '获取验证码成功', icon: 'none' });
+    uni.showToast({ title: '验证码获取成功', icon: 'none' });
     captchaIsValid.value = true;
   });
 };
@@ -132,23 +140,27 @@ const handleFinish = () => {
   captchaIsValid.value = false;
 };
 
+const { setToken, fetchUserInfo } = useUserStore();
 /* 调用登录接口 */
 const fetchMobileLogin = () => {
   proFormRef.value.validate().then((valid: boolean) => {
     if (valid) {
       const { mobile, captcha } = formData.value;
       const param = { mobile, smsCode: captcha };
-      loginWithSms(param).then(res => {
-        useUserStore().setToken(res.token);
-        // switchFirstTab();
-        uni.switchTab({ url: '/pages/taskCenter/index' });
-      });
+      uni.showLoading({ title: '登录中...' });
+      loginWithSms(param)
+        .then(res => {
+          setToken(res.token);
+          fetchUserInfo();
+          switchFirstTab();
+        })
+        .finally(uni.hideLoading);
     }
   });
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .login {
   background: linear-gradient(
     180deg,
@@ -162,5 +174,12 @@ const fetchMobileLogin = () => {
 :deep(.pro-count-down text) {
   font-size: var(--hx-font-size-base) !important;
   color: var(--hx-color-primary) !important;
+}
+
+.login-with-wechat {
+  :deep(button) {
+    background-color: unset;
+    border-color: transparent;
+  }
 }
 </style>

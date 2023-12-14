@@ -16,10 +16,24 @@
 
     <ProButton
       type="success"
+      :hairline="false"
+      :class="[valid && '!hx-hidden']"
+      class="hx-text-[white] hx-mt-[56px] hx-bg-color-success hx-h-[44px] hx-flex hx-items-center hx-justify-center hx-rounded-[6px]"
+      @click="validate"
+    >
+      <image
+        src="@/static/login/weixin-white-icon.png"
+        class="hx-w-[24px] hx-h-[24px] hx-mr-[2px]"
+      />
+      <text> 微信授权登录 </text>
+    </ProButton>
+    <ProButton
+      type="success"
       open-type="getPhoneNumber"
       :hairline="false"
+      :class="[!valid && '!hx-hidden']"
       class="hx-text-[white] hx-mt-[56px] hx-bg-color-success hx-h-[44px] hx-flex hx-items-center hx-justify-center hx-rounded-[6px]"
-      @getphonenumber="getPhoneNumber"
+      @getphonenumber="loginUnderWeChatAuth"
     >
       <image
         src="@/static/login/weixin-white-icon.png"
@@ -89,6 +103,7 @@
 
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue';
+import { loginUnderWeChatAuth } from './utils/weChat';
 
 const isAgree = shallowRef([]);
 const proTooltipRef = shallowRef();
@@ -98,16 +113,6 @@ const proPopupRef = shallowRef();
 const openPopup = () => {
   proPopupRef.value.open();
 };
-
-const getPhoneNumber = () => {};
-
-// TODO:
-// const handleWeXinLogin = () => {
-//   if (!validate()) return;
-//   uni.login().then(res => {
-//     console.log(res);
-//   });
-// };
 
 const navToMobileLogin = () => {
   if (!validate()) return;
