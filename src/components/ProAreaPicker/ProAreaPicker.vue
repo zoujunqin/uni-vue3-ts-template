@@ -30,7 +30,7 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue']);
 
 const defaultValue = [110000, 110100, 110105];
-const pickerValue = shallowRef([]);
+const pickerValue = shallowRef<Array<number>>([]);
 const handleResetPickerValue = () => {
   pickerValue.value =
     props.modelValue?.length !== 0 ? [...props.modelValue] : [...defaultValue];

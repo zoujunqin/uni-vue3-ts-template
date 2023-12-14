@@ -8,7 +8,7 @@
     :auto="false"
     :refresher-enabled="false"
     :use-virtual-list="true"
-    :default-page-size="3"
+    :default-page-size="10"
     :empty-view-center="false"
     @query="handleQuery"
   >

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
     "target": "esnext",
     "module": "esnext",
     "strict": true,
@@ -18,19 +18,14 @@
       "@/*": ["src/*"],
       "@http/*": ["src/static/*"]
     },
-    "types": [
-      "@dcloudio/types",
-      "node",
-      "vite/client"
-    ],
-    "typeRoots": ["./node_modules/@types", "./types"]
+    "types": ["node", "vite/client"],
+    "typeRoots": [
+      "./node_modules/@dcloudio/types",
+      "./node_modules/@types",
+      "./types"
+    ]
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "exclude": [
     "dist",
     "node_modules",

@@ -27,11 +27,13 @@ defineProps({
 });
 
 const { systemInfo } = storeToRefs(useSystemStore());
-const style = computed(() => ({
-  // top: systemInfo.value.statusBarHeight + 'PX'
-  height: systemInfo.value.statusBarHeight + 44 + 'PX',
-  'padding-top': systemInfo.value.statusBarHeight + 'PX'
-}));
+const style = computed(() => {
+  const statusBarHeight = systemInfo.value.statusBarHeight || 0;
+  return {
+    height: statusBarHeight + 44 + 'PX',
+    'padding-top': statusBarHeight + 'PX'
+  };
+});
 
 const currentPages = getCurrentPages();
 const showBackIcon = currentPages.length > 1;

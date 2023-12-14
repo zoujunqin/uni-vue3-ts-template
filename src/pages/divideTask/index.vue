@@ -22,7 +22,7 @@
       </template>
     </ProPageHeader>
 
-    <ProScrollList :fetch="() => {}" class="hx-flex-1 hx-pb-[10px]">
+    <ProScrollList :fetch="getRecommendTaskList" class="hx-flex-1 hx-pb-[10px]">
       <template #default="{ row }">
         <ProTaskCard
           id="card"
@@ -51,6 +51,7 @@
 </template>
 
 <script setup lang="ts">
+import { getRecommendTaskList } from '@/api/fe/wechat';
 import { useHandler } from './hooks/useHandler';
 import IndustryDropDownPopup from './components/IndustryDropDownPopup.vue';
 

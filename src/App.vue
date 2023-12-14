@@ -5,14 +5,11 @@ import { useUserStore } from './pinia/modules/user';
 import { switchFirstTab } from './utils/switchTab';
 
 onLaunch(() => {
-  const { setSystemInfo } = useSystemStore();
   uni.getSystemInfo().then(data => {
-    setSystemInfo(data);
+    useSystemStore().setSystemInfo(data);
   });
 
-  if (useUserStore().getToken()) {
-    switchFirstTab();
-  }
+  useUserStore().getToken() && switchFirstTab();
 });
 
 onShow(() => {});

@@ -40,6 +40,7 @@ module.exports = {
     '@vue/prettier',
     '@vue/eslint-config-typescript'
   ],
+  plugins: ['import'],
   parser: 'vue-eslint-parser',
   parserOptions: {
     parser: '@typescript-eslint/parser',
@@ -119,6 +120,32 @@ module.exports = {
       {
         endOfLine: 'auto',
         singleQuote: true
+      }
+    ],
+    'import/order': [
+      'error',
+      {
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          'parent',
+          'sibling',
+          'index'
+        ],
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true
+        },
+        'newlines-between': 'always',
+        pathGroupsExcludedImportTypes: ['builtin'],
+        pathGroups: [
+          {
+            pattern: 'react',
+            group: 'external',
+            position: 'before'
+          }
+        ]
       }
     ]
   }
