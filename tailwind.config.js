@@ -55,6 +55,7 @@ module.exports = {
         'text-color-disable': 'var(--hx-text-color-disable)',
         'text-color-tip': 'var(--hx-text-color-tip)',
         'text-color-content': 'var(  --hx-text-color-content)',
+        'text-color-main': 'var(  --hx-text-color-main)',
         'bg-color': 'var(--hx-bg-color)',
         'bg-color-grey': 'var(--hx-bg-color-grey)',
         'bg-color-hover': 'var(--hx-bg-color-hover)',
@@ -75,6 +76,7 @@ module.exports = {
         'font-size-base': 'var(--hx-font-size-base)',
         'font-size-regular': 'var(--hx-font-size-regular)',
         'font-size-lg': 'var(--hx-font-size-lg)',
+        'font-size-20': 'var(--hx-font-size-20)',
         'font-size-title': 'var(--hx-font-size-title)',
         'font-size-subtitle': 'var(--hx-font-size-subtitle)',
         'font-size-paragraph': 'var(--hx-font-size-paragraph)'
