@@ -9,7 +9,7 @@
 <script setup lang="ts"></script>
 
 <script lang="ts">
-export default { options: { virtualHost: true } };
+export default { options: { name: 'ProPageFooter', virtualHost: true } };
 </script>
 
 <style scoped>

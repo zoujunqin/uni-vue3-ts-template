@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { snakeCase } from 'lodash-es';
 
 /**

@@ -23,14 +23,16 @@
 </template>
 
 <script setup lang="ts">
-import TaskHeader from './components/TaskHeader.vue';
-import BaseNeeds from './components/BaseNeeds.vue';
-import TaskDescribe from './components/TaskDescribe.vue';
-import TaskPlace from './components/TaskPlace.vue';
-import SecurityTip from './components/SecurityTip.vue';
-import { ITaskDetail, getTaskDetail } from '@/api/fe/wechat/task';
 import { onLoad } from '@dcloudio/uni-app';
 import { shallowRef } from 'vue';
+
+import BaseNeeds from './components/BaseNeeds.vue';
+import SecurityTip from './components/SecurityTip.vue';
+import TaskDescribe from './components/TaskDescribe.vue';
+import TaskHeader from './components/TaskHeader.vue';
+import TaskPlace from './components/TaskPlace.vue';
+
+import { ITaskDetail, getTaskDetail } from '@/api/fe/wechat/task';
 
 const taskDetail = shallowRef<ITaskDetail>();
 onLoad(query => {

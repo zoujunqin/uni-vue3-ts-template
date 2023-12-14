@@ -23,8 +23,8 @@
 </template>
 
 <script setup lang="ts">
-import { scrollListProps } from './props';
 import { useHandler } from './hooks/useHandler';
+import { scrollListProps } from './props';
 
 const props = defineProps(scrollListProps);
 const { zPagingRef, dataList, handleQuery } = useHandler(props);

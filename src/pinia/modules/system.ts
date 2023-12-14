@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { ShallowRef, shallowRef } from 'vue';
+
 import GetSystemInfoResult = UniNamespace.GetSystemInfoResult;
 
 export const useSystemStore = defineStore('system', () => {

@@ -10,8 +10,9 @@
 </template>
 
 <script setup lang="ts">
-import { useBridgedEmits } from '@/hooks/useBridgedEmits';
 import { uvEvents } from './events';
+
+import { useBridgedEmits } from '@/hooks/useBridgedEmits';
 
 const { bridgedEvents } = useBridgedEmits(uvEvents);
 </script>

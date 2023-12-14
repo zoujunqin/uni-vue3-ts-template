@@ -1,8 +1,9 @@
+import { shallowRef } from 'vue';
+
 import { ITask, getTaskList } from '@/api/fe/wechat/task_center';
 import ProScrollList from '@/components/ProScrollList/ProScrollList.vue';
 import { TASK_STATUS } from '@/constant/taskDetail';
 import { getUUID } from '@/utils';
-import { shallowRef } from 'vue';
 
 export const useHandler = () => {
   const componentKey = shallowRef(getUUID());

@@ -26,9 +26,11 @@
 </template>
 
 <script setup lang="ts">
-import ProUploadButton from './components/ProUploadButton';
 import { computed, shallowRef } from 'vue';
+
+import ProUploadButton from './components/ProUploadButton.vue';
 import { uploadProps } from './props';
+
 import { useOssUploadImage } from '@/hooks/useOssUploadImage';
 
 const props = defineProps(uploadProps);
@@ -67,6 +69,7 @@ export default { options: { name: 'ProUpload', virtualHost: true } };
 .pro-remove-button {
   background-color: rgb(20 23 49 / 60%);
 }
+
 /* 身份证背面 */
 .back-id-card-background {
   background-image: url($http + '/upload/back-id-card.png');

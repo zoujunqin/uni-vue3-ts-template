@@ -15,8 +15,9 @@
 </template>
 
 <script setup lang="ts">
-import { ITaskDetail } from '@/api/fe/wechat/task';
 import { PropType, computed } from 'vue';
+
+import { ITaskDetail } from '@/api/fe/wechat/task';
 
 const props = defineProps({
   data: {

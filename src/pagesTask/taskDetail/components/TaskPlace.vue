@@ -9,9 +9,10 @@
 </template>
 
 <script setup lang="ts">
-import { ITaskDetail } from '@/api/fe/wechat/task';
-import { getGeo } from '@/api/amap';
 import { PropType, shallowRef, watch } from 'vue';
+
+import { getGeo } from '@/api/amap';
+import { ITaskDetail } from '@/api/fe/wechat/task';
 
 const props = defineProps({
   data: {

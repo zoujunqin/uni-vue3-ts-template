@@ -36,5 +36,5 @@ const navbarStyle = computed(() => {
 </script>
 
 <script lang="ts">
-export default { options: { virtualHost: true } };
+export default { options: { name: 'ProPage', virtualHost: true } };
 </script>

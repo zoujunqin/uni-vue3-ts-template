@@ -49,9 +49,10 @@
 </template>
 
 <script setup lang="ts">
-import { TASK_STATUS_MAP } from '@/constant/taskDetail';
-import { ITaskDetail } from '@/api/fe/wechat/task';
 import { PropType } from 'vue';
+
+import { ITaskDetail } from '@/api/fe/wechat/task';
+import { TASK_STATUS_MAP } from '@/constant/taskDetail';
 
 defineProps({
   data: {

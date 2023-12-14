@@ -13,13 +13,26 @@
 </template>
 
 <script setup lang="ts">
-import region from '@/static/region';
+import {
+  ShallowRef,
+  shallowRef,
+  computed,
+  PropType,
+  watch,
+  onMounted
+} from 'vue';
 
-import { shallowRef, computed, PropType, watch, onMounted } from 'vue';
-import { useBridgedMethods } from '@/hooks/useBridgedMethods';
-import { useBridgedEmits } from '@/hooks/useBridgedEmits';
-import { uvMethods } from '@/components/ProPicker/methods';
 import { uvEvents } from '@/components/ProPicker/events';
+import { uvMethods } from '@/components/ProPicker/methods';
+import { useBridgedEmits } from '@/hooks/useBridgedEmits';
+import { useBridgedMethods } from '@/hooks/useBridgedMethods';
+import region from '@/static/region.json';
+
+interface IRegion {
+  id: number;
+  name: string;
+  children: Array<IRegion>;
+}
 
 const props = defineProps({
   modelValue: {
@@ -39,16 +52,17 @@ watch(() => props.modelValue, handleResetPickerValue, {
   immediate: true,
   deep: true
 });
-const handleConfirm = e => {
+
+const handleConfirm = (e: ShallowRef<Array<IRegion>>) => {
   emit(
     'update:modelValue',
     e.value.map(item => item.id)
   );
 };
 
-const provinces = shallowRef(region);
-const citys = shallowRef([]);
-const areas = shallowRef([]);
+const provinces = shallowRef<Array<IRegion>>(region);
+const citys = shallowRef<Array<IRegion>>([]);
+const areas = shallowRef<Array<IRegion>>([]);
 const addressList = computed(() => [provinces.value, citys.value, areas.value]);
 
 const handlePickValueDefault = () => {
@@ -69,7 +83,7 @@ const handlePickValueDefault = () => {
 };
 onMounted(handlePickValueDefault);
 
-const handleChange = e => {
+const handleChange = (e: any) => {
   const { columnIndex, index, indexs } = e;
   // 改变了省
   if (columnIndex === 0) {

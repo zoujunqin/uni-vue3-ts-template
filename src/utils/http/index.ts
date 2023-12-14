@@ -1,7 +1,5 @@
 // @ts-nocheck
-import { getUUID } from '@/utils';
-import { decryptString, encryptString } from '@/utils/crypto';
-import { formatToken, getToken, removeToken } from '@/utils/user';
+
 import { createUniAppAxiosAdapter } from '@uni-helper/axios-adapter';
 import Axios, {
   AxiosInstance,
@@ -9,12 +7,17 @@ import Axios, {
   CustomParamsSerializer
 } from 'axios';
 import { stringify } from 'qs';
+
 import {
   PureHttpError,
   PureHttpRequestConfig,
   PureHttpResponse,
   RequestMethods
 } from './types.d';
+
+import { getUUID } from '@/utils';
+import { decryptString, encryptString } from '@/utils/crypto';
+import { formatToken, getToken, removeToken } from '@/utils/user';
 
 const baseURL = 'http://192.168.117.87:8100'; // 林伦
 

@@ -1,9 +1,11 @@
 // @ts-nocheck
 
-import axios from 'axios';
 import AliOss from 'ali-oss';
-import { getOssPolicy, getOssCredential } from '@/api/system/oss';
+import axios from 'axios';
+
 import { OssUploadConfig, OSSCredentialConfig, ModuleType } from './types';
+
+import { getOssPolicy, getOssCredential } from '@/api/system/oss';
 import { getUUID } from '@/utils';
 
 const OSS_CREDENTIAL_KEY = 'oss_creadential_key';

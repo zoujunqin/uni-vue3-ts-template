@@ -13,6 +13,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+
 import { tagProps } from './props';
 
 const props = defineProps(tagProps);
@@ -50,7 +51,7 @@ const typeConfig = computed(() => typeMap[props.type]);
 </script>
 
 <script lang="ts">
-export default { options: { virtualHost: true } };
+export default { options: { name: 'ProTags', virtualHost: true } };
 </script>
 
 <style lang="scss">

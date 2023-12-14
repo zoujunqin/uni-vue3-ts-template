@@ -22,8 +22,9 @@
   </view>
 </template>
 <script setup lang="ts">
-import { ITabbar, useTabbarStore } from '@/pinia/modules/tabbar';
 import { storeToRefs } from 'pinia';
+
+import { ITabbar, useTabbarStore } from '@/pinia/modules/tabbar';
 
 const tabbarStore = useTabbarStore();
 
@@ -44,7 +45,7 @@ initTabbar();
 </script>
 
 <script lang="ts">
-export default { options: { virtualHost: true } };
+export default { options: { name: 'ProTabbar', virtualHost: true } };
 </script>
 
 <style scoped>

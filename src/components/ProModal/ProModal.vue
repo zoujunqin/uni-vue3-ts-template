@@ -87,6 +87,10 @@ const handleConfirm = () => {
 defineExpose({ open });
 </script>
 
+<script lang="ts">
+export default { options: { name: 'ProModal', virtualHost: true } };
+</script>
+
 <style scoped>
 .modal-content {
   background: linear-gradient(180deg, #ebf3ff 0%, #fff 37.77%);

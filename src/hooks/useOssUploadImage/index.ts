@@ -1,9 +1,10 @@
 import { shallowRef } from 'vue';
-import { useOss } from '@/hooks/useOss';
+
 import ChooseMediaOption = UniNamespace.ChooseMediaOption;
 import ChooseMediaSuccessCallbackResult = UniNamespace.ChooseMediaSuccessCallbackResult;
 import ChooseMediaFailCallback = UniNamespace.ChooseMediaFailCallback;
 import ChooseMediaSuccessCallback = UniNamespace.ChooseMediaSuccessCallback;
+import { useOss } from '@/hooks/useOss';
 
 /* 灵工模块 */
 const module = 'fe';

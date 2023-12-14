@@ -1,6 +1,8 @@
-import { useFirst } from '@/hooks/useFirst';
 import { ExtractPropTypes, onMounted, shallowRef, toRef } from 'vue';
+
 import { scrollListProps } from '../props';
+
+import { useFirst } from '@/hooks/useFirst';
 
 export const useHandler = (props: ExtractPropTypes<typeof scrollListProps>) => {
   const zPagingRef = shallowRef();

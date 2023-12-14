@@ -1,5 +1,5 @@
-import { Ref, shallowRef, watch } from 'vue';
 import { isFunction } from 'lodash-es';
+import { Ref, shallowRef, watch } from 'vue';
 
 function useFirst(
   initial: Ref<number>,

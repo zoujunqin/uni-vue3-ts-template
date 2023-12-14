@@ -32,11 +32,14 @@
 
 <script setup lang="ts">
 import { shallowRef } from 'vue';
-import { uvMethods } from '../ProDropDownPopup/methods';
+
 import { uvEvents } from '../ProDropDownPopup/events';
+import { uvMethods } from '../ProDropDownPopup/methods';
+
 import { dropDownPopupWrapperEvents } from './events';
-import { useBridgedMethods } from '@/hooks/useBridgedMethods';
+
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
+import { useBridgedMethods } from '@/hooks/useBridgedMethods';
 
 const emit = defineEmits(dropDownPopupWrapperEvents);
 
@@ -68,6 +71,7 @@ export default {
 .button-container {
   box-shadow: 0 -1px 4px 0 rgb(0 0 0 / 6%);
 }
+
 :deep(.uv-dp__container) {
   background-color: unset;
 }

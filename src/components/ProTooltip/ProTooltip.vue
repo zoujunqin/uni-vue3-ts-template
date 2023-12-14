@@ -22,5 +22,5 @@ defineExpose({
 </script>
 
 <script lang="ts">
-export default { options: { virtualHost: true } };
+export default { options: { name: 'ProTooltip', virtualHost: true } };
 </script>

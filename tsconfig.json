@@ -18,8 +18,9 @@
       "@/*": ["src/*"],
       "@http/*": ["src/static/*"]
     },
-    "types": ["node", "vite/client"],
+    "types": ["@dcloudio/types", "node", "vite/client"],
     "typeRoots": [
+      "./node_modules",
       "./node_modules/@dcloudio/types",
       "./node_modules/@types",
       "./types"

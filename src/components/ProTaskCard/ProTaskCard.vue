@@ -43,5 +43,5 @@ const handleClick = () => {
 </script>
 
 <script lang="ts">
-export default { options: { virtualHost: true } };
+export default { options: { name: 'ProTaskCard', virtualHost: true } };
 </script>

@@ -10,7 +10,9 @@
 
 <script setup lang="ts">
 import { ComponentInternalInstance, watch, nextTick } from 'vue';
+
 import { conditionGroupProps } from './props';
+
 import { useVModel } from '@/hooks/useVModel';
 
 const props = defineProps(conditionGroupProps);

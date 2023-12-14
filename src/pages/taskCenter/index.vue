@@ -46,7 +46,9 @@
 </template>
 <script setup lang="ts">
 import { onPullDownRefresh } from '@dcloudio/uni-app';
+
 import { useHandler } from './hooks/useHandler';
+
 import { useTabLinkSwiper } from '@/hooks/useTabLinkSwiper';
 
 const {

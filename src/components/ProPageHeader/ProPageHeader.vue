@@ -40,7 +40,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+
 import { pageHeaderProps } from './props';
+
 import { uvEvents as uvInputEvents } from '@/components/ProInput/events';
 import { uvEvents as uvTabsEvents } from '@/components/ProTabs/events';
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
@@ -64,7 +66,7 @@ const headerStyle = computed(() => {
 
 <style scoped>
 .hx-page-header {
-  box-shadow: 0 6px 6px 0 rgba(0, 33, 81, 0.03);
+  box-shadow: 0 6px 6px 0 rgb(0 33 81 / 3%);
 }
 </style>
 

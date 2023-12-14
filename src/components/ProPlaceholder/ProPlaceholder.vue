@@ -32,6 +32,7 @@
 </template>
 <script setup lang="ts">
 import { computed, ComputedRef, PropType } from 'vue';
+
 import { typeMap, buttonMap, EMPTY_DATA } from './const';
 
 const props = defineProps({
