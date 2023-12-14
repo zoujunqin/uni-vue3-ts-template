@@ -20,3 +20,8 @@ interface ISmsParam {
 export const loginWithSms = (data: ISmsParam): Promise<{ token: string }> => {
   return http.request('post', `${baseApi}/sms_login`, { data });
 };
+
+/** 获取银行卡 */
+export const getPersonalCenterBankCard = () => {
+  return http.request('get', `${baseApi}/personal_center/bank_card`);
+};
