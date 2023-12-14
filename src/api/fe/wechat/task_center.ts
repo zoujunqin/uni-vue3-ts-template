@@ -1,14 +1,18 @@
+import { TASK_STATUS } from '@/constant/taskDetail';
 import { http } from '@/utils/http';
 
-const baseApi = '/fe/wechat/personal_center';
+const baseApi = '/fe/wechat/task_center';
 
 export interface ITask {
-  workerName: string;
-  mobile: string;
-  idCardReverse: string;
-  idCardNo: string;
-  idCardFront: string;
-  appealStatus: string;
+  costTypeName: string;
+  taskContent: string;
+  taskId: number;
+  taskSalaryMax: number;
+  taskSalaryMin: number;
+  status: (typeof TASK_STATUS)[keyof typeof TASK_STATUS];
+  statusName: string;
+  taskName: string;
+  taskTypeName: string;
 }
 export interface ITaskParam {
   status: string;

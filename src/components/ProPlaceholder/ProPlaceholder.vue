@@ -16,15 +16,18 @@
       v-if="buttonMap.refresh(type)"
       class="hx-mt-[20px] hx-w-[108px]"
       type="primary"
-      text="刷新一下"
-    />
+      @click="handleRefresh"
+    >
+      刷新一下
+    </ProButton>
     <ProButton
       v-if="buttonMap.checkNetwork(type)"
       class="hx-mt-[16px] hx-w-[108px]"
       plain
       type="primary"
-      text="检查网络"
-    />
+    >
+      检查网络
+    </ProButton>
   </view>
 </template>
 <script setup lang="ts">
@@ -37,8 +40,17 @@ const props = defineProps({
     default: EMPTY_DATA
   }
 });
+const emit = defineEmits(['refresh']);
 
 const data: ComputedRef<(typeof typeMap)[keyof typeof typeMap]> = computed(
   () => typeMap[props.type]
 );
+
+const handleRefresh = () => {
+  emit('refresh');
+};
+</script>
+
+<script lang="ts">
+export default { options: { name: 'ProPlaceholder', virtualHost: true } };
 </script>

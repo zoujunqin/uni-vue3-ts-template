@@ -11,7 +11,7 @@ import { ip, port } from './build/httpServer';
 export default defineConfig({
   resolve: {
     alias: getAlias(),
-    extensions: ['js', 'ts', 'vue', 'nvue', 'css', 'scss']
+    extensions: ['ts', 'js', 'vue', 'nvue', 'css', 'scss']
   },
   plugins: [
     uni(),

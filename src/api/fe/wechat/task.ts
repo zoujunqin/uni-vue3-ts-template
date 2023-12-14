@@ -1,3 +1,4 @@
+import { TASK_STATUS } from '@/constant/taskDetail';
 import { http } from '@/utils/http';
 
 const baseApi = '/fe/wechat/task';
@@ -14,6 +15,7 @@ export interface ITaskDetail {
   content: string;
   costTypeName: string;
   education: string;
+  educationName: string;
   endDate: string;
   gender: string;
   id: number;
@@ -25,7 +27,8 @@ export interface ITaskDetail {
   provinceCode: number;
   salaryMax: number;
   salaryMin: number;
-  status: string;
+  status: (typeof TASK_STATUS)[keyof typeof TASK_STATUS];
+  statusName: string;
   taskName: string;
   taskTypeName: string;
   description: string;

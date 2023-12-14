@@ -6,14 +6,17 @@
     close-text="查看更多"
     class="hx-mb-[24px]"
   >
-    <view> {{ data.describe }} </view>
+    <view> {{ data.content }} </view>
   </ProReadMore>
 </template>
 
 <script setup lang="ts">
+import { ITaskDetail } from '@/api/fe/wechat/task';
+import { PropType } from 'vue';
+
 defineProps({
   data: {
-    type: Object,
+    type: Object as PropType<ITaskDetail>,
     default: () => ({})
   }
 });

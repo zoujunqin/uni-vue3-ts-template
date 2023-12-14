@@ -3,6 +3,7 @@ export const NO_MSG = 'noMsg';
 export const NO_PAGE_INFO = 'noPageInfo';
 export const EMPTY_DATA = 'emptyData';
 export const NO_ADDRESS = 'noAddress';
+export const NO_DATA = 'noData';
 
 export const typeMap = {
   [NETWORK_ERROR]: {
@@ -29,13 +30,18 @@ export const typeMap = {
     title: '暂无地址信息',
     subTitle: '暂无地址信息，去添加地址~',
     image: import('@http/placeholder/no-address.png')
+  },
+  [NO_DATA]: {
+    title: '暂无数据！',
+    subTitle: '数据列表空空如也~',
+    image: import('@http/placeholder/no-msg.png')
   }
 } as const;
 
 export const buttonMap = {
   /* 刷新按钮 */
   refresh: (type: keyof typeof typeMap) =>
-    [NETWORK_ERROR, NO_PAGE_INFO].includes(type),
+    [NETWORK_ERROR, NO_PAGE_INFO, NO_DATA].includes(type),
   /* 检查网络 */
   checkNetwork: (type: keyof typeof typeMap) => [NETWORK_ERROR].includes(type)
 };

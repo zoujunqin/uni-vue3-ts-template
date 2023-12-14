@@ -1,35 +1,84 @@
-import { getAddedMemberList } from '@/api/test';
+import { ITask, getTaskList } from '@/api/fe/wechat/task_center';
+import ProScrollList from '@/components/ProScrollList/ProScrollList.vue';
+import { TASK_STATUS } from '@/constant/taskDetail';
 import { getUUID } from '@/utils';
+import { shallowRef } from 'vue';
 
 export const useHandler = () => {
-  const componentKey = getUUID();
+  const componentKey = shallowRef(getUUID());
   const tabList = [
     {
-      fetch: getAddedMemberList,
-      name: '待确认'
+      fetch: getTaskList,
+      name: '待确认',
+      type: TASK_STATUS.WAIT_CONFIRM
     },
     {
-      fetch: getAddedMemberList,
-      name: '承接中'
+      fetch: getTaskList,
+      name: '承接中',
+      type: TASK_STATUS.ACCEPTED
     },
     {
-      fetch: getAddedMemberList,
-      name: '已完结'
+      fetch: getTaskList,
+      name: '已完结',
+      type: TASK_STATUS.COMPLETED
     }
   ];
 
-  const handleInputConfirm = () => {};
+  const proScrollListRef =
+    shallowRef<Array<InstanceType<typeof ProScrollList>>>();
+  const inputSearchValue = shallowRef('');
 
-  const navToTaskDetail = row => {
+  const confirmedInputSearchValue = shallowRef('');
+  const handleInputConfirm = (value: string, tabIndex: number) => {
+    confirmedInputSearchValue.value = value;
+    proScrollListRef.value?.[tabIndex]?.reload();
+  };
+
+  const handleInputBlur = () => {
+    inputSearchValue.value = confirmedInputSearchValue.value;
+  };
+
+  /* 拓展参数：tab的类型以及搜索值 */
+  const getExtendParams = (type: string) => {
+    return {
+      status: type,
+      taskName: confirmedInputSearchValue.value
+    };
+  };
+
+  const navToTaskDetail = (row: ITask) => {
     uni.navigateTo({
-      url: '/pages/task/taskDetail/index'
+      url: `/pagesTask/taskDetail/index?id=${row.taskId}`
     });
   };
 
+  const getHandledInfo = (row: ITask) => {
+    const {
+      taskSalaryMin,
+      taskSalaryMax,
+      costTypeName,
+      taskTypeName,
+      taskName,
+      taskContent
+    } = row;
+    return {
+      ...row,
+      cost: taskSalaryMin + ' ~ ' + taskSalaryMax + costTypeName,
+      title: taskName,
+      desc: taskContent,
+      tag: taskTypeName
+    };
+  };
+
   return {
+    proScrollListRef,
+    inputSearchValue,
     componentKey,
     tabList,
     navToTaskDetail,
-    handleInputConfirm
+    handleInputConfirm,
+    handleInputBlur,
+    getExtendParams,
+    getHandledInfo
   };
 };

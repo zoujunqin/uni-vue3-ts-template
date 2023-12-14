@@ -4,20 +4,41 @@
     class="section-content hx-mb-[16px] hx-rounded-[6px] hx-p-[12px] hx-text-text-color hx-text-[13px] hx-font-[400] hx-leading-[18px]"
   >
     <view class="hx-mb-[10px]">
-      人员要求： {{ data.personalRequirement }}
+      人员要求：
+      {{ getPersonRequire }}
     </view>
-    <view class="hx-mb-[10px]"> 任务时间： {{ data.taskTime }} </view>
-    <view> 任务需求： {{ data.taskRequirement }} </view>
+    <view class="hx-mb-[10px]">
+      任务时间： {{ data.beginDate + '-' + data.endDate }}
+    </view>
+    <view> 任务需求： {{ data.description }} </view>
   </view>
 </template>
 
 <script setup lang="ts">
-defineProps({
+import { ITaskDetail } from '@/api/fe/wechat/task';
+import { PropType, computed } from 'vue';
+
+const props = defineProps({
   data: {
-    type: Object,
+    type: Object as PropType<ITaskDetail>,
     default: () => ({})
   }
 });
+
+const getPersonRequire = computed(() => {
+  const { data } = props;
+  return (
+    `性别${getUnLimitText(data.gender)}` +
+    `、年龄${
+      data.ageMin
+        ? data.ageMin + '-' + data.ageMax
+        : getUnLimitText(data.ageMin)
+    }` +
+    `、${getUnLimitText(data.educationName)}`
+  );
+});
+
+const getUnLimitText = (val: unknown) => val || '不限';
 </script>
 
 <style scoped>

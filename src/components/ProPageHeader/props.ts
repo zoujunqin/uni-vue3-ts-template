@@ -1,7 +1,7 @@
 import { PropType } from 'vue';
 
 export const pageHeaderProps = {
-  inputValue: {
+  modelValue: {
     type: String,
     default: ''
   },

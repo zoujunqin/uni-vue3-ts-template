@@ -9,9 +9,16 @@
     :refresher-enabled="false"
     :use-virtual-list="true"
     :default-page-size="3"
+    :empty-view-center="false"
     @query="handleQuery"
   >
     <slot v-for="(item, index) in dataList" :key="index" :row="item" />
+
+    <template #empty>
+      <slot name="empty">
+        <ProPlaceholder class="hx-mt-[30%]" type="noData" @refresh="reload" />
+      </slot>
+    </template>
   </z-paging>
 </template>
 
@@ -22,20 +29,13 @@ import { useHandler } from './hooks/useHandler';
 const props = defineProps(scrollListProps);
 const { zPagingRef, dataList, handleQuery } = useHandler(props);
 
-defineExpose({
-  reload: () => {
-    zPagingRef.value.reload();
-  }
-});
+const reload = () => {
+  zPagingRef.value.reload();
+};
+
+defineExpose({ reload });
 </script>
 
 <script lang="ts">
 export default { options: { name: 'ProScrollList', virtualHost: true } };
 </script>
-
-<style>
-:deep(.z-paging-content) {
-  position: unset !important;
-  height: unset !important;
-}
-</style>

@@ -6,12 +6,14 @@
     class="hx-bg-[#F7F8FA] hx-flex hx-flex-col"
   >
     <ProPageHeader
+      v-model="inputSearchValue"
       class="hx-relative hx-z-1"
       :tab-index="tabIndex"
       :tab-list="tabList"
       :bg-img-url="import('@http/task/task-bg.png')"
       @tab-change="handleTabChange"
-      @input-confirm="handleInputConfirm"
+      @input-confirm="(val: string) => handleInputConfirm(val, tabIndex)"
+      @input-blur="handleInputBlur"
     />
 
     <swiper
@@ -21,18 +23,20 @@
     >
       <swiper-item v-for="(item, index) in tabList" :key="index">
         <ProScrollList
+          ref="proScrollListRef"
           :key="componentKey + index"
           :fetch="item.fetch"
           :initial-index="index"
           :current-index="swiperIndex"
+          :extend-params="getExtendParams(item.type)"
           class="hx-h-full hx-pb-[10px] hx-box-border"
         >
           <template #default="{ row }">
             <ProTaskCard
               id="card"
+              :card-info="getHandledInfo(row)"
               class="hx-mt-[10px]"
-              :card-info="getRow(row)"
-              @tap="navToTaskDetail(row)"
+              @click="navToTaskDetail(row)"
             />
           </template>
         </ProScrollList>
@@ -53,18 +57,22 @@ const {
   resetIndex
 } = useTabLinkSwiper();
 
-const { componentKey, tabList, navToTaskDetail, handleInputConfirm } =
-  useHandler();
+const {
+  proScrollListRef,
+  inputSearchValue,
+  componentKey,
+  tabList,
+  navToTaskDetail,
+  handleInputConfirm,
+  handleInputBlur,
+  getExtendParams,
+  getHandledInfo
+} = useHandler();
 
-const getRow = row => {
-  return {
-    ...row,
-    cost: row.addMonth,
-    title: row.serviceContract,
-    desc: row.supplierName,
-    tag: row.name
-  };
-};
-
-onPullDownRefresh(resetIndex);
+onPullDownRefresh(() => {
+  resetIndex();
+  inputSearchValue.value = '';
+  handleInputConfirm(inputSearchValue.value, tabIndex.value);
+  uni.stopPullDownRefresh();
+});
 </script>
