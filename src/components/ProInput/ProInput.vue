@@ -30,7 +30,7 @@ const { bridgedEvents } = useBridgedEmits(uvEvents);
 const inputValue = useVModel(props, 'modelValue', emits);
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 :deep(.uv-input__content__prefix-icon) > view {
   @apply hx-flex hx-items-center;
 }

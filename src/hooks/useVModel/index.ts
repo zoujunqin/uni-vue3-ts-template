@@ -109,6 +109,7 @@ export function useVModel<
   const _emit =
     emit ||
     vm?.emit ||
+    // @ts-ignore
     vm?.$emit?.bind(vm) ||
     vm?.proxy?.$emit?.bind(vm?.proxy);
   let event: string | undefined = eventName;

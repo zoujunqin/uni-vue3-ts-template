@@ -12,6 +12,7 @@ export const useBridgedEmits = (
   const vm: VM | null = getCurrentInstance();
   const emitsOptions = vm?.emitsOptions || {};
   const _emit =
+    // @ts-ignore
     vm?.emit || vm?.$emit?.bind(vm) || vm?.proxy?.$emit?.bind(vm?.proxy);
 
   const bridgedEvents = eventNames.reduce(

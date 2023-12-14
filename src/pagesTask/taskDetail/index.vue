@@ -36,7 +36,7 @@ import { ITaskDetail, getTaskDetail } from '@/api/fe/wechat/task';
 
 const taskDetail = shallowRef<ITaskDetail>();
 onLoad(query => {
-  getTaskDetail(query.id).then(res => {
+  getTaskDetail(query?.id).then(res => {
     taskDetail.value = res;
   });
 });
