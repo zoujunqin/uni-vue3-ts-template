@@ -11,22 +11,22 @@
         <view
           v-for="(item, index) in bankList"
           :key="index"
-          class="hx-flex hx-items-center hx-bg-white hx-mt-[10px] hx-pl-[15px] hx-py-[24px] hx-rounded-[14px]"
+          class="hx-flex hx-items-center hx-bg-white hx-mb-[10px] hx-pl-[15px] hx-py-[24px] hx-rounded-[14px]"
         >
           <image
             class="hx-w-[50px] hx-h-[50px] hx-mr-[10px]"
-            src="@/static/person/card-icon.png"
+            :src="import('@http/person/card-icon.png')"
           />
-          <view>
-            <span
-              class="hx-text-color-[--hx-text-color] hx-text-font-size-regular"
+          <view class="hx-w-[250px]">
+            <p
+              class="hx-text-color-[--hx-text-color] hx-text-font-size-regular hx-truncate"
             >
               {{ item?.bankName }}
-            </span>
+            </p>
             <p
-              class="hx-text-color-[--hx-text-color-main] hx-text-font-size-20"
+              class="hx-text-color-[--hx-text-color-main] hx-text-font-size-20 hx-truncate"
             >
-              {{ item?.bankAccount }}
+              {{ handleGetBankNum(item?.bankAccount) }}
             </p>
           </view>
         </view>
@@ -39,6 +39,7 @@
 <script setup lang="ts">
 import { getPersonalCenterBankCard } from '@/api/personCenter';
 import { onMounted, shallowRef } from 'vue';
+import { handleGetBankNum } from '@/utils/processingText';
 
 const bankList = shallowRef<Array<any>>([]);
 
