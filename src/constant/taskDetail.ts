@@ -5,12 +5,12 @@ export const { TASK_STATUS, TASK_STATUS_MAP, TASK_STATUS_LIST } =
     [
       {
         label: '待确认',
-        value: 'unconfirmed',
+        value: 'wait_confirm',
         type: 'warning'
       },
       {
         label: '承接中',
-        value: 'underTake',
+        value: 'accepted',
         type: 'success'
       },
       {

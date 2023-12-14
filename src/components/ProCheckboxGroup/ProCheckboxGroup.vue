@@ -17,7 +17,7 @@ import props from './props';
  * @description 复选框组件一般用于需要多个选择的场景，该组件功能完整，使用方便
  * @tutorial https://www.uvui.cn/components/checkbox.html
  * @property {String}			name			标识符
- * @property {Array}			value			绑定的值
+ * @property {Array}			value			绑定的值 
  * @property {String}			shape			形状，circle-圆形，square-方形 （默认 'square' ）
  * @property {Boolean}			disabled		是否禁用全部checkbox （默认 false ）
  * @property {String}			activeColor		选中状态下的颜色，如设置此值，将会覆盖parent的activeColor值 （默认 '#2979ff' ）
@@ -125,5 +125,5 @@ export default {
   &--column {
     @include flex(column);
   }
-}
+} 
 </style>
