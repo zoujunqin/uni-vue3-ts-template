@@ -27,3 +27,8 @@ export const loginWithSms = (data: ISmsParam): Promise<{ token: string }> => {
 export const getPersonalCenterBankCard = () => {
   return http.request('get', `${baseApi}/personal_center/bank_card`);
 };
+
+/** 获取个人信息 */
+export const getPersonalCenterInfo = () => {
+  return http.request('get', `${baseApi}/personal_center/info`);
+};
