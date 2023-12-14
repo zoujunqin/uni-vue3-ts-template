@@ -2,7 +2,7 @@ import { http } from '@/utils/http';
 
 const baseApi = '/fe/wechat';
 
-interface IWeChatParma {
+export interface IWeChatParma {
   code: string;
   invitationCodeId?: number;
 }
@@ -13,7 +13,7 @@ export const loginWithWeChat = (
   return http.request('post', `${baseApi}/code_login`, { data });
 };
 
-interface ISmsParam {
+export interface ISmsParam {
   invitationCodeId?: number;
   mobile: string;
   smsCode: string;
@@ -21,4 +21,28 @@ interface ISmsParam {
 /* 手机号验证码登录 */
 export const loginWithSms = (data: ISmsParam): Promise<{ token: string }> => {
   return http.request('post', `${baseApi}/sms_login`, { data });
+};
+
+export interface IGetRecommendTaskParam {
+  page?: number;
+  pageSize?: number;
+  provinceCode?: number;
+  taskName?: string;
+  taskTypeId?: number;
+}
+export interface IRecommendTask {
+  costTypeName: string;
+  description: string;
+  id: number;
+  salaryMax: number;
+  salaryMin: number;
+  status: string;
+  taskName: string;
+  taskTypeName: string;
+}
+/* 获取推荐任务列表 */
+export const getRecommendTaskList = (
+  params: IGetRecommendTaskParam
+): Promise<IRecommendTask> => {
+  return http.request('get', `${baseApi}/public_task`, { params });
 };
