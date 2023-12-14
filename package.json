@@ -40,6 +40,7 @@
     "build:quickapp-webview": "uni build -p quickapp-webview",
     "build:quickapp-webview-huawei": "uni build -p quickapp-webview-huawei",
     "build:quickapp-webview-union": "uni build -p quickapp-webview-union",
+    "prepare": "husky install",
     "reinstall": "node build/npm/reinstall.js",
     "preinstall": "node build/npm/preinstall.js",
     "lint:eslint": "eslint --fix --ext .js,.ts,.vue ./src",
