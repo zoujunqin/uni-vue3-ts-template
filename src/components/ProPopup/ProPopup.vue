@@ -6,10 +6,12 @@
 
 <script setup lang="ts">
 import { shallowRef } from 'vue';
-import { useBridgedMethods } from '@/hooks/useBridgedMethods';
-import { useBridgedEmits } from '@/hooks/useBridgedEmits';
+
 import { uvEvents } from './events';
 import { uvMethods } from './methods';
+
+import { useBridgedEmits } from '@/hooks/useBridgedEmits';
+import { useBridgedMethods } from '@/hooks/useBridgedMethods';
 
 const { bridgedEvents } = useBridgedEmits(uvEvents);
 
@@ -19,4 +21,8 @@ const { bridgedMethods } = useBridgedMethods(uvMethods, uvPopupRef);
 defineExpose({
   ...bridgedMethods
 });
+</script>
+
+<script lang="ts">
+export default { options: { name: 'ProPopup', virtualHost: true } };
 </script>

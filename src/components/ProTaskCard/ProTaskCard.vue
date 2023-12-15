@@ -1,5 +1,5 @@
 <template>
-  <view class="hx-p-[16px_12.5px] hx-bg-[#fff]">
+  <view class="hx-p-[16px_12.5px] hx-bg-[#fff]" @click="handleClick">
     <view class="hx-flex hx-items-end hx-justify-between hx-mb-[10px]">
       <text
         class="hx-text-color-title hx-text-[20px] hx-font-[500] hx-leading-[27px]"
@@ -34,9 +34,14 @@
 </template>
 <script setup lang="ts">
 import { taskCardProps } from './props';
+
 defineProps(taskCardProps);
+const emit = defineEmits(['click']);
+const handleClick = () => {
+  emit('click');
+};
 </script>
 
 <script lang="ts">
-export default { options: { virtualHost: true } };
+export default { options: { name: 'ProTaskCard', virtualHost: true } };
 </script>

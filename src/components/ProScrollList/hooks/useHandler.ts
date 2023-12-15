@@ -1,6 +1,8 @@
-import { onMounted, shallowRef, toRef, ExtractPropTypes } from 'vue';
-import { useFirst } from '@/hooks/useFirst';
+import { ExtractPropTypes, onMounted, shallowRef, toRef } from 'vue';
+
 import { scrollListProps } from '../props';
+
+import { useFirst } from '@/hooks/useFirst';
 
 export const useHandler = (props: ExtractPropTypes<typeof scrollListProps>) => {
   const zPagingRef = shallowRef();
@@ -8,7 +10,8 @@ export const useHandler = (props: ExtractPropTypes<typeof scrollListProps>) => {
 
   const handleQuery = (page: number, pageSize: number) => {
     const params = Object.assign({ page, pageSize }, props.extendParams);
-    props.fetch(params).then(data => {
+
+    props.fetch(params).then((data: any) => {
       const { records = [], total = 0 } = data;
       zPagingRef.value.complete(records, total);
     });

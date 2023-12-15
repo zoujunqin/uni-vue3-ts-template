@@ -16,22 +16,22 @@
 </template>
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { useSystemStore } from '@/pinia/modules/system';
 import { computed } from 'vue';
 
+import { useSystemStore } from '@/pinia/modules/system';
+
 defineProps({
-  text: {
-    type: String,
-    default: '导航栏'
-  }
+  text: { type: String, default: '导航栏' }
 });
 
 const { systemInfo } = storeToRefs(useSystemStore());
-const style = computed(() => ({
-  // top: systemInfo.value.statusBarHeight + 'PX'
-  height: systemInfo.value.statusBarHeight + 44 + 'PX',
-  'padding-top': systemInfo.value.statusBarHeight + 'PX'
-}));
+const style = computed(() => {
+  const statusBarHeight = systemInfo.value.statusBarHeight || 0;
+  return {
+    height: statusBarHeight + 44 + 'PX',
+    'padding-top': statusBarHeight + 'PX'
+  };
+});
 
 const currentPages = getCurrentPages();
 const showBackIcon = currentPages.length > 1;
@@ -42,5 +42,5 @@ const handleBack = () => {
 </script>
 
 <script lang="ts">
-export default { options: { virtualHost: true } };
+export default { options: { name: 'ProNavbar', virtualHost: true } };
 </script>

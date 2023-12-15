@@ -17,54 +17,29 @@
 
       <SecurityTip :data="taskDetail" />
 
-      <ProButton type="primary" text="申请任务" />
+      <ProButton type="primary"> 申请任务 </ProButton>
     </view>
   </ProPage>
 </template>
 
 <script setup lang="ts">
-import TaskHeader from './components/TaskHeader.vue';
+import { onLoad } from '@dcloudio/uni-app';
+import { shallowRef } from 'vue';
+
 import BaseNeeds from './components/BaseNeeds.vue';
-import TaskDescribe from './components/TaskDescribe.vue';
-import TaskPlace from './components/TaskPlace.vue';
 import SecurityTip from './components/SecurityTip.vue';
+import TaskDescribe from './components/TaskDescribe.vue';
+import TaskHeader from './components/TaskHeader.vue';
+import TaskPlace from './components/TaskPlace.vue';
 
-// const props = defineProps({
-//   taskDetail:{
-//     type: Object,
-//     default: () => ({})
-//   }
-// })
+import { ITaskDetail, getTaskDetail } from '@/api/fe/wechat/task';
 
-const taskDetail = {
-  title: '信息软件开发',
-  tag: '待确认 ',
-  tagStatus: 'unconfirmed',
-  cost: '100元/天',
-
-  address: '福州市 鼓楼区',
-  experience: '0-3年',
-  education: '本科',
-
-  belong: '软件和信息技术',
-  sector: '软件开发',
-
-  personalRequirement: '性别不限、年龄不限、本科',
-  taskTime: '2023/06/15-2023/08/15',
-  taskRequirement: '专业技能go语言、相关经验0-3年、性格特点开朗活泼',
-
-  describe: `1、对写一个网站，数据库用mysql，简答日志和故障日志查询，windows平台使用2个网站的对接，1 电联通信(有开发文档) 2vultr 有开发文档
-      2、电联通信(有开发文档) 只需要以下功能 1 购买(支持月和天付款) 2 续费(支持月和大续费)3获取系统镜像 4管理页面跳转 5安全组默认全部开通
-3、对写一个网站，数据库用mysql，简答日志和故障日志查询，windows平台使用2个网站的对接，1 电联通信(有开发文档) 2vultr 有开发文档
-4、电联通信(有开发文档) 只需要以下功能 1 购买(支持月和天付款) 2 续费(支持月和大续费)3获取系统镜像 4管理页面跳转 5安全组默认全部开通
-5、电联通信(有开发文档) 只需要以下功能 1 购买(支持月和天付款) 2 续费(支持月和大续费)3获取系统镜像 4管理页面跳转 5安全组默认全部开通
-1、对写一个网站，数据库用mysql，简答日志和故障日志查询，windows平台使用2个网站的对接，1 电联通信(有开发文档) 2vultr 有开发文档
-      2、电联通信(有开发文档) 只需要以下功能 1 购买(支持月和天付款) 2 续费(支持月和大续费)3获取系统镜像 4管理页面跳转 5安全组默认全部开通
-3、对写一个网站，数据库用mysql，简答日志和故障日志查询，windows平台使用2个网站的对接，1 电联通信(有开发文档) 2vultr 有开发文档
-4、电联通信(有开发文档) 只需要以下功能 1 购买(支持月和天付款) 2 续费(支持月和大续费)3获取系统镜像 4管理页面跳转 5安全组默认全部开通
-5、电联通信(有开发文档) 只需要以下功能 1 购买(支持月和天付款) 2 续费(支持月和大续费)3获取系统镜像 4管理页面跳转 5安全组默认全部开通
-`
-};
+const taskDetail = shallowRef<ITaskDetail>();
+onLoad(query => {
+  getTaskDetail(query?.id).then(res => {
+    taskDetail.value = res;
+  });
+});
 </script>
 
 <style scoped>

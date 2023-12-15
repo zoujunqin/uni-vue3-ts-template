@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import { useSystemStore } from '@/pinia/modules/system';
 import { onHide, onLaunch, onShow } from '@dcloudio/uni-app';
+
 import { useUserStore } from './pinia/modules/user';
 import { switchFirstTab } from './utils/switchTab';
 
+import { useSystemStore } from '@/pinia/modules/system';
+
 onLaunch(() => {
-  const { setSystemInfo } = useSystemStore();
   uni.getSystemInfo().then(data => {
-    setSystemInfo(data);
+    useSystemStore().setSystemInfo(data);
   });
 
-  if (useUserStore().getToken()) {
-    switchFirstTab();
-  }
+  useUserStore().getToken() && switchFirstTab();
 });
 
 onShow(() => {});

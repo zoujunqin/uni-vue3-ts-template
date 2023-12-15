@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { getPersonalCenterBankCard } from '@/api/fe/wechat';
+import { getPersonalCenterBankCard } from '@/api/fe/wechat/personal_center';
 import { onMounted, shallowRef } from 'vue';
 import { handleGetBankNum } from '@/utils/processingText';
 

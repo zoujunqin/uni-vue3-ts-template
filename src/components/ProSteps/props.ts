@@ -35,6 +35,7 @@ export default {
       type: Boolean,
       default: false
     },
+    // @ts-ignore
     ...uni.$uv?.props?.steps
   }
 };

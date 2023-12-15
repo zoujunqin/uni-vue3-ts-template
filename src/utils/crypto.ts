@@ -18,7 +18,7 @@ export const encryptString = (text: string): string => {
 
 export const decryptString = (text: string) => {
   const bytes = AES.decrypt(
-    {
+    <any>{
       ciphertext: enc.Hex.parse(text)
     },
     SECRET_KEY,

@@ -7,8 +7,14 @@
       <view v-if="showInput" class="hx-pl-[16px] hx-pr-[16px] hx-mb-[4px]">
         <ProInput
           class="hx-bg-[#f7f8fa]"
-          v-model="inputValue"
-          v-bind="{ ...$attrs, ...inputBridgedEvents }"
+          :modelValue="modelValue"
+          v-bind="{
+            ...$attrs,
+            ...inputBridgedEvents,
+            onInput: (val: string) => {
+              emit('update:modelValue', val);
+            }
+          }"
         >
           <template #prefix>
             <image
@@ -34,13 +40,15 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+
 import { pageHeaderProps } from './props';
+
 import { uvEvents as uvInputEvents } from '@/components/ProInput/events';
 import { uvEvents as uvTabsEvents } from '@/components/ProTabs/events';
-import { useInputHandler } from './hooks/useInputHnadler';
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
 
 const props = defineProps(pageHeaderProps);
+const emit = defineEmits(['update:modelValue']);
 const { bridgedEvents: inputBridgedEvents } = useBridgedEmits(
   uvInputEvents,
   'input'
@@ -50,8 +58,6 @@ const { bridgedEvents: tabBridgedEvents } = useBridgedEmits(
   'tab'
 );
 
-const { inputValue } = useInputHandler();
-
 const headerStyle = computed(() => {
   const { bgImgUrl } = props;
   return { backgroundImage: bgImgUrl ? `url(${bgImgUrl})` : 'unset' };
@@ -60,7 +66,7 @@ const headerStyle = computed(() => {
 
 <style scoped>
 .hx-page-header {
-  box-shadow: 0 6px 6px 0 rgba(0, 33, 81, 0.03);
+  box-shadow: 0 6px 6px 0 rgb(0 33 81 / 3%);
 }
 </style>
 

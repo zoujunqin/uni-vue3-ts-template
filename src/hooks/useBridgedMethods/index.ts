@@ -4,12 +4,16 @@ export const useBridgedMethods = (
   methods: string[],
   componentInstance: ShallowRef<ComponentInternalInstance>
 ) => {
-  const bridgedMethods = methods.reduce((result, method) => {
-    result[method] = (...args: unknown[]) => {
-      componentInstance.value[method](...args);
-    };
-    return result;
-  }, {});
+  const bridgedMethods = methods.reduce(
+    (result: Record<string, any>, method: string) => {
+      result[method] = (...args: unknown[]) => {
+        // @ts-ignore
+        componentInstance.value[method](...args);
+      };
+      return result;
+    },
+    {}
+  );
 
   return {
     bridgedMethods

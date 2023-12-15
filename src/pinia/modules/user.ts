@@ -1,3 +1,6 @@
+import { defineStore } from 'pinia';
+import { shallowRef } from 'vue';
+
 import { IPersonInfo, getPersonInfo } from '@/api/fe/wechat/personal_center';
 import {
   getToken as getPersistenceToken,
@@ -7,8 +10,6 @@ import {
   setToken as setTokenPersist,
   setUserInfo as setUserInfoPersist
 } from '@/utils/user';
-import { defineStore } from 'pinia';
-import { shallowRef } from 'vue';
 
 export const useUserStore = defineStore('user', () => {
   /* --------------------- 用户信息 ↓ ---------------------- */

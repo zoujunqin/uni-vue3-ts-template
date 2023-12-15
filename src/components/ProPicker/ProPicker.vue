@@ -4,10 +4,12 @@
 
 <script setup lang="ts">
 import { shallowRef } from 'vue';
-import { useBridgedMethods } from '@/hooks/useBridgedMethods';
-import { useBridgedEmits } from '@/hooks/useBridgedEmits';
-import { uvMethods } from './methods';
+
 import { uvEvents } from './events';
+import { uvMethods } from './methods';
+
+import { useBridgedEmits } from '@/hooks/useBridgedEmits';
+import { useBridgedMethods } from '@/hooks/useBridgedMethods';
 
 const { bridgedEvents } = useBridgedEmits(uvEvents);
 

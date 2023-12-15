@@ -18,9 +18,11 @@ import {
   getCurrentInstance,
   watch
 } from 'vue';
+
 import { conditionProps } from './props';
-import { useVModel } from '@/hooks/useVModel';
+
 import { useParentComponent } from '@/hooks/useParentComponent';
+import { useVModel } from '@/hooks/useVModel';
 
 const props = defineProps(conditionProps);
 const emit = defineEmits(['change', 'update:modelValue']);

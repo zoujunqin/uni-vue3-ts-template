@@ -14,3 +14,8 @@ export interface IPersonInfo {
 export const getPersonInfo = (): Promise<IPersonInfo> => {
   return http.request('get', `${baseApi}/info`);
 };
+
+/** 获取银行卡 */
+export const getPersonalCenterBankCard = () => {
+  return http.request('get', `${baseApi}/personal_center/bank_card`);
+};

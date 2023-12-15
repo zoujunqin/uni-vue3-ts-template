@@ -17,10 +17,11 @@
 </template>
 
 <script setup lang="ts">
-import { useVModel } from '@/hooks/useVModel';
-import { useBridgedEmits } from '@/hooks/useBridgedEmits';
 import { inputEvents, uvEvents } from './events';
 import { inputProps } from './props';
+
+import { useBridgedEmits } from '@/hooks/useBridgedEmits';
+import { useVModel } from '@/hooks/useVModel';
 
 const emits = defineEmits(inputEvents);
 const props = defineProps(inputProps);
@@ -29,15 +30,16 @@ const { bridgedEvents } = useBridgedEmits(uvEvents);
 const inputValue = useVModel(props, 'modelValue', emits);
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 :deep(.uv-input__content__prefix-icon) > view {
   @apply hx-flex hx-items-center;
 }
+
 :deep(.input-placeholder) {
   @apply hx-text-font-size-regular hx-text-text-color-placeholder hx-font-[400] hx-leading-[24px];
 }
 </style>
 
 <script lang="ts">
-export default { options: { virtualHost: true } };
+export default { options: { name: 'ProInput', virtualHost: true } };
 </script>

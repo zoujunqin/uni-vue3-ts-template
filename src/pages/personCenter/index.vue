@@ -99,17 +99,18 @@
 </template>
 
 <script setup lang="ts">
-import InfoIcon from '@/static/person/info-icon.png';
-import BankCardIcon from '@/static/person/bank-card-icon.png';
-import ContractIcon from '@/static/person/contract-icon.png';
-import SecurityIcon from '@/static/person/security-icon.png';
-import RemunerationIcon from '@/static/person/remuneration-icon.png';
-import AgreementIcon from '@/static/person/agreement-icon.png';
-import ShareIcon from '@/static/person/share-icon.png';
-import ContactIcon from '@/static/person/contact-icon.png';
 import VerticalListItem from './components/VerticalListItem.vue';
-
 import { useHandler } from './hooks/useHandler';
+
+import AgreementIcon from '@/static/person/agreement-icon.png';
+import BankCardIcon from '@/static/person/bank-card-icon.png';
+import ContactIcon from '@/static/person/contact-icon.png';
+import ContractIcon from '@/static/person/contract-icon.png';
+import InfoIcon from '@/static/person/info-icon.png';
+import RemunerationIcon from '@/static/person/remuneration-icon.png';
+import SecurityIcon from '@/static/person/security-icon.png';
+import ShareIcon from '@/static/person/share-icon.png';
+
 const {
   contactModalRef,
   logoutModalRef,

@@ -1,4 +1,4 @@
-import { PropType } from 'vue/dist/vue';
+import { PropType } from 'vue';
 
 export const tagProps = {
   size: {
