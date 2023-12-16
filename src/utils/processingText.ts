@@ -9,3 +9,13 @@ export const handleGetBankNum = (num: string) => {
   }
   return dealBankNum;
 };
+
+/* 连字符连接 AB */
+export const hyphenAB = (
+  varA: number | string,
+  varB: number | string,
+  hyphen = '~'
+) => {
+  if (varA && varB) return varA + hyphen + varB;
+  else return varA || varB;
+};

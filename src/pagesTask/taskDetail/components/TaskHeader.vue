@@ -8,13 +8,13 @@
     <ProTags
       class="hx-mt-[8px]"
       size="mini"
-      :text="data.statusName"
-      :type="TASK_STATUS_MAP[data.status]?.type"
+      :text="data.undertakingStatusName"
+      :type="TASK_STATUS_MAP[data.undertakingStatus]?.type"
     />
     <text
       class="hx-mt-[3px] hx-flex-1 hx-text-right hx-text-color-primary hx-text-[20px] hx-font-[600] hx-leading-[30px]"
     >
-      {{ data.salaryMin + '~' + data.salaryMax + data.costTypeName }}
+      {{ hyphenAB(data.salaryMin, data.salaryMax) + data.costTypeName }}
     </text>
   </view>
 
@@ -27,7 +27,7 @@
       <text
         class="hx-text-[14px] hx-font-[400] hx-leading-[14px] hx-text-text-color"
       >
-        {{ data.city + ' ' + data.area }}
+        {{ hyphenAB(data.city, data.area, ' ') }}
       </text>
     </view>
     <view class="hx-flex hx-items-center">
@@ -53,6 +53,7 @@ import { PropType } from 'vue';
 
 import { ITaskDetail } from '@/api/fe/wechat/task';
 import { TASK_STATUS_MAP } from '@/constant/taskDetail';
+import { hyphenAB } from '@/utils/processingText';
 
 defineProps({
   data: {

@@ -34,7 +34,7 @@
           <template #default="{ row }">
             <ProTaskCard
               id="card"
-              :card-info="getHandledInfo(row)"
+              :card-info="getHandledTaskInfo(row)"
               class="hx-mt-[10px]"
               @click="navToTaskDetail(row)"
             />
@@ -48,6 +48,7 @@
 import { onPullDownRefresh } from '@dcloudio/uni-app';
 
 import { useHandler } from './hooks/useHandler';
+import { getHandledTaskInfo } from './utils/handleDataStruct';
 
 import { useTabLinkSwiper } from '@/hooks/useTabLinkSwiper';
 
@@ -67,8 +68,7 @@ const {
   navToTaskDetail,
   handleInputConfirm,
   handleInputBlur,
-  getExtendParams,
-  getHandledInfo
+  getExtendParams
 } = useHandler();
 
 onPullDownRefresh(() => {

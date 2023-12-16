@@ -9,66 +9,81 @@
       class="hx-relative hx-z-[11]"
       :bg-img-url="import('@http/task/task-bg.png')"
       @input-confirm="handleInputConfirm"
+      @input-focus="resetConditionActive"
     >
       <template #bottom>
         <ProConditionGroup v-model="conditionActive" sign="sign">
           <ProCondition
-            name="taskType"
-            title="任务类型"
-            @change="openIndustryPopup"
+            v-for="(item, index) in conditionList"
+            :key="index"
+            :name="item.name"
+            :title="item.title"
           />
-          <ProCondition name="area" title="地点" @change="openAreaPicker" />
         </ProConditionGroup>
       </template>
     </ProPageHeader>
 
-    <ProScrollList :fetch="getRecommendTaskList" class="hx-flex-1 hx-pb-[10px]">
+    <ProScrollList
+      :fetch="getRecommendTaskList"
+      :extend-params="getExtendParams()"
+      ref="proScrollListRef"
+      class="hx-flex-1 hx-pb-[10px]"
+    >
       <template #default="{ row }">
         <ProTaskCard
           id="card"
           class="hx-mt-[10px]"
-          :card-info="row"
-          @tap="navToTaskDetail(row)"
+          :card-info="getHandledTaskInfo(row)"
+          @click="navToTaskDetail(row)"
         />
       </template>
     </ProScrollList>
   </ProPage>
 
   <!--  任务类型  -->
-  <IndustryDropDownPopup
-    ref="industryDropDownPopupRef"
+  <TaskTypeDropDownPopup
+    v-model="taskTypeList"
+    ref="taskTypeDropDownPopupRef"
     sign="sign"
-    v-model="industryList"
-    @popup-change="handlePopupChange"
+    @popup-change="handleTaskTypePopupChange"
+    @confirm="reload"
   />
 
   <!-- 地点选择 -->
   <ProAreaPicker
     v-model="areaList"
     ref="proAreaPickerRef"
-    @close="handleAreaPickerClose"
+    @close="resetConditionActive"
+    @confirm="reload"
   />
 </template>
 
 <script setup lang="ts">
-import { getRecommendTaskList } from '@/api/fe/wechat';
+import { getHandledTaskInfo } from '../taskCenter/utils/handleDataStruct';
+
+import TaskTypeDropDownPopup from './components/TaskTypeDropDownPopup.vue';
 import { useHandler } from './hooks/useHandler';
-import IndustryDropDownPopup from './components/IndustryDropDownPopup.vue';
+
+import { getRecommendTaskList } from '@/api/fe/wechat';
 
 const {
-  industryList,
-  industryDropDownPopupRef,
-  openIndustryPopup,
+  proScrollListRef,
+  reload,
+
+  handleInputConfirm,
+  getExtendParams,
+
+  taskTypeList,
+  taskTypeDropDownPopupRef,
+  handleTaskTypePopupChange,
 
   areaList,
   proAreaPickerRef,
-  openAreaPicker,
 
+  conditionList,
   conditionActive,
-  handlePopupChange,
-  handleAreaPickerClose,
+  resetConditionActive,
 
-  navToTaskDetail,
-  handleInputConfirm
+  navToTaskDetail
 } = useHandler();
 </script>

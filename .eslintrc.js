@@ -138,10 +138,9 @@ module.exports = {
           caseInsensitive: true
         },
         'newlines-between': 'always',
-        pathGroupsExcludedImportTypes: ['builtin'],
         pathGroups: [
           {
-            pattern: 'react',
+            pattern: 'vue*',
             group: 'external',
             position: 'before'
           }

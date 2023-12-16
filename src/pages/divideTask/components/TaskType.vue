@@ -1,7 +1,7 @@
 <template>
   <template v-for="(item, index) in list" :key="index">
     <view class="section-title hx-leading-[19px] hx-mb-[16px]">
-      {{ item.title }}
+      {{ item.categoryName }}
     </view>
     <view class="hx-mb-[24px] hx-flex hx-flex-wrap">
       <view
@@ -9,14 +9,14 @@
         :class="getClass(subItem)"
         v-for="(subItem, subIndex) in item.children"
         :key="subIndex"
-        @tap.stop="handleSelect(subItem.id)"
+        @click="handleSelect(subItem.id)"
       >
         <view
           class="icon-container hx-hidden hx-items-center hx-justify-center hx-absolute hx-w-[14px] hx-h-[8px] hx-bg-color-primary hx-rounded-tl-[6px] hx-right-0 hx-bottom-0"
         >
           <ProIcon name="checkmark" size="20rpx" color="white" />
         </view>
-        <text> {{ subItem.title }} </text>
+        <text> {{ subItem.name }} </text>
       </view>
     </view>
   </template>
@@ -25,11 +25,7 @@
 <script setup lang="ts">
 import { PropType, computed } from 'vue';
 
-interface IDataItem {
-  title: string;
-  id: number;
-  children: Array<IDataItem>;
-}
+import { ITreeTaskType, ITreeSubTaskType } from '@/api/fe/task/task_type';
 
 const props = defineProps({
   modelValue: {
@@ -37,7 +33,7 @@ const props = defineProps({
     default: () => []
   },
   list: {
-    type: Array as PropType<Array<IDataItem>>,
+    type: Array as PropType<Array<ITreeTaskType>>,
     default: () => []
   }
 });
@@ -57,16 +53,16 @@ const handleSelect = (id: number) => {
   }
 };
 
-const getClass = (subItem: IDataItem) => {
+const getClass = (subItem: ITreeSubTaskType) => {
   return [
-    subItem.title.length <= 4 ? 'hx-w-[80px]' : 'hx-w-[108px]',
+    subItem.name.length <= 4 ? 'hx-w-[80px]' : 'hx-w-[108px]',
     selectIdList.value.includes(subItem.id) ? 'active' : null
   ];
 };
 </script>
 
 <script lang="ts">
-export default { options: { name: 'IndustrySelect', virtualHost: true } };
+export default { options: { name: 'TaskType', virtualHost: true } };
 </script>
 
 <style scoped>

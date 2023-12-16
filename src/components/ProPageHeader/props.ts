@@ -1,11 +1,6 @@
 import { PropType } from 'vue';
 
 export const pageHeaderProps = {
-  modelValue: {
-    type: String,
-    default: ''
-  },
-
   tabIndex: {
     type: Number,
     default: 0

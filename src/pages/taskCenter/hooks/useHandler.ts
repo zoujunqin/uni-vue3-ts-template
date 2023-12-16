@@ -53,24 +53,6 @@ export const useHandler = () => {
     });
   };
 
-  const getHandledInfo = (row: ITask) => {
-    const {
-      taskSalaryMin,
-      taskSalaryMax,
-      costTypeName,
-      taskTypeName,
-      taskName,
-      taskContent
-    } = row;
-    return {
-      ...row,
-      cost: taskSalaryMin + ' ~ ' + taskSalaryMax + costTypeName,
-      title: taskName,
-      desc: taskContent,
-      tag: taskTypeName
-    };
-  };
-
   return {
     proScrollListRef,
     inputSearchValue,
@@ -79,7 +61,6 @@ export const useHandler = () => {
     navToTaskDetail,
     handleInputConfirm,
     handleInputBlur,
-    getExtendParams,
-    getHandledInfo
+    getExtendParams
   };
 };

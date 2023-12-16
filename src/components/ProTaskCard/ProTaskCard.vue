@@ -17,6 +17,7 @@
       <ProTags
         v-if="cardInfo.tag"
         :text="cardInfo.tag"
+        type="info"
         size="medium"
         color="var(--hx-text-color-tip)"
         bg-color="#f5f5f5"

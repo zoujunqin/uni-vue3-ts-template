@@ -1,59 +1,108 @@
-import { shallowRef } from 'vue';
 import { onPullDownRefresh } from '@dcloudio/uni-app';
+import { shallowRef, watch } from 'vue';
+
+import TaskTypeDropDownPopup from '../components/TaskTypeDropDownPopup.vue';
+
+import { ITask } from '@/api/fe/wechat/task_center';
+import ProAreaPicker from '@/components/ProAreaPicker/ProAreaPicker.vue';
+import ProScrollList from '@/components/ProScrollList/ProScrollList.vue';
+
+const TASK_TYPE = 'taskType';
+const AREA = 'area';
+type ConditionActive = typeof TASK_TYPE | typeof AREA | null;
 
 export const useHandler = () => {
-  /* 行业类型 */
-  const industryList = shallowRef([]);
-  const industryDropDownPopupRef = shallowRef();
-  const openIndustryPopup = (val: boolean) => {
-    industryDropDownPopupRef.value[val ? 'open' : 'close']();
-    proAreaPickerRef.value.close();
-  };
+  /* 任务类型 */
+  const taskTypeList = shallowRef<Array<number>>([]);
+  const taskTypeDropDownPopupRef =
+    shallowRef<InstanceType<typeof TaskTypeDropDownPopup>>();
 
   /* 地区选择 */
-  const areaList = shallowRef([]);
-  const proAreaPickerRef = shallowRef();
-  const openAreaPicker = (val: boolean) => {
-    proAreaPickerRef.value[val ? 'open' : 'close']();
-    industryDropDownPopupRef.value.close();
-  };
+  const areaList = shallowRef<Array<number>>([]);
+  const proAreaPickerRef = shallowRef<InstanceType<typeof ProAreaPicker>>();
 
   /* 条件 */
-  const conditionActive = shallowRef('');
-  const handlePopupChange = ({ show }: { show: boolean }) => {
-    !show && (conditionActive.value = '');
-  };
-  const handleAreaPickerClose = () => {
-    conditionActive.value = '';
+  const conditionList = [
+    {
+      name: TASK_TYPE,
+      title: '任务类型',
+      ref: taskTypeDropDownPopupRef
+    },
+    {
+      name: AREA,
+      title: '地点',
+      ref: proAreaPickerRef
+    }
+  ];
+  const conditionActive = shallowRef<ConditionActive>(null);
+  const resetConditionActive = () => (conditionActive.value = null);
+  watch(conditionActive, (newVal: ConditionActive, oldVal: ConditionActive) => {
+    for (const item of conditionList) {
+      newVal === item.name && item.ref.value?.open();
+      oldVal === item.name && item.ref.value?.close();
+    }
+  });
+
+  const handleTaskTypePopupChange = ({ show }: { show: boolean }) => {
+    !show && resetConditionActive();
   };
 
-  /* 下拉刷新 */
-  onPullDownRefresh(() => {});
+  const proScrollListRef = shallowRef<InstanceType<typeof ProScrollList>>();
+  const reload = () => {
+    proScrollListRef.value?.reload();
+  };
 
-  /* 输入框搜索 */
-  const handleInputConfirm = () => {};
+  /* 搜索输入 */
+  const inputRef = shallowRef();
+  const confirmedInputSearchValue = shallowRef('');
+  const handleInputConfirm = (value: string) => {
+    confirmedInputSearchValue.value = value;
+    reload();
+  };
+
+  /* 拓展参数：搜索值 地区 任务类型 */
+  const getExtendParams = () => {
+    return {
+      taskName: confirmedInputSearchValue.value,
+      areaCode: areaList.value[2],
+      taskTypeIds: taskTypeList.value.join(',')
+    };
+  };
 
   /* 跳转到任务详情 */
-  const navToTaskDetail = () => {
+  const navToTaskDetail = (row: ITask) => {
     uni.navigateTo({
-      url: '/pages/task/taskDetail/index'
+      url: `/pagesTask/taskDetail/index?id=${row.taskId}`
     });
   };
 
+  onPullDownRefresh(() => {
+    taskTypeList.value = [];
+    areaList.value = [];
+    inputRef.value.clearInput();
+    handleInputConfirm('');
+    uni.stopPullDownRefresh();
+  });
+
   return {
-    industryList,
-    industryDropDownPopupRef,
-    openIndustryPopup,
+    proScrollListRef,
+    reload,
+
+    inputRef,
+    handleInputConfirm,
+    getExtendParams,
+
+    taskTypeList,
+    taskTypeDropDownPopupRef,
 
     areaList,
     proAreaPickerRef,
-    openAreaPicker,
 
+    conditionList,
     conditionActive,
-    handlePopupChange,
-    handleAreaPickerClose,
+    handleTaskTypePopupChange,
+    resetConditionActive,
 
-    navToTaskDetail,
-    handleInputConfirm
+    navToTaskDetail
   };
 };

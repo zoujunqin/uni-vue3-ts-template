@@ -6,14 +6,13 @@
     <slot>
       <view v-if="showInput" class="hx-pl-[16px] hx-pr-[16px] hx-mb-[4px]">
         <ProInput
+          v-model="inputSearchValue"
           class="hx-bg-[#f7f8fa]"
-          :modelValue="modelValue"
           v-bind="{
             ...$attrs,
             ...inputBridgedEvents,
-            onInput: (val: string) => {
-              emit('update:modelValue', val);
-            }
+            onConfirm: handleInputConfirm,
+            onBlur: handleInputBlur
           }"
         >
           <template #prefix>
@@ -39,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, shallowRef } from 'vue';
 
 import { pageHeaderProps } from './props';
 
@@ -47,8 +46,22 @@ import { uvEvents as uvInputEvents } from '@/components/ProInput/events';
 import { uvEvents as uvTabsEvents } from '@/components/ProTabs/events';
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
 
+const emit = defineEmits(['confirm', 'blur']);
+const inputSearchValue = shallowRef('');
+const confirmedInputValue = shallowRef('');
+const handleInputConfirm = () => {
+  confirmedInputValue.value = inputSearchValue.value;
+  emit('confirm', confirmedInputValue.value);
+};
+const handleInputBlur = () => {
+  inputSearchValue.value = confirmedInputValue.value;
+  emit('blur');
+};
+const clearInput = () => {
+  inputSearchValue.value = '';
+};
+
 const props = defineProps(pageHeaderProps);
-const emit = defineEmits(['update:modelValue']);
 const { bridgedEvents: inputBridgedEvents } = useBridgedEmits(
   uvInputEvents,
   'input'
@@ -62,6 +75,8 @@ const headerStyle = computed(() => {
   const { bgImgUrl } = props;
   return { backgroundImage: bgImgUrl ? `url(${bgImgUrl})` : 'unset' };
 });
+
+defineExpose({ clearInput });
 </script>
 
 <style scoped>

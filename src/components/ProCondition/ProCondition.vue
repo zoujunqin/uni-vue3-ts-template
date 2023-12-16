@@ -1,5 +1,5 @@
 <template>
-  <view class="hx-flex hx-items-end hx-p-[11px_16px]" @tap.stop="handleTap">
+  <view class="hx-flex hx-items-end hx-p-[11px_16px]" @click="handleClick">
     <text
       class="hx-text-[14px] hx-font-[400] hx-leading-[21px] hx-text-text-color-content hx-mr-[3px]"
       :class="activeTextClass"
@@ -15,8 +15,7 @@ import {
   ComponentInternalInstance,
   computed,
   onMounted,
-  getCurrentInstance,
-  watch
+  getCurrentInstance
 } from 'vue';
 
 import { conditionProps } from './props';
@@ -36,9 +35,12 @@ const activeIconStyle = computed(() =>
   active.value ? { borderLeftColor: 'var(--hx-color-primary)' } : {}
 );
 
-const handleTap = () => {
-  active.value = !active.value;
-  emit('change', active.value);
+const handleClick = () => {
+  if (parent) parent?.exposed?.updateActive(!active.value ? props.name : null);
+  else {
+    active.value = !active.value;
+    emit('change', active.value);
+  }
 };
 
 let parent: ComponentInternalInstance | undefined;
@@ -47,15 +49,9 @@ onMounted(async () => {
   parent?.exposed?.children?.push(getCurrentInstance());
 });
 
-watch(
-  () => active.value,
-  () => {
-    active.value && parent?.exposed?.updateActive(props.name);
-  }
-);
-
 const updateActive = (status: string) => {
   active.value = props.name === status;
+  emit('change', active.value);
 };
 defineExpose({ updateActive });
 </script>
