@@ -53,7 +53,7 @@ export const useHandler = () => {
   };
 
   /* 搜索输入 */
-  const inputRef = shallowRef();
+  const proPageHeaderRef = shallowRef();
   const confirmedInputSearchValue = shallowRef('');
   const handleInputConfirm = (value: string) => {
     confirmedInputSearchValue.value = value;
@@ -79,7 +79,7 @@ export const useHandler = () => {
   onPullDownRefresh(() => {
     taskTypeList.value = [];
     areaList.value = [];
-    inputRef.value.clearInput();
+    proPageHeaderRef.value.clearInput();
     handleInputConfirm('');
     uni.stopPullDownRefresh();
   });
@@ -88,7 +88,7 @@ export const useHandler = () => {
     proScrollListRef,
     reload,
 
-    inputRef,
+    proPageHeaderRef,
     handleInputConfirm,
     getExtendParams,
 

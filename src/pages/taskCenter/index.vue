@@ -6,14 +6,13 @@
     class="hx-bg-[#F7F8FA] hx-flex hx-flex-col"
   >
     <ProPageHeader
-      v-model="inputSearchValue"
+      ref="proPageHeaderRef"
       class="hx-relative hx-z-1"
       :tab-index="tabIndex"
       :tab-list="tabList"
       :bg-img-url="import('@http/task/task-bg.png')"
       @tab-change="handleTabChange"
       @input-confirm="(val: string) => handleInputConfirm(val, tabIndex)"
-      @input-blur="handleInputBlur"
     />
 
     <swiper
@@ -62,19 +61,18 @@ const {
 
 const {
   proScrollListRef,
-  inputSearchValue,
+  proPageHeaderRef,
   componentKey,
   tabList,
   navToTaskDetail,
   handleInputConfirm,
-  handleInputBlur,
   getExtendParams
 } = useHandler();
 
 onPullDownRefresh(() => {
   resetIndex();
-  inputSearchValue.value = '';
-  handleInputConfirm(inputSearchValue.value, tabIndex.value);
+  proPageHeaderRef.value?.clearInput();
+  handleInputConfirm('', tabIndex.value);
   uni.stopPullDownRefresh();
 });
 </script>

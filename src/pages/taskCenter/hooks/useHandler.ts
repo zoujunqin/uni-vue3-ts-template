@@ -1,6 +1,7 @@
 import { shallowRef } from 'vue';
 
 import { ITask, getTaskList } from '@/api/fe/wechat/task_center';
+import ProPageHeader from '@/components/ProPageHeader/ProPageHeader.vue';
 import ProScrollList from '@/components/ProScrollList/ProScrollList.vue';
 import { TASK_STATUS } from '@/constant/taskDetail';
 import { getUUID } from '@/utils';
@@ -27,16 +28,12 @@ export const useHandler = () => {
 
   const proScrollListRef =
     shallowRef<Array<InstanceType<typeof ProScrollList>>>();
-  const inputSearchValue = shallowRef('');
+  const proPageHeaderRef = shallowRef<InstanceType<typeof ProPageHeader>>();
 
   const confirmedInputSearchValue = shallowRef('');
   const handleInputConfirm = (value: string, tabIndex: number) => {
     confirmedInputSearchValue.value = value;
     proScrollListRef.value?.[tabIndex]?.reload();
-  };
-
-  const handleInputBlur = () => {
-    inputSearchValue.value = confirmedInputSearchValue.value;
   };
 
   /* 拓展参数：tab的类型以及搜索值 */
@@ -54,13 +51,12 @@ export const useHandler = () => {
   };
 
   return {
+    proPageHeaderRef,
     proScrollListRef,
-    inputSearchValue,
     componentKey,
     tabList,
     navToTaskDetail,
     handleInputConfirm,
-    handleInputBlur,
     getExtendParams
   };
 };

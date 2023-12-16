@@ -6,6 +6,7 @@
     class="hx-bg-[#F7F8FA] hx-flex hx-flex-col"
   >
     <ProPageHeader
+      ref="proPageHeaderRef"
       class="hx-relative hx-z-[11]"
       :bg-img-url="import('@http/task/task-bg.png')"
       @input-confirm="handleInputConfirm"
@@ -70,6 +71,7 @@ const {
   proScrollListRef,
   reload,
 
+  proPageHeaderRef,
   handleInputConfirm,
   getExtendParams,
 
