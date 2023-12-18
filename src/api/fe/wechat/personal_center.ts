@@ -17,5 +17,10 @@ export const getPersonInfo = (): Promise<IPersonInfo> => {
 
 /** 获取银行卡 */
 export const getPersonalCenterBankCard = () => {
-  return http.request('get', `${baseApi}/personal_center/bank_card`);
+  return http.request('get', `${baseApi}/bank_card`);
+};
+
+/** 获取个人信息二级页面 */
+export const getPersonalCenterInfo = () => {
+  return http.request('get', `${baseApi}/info`);
 };

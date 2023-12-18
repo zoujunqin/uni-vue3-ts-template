@@ -37,8 +37,9 @@
 </template>
 
 <script setup lang="ts">
-import { getPersonalCenterBankCard } from '@/api/fe/wechat/personal_center';
 import { onMounted, shallowRef } from 'vue';
+
+import { getPersonalCenterBankCard } from '@/api/fe/wechat/personal_center';
 import { handleGetBankNum } from '@/utils/processingText';
 
 const bankList = shallowRef<Array<any>>([]);

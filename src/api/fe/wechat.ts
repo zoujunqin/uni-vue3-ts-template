@@ -46,8 +46,3 @@ export const getRecommendTaskList = (
 ): Promise<IRecommendTask> => {
   return http.request('get', `${baseApi}/public_task`, { params });
 };
-
-/** 获取个人信息 */
-export const getPersonalCenterInfo = () => {
-  return http.request('get', `${baseApi}/personal_center/info`);
-};

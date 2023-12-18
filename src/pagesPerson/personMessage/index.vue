@@ -58,7 +58,7 @@
 <script setup lang="ts">
 import { onMounted, shallowRef } from 'vue';
 
-import { getPersonalCenterInfo } from '@/api/fe/wechat';
+import { getPersonalCenterInfo } from '@/api/fe/wechat/personal_center';
 import { useOss } from '@/hooks/useOss';
 
 const { getPreviewUrl } = useOss();
