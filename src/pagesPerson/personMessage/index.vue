@@ -18,9 +18,7 @@
               class="hx-w-[170px] hx-h-[107px] hx-mb-[8px]"
               @tap="handleLookImg(0)"
               :src="
-                personData.idCardFront
-                  ? personData.idCardFront
-                  : import('@http/person/card-front.svg')
+                personData.idCardFront || import('@http/person/card-front.svg')
               "
             />
             <span class="card-tip"> 证件信息面 </span>
@@ -30,9 +28,7 @@
               class="hx-w-[170px] hx-h-[107px] hx-mb-[8px]"
               @tap="handleLookImg(1)"
               :src="
-                personData.idCardReverse
-                  ? personData.idCardReverse
-                  : import('@http/person/card-reverse.svg')
+                personData.idCardReverse || import('@http/person/card-reverse.svg')
               "
             />
             <span class="card-tip"> 国徽面 </span>
