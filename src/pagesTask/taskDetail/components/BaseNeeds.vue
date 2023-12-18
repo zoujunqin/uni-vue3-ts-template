@@ -8,7 +8,7 @@
       {{ getPersonRequire }}
     </view>
     <view class="hx-mb-[10px]">
-      任务时间： {{ data.beginDate + '-' + data.endDate }}
+      任务时间： {{ hyphenAB(data.beginDate, data.endDate) }}
     </view>
     <view> 任务需求： {{ data.description }} </view>
   </view>
@@ -18,6 +18,7 @@
 import { PropType, computed } from 'vue';
 
 import { ITaskDetail } from '@/api/fe/wechat/task';
+import { hyphenAB } from '@/utils/processingText';
 
 const props = defineProps({
   data: {
@@ -29,10 +30,10 @@ const props = defineProps({
 const getPersonRequire = computed(() => {
   const { data } = props;
   return (
-    `性别${getUnLimitText(data.gender)}` +
+    `性别${getUnLimitText(data.genderName)}` +
     `、年龄${
       data.ageMin
-        ? data.ageMin + '-' + data.ageMax
+        ? hyphenAB(data.ageMin, data.ageMax, '-')
         : getUnLimitText(data.ageMin)
     }` +
     `、${getUnLimitText(data.educationName)}`

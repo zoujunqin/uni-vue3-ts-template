@@ -14,17 +14,15 @@
       >
         <ProButton
           class="hx-mr-[10px] hx-w-[110px]"
-          text="取消"
           color="rgb(61 134 242 / 10%)"
           :custom-text-style="{ color: 'var(--hx-color-primary)' }"
           @tap.stop="handleCancel"
-        />
-        <ProButton
-          class="!hx-flex-1"
-          type="primary"
-          text="确定"
-          @tap.stop="handleConfirm"
-        />
+        >
+          <text class="hx-text-color-primary"> 取消 </text>
+        </ProButton>
+        <ProButton class="!hx-flex-1" type="primary" @tap.stop="handleConfirm">
+          确定
+        </ProButton>
       </view>
     </view>
   </ProDropDownPopup>

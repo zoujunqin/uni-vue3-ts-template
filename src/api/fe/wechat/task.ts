@@ -18,6 +18,7 @@ export interface ITaskDetail {
   educationName: string;
   endDate: string;
   gender: string;
+  genderName: string;
   id: number;
   imgUrl: string;
   individualContractName: string;
@@ -27,8 +28,8 @@ export interface ITaskDetail {
   provinceCode: number;
   salaryMax: number;
   salaryMin: number;
-  status: (typeof TASK_STATUS)[keyof typeof TASK_STATUS];
-  statusName: string;
+  undertakingStatus: (typeof TASK_STATUS)[keyof typeof TASK_STATUS];
+  undertakingStatusName: string;
   taskName: string;
   taskTypeName: string;
   description: string;

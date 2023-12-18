@@ -24,11 +24,11 @@ export const loginWithSms = (data: ISmsParam): Promise<{ token: string }> => {
 };
 
 export interface IGetRecommendTaskParam {
-  page?: number;
-  pageSize?: number;
-  provinceCode?: number;
+  page: number;
+  pageSize: number;
+  areaCode?: number;
   taskName?: string;
-  taskTypeId?: number;
+  taskTypeIds?: string;
 }
 export interface IRecommendTask {
   costTypeName: string;

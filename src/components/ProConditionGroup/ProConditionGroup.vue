@@ -30,7 +30,7 @@ watch(() => active.value, updateChildren);
 const updateActive = (val: string) => {
   active.value = val;
 };
-defineExpose({ updateActive, children });
+defineExpose({ updateActive, active, children });
 </script>
 
 <script lang="ts">

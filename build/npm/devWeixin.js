@@ -1,5 +1,7 @@
 const { spawn } = require('child_process');
+
 const chalk = require('chalk');
+
 const { ip, port } = require('../httpServer');
 
 const cmd = /^win/.test(process.platform) ? 'pnpm.cmd' : 'pnpm';

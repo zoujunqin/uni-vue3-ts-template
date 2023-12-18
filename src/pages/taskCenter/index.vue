@@ -6,14 +6,13 @@
     class="hx-bg-[#F7F8FA] hx-flex hx-flex-col"
   >
     <ProPageHeader
-      v-model="inputSearchValue"
+      ref="proPageHeaderRef"
       class="hx-relative hx-z-1"
       :tab-index="tabIndex"
       :tab-list="tabList"
       :bg-img-url="import('@http/task/task-bg.png')"
       @tab-change="handleTabChange"
       @input-confirm="(val: string) => handleInputConfirm(val, tabIndex)"
-      @input-blur="handleInputBlur"
     />
 
     <swiper
@@ -34,7 +33,7 @@
           <template #default="{ row }">
             <ProTaskCard
               id="card"
-              :card-info="getHandledInfo(row)"
+              :card-info="getHandledTaskInfo(row)"
               class="hx-mt-[10px]"
               @click="navToTaskDetail(row)"
             />
@@ -48,6 +47,7 @@
 import { onPullDownRefresh } from '@dcloudio/uni-app';
 
 import { useHandler } from './hooks/useHandler';
+import { getHandledTaskInfo } from './utils/handleDataStruct';
 
 import { useTabLinkSwiper } from '@/hooks/useTabLinkSwiper';
 
@@ -61,20 +61,18 @@ const {
 
 const {
   proScrollListRef,
-  inputSearchValue,
+  proPageHeaderRef,
   componentKey,
   tabList,
   navToTaskDetail,
   handleInputConfirm,
-  handleInputBlur,
-  getExtendParams,
-  getHandledInfo
+  getExtendParams
 } = useHandler();
 
 onPullDownRefresh(() => {
   resetIndex();
-  inputSearchValue.value = '';
-  handleInputConfirm(inputSearchValue.value, tabIndex.value);
+  proPageHeaderRef.value?.clearInput();
+  handleInputConfirm('', tabIndex.value);
   uni.stopPullDownRefresh();
 });
 </script>
