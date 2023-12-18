@@ -28,7 +28,8 @@
               class="hx-w-[170px] hx-h-[107px] hx-mb-[8px]"
               @tap="handleLookImg(1)"
               :src="
-                personData.idCardReverse || import('@http/person/card-reverse.svg')
+                personData.idCardReverse ||
+                import('@http/person/card-reverse.svg')
               "
             />
             <span class="card-tip"> 国徽面 </span>
@@ -55,8 +56,9 @@
 </template>
 
 <script setup lang="ts">
-import { getPersonalCenterInfo } from '@/api/fe/wechat';
 import { onMounted, shallowRef } from 'vue';
+
+import { getPersonalCenterInfo } from '@/api/fe/wechat';
 import { useOss } from '@/hooks/useOss';
 
 const { getPreviewUrl } = useOss();
