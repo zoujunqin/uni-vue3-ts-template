@@ -24,3 +24,8 @@ export const getPersonalCenterBankCard = () => {
 export const getPersonalCenterInfo = () => {
   return http.request('get', `${baseApi}/info`);
 };
+
+/** 获取我的商保 */
+export const getPersonalCenterInsurance = () => {
+  return http.request('get', `${baseApi}/commercial_insurance`);
+};
