@@ -15,34 +15,30 @@
         >
           <image
             class="hx-w-[50px] hx-h-[50px] hx-mr-[10px]"
-            :src="import('@http/person/card-icon.png')"
+            :src="import('@http/person/card-icon.svg')"
           />
           <view class="hx-w-[250px]">
-            <p
-              class="hx-text-color-[--hx-text-color] hx-text-font-size-regular hx-truncate"
-            >
+            <p class="hx-text-color hx-text-font-size-regular hx-truncate">
               {{ item?.bankName }}
             </p>
-            <p
-              class="hx-text-color-[--hx-text-color-main] hx-text-font-size-20 hx-truncate"
-            >
+            <p class="hx-text-color-main hx-text-font-size-20 hx-truncate">
               {{ handleGetBankNum(item?.bankAccount) }}
             </p>
           </view>
         </view>
       </template>
-      <ProPlaceholder v-else type="noBankCard" />
+      <ProPlaceholder v-else type="noData" />
     </view>
   </ProPage>
 </template>
 
 <script setup lang="ts">
-import { onMounted, shallowRef } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import { getPersonalCenterBankCard } from '@/api/fe/wechat/personal_center';
 import { handleGetBankNum } from '@/utils/processingText';
 
-const bankList = shallowRef<Array<any>>([]);
+const bankList = ref<Array<any>>([]);
 
 onMounted(() => {
   handleGetPersonalCenterBankCard();

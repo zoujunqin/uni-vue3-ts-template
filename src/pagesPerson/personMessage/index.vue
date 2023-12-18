@@ -56,16 +56,16 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, shallowRef } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import { getPersonalCenterInfo } from '@/api/fe/wechat/personal_center';
 import { useOss } from '@/hooks/useOss';
 
 const { getPreviewUrl } = useOss();
 
-const imageList = shallowRef<Array<string>>([]);
+const imageList = ref<Array<string>>([]);
 
-const personData = shallowRef({
+const personData = ref({
   appealStatus: '',
   workerName: '',
   idCardNo: '',

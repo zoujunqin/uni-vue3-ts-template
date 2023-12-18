@@ -16,7 +16,7 @@
   <ProPage
     show-tabbar
     class="page-pt-with-navbar hx-pl-[8px] hx-pr-[8px] hx-bg-[length:100%_432px] hx-bg-no-repeat"
-    :style="`background-image: url(${import('@http/person/nav-bar-bg.png')});`"
+    :style="`background-image: url(${import('@http/person/nav-bar-bg.svg')});`"
   >
     <view
       class="hx-flex hx-items-center hx-justify-between hx-pl-[8px] hx-pr-[8px] hx-mt-[12px] hx-mb-[20px]"
@@ -24,7 +24,7 @@
       <view class="hx-flex hx-flex-1">
         <image
           class="hx-w-[60px] hx-h-[60px] hx-mr-[12px]"
-          src="@/static/person/avatar-default.png"
+          :src="import('@http/person/avatar-default.svg')"
         />
         <view class="hx-flex hx-flex-col hx-justify-center">
           <text
@@ -45,7 +45,7 @@
       >
         <image
           class="hx-w-[14px] hx-h-[14px] hx-mr-[4px]"
-          src="@/static/person/exit.png"
+          :src="import('@http/person/exit.svg')"
         />
         <text class="hx-text-font-size-sm hx-leading-[20px] hx-text-text-color">
           退出登录
@@ -102,15 +102,6 @@
 import VerticalListItem from './components/VerticalListItem.vue';
 import { useHandler } from './hooks/useHandler';
 
-import AgreementIcon from '@/static/person/agreement-icon.png';
-import BankCardIcon from '@/static/person/bank-card-icon.png';
-import ContactIcon from '@/static/person/contact-icon.png';
-import ContractIcon from '@/static/person/contract-icon.png';
-import InfoIcon from '@/static/person/info-icon.png';
-import RemunerationIcon from '@/static/person/remuneration-icon.png';
-import SecurityIcon from '@/static/person/security-icon.png';
-import ShareIcon from '@/static/person/share-icon.png';
-
 const {
   contactModalRef,
   logoutModalRef,
@@ -124,25 +115,25 @@ const {
 const panelItemList = [
   {
     type: panelItemMap.personInfo.type,
-    icon: InfoIcon,
+    icon: import('@http/person/info-icon.svg'),
     name: '个人信息',
     badge: '已实名'
   },
   {
     type: panelItemMap.bankCard.type,
-    icon: BankCardIcon,
+    icon: import('@http/person/bank-card-icon.svg'),
     name: '银行卡',
     badge: '已绑定'
   },
   {
     type: panelItemMap.contract.type,
-    icon: ContractIcon,
+    icon: import('@http/person/contract-icon.svg'),
     name: '我的合同',
     badge: ''
   },
   {
     type: panelItemMap.myInsurance.type,
-    icon: SecurityIcon,
+    icon: import('@http/person/security-icon.svg'),
     name: '我的商保',
     badge: ''
   }
@@ -151,18 +142,18 @@ const panelItemList = [
 const firstVerticalList = [
   {
     type: verticalListItemMap.remuneration.type,
-    icon: RemunerationIcon,
+    icon: import('@http/person/remuneration-icon.svg'),
     desc: '累计报酬(元)',
     text: '￥589.00'
   },
   {
     type: verticalListItemMap.agreement.type,
-    icon: AgreementIcon,
+    icon: import('@http/person/agreement-icon.svg'),
     desc: '用户隐私协议'
   },
   {
     type: verticalListItemMap.share.type,
-    icon: ShareIcon,
+    icon: import('@http/person/share-icon.svg'),
     desc: '分享小程序'
   }
 ];
@@ -170,7 +161,7 @@ const firstVerticalList = [
 const secondVerticalList = [
   {
     type: verticalListItemMap.contact.type,
-    icon: ContactIcon,
+    icon: import('@http/person/contact-icon.svg'),
     desc: '联系我们'
   }
 ];
@@ -192,7 +183,6 @@ const secondVerticalList = [
 </style>
 
 <style>
-/* stylelint-disable-next-line */
 page {
   background: linear-gradient(180deg, #fff 18.25%, #f7f8fa 92.19%);
 }
