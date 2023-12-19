@@ -4,7 +4,7 @@
     navbar-title="我的商保"
     class="page-pt-with-navbar hx-bg-white"
   >
-    <view class="hx-bg-[--hx-bg-color-grey] hx-h-full hx-py-[10px]">
+    <view class="hx-bg-bg-color-grey hx-h-full hx-py-[10px]">
       <template v-if="insuranceList.length > 0">
         <view
           v-for="(item, index) in insuranceList"
@@ -16,7 +16,7 @@
             :src="import('@http/person/insurance-icon.svg')"
           />
           <view class="hx-w-[250px]">
-            <p class="hx-text-color hx-text-font-size-[16px] hx-truncate">
+            <p class="hx-text-text-color hx-tex-[16px] hx-truncate">
               {{ item?.insuranceName }}
             </p>
           </view>

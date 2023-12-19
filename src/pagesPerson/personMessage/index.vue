@@ -4,7 +4,7 @@
     navbar-title="个人信息"
     class="personCenter-container page-pt-with-navbar hx-bg-white"
   >
-    <view class="hx-bg-[--hx-bg-color-grey] hx-h-full hx-pt-[10px]">
+    <view class="hx-bg-bg-color-grey hx-h-full hx-pt-[10px]">
       <view class="card-box">
         <view class="hx-flex hx-justify-between hx-mb-[12px]">
           <span class="title-tip"> 证件信息 </span>

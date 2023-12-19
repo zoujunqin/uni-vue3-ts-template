@@ -4,9 +4,7 @@
     navbar-title="银行卡"
     class="page-pt-with-navbar hx-bg-white"
   >
-    <view
-      class="hx-bg-[--hx-bg-color-grey] hx-h-full hx-px-[12px] hx-py-[10px]"
-    >
+    <view class="hx-bg-bg-color-grey hx-h-full hx-px-[12px] hx-py-[10px]">
       <template v-if="bankList.length > 0">
         <view
           v-for="(item, index) in bankList"
@@ -18,10 +16,10 @@
             :src="import('@http/person/card-icon.svg')"
           />
           <view class="hx-w-[250px]">
-            <p class="hx-text-color hx-text-font-size-regular hx-truncate">
+            <p class="hx-text-color hx-text-[16px] hx-truncate">
               {{ item?.bankName }}
             </p>
-            <p class="hx-text-color-main hx-text-font-size-20 hx-truncate">
+            <p class="hx-text-color-main hx-text-[20px] hx-truncate">
               {{ handleGetBankNum(item?.bankAccount) }}
             </p>
           </view>
