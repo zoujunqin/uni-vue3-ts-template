@@ -25,7 +25,11 @@
           </view>
         </view>
       </template>
-      <ProPlaceholder v-else type="noData" />
+      <ProPlaceholder
+        v-else
+        type="noData"
+        @refresh="handleGetPersonalCenterBankCard"
+      />
     </view>
   </ProPage>
 </template>

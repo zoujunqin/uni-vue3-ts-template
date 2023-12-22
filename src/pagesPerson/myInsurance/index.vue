@@ -22,7 +22,11 @@
           </view>
         </view>
       </template>
-      <ProPlaceholder v-else type="noData" />
+      <ProPlaceholder
+        v-else
+        type="noData"
+        @refresh="handleGetPersonalCenterInsurance"
+      />
     </view>
   </ProPage>
 </template>
@@ -35,9 +39,9 @@ import { getPersonalCenterInsurance } from '@/api/fe/wechat/personal_center';
 const insuranceList = ref<Array<any>>([]);
 
 onMounted(() => {
-  handleGetPersonalCenterBankCard();
+  handleGetPersonalCenterInsurance();
 });
-const handleGetPersonalCenterBankCard = () => {
+const handleGetPersonalCenterInsurance = () => {
   getPersonalCenterInsurance().then(res => {
     insuranceList.value = res;
   });

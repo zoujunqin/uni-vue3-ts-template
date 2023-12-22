@@ -29,3 +29,8 @@ export const getPersonalCenterInfo = () => {
 export const getPersonalCenterInsurance = () => {
   return http.request('get', `${baseApi}/commercial_insurance`);
 };
+
+/** 获取我的合同 */
+export const getPersonalCenterContract = (params: unknown) => {
+  return http.request('get', `${baseApi}/contract`, { params });
+};

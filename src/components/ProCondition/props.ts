@@ -6,7 +6,7 @@ export const conditionProps = {
 
   title: {
     type: String,
-    default: '任务类型'
+    default: ''
   },
 
   name: {
