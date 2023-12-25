@@ -35,6 +35,7 @@
 </template>
 
 <script setup lang="ts">
+import { onPullDownRefresh } from '@dcloudio/uni-app';
 import { onMounted, ref } from 'vue';
 
 import { getPersonalCenterBankCard } from '@/api/fe/wechat/personal_center';
@@ -45,9 +46,14 @@ const bankList = ref<Array<any>>([]);
 onMounted(() => {
   handleGetPersonalCenterBankCard();
 });
+onPullDownRefresh(() => {
+  uni.startPullDownRefresh();
+  handleGetPersonalCenterBankCard();
+});
 const handleGetPersonalCenterBankCard = () => {
   getPersonalCenterBankCard().then(res => {
     bankList.value = res;
+    uni.stopPullDownRefresh();
   });
 };
 </script>

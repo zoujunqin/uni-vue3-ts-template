@@ -61,13 +61,22 @@
           "path": "personMessage/index"
         },
         {
-          "path": "bankCard/index"
+          "path": "bankCard/index",
+          "style": {
+            "enablePullDownRefresh": true
+          }
         },
         {
-          "path": "myContract/index"
+          "path": "myContract/index",
+          "style": {
+            "enablePullDownRefresh": true
+          }
         },
         {
-          "path": "myInsurance/index"
+          "path": "myInsurance/index",
+          "style": {
+            "enablePullDownRefresh": true
+          }
         },
         {
           "path": "remuneration/index"

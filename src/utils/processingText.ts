@@ -28,6 +28,7 @@ export const handleDealTimestamp = (timestamp: Date) => {
   return `${year}年` + `${month}月`;
 };
 
+//时间选择器展示格式
 export const handleFormatter = (type: string, value: string) => {
   if (type === 'year') {
     return `${value}年`;
