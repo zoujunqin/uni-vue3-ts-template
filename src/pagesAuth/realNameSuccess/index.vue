@@ -9,9 +9,7 @@
         class="hx-w-[32px] hx-h-[32px] hx-mr-[8px] hx-mt-[8px]"
         :src="import('@http/real-name-success/success-icon-blue.png')"
       />
-      <text
-        class="hx-text-[30px] hx-font-[600] hx-text-[30px] hx-leading-[30px]"
-      >
+      <text class="hx-text-[30px] hx-font-[600] hx-leading-[30px]">
         认证成功
       </text>
     </view>

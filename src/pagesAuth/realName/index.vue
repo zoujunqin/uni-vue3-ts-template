@@ -48,13 +48,14 @@
 </template>
 
 <script setup lang="ts">
-import Steps from './components/Steps.vue';
-import OperateTip from './components/OperateTip.vue';
-import BaseInfoForm from './components/BaseInfoForm.vue';
-import BankInfoForm from './components/BankInfoForm.vue';
-import IDCardUpload from './components/IDCardUpload.vue';
-import QualificationUpload from './components/QualificationUpload.vue';
 import { ref, shallowRef } from 'vue';
+
+import BankInfoForm from './components/BankInfoForm.vue';
+import BaseInfoForm from './components/BaseInfoForm.vue';
+import IDCardUpload from './components/IDCardUpload.vue';
+import OperateTip from './components/OperateTip.vue';
+import QualificationUpload from './components/QualificationUpload.vue';
+import Steps from './components/Steps.vue';
 
 const fixedTipClass = 'error-fixed-tip';
 
