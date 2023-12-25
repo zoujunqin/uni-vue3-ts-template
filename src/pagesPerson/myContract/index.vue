@@ -2,10 +2,15 @@
   <ProPage
     show-navbar
     navbar-title="合同记录"
-    class="myContract-container page-pt-with-navbar hx-bg-white"
+    class="myContract-container page-pt-with-navbar hx-bg-white hx-flex hx-flex-col"
   >
-    <ProCondition @tap="openDate" name="taskType" :title="monthDate" />
-    <view class="hx-bg-bg-color-grey hx-h-full hx-py-[10px]">
+    <ProCondition
+      v-model="conditionStatus"
+      @change="openDate"
+      name="taskType"
+      :title="monthDate"
+    />
+    <view class="hx-bg-bg-color-grey hx-flex-1 hx-pt-[10px]">
       <template v-if="dataList.length > 0">
         <view
           v-for="item in dataList"
@@ -37,22 +42,22 @@
       v-model="monthDatetime"
       mode="year-month"
       :formatter="handleFormatter"
-      @confirm="handleConfirmDate"
+      @confirm="handleGetPersonalCenterContract"
+      @close="handleCloseDate"
     />
   </ProPage>
 </template>
 
 <script setup lang="ts">
 import { onPullDownRefresh } from '@dcloudio/uni-app';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 import { getPersonalCenterContract } from '@/api/fe/wechat/personal_center';
 import { useOss } from '@/hooks/useOss';
 import { handleDealTimestamp, handleFormatter } from '@/utils/processingText';
-const monthDate = ref();
 const monthDatetime = ref(new Date());
+const conditionStatus = ref(false);
 const { getPreviewUrl } = useOss();
-
 const datetimePicker = ref();
 const dataList = ref([
   {
@@ -70,14 +75,21 @@ const dataList = ref([
     path: 'fe/2023-12/2023-12-22/网络安全培训20231220 _18c903376c904f6d9890894dfe0edfb7.pdf'
   }
 ]);
+
+const monthDate = computed(() => {
+  return handleDealTimestamp(monthDatetime.value);
+});
+
 onMounted(() => {
-  monthDate.value = handleDealTimestamp(new Date());
   handleGetPersonalCenterContract();
 });
 onPullDownRefresh(() => {
   uni.startPullDownRefresh();
   handleGetPersonalCenterContract();
 });
+const handleCloseDate = () => {
+  conditionStatus.value = false;
+};
 const handleGetPersonalCenterContract = () => {
   const timeData = monthDate.value.slice(0, 4) + monthDate.value.slice(5, 7);
   getPersonalCenterContract({ month: timeData }).then(res => {
@@ -85,8 +97,8 @@ const handleGetPersonalCenterContract = () => {
     uni.stopPullDownRefresh();
   });
 };
-const openDate = () => {
-  datetimePicker.value.open();
+const openDate = (bool: boolean) => {
+  bool && datetimePicker.value.open();
 };
 const isShowProgress = ref();
 const handleLookContract = async (path: string) => {
@@ -106,10 +118,6 @@ const handleLookContract = async (path: string) => {
       uni.hideLoading();
     }
   });
-};
-const handleConfirmDate = async (val: any) => {
-  monthDate.value = await handleDealTimestamp(val.value);
-  handleGetPersonalCenterContract();
 };
 </script>
 
