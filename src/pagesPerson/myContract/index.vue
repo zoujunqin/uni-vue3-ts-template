@@ -36,7 +36,7 @@
       />
     </view>
     <ProDateTimePicker
-      ref="datetimePicker"
+      ref="datetimePickerRef"
       v-model="monthDatetime"
       mode="year-month"
       @confirm="handleGetPersonalCenterContract"
@@ -55,7 +55,7 @@ import { handleDealTimestamp } from '@/utils/processingText';
 const monthDatetime = ref(new Date());
 const conditionStatus = ref(false);
 const { getPreviewUrl } = useOss();
-const datetimePicker = ref();
+const datetimePickerRef = ref();
 const dataList = ref<Array<any>>([]);
 
 const monthDate = computed(() => {
@@ -79,7 +79,7 @@ const handleGetPersonalCenterContract = () => {
   });
 };
 const openDate = (bool: boolean) => {
-  bool && datetimePicker.value.open();
+  bool && datetimePickerRef.value.open();
 };
 const handleLookContract = async (path: string) => {
   const pdfUrl = await getPreviewUrl(path);
