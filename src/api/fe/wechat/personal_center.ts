@@ -44,3 +44,8 @@ export const getPersonalCenterIncomeList = (params: unknown) => {
 export const getPersonalCenterIncomeCustomer = () => {
   return http.request('get', `${baseApi}/income/customer`);
 };
+
+/** 获取收入明细详情 */
+export const getPersonalCenterByIdIncome = (id: number) => {
+  return http.request('get', `${baseApi}/${id}/income`);
+};

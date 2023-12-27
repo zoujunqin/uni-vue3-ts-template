@@ -16,7 +16,7 @@
             :src="import('@http/person/insurance-icon.svg')"
           />
           <view class="hx-w-[250px]">
-            <p class="hx-text-text-color hx-tex-[16px] hx-truncate">
+            <p class="hx-text-text-color hx-text-[16px] hx-truncate">
               {{ item?.insuranceName }}
             </p>
           </view>

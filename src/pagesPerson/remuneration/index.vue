@@ -25,11 +25,13 @@
       <template v-if="dataList.length > 0">
         <view
           v-for="item in dataList"
-          :key="item.id"
-          @click="handleLookDetails(item?.id)"
+          :key="item.commissionDetailId"
+          @click="handleLookDetails(item?.commissionDetailId)"
           class="hx-flex hx-items-center hx-justify-between hx-bg-white hx-p-[16px_12px] hx-mb-[10px]"
         >
-          <p class="remuneration-title">{{ item?.customerName }}</p>
+          <p class="remuneration-title hx-truncate">
+            {{ item?.customerName }}
+          </p>
           <view class="hx-flex hx-items-center">
             <span class="remuneration-money">
               +{{ item?.finalPayingAmount }}元
@@ -106,6 +108,10 @@ onPullDownRefresh(() => {
   handleGetPersonalCenterIncomeList();
 });
 
+const handleInputClick = () => {
+  proPickerRef.value.open();
+};
+
 const handlePickerConfirm = (e: any) => {
   inputSearchValue.value = e.value[0].customerName;
   formData.value.customerId = e.value[0].customerId;
@@ -116,10 +122,6 @@ const handlePickerCancel = () => {
   inputSearchValue.value = '';
   formData.value.customerId = '';
   handleGetPersonalCenterIncomeList();
-};
-
-const handleInputClick = () => {
-  proPickerRef.value.open();
 };
 
 const openDate = (bool: boolean) => {
@@ -154,7 +156,7 @@ const handleLookDetails = (id: string) => {
     color: var(--hx-text-color-main);
     font-size: 18px;
     font-weight: 600;
-    margin-bottom: 4px;
+    width: 220px;
   }
   .remuneration-text {
     color: var(--hx-text-color);
