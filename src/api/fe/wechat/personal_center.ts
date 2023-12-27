@@ -34,3 +34,13 @@ export const getPersonalCenterInsurance = () => {
 export const getPersonalCenterContract = (params: unknown) => {
   return http.request('get', `${baseApi}/contract`, { params });
 };
+
+/** 获取收入明细列表 */
+export const getPersonalCenterIncomeList = (params: unknown) => {
+  return http.request('get', `${baseApi}/income_list`, { params });
+};
+
+/** 获取收入客户列表 */
+export const getPersonalCenterIncomeCustomer = () => {
+  return http.request('get', `${baseApi}/income/customer`);
+};

@@ -1,11 +1,170 @@
 <template>
   <ProPage
     show-navbar
-    navbar-title="累计报酬"
-    class="page-pt-with-navbar hx-bg-white"
-  />
+    navbar-title="收入明细"
+    class="remuneration-container hx-bg-white hx-flex hx-flex-col"
+  >
+    <ProPageHeader
+      ref="proPageHeaderRef"
+      class="hx-relative hx-z-[11]"
+      placeholder="请选择企业"
+      :readonly="true"
+      v-model="inputSearchValue"
+      @inputClick="handleInputClick"
+    >
+      <template #bottom>
+        <ProCondition
+          v-model="conditionStatus"
+          @change="openDate"
+          name="remunerationType"
+          :title="monthDate"
+        />
+      </template>
+    </ProPageHeader>
+    <view class="hx-bg-bg-color-grey hx-flex-1 hx-pt-[10px]">
+      <template v-if="dataList.length > 0">
+        <view
+          v-for="item in dataList"
+          :key="item.id"
+          @click="handleLookDetails(item?.id)"
+          class="hx-flex hx-items-center hx-justify-between hx-bg-white hx-p-[16px_12px] hx-mb-[10px]"
+        >
+          <p class="remuneration-title">{{ item?.customerName }}</p>
+          <view class="hx-flex hx-items-center">
+            <span class="remuneration-money">
+              +{{ item?.finalPayingAmount }}元
+            </span>
+            <image
+              :src="import('@http/person/arrow-right.svg')"
+              class="hx-w-[18px] hx-h-[18px]"
+            />
+          </view>
+        </view>
+      </template>
+      <ProPlaceholder
+        v-else
+        type="noData"
+        @refresh="handleGetPersonalCenterIncomeList"
+      />
+    </view>
+    <ProDateTimePicker
+      ref="datetimePickerRef"
+      v-model="monthDatetime"
+      mode="year-month"
+      @confirm="handleGetPersonalCenterIncomeList"
+      @close="handleCloseDate"
+    />
+    <ProPicker
+      ref="proPickerRef"
+      keyName="customerName"
+      :columns="pickerValue"
+      cancelText="重置"
+      @confirm="handlePickerConfirm"
+      @cancel="handlePickerCancel"
+    />
+  </ProPage>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { onPullDownRefresh } from '@dcloudio/uni-app';
+import { computed, nextTick, onMounted, ref } from 'vue';
 
-<style scoped></style>
+import {
+  getPersonalCenterIncomeList,
+  getPersonalCenterIncomeCustomer
+} from '@/api/fe/wechat/personal_center';
+import { handleDealTimestamp } from '@/utils/processingText';
+const monthDatetime = ref(new Date());
+const datetimePickerRef = ref();
+const inputSearchValue = ref('');
+const customerList = ref<Array<any>>([]);
+const proPickerRef = ref();
+const dataList = ref<Array<any>>([]);
+const conditionStatus = ref(false);
+const formData = ref({
+  salaryIssueMonth: '',
+  customerId: ''
+});
+
+const monthDate = computed(() => {
+  return handleDealTimestamp(monthDatetime.value);
+});
+
+getPersonalCenterIncomeCustomer().then(res => {
+  customerList.value = res;
+});
+
+const pickerValue = computed(() => {
+  return [[...customerList.value]];
+});
+
+onMounted(() => {
+  handleGetPersonalCenterIncomeList();
+});
+
+onPullDownRefresh(() => {
+  handleGetPersonalCenterIncomeList();
+});
+
+const handlePickerConfirm = (e: any) => {
+  inputSearchValue.value = e.value[0].customerName;
+  formData.value.customerId = e.value[0].customerId;
+  handleGetPersonalCenterIncomeList();
+};
+
+const handlePickerCancel = () => {
+  inputSearchValue.value = '';
+  formData.value.customerId = '';
+  handleGetPersonalCenterIncomeList();
+};
+
+const handleInputClick = () => {
+  proPickerRef.value.open();
+};
+
+const openDate = (bool: boolean) => {
+  bool && datetimePickerRef.value.open();
+};
+
+const handleCloseDate = () => {
+  conditionStatus.value = false;
+};
+
+const handleGetPersonalCenterIncomeList = () => {
+  nextTick(() => {
+    formData.value.salaryIssueMonth =
+      monthDate.value.slice(0, 4) + '-' + monthDate.value.slice(5, 7);
+    getPersonalCenterIncomeList(formData.value).then(res => {
+      dataList.value = res;
+      uni.stopPullDownRefresh();
+    });
+  });
+};
+
+const handleLookDetails = (id: string) => {
+  uni.navigateTo({
+    url: `/pagesPerson/remuneration/list/remunerationDetails?id=${id}`
+  });
+};
+</script>
+
+<style scoped lang="scss">
+.remuneration-container {
+  .remuneration-title {
+    color: var(--hx-text-color-main);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .remuneration-text {
+    color: var(--hx-text-color);
+    font-size: 14px;
+    margin-top: 8px;
+  }
+  .remuneration-money {
+    color: var(--hx-text-color-theme);
+    font-size: 18px;
+    font-weight: bold;
+  }
+}
+</style>

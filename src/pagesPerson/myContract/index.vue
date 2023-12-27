@@ -7,7 +7,7 @@
     <ProCondition
       v-model="conditionStatus"
       @change="openDate"
-      name="taskType"
+      name="contractType"
       :title="monthDate"
     />
     <view class="hx-bg-bg-color-grey hx-flex-1 hx-pt-[10px]">
@@ -15,7 +15,7 @@
         <view
           v-for="item in dataList"
           :key="item.id"
-          @tap="handleLookContract(item?.path)"
+          @click="handleLookContract(item?.path)"
           class="hx-flex hx-items-center hx-justify-between hx-bg-white hx-p-[16px_12px] hx-mb-[10px]"
         >
           <view class="hx-flex hx-flex-col">
@@ -47,7 +47,7 @@
 
 <script setup lang="ts">
 import { onPullDownRefresh } from '@dcloudio/uni-app';
-import { computed, onMounted, ref } from 'vue';
+import { computed, nextTick, onMounted, ref } from 'vue';
 
 import { getPersonalCenterContract } from '@/api/fe/wechat/personal_center';
 import { useOss } from '@/hooks/useOss';
@@ -72,10 +72,13 @@ const handleCloseDate = () => {
   conditionStatus.value = false;
 };
 const handleGetPersonalCenterContract = () => {
-  const timeData = monthDate.value.slice(0, 4) + monthDate.value.slice(5, 7);
-  getPersonalCenterContract({ month: timeData }).then(res => {
-    dataList.value = res;
-    uni.stopPullDownRefresh();
+  nextTick(() => {
+    const timeData =
+      monthDate.value.slice(0, 4) + '-' + monthDate.value.slice(5, 7);
+    getPersonalCenterContract({ month: timeData }).then(res => {
+      dataList.value = res;
+      uni.stopPullDownRefresh();
+    });
   });
 };
 const openDate = (bool: boolean) => {

@@ -79,10 +79,16 @@
           }
         },
         {
-          "path": "remuneration/index"
+          "path": "remuneration/index",
+          "style": {
+            "enablePullDownRefresh": true
+          }
         },
         {
           "path": "agreement/index"
+        },
+        {
+          "path": "remuneration/list/remunerationDetails"
         }
       ]
     }

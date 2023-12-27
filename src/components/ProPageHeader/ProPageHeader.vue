@@ -4,7 +4,11 @@
     :style="headerStyle"
   >
     <slot>
-      <view v-if="showInput" class="hx-pl-[16px] hx-pr-[16px] hx-mb-[4px]">
+      <view
+        @click="handleInputClick"
+        v-if="showInput"
+        class="hx-pl-[16px] hx-pr-[16px] hx-mb-[4px]"
+      >
         <ProInput
           v-model="inputSearchValue"
           class="hx-bg-[#f7f8fa]"
@@ -45,13 +49,21 @@ import { pageHeaderProps } from './props';
 import { uvEvents as uvInputEvents } from '@/components/ProInput/events';
 import { uvEvents as uvTabsEvents } from '@/components/ProTabs/events';
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
+import { useVModel } from '@/hooks/useVModel';
 
-const emit = defineEmits(['confirm', 'blur']);
-const inputSearchValue = shallowRef('');
+const props = defineProps(pageHeaderProps);
+
+const emit = defineEmits(['confirm', 'blur', 'inputClick']);
+const inputSearchValue = useVModel(props, 'modelValue', undefined, {
+  passive: true
+});
 const confirmedInputValue = shallowRef('');
 const handleInputConfirm = () => {
   confirmedInputValue.value = inputSearchValue.value;
   emit('confirm', confirmedInputValue.value);
+};
+const handleInputClick = () => {
+  emit('inputClick');
 };
 const handleInputBlur = () => {
   inputSearchValue.value = confirmedInputValue.value;
@@ -61,7 +73,6 @@ const clearInput = () => {
   inputSearchValue.value = '';
 };
 
-const props = defineProps(pageHeaderProps);
 const { bridgedEvents: inputBridgedEvents } = useBridgedEmits(
   uvInputEvents,
   'input'
