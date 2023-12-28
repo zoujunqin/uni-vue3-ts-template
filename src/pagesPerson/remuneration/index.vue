@@ -76,28 +76,22 @@ import {
   getPersonalCenterIncomeCustomer
 } from '@/api/fe/wechat/personal_center';
 import { handleDealTimestamp } from '@/utils/processingText';
-const monthDatetime = ref(new Date());
-const datetimePickerRef = ref();
-const inputSearchValue = ref('');
-const customerList = ref<Array<any>>([]);
-const proPickerRef = ref();
-const dataList = ref<Array<any>>([]);
-const conditionStatus = ref(false);
 const formData = ref({
   salaryIssueMonth: '',
   customerId: ''
 });
 
+const monthDatetime = ref(new Date());
 const monthDate = computed(() => {
   return handleDealTimestamp(monthDatetime.value);
 });
 
+const customerList = ref<Array<any>>([]);
 getPersonalCenterIncomeCustomer().then(res => {
   customerList.value = res;
 });
-
 const pickerValue = computed(() => {
-  return [[...customerList.value]];
+  return [customerList.value];
 });
 
 onMounted(() => {
@@ -108,10 +102,16 @@ onPullDownRefresh(() => {
   handleGetPersonalCenterIncomeList();
 });
 
+const proPickerRef = ref();
 const handleInputClick = () => {
-  proPickerRef.value.open();
+  if (customerList.value.length > 0) {
+    proPickerRef.value.open();
+  } else {
+    return uni.showToast({ title: '暂无企业数据', icon: 'none' });
+  }
 };
 
+const inputSearchValue = ref('');
 const handlePickerConfirm = (e: any) => {
   inputSearchValue.value = e.value[0].customerName;
   formData.value.customerId = e.value[0].customerId;
@@ -124,14 +124,17 @@ const handlePickerCancel = () => {
   handleGetPersonalCenterIncomeList();
 };
 
+const datetimePickerRef = ref();
 const openDate = (bool: boolean) => {
   bool && datetimePickerRef.value.open();
 };
 
+const conditionStatus = ref(false);
 const handleCloseDate = () => {
   conditionStatus.value = false;
 };
 
+const dataList = ref<Array<any>>([]);
 const handleGetPersonalCenterIncomeList = () => {
   nextTick(() => {
     formData.value.salaryIssueMonth =
@@ -145,7 +148,7 @@ const handleGetPersonalCenterIncomeList = () => {
 
 const handleLookDetails = (id: string) => {
   uni.navigateTo({
-    url: `/pagesPerson/remuneration/list/remunerationDetails?id=${id}`
+    url: `/pagesPerson/remuneration/remunerationDetails?id=${id}`
   });
 };
 </script>

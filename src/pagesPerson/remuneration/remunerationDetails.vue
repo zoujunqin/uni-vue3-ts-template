@@ -79,14 +79,10 @@ const formDataList = ref([
 onLoad(query => {
   getPersonalCenterByIdIncome(query?.id).then(res => {
     formData.value = { ...res, ...res.extJsonMap };
-    let dataObj = {};
-    Object.keys(res.extJsonMap).forEach(item => {
-      dataObj = {
-        label: item,
-        key: item
-      };
-      formDataList.value.push(dataObj);
-    });
+    Object.keys(res.extJsonMap).reduce((result, item) => {
+      result.push({ label: item, key: item });
+      return result;
+    }, formDataList.value);
   });
 });
 </script>
