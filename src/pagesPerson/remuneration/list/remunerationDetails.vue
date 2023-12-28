@@ -2,11 +2,11 @@
   <ProPage
     show-navbar
     navbar-title="收入明细"
-    class="remunerationDetails-container hx-bg-no-repeat hx-px-[16px] hx-pt-[10px]"
+    class="remunerationDetails-container hx-bg-[length:100%] hx-bg-no-repeat hx-px-[16px] hx-pt-[10px]"
     :style="`background-image: url(${import('@http/person/income-bg.svg')});`"
   >
-    <view class="content-box">
-      <view class="monty-box page-pt-with-navbar">
+    <view class="page-pt-with-navbar">
+      <view class="monty-box">
         <view class="top-content">
           <image
             :src="import('@http/person/shield.svg')"
@@ -28,25 +28,23 @@
         />
       </view>
       <view class="details-content">
-        <view class="hx-mx-[16px] hx-mt-[16px] hx-mb-[22px]">
-          <p class="hx-text-text-color-main hx-text-[18px] hx-font-semibold">
-            详细信息
-          </p>
-          <view
-            v-for="item in formDataList"
-            :key="item.key"
-            class="hx-flex hx-mt-[12px]"
-          >
-            <view class="hx-w-[95px] hx-truncate hx-mr-[24px]">
-              <span class="hx-text-text-color-tip hx-text-[14px]">
-                {{ item.label }}
-              </span>
-            </view>
-            <view class="hx-w-[195px] hx-truncate">
-              <span class="hx-text-text-color-main hx-text-[14px]">
-                {{ formData[item.key] }}
-              </span>
-            </view>
+        <p class="hx-text-text-color-main hx-text-[18px] hx-font-semibold">
+          详细信息
+        </p>
+        <view
+          v-for="item in formDataList"
+          :key="item.key"
+          class="hx-flex hx-mt-[12px]"
+        >
+          <view class="hx-w-[95px] hx-truncate hx-mr-[24px]">
+            <span class="hx-text-text-color-tip hx-text-[14px]">
+              {{ item.label }}
+            </span>
+          </view>
+          <view class="hx-w-[195px] hx-truncate">
+            <span class="hx-text-text-color-main hx-text-[14px]">
+              {{ formData[item.key] }}
+            </span>
           </view>
         </view>
       </view>
@@ -95,12 +93,8 @@ onLoad(query => {
 
 <style scoped lang="scss">
 .remunerationDetails-container {
-  .content-box {
-    position: relative;
-    top: 104px;
-  }
   .monty-box {
-    position: absolute;
+    position: relative;
     height: 138px;
     width: 343px;
     border-radius: 12px;
@@ -132,11 +126,11 @@ onLoad(query => {
     }
   }
   .details-content {
-    position: absolute;
-    top: 148px;
     width: 343px;
     background-color: #fff;
     border-radius: 12px;
+    padding: 16px 12px 22px 12px;
+    margin: 10px 0;
   }
 }
 </style>
