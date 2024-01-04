@@ -17,7 +17,7 @@
 
       <SecurityTip :data="taskDetail" />
 
-      <ProButton type="primary"> 申请任务 </ProButton>
+      <ProButton type="primary" @click="handleApplyTask"> 申请任务 </ProButton>
     </view>
   </ProPage>
 </template>
@@ -40,6 +40,11 @@ onLoad(query => {
     taskDetail.value = res;
   });
 });
+const handleApplyTask = () => {
+  uni.navigateTo({
+    url: `/pagesAuth/realName/index`
+  });
+};
 </script>
 
 <style scoped>
