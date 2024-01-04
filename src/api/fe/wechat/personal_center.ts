@@ -10,14 +10,20 @@ export interface IPersonInfo {
   idCardFront: string;
   appealStatus: string;
 }
-
+export interface IPersonCenterInfo {
+  izBindBankCard: string;
+  izRealNameAuthenticationName: string;
+  mobile: string;
+  totalAmount: number;
+  workerName: string;
+}
 /* 获取个人信息 */
 export const getPersonInfo = (): Promise<IPersonInfo> => {
   return http.request('get', `${baseApi}/info`);
 };
 
 /* 获取个人中心数据 */
-export const getPersonCenter = (): Promise<IPersonInfo> => {
+export const getPersonCenter = (): Promise<IPersonCenterInfo> => {
   return http.request('get', `${baseApi}`);
 };
 

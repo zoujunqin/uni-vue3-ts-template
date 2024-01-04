@@ -79,7 +79,7 @@ export const useHandler = () => {
     }
   } as const;
 
-  getPersonCenter().then((res: any) => {
+  getPersonCenter().then(res => {
     personalData.value = res;
   });
   onMounted(() => {
