@@ -30,12 +30,12 @@
           <text
             class="hx-mb-[4px] hx-text-color-title hx-text-font-size-title hx-font-[600] hx-leading-[28px]"
           >
-            未登录
+            {{ token ? personalData?.workerName : '未登录' }}
           </text>
           <text
             class="hx-text-text-color hx-text-font-size-base hx-leading-[20px] hx-font-[500]"
           >
-            点击登录，查看更多信息
+            {{ token ? personalData?.mobile : '点击登录，查看更多信息' }}
           </text>
         </view>
       </view>
@@ -99,8 +99,12 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
+
 import VerticalListItem from './components/VerticalListItem.vue';
 import { useHandler } from './hooks/useHandler';
+
+import { BANK_STATUS_MAP } from '@/constant/personCenter';
 
 const {
   contactModalRef,
@@ -109,54 +113,59 @@ const {
   handleLogoutConfirm,
   handleContactConfirm,
   panelItemMap,
-  verticalListItemMap
+  verticalListItemMap,
+  personalData,
+  token
 } = useHandler();
+const panelItemList = computed(() => {
+  return [
+    {
+      type: panelItemMap.personInfo.type,
+      icon: import('@http/person/info-icon.svg'),
+      name: '个人信息',
+      badge: `${personalData.value?.izRealNameAuthenticationName}`
+    },
+    {
+      type: panelItemMap.bankCard.type,
+      icon: import('@http/person/bank-card-icon.svg'),
+      name: '银行卡',
+      badge: `${BANK_STATUS_MAP[personalData.value?.izBindBankCard].label}`
+    },
+    {
+      type: panelItemMap.contract.type,
+      icon: import('@http/person/contract-icon.svg'),
+      name: '我的合同',
+      badge: ''
+    },
+    {
+      type: panelItemMap.myInsurance.type,
+      icon: import('@http/person/security-icon.svg'),
+      name: '我的商保',
+      badge: ''
+    }
+  ];
+});
 
-const panelItemList = [
-  {
-    type: panelItemMap.personInfo.type,
-    icon: import('@http/person/info-icon.svg'),
-    name: '个人信息',
-    badge: '已实名'
-  },
-  {
-    type: panelItemMap.bankCard.type,
-    icon: import('@http/person/bank-card-icon.svg'),
-    name: '银行卡',
-    badge: '已绑定'
-  },
-  {
-    type: panelItemMap.contract.type,
-    icon: import('@http/person/contract-icon.svg'),
-    name: '我的合同',
-    badge: ''
-  },
-  {
-    type: panelItemMap.myInsurance.type,
-    icon: import('@http/person/security-icon.svg'),
-    name: '我的商保',
-    badge: ''
-  }
-];
-
-const firstVerticalList = [
-  {
-    type: verticalListItemMap.remuneration.type,
-    icon: import('@http/person/remuneration-icon.svg'),
-    desc: '累计报酬(元)',
-    text: '￥589.00'
-  },
-  {
-    type: verticalListItemMap.agreement.type,
-    icon: import('@http/person/agreement-icon.svg'),
-    desc: '用户隐私协议'
-  },
-  {
-    type: verticalListItemMap.share.type,
-    icon: import('@http/person/share-icon.svg'),
-    desc: '分享小程序'
-  }
-];
+const firstVerticalList = computed(() => {
+  return [
+    {
+      type: verticalListItemMap.remuneration.type,
+      icon: import('@http/person/remuneration-icon.svg'),
+      desc: '累计报酬(元)',
+      text: `¥${personalData.value?.totalAmount}`
+    },
+    {
+      type: verticalListItemMap.agreement.type,
+      icon: import('@http/person/agreement-icon.svg'),
+      desc: '用户隐私协议'
+    },
+    {
+      type: verticalListItemMap.share.type,
+      icon: import('@http/person/share-icon.svg'),
+      desc: '分享小程序'
+    }
+  ];
+});
 
 const secondVerticalList = [
   {
