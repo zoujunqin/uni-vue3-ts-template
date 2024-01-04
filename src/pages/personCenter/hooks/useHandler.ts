@@ -1,8 +1,19 @@
-import { shallowRef } from 'vue';
+import { onMounted, shallowRef } from 'vue';
+
+import { getPersonCenter } from '@/api/fe/wechat/personal_center';
+import { getToken } from '@/utils/user';
 
 export const useHandler = () => {
   const contactModalRef = shallowRef();
   const logoutModalRef = shallowRef();
+  const token = shallowRef();
+  const personalData = shallowRef({
+    izBindBankCard: '',
+    izRealNameAuthenticationName: '',
+    mobile: '',
+    totalAmount: null,
+    workerName: ''
+  });
 
   const panelItemMap = {
     personInfo: {
@@ -68,6 +79,15 @@ export const useHandler = () => {
     }
   } as const;
 
+  getPersonCenter().then(res => {
+    personalData.value = res;
+  });
+  onMounted(() => {
+    getTokenValue();
+  });
+  const getTokenValue = () => {
+    token.value = getToken();
+  };
   const logout = () => {
     logoutModalRef.value.open();
   };
@@ -87,6 +107,8 @@ export const useHandler = () => {
     contactModalRef,
     logoutModalRef,
     panelItemMap,
-    verticalListItemMap
+    verticalListItemMap,
+    personalData,
+    token
   };
 };
