@@ -35,12 +35,9 @@
     </view>
 
     <ProPageFooter>
-      <ProButton
-        class="hx-w-full"
-        type="primary"
-        text="完成认证（下一步）"
-        @tap.stop="handleNext"
-      />
+      <ProButton class="hx-w-full" type="primary" @tap.stop="handleNext">
+        完成认证（下一步）
+      </ProButton>
     </ProPageFooter>
   </ProPage>
 
