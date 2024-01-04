@@ -21,17 +21,20 @@
           v-if="showCancel"
           type="primary"
           color="rgb(61 134 242 / 10%)"
-          :text="cancelButtonText"
-          :custom-text-style="{ color: 'var(--hx-color-primary)' }"
           @tap.stop="handleCancel"
-        />
+        >
+          <span class="hx-text-text-color-theme">
+            {{ cancelButtonText }}
+          </span>
+        </ProButton>
         <ProButton
           class="hx-w-[122px]"
           v-if="showConfirm"
           type="primary"
-          :text="confirmButtonText"
           @tap.stop="handleConfirm"
-        />
+        >
+          <span>{{ confirmButtonText }}</span>
+        </ProButton>
       </view>
     </view>
   </ProPopup>

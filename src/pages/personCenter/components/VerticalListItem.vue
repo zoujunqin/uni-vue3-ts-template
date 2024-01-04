@@ -13,7 +13,7 @@
     <view class="hx-flex-1 hx-flex hx-items-center hx-justify-end">
       <slot name="text">
         <text
-          class="hx-text-font-size-regular hx-font-bold hx-text-[#3d86f2] hx-mr-[2px]"
+          class="hx-text-font-size-regular hx-font-bold hx-text-text-color-theme hx-mr-[2px]"
         >
           {{ data.text }}
         </text>
