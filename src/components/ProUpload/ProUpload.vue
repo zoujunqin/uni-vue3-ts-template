@@ -26,13 +26,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, shallowRef } from 'vue';
+import { computed, nextTick, shallowRef, watch } from 'vue';
 
 import ProUploadButton from './components/ProUploadButton.vue';
 import { uploadProps } from './props';
 
+import { useOss } from '@/hooks/useOss';
 import { useOssUploadImage } from '@/hooks/useOssUploadImage';
 import { useVModel } from '@/hooks/useVModel';
+
+const { getPreviewUrl } = useOss();
 
 const props = defineProps(uploadProps);
 
@@ -51,6 +54,16 @@ const previewPath = shallowRef('');
 const style = computed(() => {
   return previewPath.value && { backgroundImage: `url(${previewPath.value})` };
 });
+
+watch(
+  uploadValue,
+  async () => {
+    if (uploadValue.value) {
+      previewPath.value = await getPreviewUrl(uploadValue.value);
+    }
+  },
+  { immediate: true }
+);
 
 const handleRemove = () => {
   previewPath.value = '';

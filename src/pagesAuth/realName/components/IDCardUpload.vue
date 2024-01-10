@@ -40,7 +40,6 @@ const data = useVModel(props, 'modelValue', undefined, {
 const handleUploadSuccess = (previewUrl, type) => {
   const params = {
     imageUrl: previewUrl,
-    // type === 'Front' ? data.value.idCardFront : data.value.idCardReverse,
     needParse: true
   };
   getOcrIdCard(params).then(res => {
