@@ -46,16 +46,17 @@
                 }
               ]"
               >
-
-              <text>
-                {{ label }}
-              </text>
               <!-- nvue不支持伪元素before -->
               <text
                   v-if="required"
                   class="hx-text-color-error"
-              >*</text
               >
+              *
+              </text>
+              <text>
+                {{ label }}
+              </text>
+             
             </view
             >
           </view>

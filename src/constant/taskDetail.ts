@@ -22,3 +22,27 @@ export const { TASK_STATUS, TASK_STATUS_MAP, TASK_STATUS_LIST } =
     'TASK_STATUS',
     'value'
   );
+
+//申述处理状态
+export const { APPLY_STATUS, APPLY_STATUS_MAP, APPLY_STATUS_LIST } =
+  defineConstants(
+    [
+      {
+        label: '待处理',
+        value: 'to_be_processed',
+        className: 'warning-fixed-tip'
+      },
+      {
+        label: '通过',
+        value: 'passed',
+        className: ''
+      },
+      {
+        label: '驳回',
+        value: 'reject',
+        className: 'error-fixed-tip'
+      }
+    ] as const,
+    'APPLY_STATUS',
+    'value'
+  );

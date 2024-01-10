@@ -7,95 +7,93 @@
   </view>
 
   <view class="hx-flex hx-flex-col hx-items-center">
-    <ProFormItem
-      class="hx-w-full"
-      label="银行卡"
-      prop="name"
-      label-width="250rpx"
-    >
-      <ProInput
-        class="!hx-pr-0"
-        v-model="data.name"
-        input-align="right"
-        placeholder="请输入收款银行卡"
-      />
-    </ProFormItem>
-
-    <ProFormItem
-      class="hx-w-full"
-      label="所属银行"
-      prop="sex"
-      label-width="250rpx"
-    >
-      <ProInput
-        class="!hx-pr-0"
-        v-model="data.sex"
-        placeholder="请输入所属银行"
-        input-align="right"
-      />
-    </ProFormItem>
-
-    <ProFormItem
-      class="hx-w-full"
-      label="银行卡预留电话"
-      prop="sex"
-      label-width="250rpx"
-    >
-      <ProInput
-        class="!hx-pr-0"
-        v-model="data.sex"
-        placeholder="请输入预留电话"
-        input-align="right"
-      />
-    </ProFormItem>
-
-    <!-- 获取验证码 -->
-    <view class="hx-w-full hx-flex hx-items-center">
-      <view
-        class="hx-text-left hx-w-[125px] hx-text-color-primary hx-text-font-size-base hx-font-[400] hx-leading-[21px]"
+    <template v-for="item in dynamicStateForm" :key="item.fieldCode">
+      <ProFormItem
+        borderBottom
+        :required="item.izRequired === 'yes'"
+        class="hx-w-full"
+        :label="item.labelName"
+        :prop="item.fieldCode"
+        label-width="250rpx"
       >
-        <text v-if="!captchaIsValid" @tap.stop="handleGetCaptcha">
-          获取验证码
-        </text>
-        <view v-else class="hx-flex hx-items-center">
-          <ProCountDown
-            :time="60000"
-            format="ss"
-            class="count-down"
-            @finish="handleFinish"
-          />
-          <text> s后失效 </text>
-        </view>
-      </view>
-      <ProFormItem class="!hx-flex-1" prop="sex">
         <ProInput
           class="!hx-pr-0"
-          v-model="data.sex"
-          placeholder="请输入验证码"
+          v-model="data[item.fieldCode]"
           input-align="right"
+          :placeholder="item?.labelName"
         />
       </ProFormItem>
-    </view>
+      <!-- 获取验证码 -->
+      <view
+        class="hx-w-full hx-flex hx-items-center"
+        v-if="item.fieldCode === 'mobile'"
+      >
+        <view
+          class="hx-text-left hx-w-[125px] hx-text-color-primary hx-text-font-size-base hx-font-[400] hx-leading-[21px]"
+        >
+          <text v-if="!captchaIsValid" @tap.stop="handleGetCaptcha">
+            获取验证码
+          </text>
+          <view v-else class="hx-flex hx-items-center">
+            <ProCountDown
+              :time="countTime * 1000"
+              format="ss"
+              class="count-down"
+              @finish="handleFinish"
+            />
+            <text> s后失效 </text>
+          </view>
+        </view>
+        <ProFormItem class="!hx-flex-1" prop="code">
+          <ProInput
+            class="!hx-pr-0"
+            v-model="code"
+            placeholder="请输入验证码"
+            input-align="right"
+          />
+        </ProFormItem>
+      </view>
+    </template>
   </view>
 </template>
 
 <script setup lang="ts">
+import { ref, shallowRef } from 'vue';
+
+import { sms } from '@/api/system/sms';
 import { useVModel } from '@/hooks/useVModel';
-import { shallowRef } from 'vue';
 
 const props = defineProps({
-  formData: {
+  modelValue: {
     type: Object,
     default: () => ({})
+  },
+  dynamicStateForm: {
+    type: Array<any>,
+    default: () => []
+  },
+  smsCode: {
+    type: String,
+    default: ''
   }
 });
-const emit = defineEmits(['update:formData']);
+const emit = defineEmits(['update:smsCode']);
+const code = useVModel(props, 'smsCode', emit);
+const countTime = ref(60);
 
-const data = useVModel(props, 'formData', emit);
+const data = useVModel(props, 'modelValue', undefined, {
+  passive: true
+});
 
 const captchaIsValid = shallowRef(false);
 const handleGetCaptcha = () => {
-  captchaIsValid.value = true;
+  const { mobile } = data.value;
+  if (!mobile) return uni.showToast({ title: '请输入手机号码', icon: 'none' });
+  const param = { mobile, type: 'fe_realname_authentication' };
+  sms(param).then(() => {
+    uni.showToast({ title: '验证码获取成功', icon: 'none' });
+    captchaIsValid.value = true;
+  });
 };
 const handleFinish = () => {
   captchaIsValid.value = false;

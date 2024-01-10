@@ -6,6 +6,7 @@
       {{ data.taskName }}
     </text>
     <ProTags
+      v-if="statusShow"
       class="hx-mt-[8px]"
       size="mini"
       :text="data.undertakingStatusName"
@@ -59,6 +60,10 @@ defineProps({
   data: {
     type: Object as PropType<ITaskDetail>,
     default: () => ({})
+  },
+  statusShow: {
+    type: Boolean,
+    default: false
   }
 });
 </script>

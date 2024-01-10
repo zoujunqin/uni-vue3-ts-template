@@ -28,7 +28,7 @@
       :fetch="getRecommendTaskList"
       :extend-params="getExtendParams()"
       ref="proScrollListRef"
-      class="hx-flex-1 hx-pb-[10px]"
+      class="hx-flex-1"
     >
       <template #default="{ row }">
         <ProTaskCard

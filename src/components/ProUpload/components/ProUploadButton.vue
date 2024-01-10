@@ -1,5 +1,5 @@
 <template>
-  <view class="hx-flex hx-flex-col hx-items-center hx-w-[100px]">
+  <view class="hx-flex hx-flex-col hx-items-center hx-w-[200px]">
     <image
       :src="import('@http/upload/camera-icon.png')"
       class="hx-mb-[6px] hx-w-[44px] hx-h-[44px]"

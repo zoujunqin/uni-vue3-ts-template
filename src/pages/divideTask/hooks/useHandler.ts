@@ -72,7 +72,7 @@ export const useHandler = () => {
   /* 跳转到任务详情 */
   const navToTaskDetail = (row: ITask) => {
     uni.navigateTo({
-      url: `/pagesTask/taskDetail/index?id=${row.taskId}`
+      url: `/pagesTask/taskDetail/index?id=${row.taskId}&status=${false}`
     });
   };
 

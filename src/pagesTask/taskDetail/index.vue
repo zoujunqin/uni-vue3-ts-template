@@ -5,7 +5,11 @@
     class="page-pt-with-navbar hx-bg-white"
   >
     <view class="hx-p-[16px]">
-      <TaskHeader :data="taskDetail" />
+      <TaskHeader
+        :data="taskDetail"
+        :statusShow="!!taskDetail.undertakingStatusName"
+      />
+      <!-- <TaskHeader :data="taskDetail" :statusShow="statusShow" /> -->
 
       <ProDivider />
 
@@ -32,17 +36,42 @@ import TaskDescribe from './components/TaskDescribe.vue';
 import TaskHeader from './components/TaskHeader.vue';
 import TaskPlace from './components/TaskPlace.vue';
 
-import { ITaskDetail, getTaskDetail } from '@/api/fe/wechat/task';
+import { ITaskDetail, getTaskDetail, applyTask } from '@/api/fe/wechat/task';
 
 const taskDetail = shallowRef<ITaskDetail>();
+const statusShow = shallowRef<boolean>(false);
+const taskId = shallowRef();
 onLoad(query => {
-  getTaskDetail(query?.id).then(res => {
-    taskDetail.value = res;
-  });
+  statusShow.value = JSON.parse(query?.status);
+  taskId.value = query?.id;
+  handleGetTaskDetail();
 });
+const handleGetTaskDetail = () => {
+  getTaskDetail(taskId.value).then(res => {
+    taskDetail.value = res;
+    console.log(
+      'undertakingStatusName:',
+      taskDetail.value.undertakingStatusName,
+      !!taskDetail.value.undertakingStatusName
+    );
+  });
+};
 const handleApplyTask = () => {
-  uni.navigateTo({
-    url: `/pagesAuth/realName/index`
+  applyTask(taskId.value).then(res => {
+    const {
+      izRealname: izName,
+      izSignProtocol: izSign,
+      izFaceAuthenticated: izFace
+    } = res;
+    const current =
+      izName === 'no' ? 0 : izSign === 'no' ? 1 : izFace === 'no' ? 2 : -1;
+    if (current === -1) {
+      handleGetTaskDetail();
+    } else {
+      uni.navigateTo({
+        url: `/pagesAuth/realName/index?id=${taskId.value}?current=${current}`
+      });
+    }
   });
 };
 </script>

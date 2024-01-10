@@ -1,4 +1,5 @@
 import { PropType } from 'vue';
+
 import { FILE, IMAGE, BACKGROUND_NAMES } from './const';
 
 export const uploadProps = {
@@ -23,5 +24,11 @@ export const uploadProps = {
   uploadButtonTitle: {
     type: String,
     default: '点击上传国徽面'
+  },
+
+  /* 文件地址 */
+  modelValue: {
+    type: String,
+    default: ''
   }
 };

@@ -16,23 +16,31 @@ export interface IGetRealNameInfoParam {
   invitationCodeId?: number;
   taskId?: number;
 }
-export interface IRealNameInfo {
-  appealStatus: string;
-  propertyGroups: Array<{
-    properties: Array<{
-      fieldCode: string;
-      izRequired: boolean;
-      labelName: string;
-      sort: number;
-      value: string;
-      valueType: string;
-    }>;
-  }>;
-  rejectCause: string;
-}
+// export interface IRealNameInfo {
+//   appealStatus: string;
+//   propertyGroups: Array<{
+//     properties: Array<{
+//       fieldCode: string;
+//       izRequired: boolean;
+//       labelName: string;
+//       sort: number;
+//       value: string;
+//       valueType: string;
+//     }>;
+//   }>;
+//   rejectCause: string;
+// }
 /* 获取实名信息 */
-export const getRealNameInfo = (
-  params: IGetRealNameInfoParam
-): Promise<IRealNameInfo> => {
+// export const getRealNameInfo = (
+//   params: IGetRealNameInfoParam
+// ): Promise<IRealNameInfo> => {
+//   return http.request('get', `${baseApi}/realname_info`, { params });
+// };
+/* 获取实名信息 */
+export const getRealNameInfo = params => {
   return http.request('get', `${baseApi}/realname_info`, { params });
+};
+/* 实名认证-用户申诉 */
+export const postAppealSubmit = data => {
+  return http.request('post', `${baseApi}/appeal/submit`, { data });
 };

@@ -25,7 +25,7 @@ export const hyphenAB = (
   else return varA || varB;
 };
 
-//处理时间戳返回月份
+//处理时间戳返回年月
 export const handleDealTimestamp = (timestamp: Date) => {
   const now = new Date(timestamp);
   const year = now.getFullYear();
@@ -33,13 +33,11 @@ export const handleDealTimestamp = (timestamp: Date) => {
   return `${year}年` + `${month}月`;
 };
 
-//时间选择器展示格式
-export const handleFormatter = (type: string, value: string) => {
-  if (type === 'year') {
-    return `${value}年`;
-  }
-  if (type === 'month') {
-    return `${value}月`;
-  }
-  return value;
+//处理时间戳返回年月日
+export const handleDealTimestampDate = timestamp => {
+  const now = new Date(timestamp);
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+  const day = (now.getDate() + 1).toString().padStart(2, '0');
+  return `${year}-` + `${month}-` + `${day}`;
 };

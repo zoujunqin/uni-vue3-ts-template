@@ -40,7 +40,7 @@ const props = defineProps({
     default: () => []
   }
 });
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'confirm']);
 
 const defaultValue = [110000, 110100, 110105];
 const pickerValue = shallowRef<Array<number>>([]);
@@ -54,10 +54,12 @@ watch(() => props.modelValue, handleResetPickerValue, {
 });
 
 const handleConfirm = (e: ShallowRef<Array<IRegion>>) => {
+  console.log('eee:', e);
   emit(
     'update:modelValue',
     e.value.map(item => item.id)
   );
+  emit('confirm', e.value);
 };
 
 const provinces = shallowRef<Array<IRegion>>(region);
@@ -111,7 +113,7 @@ const open = () => {
 const { bridgedEvents } = useBridgedEmits(uvEvents);
 const proPickerRef = shallowRef();
 const { bridgedMethods } = useBridgedMethods(uvMethods, proPickerRef);
-defineExpose({ ...bridgedMethods, open });
+defineExpose({ ...bridgedMethods, open, confirm });
 </script>
 
 <script lang="ts">

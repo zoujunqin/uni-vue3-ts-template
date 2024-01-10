@@ -26,16 +26,22 @@
 </template>
 
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue';
+import { computed, nextTick, shallowRef } from 'vue';
 
 import ProUploadButton from './components/ProUploadButton.vue';
 import { uploadProps } from './props';
 
 import { useOssUploadImage } from '@/hooks/useOssUploadImage';
+import { useVModel } from '@/hooks/useVModel';
 
 const props = defineProps(uploadProps);
 
 const { loading, upload } = useOssUploadImage({ count: 1 });
+
+const uploadValue = useVModel(props, 'modelValue', undefined, {
+  passive: true
+});
+const emit = defineEmits(['uploadSuccess', 'handleRemovePath']);
 
 const backgroundImageClass = computed(
   () => props.backgroundName + '-background'
@@ -48,6 +54,8 @@ const style = computed(() => {
 
 const handleRemove = () => {
   previewPath.value = '';
+  uploadValue.value = '';
+  emit('handleRemovePath');
 };
 
 const handleUpload = () => {
@@ -55,6 +63,12 @@ const handleUpload = () => {
     chooseSuccess: res => {
       const { tempFilePath } = res.tempFiles[0];
       previewPath.value = tempFilePath;
+    },
+    uploadSuccess: res => {
+      uploadValue.value = res.filePath;
+      nextTick(() => {
+        emit('uploadSuccess', res.previewUrl);
+      });
     },
     uploadFail: handleRemove
   });

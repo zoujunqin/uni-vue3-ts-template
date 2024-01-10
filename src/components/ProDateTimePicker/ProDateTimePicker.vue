@@ -7,6 +7,7 @@
   />
 </template>
 <script setup lang="ts">
+import { onReady } from '@dcloudio/uni-app';
 import { ref } from 'vue';
 
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
@@ -38,6 +39,7 @@ const { bridgedMethods } = useBridgedMethods(
   ['open', 'close'],
   dataTimePickerRef
 );
+
 const formatter = (type: string, value: string) => {
   if (type === 'year') {
     return props.textShow ? `${value}年` : value;
@@ -50,6 +52,9 @@ const formatter = (type: string, value: string) => {
   }
   return value;
 };
+onReady(() => {
+  dataTimePickerRef.value.setFormatter(formatter);
+});
 defineExpose({ ...bridgedMethods });
 </script>
 <script lang="ts">
