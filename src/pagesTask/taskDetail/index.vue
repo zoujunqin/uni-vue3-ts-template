@@ -7,7 +7,7 @@
     <view class="hx-p-[16px]">
       <TaskHeader
         :data="taskDetail"
-        :statusShow="!!taskDetail.undertakingStatusName"
+        :statusShow="!!taskDetail?.undertakingStatusName"
       />
       <!-- <TaskHeader :data="taskDetail" :statusShow="statusShow" /> -->
 
@@ -49,11 +49,6 @@ onLoad(query => {
 const handleGetTaskDetail = () => {
   getTaskDetail(taskId.value).then(res => {
     taskDetail.value = res;
-    console.log(
-      'undertakingStatusName:',
-      taskDetail.value.undertakingStatusName,
-      !!taskDetail.value.undertakingStatusName
-    );
   });
 };
 const handleApplyTask = () => {
@@ -69,7 +64,7 @@ const handleApplyTask = () => {
       handleGetTaskDetail();
     } else {
       uni.navigateTo({
-        url: `/pagesAuth/realName/index?id=${taskId.value}?current=${current}`
+        url: `/pagesAuth/realName/index?id=${taskId.value}&current=${current}`
       });
     }
   });

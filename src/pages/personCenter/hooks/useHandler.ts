@@ -67,10 +67,6 @@ export const useHandler = () => {
         });
       }
     },
-    share: {
-      type: 'share',
-      handler: () => {}
-    },
     contact: {
       type: 'contact',
       handler: () => {

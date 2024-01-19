@@ -4,64 +4,66 @@
       <Steps class="hx-mt-[23px]" :current="current" />
     </view>
 
-    <view class="hx-flex-1 hx-overflow-auto hx-pb-[54px]">
-      <ProForm
-        ref="proFormRef"
-        borderBottom
-        label-position="left"
-        error-type="border-bottom"
-        :model="formData"
-        :rules="formRules"
-      >
-        <view class="hx-p-[16px_20px] hx-bg-white hx-mb-[10px]">
-          <text
-            v-if="
-              !!applyStatusMap.appealStatus &&
-              applyStatusMap.appealStatus !== APPLY_STATUS.PASSED
-            "
-            :class="[
-              APPLY_STATUS_MAP[applyStatusMap.appealStatus]?.className,
-              'hx-mb-[16px]'
-            ]"
-          >
-            {{ applyTipText }}
-          </text>
+    <view v-if="current === 0">
+      <view class="hx-flex-1 hx-overflow-auto hx-pb-[54px]">
+        <ProForm
+          ref="proFormRef"
+          borderBottom
+          label-position="left"
+          error-type="border-bottom"
+          :model="formData"
+          :rules="formRules"
+        >
+          <view class="hx-p-[16px_20px] hx-bg-white hx-mb-[10px]">
+            <text
+              v-if="
+                !!applyStatusMap.appealStatus &&
+                applyStatusMap.appealStatus !== APPLY_STATUS.PASSED
+              "
+              :class="[
+                APPLY_STATUS_MAP[applyStatusMap.appealStatus]?.className,
+                'hx-mb-[16px]'
+              ]"
+            >
+              {{ applyTipText }}
+            </text>
 
-          <IDCardUpload v-model="formData" />
-        </view>
-        <view v-for="(item, index) in dynamicState" :key="index">
-          <view class="info-content" v-if="item.categoryCode === 'bank_info'">
-            <BankInfoForm
-              :dynamicStateForm="item.properties"
-              v-model="formData"
-              v-model:smsCode="smsCode"
-              ref="bankInfoFormRef"
-            />
+            <IDCardUpload v-model="formData" />
           </view>
-          <view class="info-content" v-if="item.categoryCode === 'base_info'">
-            <BaseInfoForm
-              :dynamicStateForm="item.properties"
-              v-model="formData"
-            />
+          <view v-for="(item, index) in dynamicState" :key="index">
+            <view class="info-content" v-if="item.categoryCode === 'bank_info'">
+              <BankInfoForm
+                :dynamicStateForm="item.properties"
+                v-model="formData"
+                v-model:smsCode="smsCode"
+                ref="bankInfoFormRef"
+              />
+            </view>
+            <view class="info-content" v-if="item.categoryCode === 'base_info'">
+              <BaseInfoForm
+                :dynamicStateForm="item.properties"
+                v-model="formData"
+              />
+            </view>
+            <view
+              class="info-content"
+              v-if="item.categoryCode === 'certification_info'"
+            >
+              <QualificationUpload
+                :dynamicStateForm="item.properties"
+                v-model="formData"
+              />
+            </view>
           </view>
-          <view
-            class="info-content"
-            v-if="item.categoryCode === 'certification_info'"
-          >
-            <QualificationUpload
-              :dynamicStateForm="item.properties"
-              v-model="formData"
-            />
-          </view>
-        </view>
-      </ProForm>
+        </ProForm>
+      </view>
+
+      <ProPageFooter>
+        <ProButton class="hx-w-full" type="primary" @tap.stop="handleNext">
+          完成认证（下一步）
+        </ProButton>
+      </ProPageFooter>
     </view>
-
-    <ProPageFooter>
-      <ProButton class="hx-w-full" type="primary" @tap.stop="handleNext">
-        完成认证（下一步）
-      </ProButton>
-    </ProPageFooter>
   </ProPage>
 
   <OperateTip />
@@ -115,6 +117,7 @@ onLoad(query => {
     invitationCodeId: invitationCodeId.value,
     taskId: Number(query?.id)
   };
+  current.value = Number(query?.current);
   handleGetRealNameInfo();
 });
 const handleGetRealNameInfo = () => {
@@ -163,7 +166,7 @@ const getFormDataRules = subItem => {
     trigger: ['blur', 'change']
   };
   formRules.value[subItem.fieldCode] = rule;
-  if (subItem.fieldCode === 'domicileAreaCode') {
+  if (subItem.fieldCode === 'domicileAreaCode' && subItem.value) {
     getAreaListByDistrictId({ districtId: subItem.value }).then(res => {
       formData.value['ocrSure'].areaCode = [
         res['left'].id,
@@ -205,7 +208,6 @@ const handleNext = async () => {
     }
   }
   const { front, reverse } = formData.value['ocrSure'];
-  console.log('formData.value:', formData.value);
 
   if (front && reverse) {
     handleRealNameAuth();
@@ -229,9 +231,7 @@ const handleRealNameAuth = async () => {
     properties: properties,
     smsCode: smsCode.value
   };
-  console.log('校验通过params:', params);
-  realNameAuth(params).then(res => {
-    console.log('检查之后流程进行到哪一步:', res);
+  realNameAuth(params).then(() => {
     handleApplyTask();
   });
 };

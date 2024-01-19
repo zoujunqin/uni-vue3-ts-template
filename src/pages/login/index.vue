@@ -102,14 +102,23 @@
 </template>
 
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue';
+// import { onLoad } from '@dcloudio/uni-app';
+import { computed, ref, shallowRef } from 'vue';
+
 import { loginUnderWeChatAuth } from './utils/weChat';
 
 const isAgree = shallowRef([]);
 const proTooltipRef = shallowRef();
 const valid = computed(() => isAgree.value.length === 1);
+// const scene = ref();
 
 const proPopupRef = shallowRef();
+//扫码对接
+// onLoad(option => {
+//   if (option.scene) {
+//     scene.value = decodeURIComponent(option.scene);
+//   }
+// });
 const openPopup = () => {
   proPopupRef.value.open();
 };

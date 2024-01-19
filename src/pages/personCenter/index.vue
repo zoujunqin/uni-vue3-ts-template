@@ -158,11 +158,6 @@ const firstVerticalList = computed(() => {
       type: verticalListItemMap.agreement.type,
       icon: import('@http/person/agreement-icon.svg'),
       desc: '用户隐私协议'
-    },
-    {
-      type: verticalListItemMap.share.type,
-      icon: import('@http/person/share-icon.svg'),
-      desc: '分享小程序'
     }
   ];
 });
