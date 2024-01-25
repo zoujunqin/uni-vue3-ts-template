@@ -1,5 +1,10 @@
 <template>
-  <ProPage show-navbar navbar-title="实名认证" class="hx-flex hx-flex-col">
+  <ProPage
+    show-navbar
+    navbar-title="实名认证"
+    class="hx-flex hx-flex-col"
+    @pageBack="handlePageBack"
+  >
     <view class="step-container page-pt-with-navbar hx-h-[170px]">
       <Steps class="hx-mt-[23px]" :current="current" />
     </view>
@@ -78,7 +83,7 @@
 
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
-import { computed, ref } from 'vue';
+import { computed, provide, ref } from 'vue';
 
 import BankInfoForm from './components/BankInfoForm.vue';
 import BaseInfoForm from './components/BaseInfoForm.vue';
@@ -95,6 +100,7 @@ import {
 } from '@/api/fe/wechat/worker';
 import { getAreaListByDistrictId } from '@/api/system/area';
 import { APPLY_STATUS_MAP, APPLY_STATUS } from '@/constant/taskDetail';
+import { getRealName, setRealName } from '@/utils/user';
 
 const proFormRef = ref();
 const bankInfoFormRef = ref();
@@ -120,6 +126,14 @@ onLoad(query => {
   current.value = Number(query?.current);
   handleGetRealNameInfo();
 });
+const localFormData = getRealName() ? getRealName() : {};
+const localBool = Object.keys(localFormData).length > 0 ? true : false;
+
+const handlePageBack = () => {
+  setRealName(formData.value);
+};
+// provide('pageBack', { handlePageBack });
+
 const handleGetRealNameInfo = () => {
   getRealNameInfo(infoParams.value).then(res => {
     applyStatusMap.value = {
@@ -153,7 +167,11 @@ const applyTipText = computed(() => {
 });
 
 const getFormDataRules = subItem => {
-  formData.value[subItem.fieldCode] = subItem.value;
+  formData.value[subItem.fieldCode] = subItem.value
+    ? subItem.value
+    : localBool
+      ? localFormData[subItem.fieldCode]
+      : '';
   formData.value['ocrSure'] = {
     front: false,
     reverse: false,
@@ -232,6 +250,7 @@ const handleRealNameAuth = async () => {
     smsCode: smsCode.value
   };
   realNameAuth(params).then(() => {
+    handlePageBack();
     handleApplyTask();
   });
 };

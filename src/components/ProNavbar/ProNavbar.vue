@@ -16,13 +16,16 @@
 </template>
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
 
 import { useSystemStore } from '@/pinia/modules/system';
 
 defineProps({
   text: { type: String, default: '导航栏' }
 });
+const emit = defineEmits(['navBack']);
+
+// const pageBackFunc = inject('pageBack');
 
 const { systemInfo } = storeToRefs(useSystemStore());
 const style = computed(() => {
@@ -37,6 +40,8 @@ const currentPages = getCurrentPages();
 const showBackIcon = currentPages.length > 1;
 
 const handleBack = () => {
+  emit('navBack');
+  // pageBackFunc?.handlePageBack();
   uni.navigateBack();
 };
 </script>

@@ -1,6 +1,11 @@
 <template>
   <view class="hx-h-full hx-overflow-auto" :class="pageClass">
-    <ProNavbar v-if="showNavbar" :style="navbarStyle" :text="navbarTitle" />
+    <ProNavbar
+      v-if="showNavbar"
+      :style="navbarStyle"
+      :text="navbarTitle"
+      @navBack="handleNavBack"
+    />
     <ProTabbar v-if="showTabbar" />
 
     <slot />
@@ -21,7 +26,7 @@ const props = defineProps({
     default: 'unset'
   }
 });
-
+const emit = defineEmits(['pageBack']);
 const pageClass = computed(() => {
   return {
     'page-pb-with-tabbar': props.showTabbar
@@ -33,6 +38,9 @@ const navbarStyle = computed(() => {
     visibility: props.navbarVisibility
   };
 });
+const handleNavBack = () => {
+  emit('pageBack');
+};
 </script>
 
 <script lang="ts">

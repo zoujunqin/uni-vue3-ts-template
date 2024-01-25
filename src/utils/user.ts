@@ -20,6 +20,7 @@ export const formatToken = (token: string): string => {
 };
 
 export const USER_INFO_KEY = 'user-info';
+export const REAL_NAME_KEY = 'real-name';
 
 export function getUserInfo(): string {
   return uni.getStorageSync(USER_INFO_KEY);
@@ -31,4 +32,12 @@ export function setUserInfo(userInfo: IPersonInfo) {
 
 export function removeUserInfo() {
   uni.removeStorageSync(USER_INFO_KEY);
+}
+
+export function setRealName(data: unknown) {
+  uni.setStorageSync(REAL_NAME_KEY, data);
+}
+
+export function getRealName() {
+  return uni.getStorageSync(REAL_NAME_KEY);
 }
