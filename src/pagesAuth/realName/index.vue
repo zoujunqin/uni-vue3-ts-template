@@ -83,7 +83,7 @@
 
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
-import { computed, provide, ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import BankInfoForm from './components/BankInfoForm.vue';
 import BaseInfoForm from './components/BaseInfoForm.vue';
@@ -132,8 +132,6 @@ const localBool = Object.keys(localFormData).length > 0 ? true : false;
 const handlePageBack = () => {
   setRealName(formData.value);
 };
-// provide('pageBack', { handlePageBack });
-
 const handleGetRealNameInfo = () => {
   getRealNameInfo(infoParams.value).then(res => {
     applyStatusMap.value = {
