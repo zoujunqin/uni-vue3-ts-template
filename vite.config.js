@@ -1,16 +1,17 @@
 import uni from '@dcloudio/vite-plugin-uni';
+import uniAxiosAdapter from '@uni-helper/axios-adapter/vite';
 import { defineConfig } from 'vite';
 import { UnifiedViteWeappTailwindcssPlugin as uvtw } from 'weapp-tailwindcss/vite';
-import uniAxiosAdapter from '@uni-helper/axios-adapter/vite';
-import { plugins as postcssPlugins } from './postcss.config';
-import { weAppTailwindcssDisabled } from './build/platform';
-import { getAlias } from './build/getAlias';
-import { ip, port } from './build/httpServer';
 
+import { getAlias } from './build/getAlias';
+import { weAppTailwindcssDisabled } from './build/platform';
+import { plugins as postcssPlugins } from './postcss.config';
+
+const alias = getAlias();
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
-    alias: getAlias(),
+    alias,
     extensions: ['ts', 'js', 'vue', 'nvue', 'css', 'scss']
   },
   plugins: [
@@ -29,7 +30,7 @@ export default defineConfig({
       scss: {
         additionalData: `
         @use "@/style/index.scss" as *;
-        $http: 'http://${ip}:${port}';
+        $http: "${alias['@http']}";
         `
       }
     }
