@@ -7,7 +7,7 @@ import {
   postAppealSubmit
 } from '@/api/fe/wechat/worker';
 import { getAreaListByDistrictId } from '@/api/system/area';
-import { APPLY_STATUS } from '@/constant/taskDetail';
+import { APPLY_STATUS, REAL_TYPE, YES_NO_TYPE } from '@/constant/taskDetail';
 import { getRealName, setRealName } from '@/utils/user';
 
 export const useHandler = ({ infoParams, applyStatusMap }) => {
@@ -17,61 +17,54 @@ export const useHandler = ({ infoParams, applyStatusMap }) => {
   const formRules = ref({});
   const smsCode = ref('');
   const explainModalRef = ref();
-  const localFormData = getRealName() ? getRealName() : {};
-  const localBool = Object.keys(localFormData).length > 0 ? true : false;
+  const localFormData = getRealName() || {};
+  const localBool = Object.keys(localFormData).length > 0;
   const handleGetRealNameInfo = () => {
     getRealNameInfo(infoParams.value).then(res => {
       applyStatusMap.value = {
         appealStatus: res.appealStatus,
         rejectCause: res.rejectCause
       };
-      dynamicState.value = res.propertyGroups.reduce((arr, item) => {
-        const newProperties = item.properties.reduce((subArr, subItem) => {
-          getFormDataRules(subItem);
-          if (
-            subItem.fieldCode !== 'idCardFront' &&
-            subItem.fieldCode !== 'idCardReverse'
-          ) {
-            subArr.push(subItem);
+      res.propertyGroups.forEach(item => {
+        for (const k in item.properties) {
+          getFormData(item.properties[k]);
+          getFormDataRules(item.properties[k]);
+          if (item.properties[k].fieldCode === 'idCardFront') {
+            item.properties.splice(k, 2);
           }
-          return subArr;
-        }, []);
-        arr.push({
-          ...item,
-          properties: newProperties
-        });
-        return arr;
-      }, []);
+        }
+      });
+      dynamicState.value = res.propertyGroups;
       proFormRef.value.setRules(formRules.value);
     });
   };
-  const getFormDataRules = subItem => {
-    formData.value[subItem.fieldCode] = subItem.value
-      ? subItem.value
-      : localBool
-        ? localFormData[subItem.fieldCode]
-        : '';
+  const getFormData = subItem => {
+    formData.value[subItem.fieldCode] = localBool
+      ? localFormData[subItem.fieldCode]
+      : subItem.value;
     formData.value['ocrSure'] = {
       front: false,
       reverse: false,
       areaText: '',
       areaCode: []
     };
+  };
+  const getFormDataRules = subItem => {
     const rule = {
       type: 'string',
-      required: subItem.izRequired === 'yes',
+      required: subItem.izRequired === YES_NO_TYPE.YES,
       trigger: ['blur', 'change']
     };
     formRules.value[subItem.fieldCode] = rule;
     if (subItem.fieldCode === 'domicileAreaCode' && subItem.value) {
       getAreaListByDistrictId({ districtId: subItem.value }).then(res => {
-        formData.value['ocrSure'].areaCode = [
-          res['left'].id,
-          res['middle'].id,
-          res['right'].id
-        ];
-        formData.value['ocrSure'].areaText =
-          res['left'].name + '/' + res['middle'].name + '/' + res['right'].name;
+        const { left, middle, right } = res;
+        formData.value['ocrSure'].areaCode = [left.id, middle.id, right.id];
+        formData.value['ocrSure'].areaText = [
+          left.name,
+          middle.name,
+          right.name
+        ].join('/');
       });
     }
   };
@@ -90,11 +83,13 @@ export const useHandler = ({ infoParams, applyStatusMap }) => {
       });
     }
     const fIndex = dynamicState.value.findIndex(
-      item => item.categoryCode === 'certification_info'
+      item => item.categoryCode === REAL_TYPE.CERTIFICATION_INFO
     );
     if (fIndex !== -1) {
       const findObj = dynamicState.value[fIndex].properties.find(item => {
-        return item.izRequired === 'yes' && !formData.value[item.fieldCode];
+        return (
+          item.izRequired === YES_NO_TYPE.YES && !formData.value[item.fieldCode]
+        );
       });
       if (findObj) {
         return uni.showToast({

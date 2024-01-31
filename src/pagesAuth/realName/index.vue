@@ -36,7 +36,10 @@
             <IDCardUpload v-model="formData" />
           </view>
           <view v-for="(item, index) in dynamicState" :key="index">
-            <view class="info-content" v-if="item.categoryCode === 'bank_info'">
+            <view
+              class="info-content"
+              v-if="item.categoryCode === REAL_TYPE.BANK_INFO"
+            >
               <BankInfoForm
                 :dynamicStateForm="item.properties"
                 v-model="formData"
@@ -44,7 +47,10 @@
                 ref="bankInfoFormRef"
               />
             </view>
-            <view class="info-content" v-if="item.categoryCode === 'base_info'">
+            <view
+              class="info-content"
+              v-if="item.categoryCode === REAL_TYPE.BASE_INFO"
+            >
               <BaseInfoForm
                 :dynamicStateForm="item.properties"
                 v-model="formData"
@@ -52,7 +58,7 @@
             </view>
             <view
               class="info-content"
-              v-if="item.categoryCode === 'certification_info'"
+              v-if="item.categoryCode === REAL_TYPE.CERTIFICATION_INFO"
             >
               <QualificationUpload
                 :dynamicStateForm="item.properties"
@@ -93,7 +99,11 @@ import QualificationUpload from './components/QualificationUpload.vue';
 import Steps from './components/Steps.vue';
 import { useHandler } from './hooks/useHandler';
 
-import { APPLY_STATUS_MAP, APPLY_STATUS } from '@/constant/taskDetail';
+import {
+  APPLY_STATUS_MAP,
+  APPLY_STATUS,
+  REAL_TYPE
+} from '@/constant/taskDetail';
 
 const bankInfoFormRef = ref();
 const current = ref(0);

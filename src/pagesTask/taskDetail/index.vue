@@ -60,13 +60,9 @@ const handleApplyTask = () => {
     } = res;
     const current =
       izName === 'no' ? 0 : izSign === 'no' ? 1 : izFace === 'no' ? 2 : -1;
-    if (current === -1) {
-      handleGetTaskDetail();
-    } else {
-      uni.navigateTo({
-        url: `/pagesAuth/realName/index?id=${taskId.value}&current=${current}`
-      });
-    }
+    uni.navigateTo({
+      url: `/pagesAuth/realName/index?id=${taskId.value}&current=${current}`
+    });
   });
 };
 </script>
