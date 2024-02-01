@@ -25,16 +25,21 @@ export const useHandler = ({ infoParams, applyStatusMap }) => {
         appealStatus: res.appealStatus,
         rejectCause: res.rejectCause
       };
-      res.propertyGroups.forEach(item => {
-        for (const k in item.properties) {
-          getFormData(item.properties[k]);
-          getFormDataRules(item.properties[k]);
-          if (item.properties[k].fieldCode === 'idCardFront') {
-            item.properties.splice(k, 2);
+      const newDynamicState = [];
+      for (const key in res.propertyGroups) {
+        const { properties, ...arg } = res.propertyGroups[key];
+        newDynamicState.push({ ...arg });
+        for (const subItem of properties) {
+          if (!['idCardFront', 'idCardReverse'].includes(subItem.fieldCode)) {
+            getFormData(subItem);
+            getFormDataRules(subItem);
+            newDynamicState[key].properties =
+              newDynamicState[key].properties || [];
+            newDynamicState[key].properties.push(subItem);
           }
         }
-      });
-      dynamicState.value = res.propertyGroups;
+      }
+      dynamicState.value = newDynamicState;
       proFormRef.value.setRules(formRules.value);
     });
   };

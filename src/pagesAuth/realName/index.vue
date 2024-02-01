@@ -9,8 +9,8 @@
       <Steps class="hx-mt-[23px]" :current="current" />
     </view>
 
-    <view v-if="current === 0">
-      <view class="hx-flex-1 hx-overflow-auto hx-pb-[54px]">
+    <view class="hx-flex-1 hx-overflow-auto hx-pb-[54px]">
+      <view v-if="current === 0">
         <ProForm
           ref="proFormRef"
           borderBottom
