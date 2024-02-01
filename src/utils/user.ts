@@ -21,6 +21,7 @@ export const formatToken = (token: string): string => {
 
 export const USER_INFO_KEY = 'user-info';
 export const REAL_NAME_KEY = 'real-name';
+export const INVITATION_ID_KEY = 'invitation-id';
 
 export function getUserInfo(): string {
   return uni.getStorageSync(USER_INFO_KEY);
@@ -33,11 +34,20 @@ export function setUserInfo(userInfo: IPersonInfo) {
 export function removeUserInfo() {
   uni.removeStorageSync(USER_INFO_KEY);
 }
-
+//实名信息
 export function setRealName(data: unknown) {
   uni.setStorageSync(REAL_NAME_KEY, data);
 }
 
 export function getRealName() {
   return uni.getStorageSync(REAL_NAME_KEY);
+}
+
+//邀请码id
+export function setInvitationCodeId(id: unknown) {
+  uni.setStorageSync(INVITATION_ID_KEY, id);
+}
+
+export function getInvitationCodeId() {
+  return uni.getStorageSync(INVITATION_ID_KEY);
 }

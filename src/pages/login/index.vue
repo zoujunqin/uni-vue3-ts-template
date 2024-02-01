@@ -102,35 +102,38 @@
 </template>
 
 <script setup lang="ts">
-// import { onLoad } from '@dcloudio/uni-app';
+import { onLoad } from '@dcloudio/uni-app';
 import { computed, ref, shallowRef } from 'vue';
 
 import { loginUnderWeChatAuth } from './utils/weChat';
 
+import { setInvitationCodeId } from '@/utils/user';
+
 const isAgree = shallowRef([]);
 const proTooltipRef = shallowRef();
 const valid = computed(() => isAgree.value.length === 1);
-// const scene = ref();
-
 const proPopupRef = shallowRef();
-//扫码对接
-// onLoad(option => {
-//   if (option.scene) {
-//     scene.value = decodeURIComponent(option.scene);
-//   }
-// });
+const sceneBool = ref(false);
+
+onLoad(option => {
+  if (option.scene) {
+    sceneBool.value = true;
+    setInvitationCodeId(option.value);
+  }
+});
 const openPopup = () => {
   proPopupRef.value.open();
 };
 
 const navToMobileLogin = () => {
   if (!validate()) return;
-  uni.navigateTo({ url: '/pages/login/mobileLogin' });
+  uni.navigateTo({
+    url: '/pages/login/mobileLogin'
+  });
 };
 
 const validate = () => {
   if (!valid.value) proTooltipRef.value.open();
-
   return valid.value;
 };
 
