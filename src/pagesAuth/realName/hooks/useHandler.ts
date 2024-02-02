@@ -1,5 +1,6 @@
 import { computed, ref } from 'vue';
 
+import { getInvitationProtocolSignUrlForTask } from '@/api/fe/fe_worker_protocol';
 import { applyTask } from '@/api/fe/wechat/task';
 import {
   getRealNameInfo,
@@ -144,7 +145,15 @@ export const useHandler = ({ infoParams, applyStatusMap }) => {
         izName === 'no' ? 0 : izSign === 'no' ? 1 : izFace === 'no' ? 2 : -1;
       // TODO 三方对接
       if (current === 1) {
-        console.log('进入合同签署');
+        const params = {
+          callbackPage: '/pagesAuth/realName/index',
+          taskId: taskId
+        };
+        getInvitationProtocolSignUrlForTask(params).then(res => {
+          uni.navigateTo({
+            url: `/pagesAuth/contractSign/index?url=${res}`
+          });
+        });
       } else {
         console.log('进入活体认证');
       }

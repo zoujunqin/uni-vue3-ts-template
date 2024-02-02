@@ -19,8 +19,8 @@ import { getUUID } from '@/utils';
 import { decryptString, encryptString } from '@/utils/crypto';
 import { formatToken, getToken, removeToken } from '@/utils/user';
 
-const baseURL = 'http://218.104.230.173:17054';
-// const baseURL = 'http://192.168.117.87:8100'; // 林伦
+// const baseURL = 'http://218.104.230.173:17054';
+const baseURL = 'http://192.168.117.87:8100'; // 林伦
 
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {

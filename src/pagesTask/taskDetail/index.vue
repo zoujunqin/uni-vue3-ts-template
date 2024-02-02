@@ -61,7 +61,7 @@ const handleApplyTask = () => {
     const current =
       izName === 'no' ? 0 : izSign === 'no' ? 1 : izFace === 'no' ? 2 : -1;
     uni.navigateTo({
-      url: `/pagesAuth/realName/index?id=${taskId.value}&current=${current}`
+      url: `/pagesAuth/realName/index?taskId=${taskId.value}&current=${current}`
     });
   });
 };

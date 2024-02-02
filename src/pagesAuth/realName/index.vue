@@ -131,7 +131,7 @@ const {
 onLoad(query => {
   infoParams.value = {
     invitationCodeId: 21,
-    taskId: Number(query?.id)
+    taskId: Number(query?.taskId)
   };
   current.value = Number(query?.current);
   handleGetRealNameInfo();
