@@ -89,7 +89,7 @@ const captchaIsValid = shallowRef(false);
 const handleGetCaptcha = () => {
   const { mobile } = data.value;
   if (!mobile) return uni.showToast({ title: '请输入手机号码', icon: 'none' });
-  const param = { mobile, type: 'fe_realname_authentication' };
+  const param = { mobile, type: 'normal' };
   sms(param).then(() => {
     uni.showToast({ title: '验证码获取成功', icon: 'none' });
     captchaIsValid.value = true;
