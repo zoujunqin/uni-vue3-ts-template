@@ -79,10 +79,6 @@
       class="login-with-wechat hx-mt-[24px]"
       @getphonenumber="loginUnderWeChatAuth"
     >
-      <image
-        src="@/static/login/weixin-gray-icon.png"
-        class="hx-w-[24px] hx-h-[24px] hx-mr-[4px]"
-      />
       <text
         class="hx-text-[15px] hx-font-[400] hx-leading-[24px] hx-text-text-color-tip"
       >
@@ -93,12 +89,14 @@
 </template>
 
 <script setup lang="ts">
+import { ref, shallowRef } from 'vue';
+
+import { loginUnderWeChatAuth } from './utils/weChat';
+
 import { loginWithSms } from '@/api/fe/wechat';
 import { sms } from '@/api/system/sms';
 import { useUserStore } from '@/pinia/modules/user';
 import { switchFirstTab } from '@/utils/switchTab';
-import { ref, shallowRef } from 'vue';
-import { loginUnderWeChatAuth } from './utils/weChat';
 
 const proFormRef = shallowRef();
 const formData = ref({
@@ -162,13 +160,14 @@ const fetchMobileLogin = () => {
 
 <style scoped lang="scss">
 .login {
-  background: linear-gradient(
-    180deg,
-    #fff 0%,
-    #eef8ff 46.47%,
-    #e8efff 73.17%,
-    #e7e6fd 100%
-  );
+  background:
+    linear-gradient(
+      180deg,
+      #fff 0%,
+      #eef8ff 46.47%,
+      #e8efff 73.17%,
+      #e7e6fd 100%
+    );
 }
 
 :deep(.pro-count-down text) {

@@ -21,10 +21,6 @@
       class="hx-text-[white] hx-mt-[56px] hx-bg-color-success hx-h-[44px] hx-flex hx-items-center hx-justify-center hx-rounded-[6px]"
       @click="validate"
     >
-      <image
-        src="@/static/login/weixin-white-icon.png"
-        class="hx-w-[24px] hx-h-[24px] hx-mr-[2px]"
-      />
       <text> 微信授权登录 </text>
     </ProButton>
     <ProButton
@@ -35,10 +31,6 @@
       class="hx-text-[white] hx-mt-[56px] hx-bg-color-success hx-h-[44px] hx-flex hx-items-center hx-justify-center hx-rounded-[6px]"
       @getphonenumber="loginUnderWeChatAuth"
     >
-      <image
-        src="@/static/login/weixin-white-icon.png"
-        class="hx-w-[24px] hx-h-[24px] hx-mr-[2px]"
-      />
       <text> 微信授权登录 </text>
     </ProButton>
 
@@ -47,11 +39,7 @@
       class="hx-text-[white] hx-mt-[18px] hx-bg-color-primary hx-h-[44px] hx-flex hx-items-center hx-justify-center hx-rounded-[6px]"
       @tap="navToMobileLogin"
     >
-      <image
-        src="@/static/login/phone-icon.png"
-        class="hx-w-[24px] hx-h-[24px] hx-mr-[2px]"
-      />
-      <text> 使用手机号码登录 </text>
+      <text> 手机号快捷登录 </text>
     </ProButton>
 
     <view class="hx-mt-[24px] hx-flex hx-items-center hx-justify-center">

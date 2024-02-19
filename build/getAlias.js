@@ -1,4 +1,5 @@
 const { resolve } = require('path');
+
 const { ip, port } = require('./httpServer');
 const { isMpWeixin } = require('./platform');
 
@@ -12,7 +13,7 @@ const getAlias = () => {
     '@http': isMpWeixin
       ? process.env.NODE_ENV === 'development'
         ? `http://${ip}:${port}`
-        : 'http://0.0.0.0:9999'
+        : 'https://hxrl-hro-front-oss.oss-cn-hangzhou.aliyuncs.com/mp'
       : resolvePath('src/static@http')
   };
 };
