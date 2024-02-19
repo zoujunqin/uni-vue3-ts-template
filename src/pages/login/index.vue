@@ -91,7 +91,7 @@
 
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
-import { computed, ref, shallowRef } from 'vue';
+import { computed, shallowRef } from 'vue';
 
 import { loginUnderWeChatAuth } from './utils/weChat';
 
@@ -101,13 +101,9 @@ const isAgree = shallowRef([]);
 const proTooltipRef = shallowRef();
 const valid = computed(() => isAgree.value.length === 1);
 const proPopupRef = shallowRef();
-const sceneBool = ref(false);
 
 onLoad(option => {
-  if (option.scene) {
-    sceneBool.value = true;
-    setInvitationCodeId(option.value);
-  }
+  option.scene ? setInvitationCodeId(option.scene) : setInvitationCodeId('-1');
 });
 const openPopup = () => {
   proPopupRef.value.open();

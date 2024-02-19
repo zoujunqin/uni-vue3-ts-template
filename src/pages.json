@@ -94,9 +94,9 @@
     }
   ],
   "preloadRule": {
-    "pages/taskCenter/index": {
+    "pages/login/index": {
       "network": "all",
-      "packages": ["pagesTask", "pagesPerson"]
+      "packages": ["pagesAuth", "pagesTask", "pagesPerson"]
     }
   },
   "tabBar": {

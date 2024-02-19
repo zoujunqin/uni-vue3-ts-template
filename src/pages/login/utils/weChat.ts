@@ -1,6 +1,6 @@
 import { loginWithWeChat } from '@/api/fe/wechat';
 import { useUserStore } from '@/pinia/modules/user';
-import { switchFirstTab } from '@/utils/switchTab';
+import { loginJumpPage } from '@/utils/switchTab';
 
 export interface IPhoneNumberResult {
   iv: string;
@@ -19,7 +19,7 @@ export const loginUnderWeChatAuth = (res: IPhoneNumberResult) => {
       .then(res => {
         setToken(res.token);
         fetchUserInfo();
-        switchFirstTab();
+        loginJumpPage();
       })
       .finally(uni.hideLoading);
   } else if (errMsg === 'getPhoneNumber:fail user deny') {

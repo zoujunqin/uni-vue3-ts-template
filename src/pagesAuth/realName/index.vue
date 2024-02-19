@@ -104,6 +104,7 @@ import {
   APPLY_STATUS,
   REAL_TYPE
 } from '@/constant/taskDetail';
+import { getInvitationCodeId } from '@/utils/user';
 
 const bankInfoFormRef = ref();
 const current = ref(0);
@@ -130,8 +131,8 @@ const {
 });
 onLoad(query => {
   infoParams.value = {
-    invitationCodeId: 21,
-    taskId: Number(query?.taskId)
+    invitationCodeId: Number(getInvitationCodeId()),
+    taskId: query.taskId ? Number(query.taskId) : ''
   };
   current.value = Number(query?.current);
   handleGetRealNameInfo();

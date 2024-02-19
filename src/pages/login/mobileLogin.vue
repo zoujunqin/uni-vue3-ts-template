@@ -160,14 +160,13 @@ const fetchMobileLogin = () => {
 
 <style scoped lang="scss">
 .login {
-  background:
-    linear-gradient(
-      180deg,
-      #fff 0%,
-      #eef8ff 46.47%,
-      #e8efff 73.17%,
-      #e7e6fd 100%
-    );
+  background: linear-gradient(
+    180deg,
+    #fff 0%,
+    #eef8ff 46.47%,
+    #e8efff 73.17%,
+    #e7e6fd 100%
+  );
 }
 
 :deep(.pro-count-down text) {

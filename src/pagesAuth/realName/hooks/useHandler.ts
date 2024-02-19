@@ -1,6 +1,10 @@
 import { computed, ref } from 'vue';
 
-import { getInvitationProtocolSignUrlForTask } from '@/api/fe/fe_worker_protocol';
+import {
+  getInvitationProtocolSignUrlForTask,
+  getInvitationProtocolSignUrlForCode
+} from '@/api/fe/fe_worker_protocol';
+import { getInvitationCodeScan } from '@/api/fe/wechat/invitation_code';
 import { applyTask } from '@/api/fe/wechat/task';
 import {
   getRealNameInfo,
@@ -9,7 +13,7 @@ import {
 } from '@/api/fe/wechat/worker';
 import { getAreaListByDistrictId } from '@/api/system/area';
 import { APPLY_STATUS, REAL_TYPE, YES_NO_TYPE } from '@/constant/taskDetail';
-import { getRealName, setRealName } from '@/utils/user';
+import { getRealName, setRealName, getInvitationCodeId } from '@/utils/user';
 
 export const useHandler = ({ infoParams, applyStatusMap }) => {
   const formData = ref<any>({});
@@ -130,9 +134,14 @@ export const useHandler = ({ infoParams, applyStatusMap }) => {
     };
     realNameAuth(params).then(() => {
       handlePageBack();
-      handleApplyTask();
+      if (getInvitationCodeId() === '-1') {
+        handleApplyTask();
+      } else {
+        handleGetInvitationCodeScan();
+      }
     });
   };
+  // 申请任务进入
   const handleApplyTask = () => {
     const { taskId } = infoParams.value;
     applyTask(taskId).then(res => {
@@ -150,6 +159,33 @@ export const useHandler = ({ infoParams, applyStatusMap }) => {
           taskId: taskId
         };
         getInvitationProtocolSignUrlForTask(params).then(res => {
+          uni.navigateTo({
+            url: `/pagesAuth/contractSign/index?url=${res}`
+          });
+        });
+      } else {
+        console.log('进入活体认证');
+      }
+    });
+  };
+  //邀请码进入
+  const handleGetInvitationCodeScan = () => {
+    const { invitationCodeId } = infoParams.value;
+    getInvitationCodeScan(invitationCodeId).then(res => {
+      const {
+        izRealname: izName,
+        izSignProtocol: izSign,
+        izFaceAuthenticated: izFace
+      } = res;
+      const current =
+        izName === 'no' ? 0 : izSign === 'no' ? 1 : izFace === 'no' ? 2 : -1;
+      // TODO 三方对接
+      if (current === 1) {
+        const params = {
+          callbackPage: '/pagesAuth/realName/index',
+          invitationCodeId: invitationCodeId
+        };
+        getInvitationProtocolSignUrlForCode(params).then(res => {
           uni.navigateTo({
             url: `/pagesAuth/contractSign/index?url=${res}`
           });
