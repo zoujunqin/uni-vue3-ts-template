@@ -49,7 +49,7 @@
         </text>
       </view>
 
-      <ProButton type="primary" text="立即查看" @tap="toTaskCenter" />
+      <ProButton type="primary" @tap="toTaskCenter">立即查看</ProButton>
     </view>
   </ProPage>
 </template>

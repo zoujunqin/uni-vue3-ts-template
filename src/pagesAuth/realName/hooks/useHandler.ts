@@ -150,7 +150,7 @@ export const useHandler = ({ infoParams, applyStatusMap }) => {
       // TODO 三方对接
       if (current === 1) {
         const params = {
-          callbackPage: '/pagesAuth/realName/index',
+          callbackPage: '/pagesAuth/realNameSuccess/index',
           taskId: taskId
         };
         getInvitationProtocolSignUrlForTask(params).then(res => {
@@ -171,7 +171,7 @@ export const useHandler = ({ infoParams, applyStatusMap }) => {
       // TODO 三方对接
       if (current === 1) {
         const params = {
-          callbackPage: '/pagesAuth/realName/index',
+          callbackPage: '/pagesAuth/realNameSuccess/index',
           codeId: invitationCodeId
         };
         getInvitationProtocolSignUrlForCode(params).then(res => {

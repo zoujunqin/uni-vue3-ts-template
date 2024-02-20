@@ -156,7 +156,7 @@ onLoad(query => {
 });
 const handleGetTaskSignUrl = () => {
   const params = {
-    callbackPage: '/pages/taskCenter/index',
+    callbackPage: '/pagesAuth/realNameSuccess/index',
     taskId: infoParams.value.taskId
   };
   getInvitationProtocolSignUrlForTask(params).then(res => {
@@ -166,7 +166,7 @@ const handleGetTaskSignUrl = () => {
 };
 const handleGetCodeSignUrl = () => {
   const params = {
-    callbackPage: '/pages/taskCenter/index',
+    callbackPage: '/pagesAuth/realNameSuccess/index',
     codeId: infoParams.value.invitationCodeId
   };
   getInvitationProtocolSignUrlForCode(params).then(res => {
