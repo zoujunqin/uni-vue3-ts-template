@@ -37,6 +37,7 @@ import TaskHeader from './components/TaskHeader.vue';
 import TaskPlace from './components/TaskPlace.vue';
 
 import { ITaskDetail, getTaskDetail, applyTask } from '@/api/fe/wechat/task';
+import { dealStepCurrent } from '@/utils/index';
 
 const taskDetail = shallowRef<ITaskDetail>();
 const statusShow = shallowRef<boolean>(false);
@@ -53,13 +54,7 @@ const handleGetTaskDetail = () => {
 };
 const handleApplyTask = () => {
   applyTask(taskId.value).then(res => {
-    const {
-      izRealname: izName,
-      izSignProtocol: izSign,
-      izFaceAuthenticated: izFace
-    } = res;
-    const current =
-      izName === 'no' ? 0 : izSign === 'no' ? 1 : izFace === 'no' ? 2 : -1;
+    const current = dealStepCurrent(res);
     uni.navigateTo({
       url: `/pagesAuth/realName/index?taskId=${taskId.value}&current=${current}`
     });

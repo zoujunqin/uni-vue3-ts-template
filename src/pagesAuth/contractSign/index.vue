@@ -1,12 +1,5 @@
 <template>
-  <web-view :src="url" />
+  <web-view src="https://www.baidu.com/" />
 </template>
 
-<script setup lang="ts">
-import { onLoad } from '@dcloudio/uni-app';
-import { ref } from 'vue';
-const url = ref('');
-onLoad(query => {
-  url.value = query.url;
-});
-</script>
+<script setup lang="ts"></script>

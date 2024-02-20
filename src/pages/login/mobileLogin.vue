@@ -96,7 +96,7 @@ import { loginUnderWeChatAuth } from './utils/weChat';
 import { loginWithSms } from '@/api/fe/wechat';
 import { sms } from '@/api/system/sms';
 import { useUserStore } from '@/pinia/modules/user';
-import { switchFirstTab } from '@/utils/switchTab';
+import { loginJumpPage } from '@/utils/switchTab';
 
 const proFormRef = shallowRef();
 const formData = ref({
@@ -150,7 +150,7 @@ const fetchMobileLogin = () => {
         .then(res => {
           setToken(res.token);
           fetchUserInfo();
-          switchFirstTab();
+          loginJumpPage();
         })
         .finally(uni.hideLoading);
     }

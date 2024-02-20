@@ -13,6 +13,7 @@ import {
 } from '@/api/fe/wechat/worker';
 import { getAreaListByDistrictId } from '@/api/system/area';
 import { APPLY_STATUS, REAL_TYPE, YES_NO_TYPE } from '@/constant/taskDetail';
+import { dealStepCurrent } from '@/utils/index';
 import { getRealName, setRealName, getInvitationCodeId } from '@/utils/user';
 
 export const useHandler = ({ infoParams, applyStatusMap }) => {
@@ -145,13 +146,7 @@ export const useHandler = ({ infoParams, applyStatusMap }) => {
   const handleApplyTask = () => {
     const { taskId } = infoParams.value;
     applyTask(taskId).then(res => {
-      const {
-        izRealname: izName,
-        izSignProtocol: izSign,
-        izFaceAuthenticated: izFace
-      } = res;
-      const current =
-        izName === 'no' ? 0 : izSign === 'no' ? 1 : izFace === 'no' ? 2 : -1;
+      const current = dealStepCurrent(res);
       // TODO 三方对接
       if (current === 1) {
         const params = {
@@ -172,20 +167,15 @@ export const useHandler = ({ infoParams, applyStatusMap }) => {
   const handleGetInvitationCodeScan = () => {
     const { invitationCodeId } = infoParams.value;
     getInvitationCodeScan(invitationCodeId).then(res => {
-      const {
-        izRealname: izName,
-        izSignProtocol: izSign,
-        izFaceAuthenticated: izFace
-      } = res;
-      const current =
-        izName === 'no' ? 0 : izSign === 'no' ? 1 : izFace === 'no' ? 2 : -1;
+      const current = dealStepCurrent(res);
       // TODO 三方对接
       if (current === 1) {
         const params = {
           callbackPage: '/pagesAuth/realName/index',
-          invitationCodeId: invitationCodeId
+          codeId: invitationCodeId
         };
         getInvitationProtocolSignUrlForCode(params).then(res => {
+          console.log('邀请码签署调整地址res: ' + res);
           uni.navigateTo({
             url: `/pagesAuth/contractSign/index?url=${res}`
           });

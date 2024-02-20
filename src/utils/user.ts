@@ -22,6 +22,7 @@ export const formatToken = (token: string): string => {
 export const USER_INFO_KEY = 'user-info';
 export const REAL_NAME_KEY = 'real-name';
 export const INVITATION_ID_KEY = 'invitation-id';
+export const SIGN_CONTRACT_URL_KEY = 'sign-contract-url';
 
 export function getUserInfo(): string {
   return uni.getStorageSync(USER_INFO_KEY);
