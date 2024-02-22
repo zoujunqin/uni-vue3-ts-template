@@ -9,7 +9,7 @@
       <Steps class="hx-mt-[23px]" :current="current" />
     </view>
 
-    <view class="hx-flex-1 hx-overflow-auto hx-pb-[54px]">
+    <view class="hx-flex hx-flex-1 hx-overflow-auto hx-pb-[54px]">
       <view v-if="current === 0">
         <ProForm
           ref="proFormRef"
@@ -77,9 +77,11 @@
       <view v-if="current === 1">
         <web-view :src="signUrl" />
       </view>
+      <view class="hx-flex hx-flex-1">
+        <AuthPage v-if="current === 2" />
+      </view>
     </view>
   </ProPage>
-
   <OperateTip />
   <ProModal
     ref="explainModalRef"
@@ -94,6 +96,7 @@
 import { onLoad } from '@dcloudio/uni-app';
 import { ref } from 'vue';
 
+import AuthPage from './components/AuthPage.vue';
 import BankInfoForm from './components/BankInfoForm.vue';
 import BaseInfoForm from './components/BaseInfoForm.vue';
 import IDCardUpload from './components/IDCardUpload.vue';
@@ -147,7 +150,7 @@ onLoad(query => {
   if (current.value === 0) {
     handleGetRealNameInfo();
   } else if (current.value === 1) {
-    if (getInvitationCodeId() === -1) {
+    if (getInvitationCodeId() === '-1') {
       handleGetTaskSignUrl();
     } else {
       handleGetCodeSignUrl();
@@ -159,10 +162,22 @@ const handleGetTaskSignUrl = () => {
     callbackPage: '/pagesAuth/realNameSuccess/index',
     taskId: infoParams.value.taskId
   };
-  getInvitationProtocolSignUrlForTask(params).then(res => {
-    console.log('邀请码签署调整地址res: ' + res);
-    signUrl.value = res;
-  });
+  getInvitationProtocolSignUrlForTask(params)
+    .then(res => {
+      signUrl.value = res;
+    })
+    .catch(err => {
+      uni.showModal({
+        title: '提示',
+        content: err.response.data.message,
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            uni.navigateBack();
+          }
+        }
+      });
+    });
 };
 const handleGetCodeSignUrl = () => {
   const params = {
@@ -170,7 +185,6 @@ const handleGetCodeSignUrl = () => {
     codeId: infoParams.value.invitationCodeId
   };
   getInvitationProtocolSignUrlForCode(params).then(res => {
-    console.log('邀请码签署调整地址res: ' + res);
     signUrl.value = res;
   });
 };

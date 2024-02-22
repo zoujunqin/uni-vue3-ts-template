@@ -150,6 +150,7 @@ export const useHandler = ({ infoParams, applyStatusMap }) => {
       // TODO 三方对接
       if (current === 1) {
         const params = {
+          // callbackPage: '/pagesAuth/realNameSuccess/index',
           callbackPage: '/pagesAuth/realNameSuccess/index',
           taskId: taskId
         };

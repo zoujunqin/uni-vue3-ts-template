@@ -89,7 +89,12 @@ export const useHandler = () => {
   };
 
   /* 确认退出登录 */
-  const handleLogoutConfirm = () => {};
+  const handleLogoutConfirm = () => {
+    uni.clearStorage();
+    uni.reLaunch({
+      url: '/pages/login/index'
+    });
+  };
 
   /* 联系我们 - 拨打电话 */
   const handleContactConfirm = (phoneNumber: string) => {

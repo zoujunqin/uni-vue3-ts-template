@@ -18,10 +18,13 @@ import {
 import { getUUID } from '@/utils';
 import { decryptString, encryptString } from '@/utils/crypto';
 import { formatToken, getToken, removeToken } from '@/utils/user';
-
+const httpNoMessage = [
+  '/fe/fe_worker_protocol/invitation_protocol_sign_url_for_task',
+  '/fe/fe_worker_protocol/invitation_protocol_sign_url_for_code'
+];
 const baseUrlMap = {
-  // development: 'http://218.104.230.173:17054',
-  development: 'http://192.168.3.48:8100', // 林伦
+  development: 'http://218.104.230.173:17054',
+  // development: 'http://192.168.3.48:8100', // 林伦
   // development: 'http://192.168.117.86:8100', // 大立
   production: 'https://localdev-hro-api.fjhxrl.com'
 };
@@ -165,6 +168,8 @@ class PureHttp {
       },
       (error: PureHttpError) => {
         const $error = error;
+        console.log('$error:', $error);
+
         let responseData: any = $error.response.data;
         if (isNeedDecrypt($error.response)) {
           responseData = JSON.parse(decryptString(responseData));
@@ -178,10 +183,12 @@ class PureHttp {
           /* TODO: 暂时注释 */
           // uni.reLaunch({ url: '/pages/login/index' });
         } else if (!customDealCodes.includes(responseData.code)) {
-          uni.showToast({
-            title: responseData.message || '接口异常',
-            icon: 'none'
-          });
+          if (!httpNoMessage.includes($error.config.url)) {
+            uni.showToast({
+              title: responseData.message || '接口异常',
+              icon: 'none'
+            });
+          }
         }
 
         $error.isCancelRequest = Axios.isCancel($error);
