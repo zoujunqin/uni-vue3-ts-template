@@ -159,9 +159,11 @@ onLoad(query => {
 });
 const handleGetTaskSignUrl = () => {
   const params = {
-    callbackPage: '/pagesAuth/realNameSuccess/index',
+    callbackPage: 'http://47.96.112.174:8003/',
+    // callbackPage: '/pagesAuth/realNameSuccess/index',
     taskId: infoParams.value.taskId
   };
+  console.log('进入签署params：', params);
   getInvitationProtocolSignUrlForTask(params)
     .then(res => {
       signUrl.value = res;
@@ -181,7 +183,7 @@ const handleGetTaskSignUrl = () => {
 };
 const handleGetCodeSignUrl = () => {
   const params = {
-    callbackPage: '/pagesAuth/realNameSuccess/index',
+    callbackPage: 'http://47.96.112.174:8003/',
     codeId: infoParams.value.invitationCodeId
   };
   getInvitationProtocolSignUrlForCode(params).then(res => {

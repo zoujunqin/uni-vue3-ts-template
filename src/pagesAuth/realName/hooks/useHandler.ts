@@ -150,8 +150,7 @@ export const useHandler = ({ infoParams, applyStatusMap }) => {
       // TODO 三方对接
       if (current === 1) {
         const params = {
-          // callbackPage: '/pagesAuth/realNameSuccess/index',
-          callbackPage: '/pagesAuth/realNameSuccess/index',
+          callbackPage: 'http://47.96.112.174:8003/',
           taskId: taskId
         };
         getInvitationProtocolSignUrlForTask(params).then(res => {
@@ -172,11 +171,10 @@ export const useHandler = ({ infoParams, applyStatusMap }) => {
       // TODO 三方对接
       if (current === 1) {
         const params = {
-          callbackPage: '/pagesAuth/realNameSuccess/index',
+          callbackPage: 'http://47.96.112.174:8003/',
           codeId: invitationCodeId
         };
         getInvitationProtocolSignUrlForCode(params).then(res => {
-          console.log('邀请码签署调整地址res: ' + res);
           uni.navigateTo({
             url: `/pagesAuth/contractSign/index?url=${res}`
           });

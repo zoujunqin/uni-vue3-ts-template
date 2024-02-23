@@ -100,9 +100,8 @@ import { loginJumpPage } from '@/utils/switchTab';
 
 const proFormRef = shallowRef();
 const formData = ref({
-  /* TODO: 写死测试。 验证码接口没开，先使用手机号后6位 */
-  mobile: '18650209502',
-  captcha: '209502'
+  mobile: '',
+  captcha: ''
 });
 const formRules = {
   mobile: {
