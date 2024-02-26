@@ -59,7 +59,7 @@ const handleApplyTask = () => {
       url: `/pagesAuth/realName/index?taskId=${taskId.value}&current=${current}`
     });
     // uni.navigateTo({
-    //   url: `/pagesAuth/realName/index?taskId=${taskId.value}&current=${2}`
+    //   url: `/pagesAuth/realName/index?taskId=${taskId.value}&current=${0}`
     // });
   });
 };

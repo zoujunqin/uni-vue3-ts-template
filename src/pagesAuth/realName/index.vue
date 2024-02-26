@@ -9,7 +9,7 @@
       <Steps class="hx-mt-[23px]" :current="current" />
     </view>
 
-    <view class="hx-flex hx-flex-1 hx-overflow-auto hx-pb-[54px]">
+    <view class="hx-flex-1 hx-overflow-auto hx-pb-[54px]">
       <view v-if="current === 0">
         <ProForm
           ref="proFormRef"
@@ -77,8 +77,8 @@
       <view v-if="current === 1">
         <web-view :src="signUrl" />
       </view>
-      <view class="hx-flex hx-flex-1">
-        <AuthPage v-if="current === 2" />
+      <view v-if="current === 2" class="hx-flex hx-flex-1 hx-h-[100%]">
+        <AuthPage />
       </view>
     </view>
   </ProPage>
@@ -104,11 +104,8 @@ import OperateTip from './components/OperateTip.vue';
 import QualificationUpload from './components/QualificationUpload.vue';
 import Steps from './components/Steps.vue';
 import { useHandler } from './hooks/useHandler';
+import { useHandlerCode } from './hooks/useHandlerCode';
 
-import {
-  getInvitationProtocolSignUrlForTask,
-  getInvitationProtocolSignUrlForCode
-} from '@/api/fe/fe_worker_protocol';
 import {
   APPLY_STATUS_MAP,
   APPLY_STATUS,
@@ -138,7 +135,12 @@ const {
   handlePageBack
 } = useHandler({
   infoParams,
-  applyStatusMap
+  applyStatusMap,
+  signUrl
+});
+const { handleGetTaskSignUrl, handleGetCodeSignUrl } = useHandlerCode({
+  infoParams,
+  signUrl
 });
 onLoad(query => {
   infoParams.value = {
@@ -157,39 +159,6 @@ onLoad(query => {
     }
   }
 });
-const handleGetTaskSignUrl = () => {
-  const params = {
-    callbackPage: 'http://47.96.112.174:8003/',
-    // callbackPage: '/pagesAuth/realNameSuccess/index',
-    taskId: infoParams.value.taskId
-  };
-  console.log('进入签署params：', params);
-  getInvitationProtocolSignUrlForTask(params)
-    .then(res => {
-      signUrl.value = res;
-    })
-    .catch(err => {
-      uni.showModal({
-        title: '提示',
-        content: err.response.data.message,
-        showCancel: false,
-        success: function (res) {
-          if (res.confirm) {
-            uni.navigateBack();
-          }
-        }
-      });
-    });
-};
-const handleGetCodeSignUrl = () => {
-  const params = {
-    callbackPage: 'http://47.96.112.174:8003/',
-    codeId: infoParams.value.invitationCodeId
-  };
-  getInvitationProtocolSignUrlForCode(params).then(res => {
-    signUrl.value = res;
-  });
-};
 </script>
 
 <style scoped lang="scss">

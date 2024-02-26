@@ -1,5 +1,6 @@
 import { getInvitationCodeScan } from '@/api/fe/wechat/invitation_code';
 import pagesJson from '@/pages.json';
+import { useTabbarStore } from '@/pinia/modules/tabbar';
 import { dealStepCurrent } from '@/utils/index';
 import { getInvitationCodeId } from '@/utils/user';
 
@@ -8,9 +9,11 @@ export const switchFirstTab = () => {
 };
 
 export const loginJumpPage = () => {
+  const tabbarStore = useTabbarStore();
+  const { switchTabbar } = tabbarStore;
   const codeId = getInvitationCodeId();
   if (codeId === '-1') {
-    uni.switchTab({ url: '/' + pagesJson.tabBar.list[0].pagePath });
+    switchTabbar(pagesJson.tabBar.list[0].pagePath);
   } else {
     getInvitationCodeScan(codeId).then(res => {
       const current = dealStepCurrent(res);

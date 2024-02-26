@@ -1,11 +1,7 @@
 import { computed, ref } from 'vue';
 
-import {
-  getInvitationProtocolSignUrlForTask,
-  getInvitationProtocolSignUrlForCode
-} from '@/api/fe/fe_worker_protocol';
-import { getInvitationCodeScan } from '@/api/fe/wechat/invitation_code';
-import { applyTask } from '@/api/fe/wechat/task';
+import { useHandlerCode } from './useHandlerCode';
+
 import {
   getRealNameInfo,
   realNameAuth,
@@ -13,10 +9,13 @@ import {
 } from '@/api/fe/wechat/worker';
 import { getAreaListByDistrictId } from '@/api/system/area';
 import { APPLY_STATUS, REAL_TYPE, YES_NO_TYPE } from '@/constant/taskDetail';
-import { dealStepCurrent } from '@/utils/index';
 import { getRealName, setRealName, getInvitationCodeId } from '@/utils/user';
 
-export const useHandler = ({ infoParams, applyStatusMap }) => {
+export const useHandler = ({ infoParams, applyStatusMap, signUrl }) => {
+  const { handleApplyTask, handleGetInvitationCodeScan } = useHandlerCode({
+    infoParams,
+    signUrl
+  });
   const formData = ref<any>({});
   const proFormRef = ref();
   const dynamicState = ref();
@@ -142,48 +141,7 @@ export const useHandler = ({ infoParams, applyStatusMap }) => {
       }
     });
   };
-  // 申请任务进入
-  const handleApplyTask = () => {
-    const { taskId } = infoParams.value;
-    applyTask(taskId).then(res => {
-      const current = dealStepCurrent(res);
-      // TODO 三方对接
-      if (current === 1) {
-        const params = {
-          callbackPage: 'http://47.96.112.174:8003/',
-          taskId: taskId
-        };
-        getInvitationProtocolSignUrlForTask(params).then(res => {
-          uni.navigateTo({
-            url: `/pagesAuth/contractSign/index?url=${res}`
-          });
-        });
-      } else {
-        console.log('进入活体认证');
-      }
-    });
-  };
-  //邀请码进入
-  const handleGetInvitationCodeScan = () => {
-    const { invitationCodeId } = infoParams.value;
-    getInvitationCodeScan(invitationCodeId).then(res => {
-      const current = dealStepCurrent(res);
-      // TODO 三方对接
-      if (current === 1) {
-        const params = {
-          callbackPage: 'http://47.96.112.174:8003/',
-          codeId: invitationCodeId
-        };
-        getInvitationProtocolSignUrlForCode(params).then(res => {
-          uni.navigateTo({
-            url: `/pagesAuth/contractSign/index?url=${res}`
-          });
-        });
-      } else {
-        console.log('进入活体认证');
-      }
-    });
-  };
+
   const handlePageBack = () => {
     setRealName(formData.value);
   };
