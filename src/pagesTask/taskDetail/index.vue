@@ -54,13 +54,13 @@ const handleGetTaskDetail = () => {
 };
 const handleApplyTask = () => {
   applyTask(taskId.value).then(res => {
-    const current = dealStepCurrent(res);
-    uni.navigateTo({
-      url: `/pagesAuth/realName/index?taskId=${taskId.value}&current=${current}`
-    });
+    // const current = dealStepCurrent(res);
     // uni.navigateTo({
-    //   url: `/pagesAuth/realName/index?taskId=${taskId.value}&current=${0}`
+    //   url: `/pagesAuth/realName/index?taskId=${taskId.value}&current=${current}`
     // });
+    uni.navigateTo({
+      url: `/pagesAuth/realName/index?taskId=${taskId.value}&current=${0}`
+    });
   });
 };
 </script>

@@ -9,6 +9,7 @@ import {
 } from '@/api/fe/wechat/worker';
 import { getAreaListByDistrictId } from '@/api/system/area';
 import { APPLY_STATUS, REAL_TYPE, YES_NO_TYPE } from '@/constant/taskDetail';
+import { useOss } from '@/hooks/useOss';
 import { getRealName, setRealName, getInvitationCodeId } from '@/utils/user';
 
 export const useHandler = ({ infoParams, applyStatusMap, signUrl }) => {
@@ -16,6 +17,7 @@ export const useHandler = ({ infoParams, applyStatusMap, signUrl }) => {
     infoParams,
     signUrl
   });
+  const { getPreviewUrl } = useOss();
   const formData = ref<any>({});
   const proFormRef = ref();
   const dynamicState = ref();
@@ -25,7 +27,7 @@ export const useHandler = ({ infoParams, applyStatusMap, signUrl }) => {
   const localFormData = getRealName() || {};
   const localBool = Object.keys(localFormData).length > 0;
   const handleGetRealNameInfo = () => {
-    getRealNameInfo(infoParams.value).then(res => {
+    getRealNameInfo(infoParams.value).then(async res => {
       applyStatusMap.value = {
         appealStatus: res.appealStatus,
         rejectCause: res.rejectCause
@@ -41,6 +43,10 @@ export const useHandler = ({ infoParams, applyStatusMap, signUrl }) => {
             newDynamicState[key].properties =
               newDynamicState[key].properties || [];
             newDynamicState[key].properties.push(subItem);
+          } else {
+            formData.value[subItem.fieldCode] = localBool
+              ? await getPreviewUrl(localFormData[subItem.fieldCode])
+              : await getPreviewUrl(subItem.value);
           }
         }
       }
