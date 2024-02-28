@@ -19,6 +19,15 @@
         input-align="right"
         :placeholder="item?.labelName"
       />
+      <view v-if="item.valueType === 'select'" @click="handleOpenSelect(item)">
+        <ProInput
+          class="!hx-pr-0"
+          v-model="item.dictValue"
+          input-align="right"
+          readonly
+          :placeholder="item?.labelName"
+        />
+      </view>
       <view
         v-if="getReadonlyBool(item.valueType)"
         @click="handleOpenDate(item.fieldCode)"
@@ -33,7 +42,7 @@
       </view>
       <view
         v-if="getReadonlyAreaBool(item.valueType)"
-        @click="handleOpenArea(item.fieldCode)"
+        @click="handleOpenArea()"
       >
         <ProInput
           class="!hx-pr-0"
@@ -55,7 +64,13 @@
     mode="date"
     v-model="dayDate"
     @confirm="handleConfirmDate"
-    @close="handleCloseDate"
+  />
+  <ProPicker
+    ref="proPickerRef"
+    keyName="name"
+    :columns="pickerValue"
+    cancelText="重置"
+    @confirm="handlePickerConfirm"
   />
 </template>
 
@@ -81,8 +96,12 @@ const data = useVModel(props, 'modelValue', undefined, {
 });
 const proAreaPickerRef = ref();
 const datetimePickerRef = ref();
+const proPickerRef = ref();
 const showDate = ref();
 const dayDate = ref();
+const pickerValue = ref<Array<any>>([]);
+const clickFieldCode = ref('');
+const testValue = ref();
 const areaList = computed({
   get() {
     return data.value.ocrSure['areaCode'];
@@ -95,14 +114,22 @@ const handleAreaConfirm = val => {
   const nameList = val.value.map(item => item.name);
   data.value.ocrSure['areaText'] = nameList.join('/');
 };
+const handleOpenSelect = val => {
+  testValue.value = val;
+  clickFieldCode.value = val.fieldCode;
+  pickerValue.value = [val.dict];
+  proPickerRef.value.open();
+};
 const getReadonlyBool = valueType => {
   return ['date'].includes(valueType);
 };
 const getReadonlyAreaBool = valueType => {
   return ['area'].includes(valueType);
 };
-
-const handleCloseDate = () => {};
+const handlePickerConfirm = e => {
+  testValue.value.dictValue = e.value[0].name;
+  data.value[clickFieldCode.value] = e.value[0].code;
+};
 const handleConfirmDate = e => {
   dayDate.value = e.value;
   data.value[showDate.value] = handleDealTimestampDate(e.value);
@@ -114,7 +141,7 @@ const handleOpenDate = fieldCode => {
     datetimePickerRef.value.open();
   });
 };
-const handleOpenArea = fieldCode => {
+const handleOpenArea = () => {
   proAreaPickerRef.value.open();
 };
 </script>
