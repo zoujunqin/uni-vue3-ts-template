@@ -12,7 +12,7 @@
         @click="handleSelect(subItem.id)"
       >
         <view
-          class="icon-container hx-hidden hx-items-center hx-justify-center hx-absolute hx-w-[14px] hx-h-[8px] hx-bg-color-primary hx-rounded-tl-[6px] hx-right-0 hx-bottom-0"
+          class="icon-container hx-hidden hx-items-center hx-justify-center hx-absolute hx-w-[14px] hx-h-[8px] hx-bg-color-primary hx-rounded-tl-[6px] hx-rounded-br-[6px] hx-right-0 hx-bottom-0"
         >
           <ProIcon name="checkmark" size="20rpx" color="white" />
         </view>
@@ -54,10 +54,7 @@ const handleSelect = (id: number) => {
 };
 
 const getClass = (subItem: ITreeSubTaskType) => {
-  return [
-    subItem.name.length <= 4 ? 'hx-w-[80px]' : 'hx-w-[108px]',
-    selectIdList.value.includes(subItem.id) ? 'active' : null
-  ];
+  return [selectIdList.value.includes(subItem.id) ? 'active' : null];
 };
 </script>
 
