@@ -45,7 +45,9 @@ export const useHandler = ({ infoParams, applyStatusMap, signUrl }) => {
             newDynamicState[key].properties.push(subItem);
           } else {
             formData.value[subItem.fieldCode] = localBool
-              ? await getPreviewUrl(localFormData[subItem.fieldCode])
+              ? localFormData[subItem.fieldCode]
+                ? await getPreviewUrl(localFormData[subItem.fieldCode])
+                : ''
               : await getPreviewUrl(subItem.value);
           }
         }
@@ -59,8 +61,8 @@ export const useHandler = ({ infoParams, applyStatusMap, signUrl }) => {
       ? localFormData[subItem.fieldCode]
       : subItem.value;
     formData.value['ocrSure'] = {
-      front: false,
-      reverse: false,
+      front: localBool ? localFormData['ocrSure'].front : true,
+      reverse: localBool ? localFormData['ocrSure'].reverse : true,
       areaText: '',
       areaCode: []
     };

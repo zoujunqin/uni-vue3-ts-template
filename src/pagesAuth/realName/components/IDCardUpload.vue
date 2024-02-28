@@ -42,31 +42,35 @@ const handleUploadSuccess = (previewUrl, type) => {
     imageUrl: previewUrl,
     needParse: true
   };
-  getOcrIdCard(params).then(res => {
-    if (type === 'Front') {
-      const {
-        name,
-        idNumber,
-        address,
-        domicileDistrictCode,
-        domicileProvince,
-        domicileCity,
-        domicileDistrict
-      } = res.face;
-      data.value.workerName = name;
-      data.value.idCardNo = idNumber;
-      data.value.domicileAddress = address;
-      data.value.ocrSure.front = true;
-      data.value.ocrSure.areaText = `${domicileProvince}/${domicileCity}/${domicileDistrict}`;
-      data.value.domicileAreaCode = domicileDistrictCode.toString();
-    } else {
-      const { validPeriodBegin, validPeriodEnd, issueAuthority } = res.back;
-      data.value.credentialStartDate = validPeriodBegin;
-      data.value.credentialEndDate = validPeriodEnd;
-      data.value.issuingAuthority = issueAuthority;
-      data.value.ocrSure.reverse = true;
-    }
-  });
+  getOcrIdCard(params)
+    .then(res => {
+      if (type === 'Front') {
+        const {
+          name,
+          idNumber,
+          address,
+          domicileDistrictCode,
+          domicileProvince,
+          domicileCity,
+          domicileDistrict
+        } = res.face;
+        data.value.workerName = name;
+        data.value.idCardNo = idNumber;
+        data.value.domicileAddress = address;
+        data.value.ocrSure.front = true;
+        data.value.ocrSure.areaText = `${domicileProvince}/${domicileCity}/${domicileDistrict}`;
+        data.value.domicileAreaCode = domicileDistrictCode.toString();
+      } else {
+        const { validPeriodBegin, validPeriodEnd, issueAuthority } = res.back;
+        data.value.credentialStartDate = validPeriodBegin;
+        data.value.credentialEndDate = validPeriodEnd;
+        data.value.issuingAuthority = issueAuthority;
+        data.value.ocrSure.reverse = true;
+      }
+    })
+    .catch(() => {
+      handleRemovePath(type);
+    });
 };
 const handleRemovePath = type => {
   if (type === 'Front') {
