@@ -46,9 +46,9 @@ export const useHandler = ({ infoParams, applyStatusMap, signUrl }) => {
           } else {
             formData.value[subItem.fieldCode] = localBool
               ? localFormData[subItem.fieldCode]
-                ? await getPreviewUrl(localFormData[subItem.fieldCode])
+                ? localFormData[subItem.fieldCode]
                 : ''
-              : await getPreviewUrl(subItem.value);
+              : subItem.value;
           }
         }
       }
