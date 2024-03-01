@@ -145,8 +145,8 @@ const { handleGetTaskSignUrl, handleGetCodeSignUrl } = useHandlerCode({
 onLoad(query => {
   infoParams.value = {
     invitationCodeId:
-      getInvitationCodeId() === '-1' ? '' : Number(getInvitationCodeId()),
-    taskId: query.taskId ? Number(query.taskId) : ''
+      getInvitationCodeId() === '-1' ? '' : getInvitationCodeId(),
+    taskId: query.taskId ? query.taskId : ''
   };
   current.value = Number(query?.current);
   if (current.value === 0) {
