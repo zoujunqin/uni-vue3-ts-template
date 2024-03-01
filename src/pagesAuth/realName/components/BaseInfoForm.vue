@@ -101,7 +101,6 @@ const showDate = ref();
 const dayDate = ref();
 const pickerValue = ref<Array<any>>([]);
 const clickFieldCode = ref('');
-const testValue = ref();
 const areaList = computed({
   get() {
     return data.value.ocrSure['areaCode'];
@@ -115,7 +114,6 @@ const handleAreaConfirm = val => {
   data.value.ocrSure['areaText'] = nameList.join('/');
 };
 const handleOpenSelect = val => {
-  testValue.value = val;
   clickFieldCode.value = val.fieldCode;
   pickerValue.value = [val.dict];
   proPickerRef.value.open();
@@ -127,7 +125,6 @@ const getReadonlyAreaBool = valueType => {
   return ['area'].includes(valueType);
 };
 const handlePickerConfirm = e => {
-  testValue.value.dictValue = e.value[0].name;
   data.value[clickFieldCode.value] = e.value[0].code;
 };
 const handleConfirmDate = e => {

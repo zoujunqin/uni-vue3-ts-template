@@ -55,6 +55,7 @@ const handleGetTaskDetail = () => {
 const handleApplyTask = () => {
   applyTask(taskId.value).then(res => {
     const current = dealStepCurrent(res);
+    console.log('current:', current);
     uni.navigateTo({
       url: `/pagesAuth/realName/index?taskId=${taskId.value}&current=${current}`
     });
