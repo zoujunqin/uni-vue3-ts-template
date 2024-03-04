@@ -19,9 +19,13 @@ export const loginJumpPage = () => {
   } else {
     getInvitationCodeScan(codeId).then(res => {
       const current = dealStepCurrent(res);
-      uni.reLaunch({
-        url: `/pagesAuth/realName/index?current=${current}`
-      });
+      if (current === -1) {
+        switchFirstTab();
+      } else {
+        uni.reLaunch({
+          url: `/pagesAuth/realName/index?current=${current}`
+        });
+      }
     });
   }
 };

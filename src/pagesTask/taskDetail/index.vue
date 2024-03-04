@@ -55,9 +55,17 @@ const handleGetTaskDetail = () => {
 const handleApplyTask = () => {
   applyTask(taskId.value).then(res => {
     const current = dealStepCurrent(res);
-    uni.navigateTo({
-      url: `/pagesAuth/realName/index?taskId=${taskId.value}&current=${current}`
-    });
+    if (current === -1) {
+      uni.showToast({
+        title: '申请成功',
+        icon: 'none'
+      });
+      handleGetTaskDetail();
+    } else {
+      uni.navigateTo({
+        url: `/pagesAuth/realName/index?taskId=${taskId.value}&current=${current}`
+      });
+    }
   });
 };
 </script>

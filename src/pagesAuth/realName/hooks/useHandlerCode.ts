@@ -7,6 +7,7 @@ import {
 import { getInvitationCodeScan } from '@/api/fe/wechat/invitation_code';
 import { applyTask } from '@/api/fe/wechat/task';
 import { dealStepCurrent } from '@/utils';
+import { switchFirstTab } from '@/utils/switchTab';
 
 export const useHandlerCode = ({ infoParams, signUrl }) => {
   const callBackUrl = ref('http://47.96.112.174:8003/');
@@ -55,7 +56,6 @@ export const useHandlerCode = ({ infoParams, signUrl }) => {
     const { taskId } = infoParams.value;
     applyTask(taskId).then(res => {
       const current = dealStepCurrent(res);
-      // TODO 税局三方对接
       if (current === 1) {
         const params = {
           callbackPage: callBackUrl.value,
@@ -69,7 +69,11 @@ export const useHandlerCode = ({ infoParams, signUrl }) => {
             handleErrBack(err);
           });
       } else {
-        console.log('进入活体认证');
+        uni.showToast({
+          title: '申请成功',
+          icon: 'none'
+        });
+        switchFirstTab();
       }
     });
   };
@@ -78,7 +82,6 @@ export const useHandlerCode = ({ infoParams, signUrl }) => {
     const { invitationCodeId } = infoParams.value;
     getInvitationCodeScan(invitationCodeId).then(res => {
       const current = dealStepCurrent(res);
-      // TODO 税局三方对接
       if (current === 1) {
         const params = {
           callbackPage: callBackUrl.value,
@@ -92,7 +95,7 @@ export const useHandlerCode = ({ infoParams, signUrl }) => {
             handleErrBack(err);
           });
       } else {
-        console.log('进入活体认证');
+        switchFirstTab();
       }
     });
   };
