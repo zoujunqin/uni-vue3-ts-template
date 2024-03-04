@@ -23,6 +23,7 @@ export const USER_INFO_KEY = 'user-info';
 export const REAL_NAME_KEY = 'real-name';
 export const INVITATION_ID_KEY = 'invitation-id';
 export const SIGN_CONTRACT_URL_KEY = 'sign-contract-url';
+export const AREA_KEY = 'area';
 
 export function getUserInfo(): string {
   return uni.getStorageSync(USER_INFO_KEY);
@@ -51,4 +52,13 @@ export function setInvitationCodeId(id: unknown) {
 
 export function getInvitationCodeId() {
   return uni.getStorageSync(INVITATION_ID_KEY);
+}
+
+//省市区
+export function setArea(data: unknown) {
+  uni.setStorageSync(AREA_KEY, data);
+}
+
+export function getArea() {
+  return uni.getStorageSync(AREA_KEY);
 }

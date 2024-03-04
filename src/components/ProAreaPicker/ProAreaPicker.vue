@@ -26,7 +26,7 @@ import { uvEvents } from '@/components/ProPicker/events';
 import { uvMethods } from '@/components/ProPicker/methods';
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
 import { useBridgedMethods } from '@/hooks/useBridgedMethods';
-import region from '@/static/region.json';
+import { getArea } from '@/utils/user';
 
 interface IRegion {
   id: number;
@@ -42,7 +42,7 @@ const props = defineProps({
 });
 const emit = defineEmits(['update:modelValue', 'confirm']);
 
-const defaultValue = [110000, 110100, 110105];
+const defaultValue = ['110000', '110100', '110101'];
 const pickerValue = shallowRef<Array<number>>([]);
 const handleResetPickerValue = () => {
   pickerValue.value =
@@ -54,7 +54,6 @@ watch(() => props.modelValue, handleResetPickerValue, {
 });
 
 const handleConfirm = (e: ShallowRef<Array<IRegion>>) => {
-  console.log('eee:', e);
   emit(
     'update:modelValue',
     e.value.map(item => item.id)
@@ -62,7 +61,7 @@ const handleConfirm = (e: ShallowRef<Array<IRegion>>) => {
   emit('confirm', e.value);
 };
 
-const provinces = shallowRef<Array<IRegion>>(region);
+const provinces = shallowRef<Array<IRegion>>(JSON.parse(getArea()));
 const citys = shallowRef<Array<IRegion>>([]);
 const areas = shallowRef<Array<IRegion>>([]);
 const addressList = computed(() => [provinces.value, citys.value, areas.value]);
