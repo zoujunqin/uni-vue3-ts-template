@@ -55,8 +55,10 @@
 </template>
 
 <script setup lang="ts">
+import { switchFirstTab } from '@/utils/switchTab';
+
 const toTaskCenter = () => {
-  uni.switchTab({ url: '/pages/taskCenter/index' });
+  switchFirstTab();
 };
 </script>
 

@@ -77,9 +77,6 @@
       <view v-if="current === 1">
         <web-view :src="signUrl" />
       </view>
-      <view v-if="current === 2" class="hx-flex hx-flex-1 hx-h-[100%]">
-        <AuthPage />
-      </view>
     </view>
   </ProPage>
   <OperateTip />
@@ -96,7 +93,6 @@
 import { onLoad } from '@dcloudio/uni-app';
 import { ref } from 'vue';
 
-import AuthPage from './components/AuthPage.vue';
 import BankInfoForm from './components/BankInfoForm.vue';
 import BaseInfoForm from './components/BaseInfoForm.vue';
 import IDCardUpload from './components/IDCardUpload.vue';

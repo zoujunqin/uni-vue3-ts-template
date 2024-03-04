@@ -15,12 +15,7 @@ export const getUUID = (len = 32) => {
 export const isDef = <T = any>(val?: T): val is T => typeof val !== 'undefined';
 
 export const dealStepCurrent = val => {
-  const {
-    izRealname: izName,
-    izSignProtocol: izSign,
-    izFaceAuthenticated: izFace
-  } = val;
-  const current =
-    izName === 'no' ? 0 : izSign === 'no' ? 1 : izFace === 'no' ? 2 : -1;
+  const { izRealname: izName, izSignProtocol: izSign } = val;
+  const current = izName === 'no' ? 0 : izSign === 'no' ? 1 : -1;
   return current;
 };

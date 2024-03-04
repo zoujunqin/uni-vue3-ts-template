@@ -31,7 +31,7 @@ defineProps({
   }
 });
 
-const stepItems = ['实名认证', '签署合同', '活体认证'];
+const stepItems = ['实名认证', '签署合同'];
 </script>
 
 <script lang="ts">
