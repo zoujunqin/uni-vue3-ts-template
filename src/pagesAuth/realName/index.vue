@@ -69,7 +69,12 @@
         </ProForm>
 
         <ProPageFooter>
-          <ProButton class="hx-w-full" type="primary" @tap.stop="handleNext">
+          <ProButton
+            class="hx-w-full"
+            type="primary"
+            @tap.stop="handleNext"
+            v-if="!nextDisabled"
+          >
             完成认证（下一步）
           </ProButton>
         </ProPageFooter>
@@ -91,7 +96,7 @@
 
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import BankInfoForm from './components/BankInfoForm.vue';
 import BaseInfoForm from './components/BaseInfoForm.vue';
@@ -154,6 +159,9 @@ onLoad(query => {
       handleGetCodeSignUrl();
     }
   }
+});
+const nextDisabled = computed(() => {
+  return applyStatusMap.value.appealStatus === APPLY_STATUS.TO_BE_PROCESSED;
 });
 </script>
 
