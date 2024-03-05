@@ -27,7 +27,7 @@ const baseUrlMap = {
   development: 'https://localdev-hro-api.fjhxrl.com',
   // development: 'http://192.168.3.48:8100', // 林伦
   // development: 'http://192.168.117.86:8100', // 大立
-  production: 'https://localdev-hro-api.fjhxrl.com'
+  production: 'https://localtest-hro-api.fjhxrl.com/'
 };
 
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
