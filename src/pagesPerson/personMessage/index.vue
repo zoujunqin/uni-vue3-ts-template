@@ -10,7 +10,7 @@
           <span class="title-tip"> 证件信息 </span>
           <span
             :class="[
-              APPLY_STATUS_MAP[personData.appealStatus].textColor,
+              APPLY_STATUS_MAP[personData.appealStatus]?.textColor,
               'hx-text-[14px]'
             ]"
           >

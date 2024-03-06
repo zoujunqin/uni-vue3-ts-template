@@ -19,7 +19,7 @@
       ref="proFormRef"
       :model="formData"
       :rules="formRules"
-      error-type="border-bottom"
+      error-type="toast"
       class="hx-mt-[24px]"
     >
       <ProFormItem prop="mobile">
@@ -27,6 +27,7 @@
           v-model="formData.mobile"
           clearable
           placeholder="输入手机号"
+          type="number"
           class="hx-bg-white hx-h-[44px] !hx-flex-none"
         />
       </ProFormItem>
@@ -35,6 +36,7 @@
           v-model="formData.captcha"
           clearable
           placeholder="输入验证码"
+          type="number"
           class="hx-bg-white hx-h-[44px] !hx-flex-none"
         >
           <template #suffix>
@@ -96,6 +98,7 @@ import { loginUnderWeChatAuth } from './utils/weChat';
 import { loginWithSms } from '@/api/fe/wechat';
 import { sms } from '@/api/system/sms';
 import { useUserStore } from '@/pinia/modules/user';
+import { mobileValidator } from '@/utils/formValidator';
 import { loginJumpPage } from '@/utils/switchTab';
 
 const proFormRef = shallowRef();
@@ -104,12 +107,18 @@ const formData = ref({
   captcha: ''
 });
 const formRules = {
-  mobile: {
-    type: 'string',
-    required: true,
-    message: '请输入手机号',
-    trigger: ['blur', 'change']
-  },
+  mobile: [
+    {
+      type: 'string',
+      required: true,
+      message: '请输入手机号',
+      trigger: ['blur', 'change']
+    },
+    {
+      validator: mobileValidator,
+      message: '手机号码错误'
+    }
+  ],
   captcha: {
     type: 'string',
     required: true,
@@ -145,13 +154,11 @@ const fetchMobileLogin = () => {
       const { mobile, captcha } = formData.value;
       const param = { mobile, smsCode: captcha };
       uni.showLoading({ title: '登录中...' });
-      loginWithSms(param)
-        .then(res => {
-          setToken(res.token);
-          fetchUserInfo();
-          loginJumpPage();
-        })
-        .finally(uni.hideLoading);
+      loginWithSms(param).then(res => {
+        setToken(res.token);
+        fetchUserInfo();
+        loginJumpPage();
+      });
     }
   });
 };
