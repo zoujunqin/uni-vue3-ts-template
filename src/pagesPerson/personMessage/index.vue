@@ -2,14 +2,19 @@
   <ProPage
     show-navbar
     navbar-title="个人信息"
-    class="personCenter-container page-pt-with-navbar hx-bg-white"
+    class="personMessage-container page-pt-with-navbar hx-bg-white"
   >
     <view class="hx-bg-bg-color-grey hx-h-full hx-pt-[10px]">
       <view class="card-box">
         <view class="hx-flex hx-justify-between hx-mb-[12px]">
           <span class="title-tip"> 证件信息 </span>
-          <span class="hx-text-color-success hx-text-[14px]">
-            {{ personData.appealStatus }}
+          <span
+            :class="[
+              APPLY_STATUS_MAP[personData.appealStatus].textColor,
+              'hx-text-[14px]'
+            ]"
+          >
+            {{ personData.appealStatusName }}
           </span>
         </view>
         <view class="hx-flex hx-justify-between">
@@ -59,6 +64,7 @@
 import { onMounted, ref } from 'vue';
 
 import { getPersonalCenterInfo } from '@/api/fe/wechat/personal_center';
+import { APPLY_STATUS_MAP } from '@/constant/taskDetail';
 import { useOss } from '@/hooks/useOss';
 
 const { getPreviewUrl } = useOss();
@@ -71,7 +77,8 @@ const personData = ref({
   idCardNo: '',
   idCardFront: '',
   idCardReverse: '',
-  mobile: ''
+  mobile: '',
+  appealStatusName: ''
 });
 
 onMounted(() => {
@@ -103,7 +110,7 @@ const handleLookImg = (index: number) => {
 </script>
 
 <style scoped lang="scss">
-.personCenter-container {
+.personMessage-container {
   .card-box {
     margin-bottom: 10px;
     padding: 16px 12px;
@@ -131,6 +138,15 @@ const handleLookImg = (index: number) => {
   .form-text {
     color: var(--hx-text-color-main);
     font-size: 14px;
+  }
+  .warning-text-color {
+    color: var(--hx-color-warning-active);
+  }
+  .passed-text-color {
+    color: var(--hx-color-success-active);
+  }
+  .error-text-color {
+    color: var(--hx-color-error-active);
   }
 }
 </style>

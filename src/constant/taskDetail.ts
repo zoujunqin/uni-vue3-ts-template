@@ -30,17 +30,20 @@ export const { APPLY_STATUS, APPLY_STATUS_MAP, APPLY_STATUS_LIST } =
       {
         label: '待处理',
         value: 'to_be_processed',
-        className: 'warning-fixed-tip'
+        className: 'warning-fixed-tip',
+        textColor: 'warning-text-color'
       },
       {
         label: '通过',
         value: 'passed',
-        className: ''
+        className: '',
+        textColor: 'passed-text-color'
       },
       {
         label: '驳回',
         value: 'reject',
-        className: 'error-fixed-tip'
+        className: 'error-fixed-tip',
+        textColor: 'error-text-color'
       }
     ] as const,
     'APPLY_STATUS',

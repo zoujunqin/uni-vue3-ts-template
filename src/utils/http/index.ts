@@ -26,7 +26,7 @@ const baseUrlMap = {
   // development: 'http://218.104.230.173:17054',
   development: 'https://localdev-hro-api.fjhxrl.com',
   // development: 'http://192.168.3.48:8100', // 林伦
-  // development: 'http://192.168.117.86:8100', // 大立
+  // development: 'https://localtest-hro-api.fjhxrl.com/',
   production: 'https://localtest-hro-api.fjhxrl.com/'
 };
 
