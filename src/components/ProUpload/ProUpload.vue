@@ -52,7 +52,12 @@ const backgroundImageClass = computed(
 
 const previewPath = shallowRef('');
 const style = computed(() => {
-  return previewPath.value && { backgroundImage: `url(${previewPath.value})` };
+  return (
+    previewPath.value && {
+      backgroundImage: `url(${previewPath.value})`,
+      backgroundSize: 'cover'
+    }
+  );
 });
 
 watch(

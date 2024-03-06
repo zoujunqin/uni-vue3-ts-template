@@ -179,8 +179,7 @@ class PureHttp {
         if (loginFailureCodeList.includes(responseData.code)) {
           uni.showToast({ title: '授权过期，请重新登录', icon: 'none' });
           removeToken();
-          /* TODO: 暂时注释 */
-          // uni.reLaunch({ url: '/pages/login/index' });
+          uni.reLaunch({ url: '/pages/login/index' });
         } else if (!customDealCodes.includes(responseData.code)) {
           if (!httpNoMessage.includes($error.config.url)) {
             uni.showToast({
@@ -191,7 +190,9 @@ class PureHttp {
         }
 
         $error.isCancelRequest = Axios.isCancel($error);
-        uni.hideLoading();
+        setTimeout(() => {
+          uni.hideLoading();
+        }, 1500);
         // 所有的响应异常 区分来源为取消请求/非取消请求
         return Promise.reject($error);
       }
