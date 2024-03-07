@@ -4,6 +4,7 @@ import { http } from '@/utils/http';
 const baseApi = '/fe/wechat/task';
 
 export interface ITaskDetail {
+  izApplied: string;
   address: string;
   ageMax: number;
   ageMin: number;
@@ -33,10 +34,11 @@ export interface ITaskDetail {
   taskName: string;
   taskTypeName: string;
   description: string;
+  taskDetail: string;
 }
 /* 获取任务详情 */
-export const getTaskDetail = (id: number): Promise<ITaskDetail> => {
-  return http.request('get', `${baseApi}/${id}`);
+export const getTaskDetail = (params): Promise<ITaskDetail> => {
+  return http.request('get', `${baseApi}`, { params });
 };
 
 export interface IApplyReturn {
@@ -45,6 +47,6 @@ export interface IApplyReturn {
   izFaceAuthenticated: string;
 }
 /* 申请任务 */
-export const applyTask = (id: number): Promise<IApplyReturn> => {
-  return http.request('get', `${baseApi}/${id}/apply`);
+export const applyTask = (params): Promise<IApplyReturn> => {
+  return http.request('get', `${baseApi}/apply`, { params });
 };

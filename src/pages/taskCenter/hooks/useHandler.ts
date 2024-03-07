@@ -45,8 +45,12 @@ export const useHandler = () => {
   };
 
   const navToTaskDetail = (row: ITask) => {
+    const params = {
+      taskId: row.taskId,
+      orderDetailId: row.orderDetailId
+    };
     uni.navigateTo({
-      url: `/pagesTask/taskDetail/index?id=${row.taskId}&status=${true}`
+      url: `/pagesTask/taskDetail/index?params=${JSON.stringify(params)}`
     });
   };
 

@@ -14,6 +14,7 @@ export interface ITask {
   statusName: string;
   taskName: string;
   taskTypeName: string;
+  orderDetailId: string;
 }
 export interface ITaskParam {
   status: string;

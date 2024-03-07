@@ -71,8 +71,11 @@ export const useHandler = () => {
 
   /* 跳转到任务详情 */
   const navToTaskDetail = (row: ITask) => {
+    const params = {
+      taskId: row.taskId
+    };
     uni.navigateTo({
-      url: `/pagesTask/taskDetail/index?id=${row.taskId}&status=${false}`
+      url: `/pagesTask/taskDetail/index?params=${JSON.stringify(params)}`
     });
   };
 
