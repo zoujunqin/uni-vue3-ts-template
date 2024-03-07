@@ -22,17 +22,11 @@ export const useTabLinkSwiper = () => {
     onChange: handleSwiperChange
   };
 
-  const resetIndex = () => {
-    tabIndex.value = 0;
-    swiperIndex.value = 0;
-  };
-
   return {
     tabProps,
     swiperProps,
     tabIndex,
     swiperIndex,
-    resetIndex,
     handleTabChange,
     handleSwiperChange
   };
