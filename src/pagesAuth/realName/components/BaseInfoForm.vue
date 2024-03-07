@@ -65,6 +65,7 @@
   <ProDateTimePicker
     ref="datetimePickerRef"
     mode="date"
+    :minDate="-631180800000"
     v-model="dayDate"
     @confirm="handleConfirmDate"
   />
