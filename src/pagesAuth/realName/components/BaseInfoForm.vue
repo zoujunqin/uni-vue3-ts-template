@@ -4,7 +4,7 @@
   <view class="hx-flex hx-flex-col hx-items-center">
     <ProFormItem
       borderBottom
-      v-for="item in dynamicStateForm"
+      v-for="(item, index) in dynamicStateForm"
       :key="item.fieldCode"
       :required="item.izRequired === 'yes'"
       class="hx-w-full"
@@ -19,7 +19,10 @@
         input-align="right"
         :placeholder="item?.labelName"
       />
-      <view v-if="item.valueType === 'select'" @click="handleOpenSelect(item)">
+      <view
+        v-if="item.valueType === 'select'"
+        @click="handleOpenSelect(item, index)"
+      >
         <ProInput
           class="!hx-pr-0"
           v-model="item.dictValue"
@@ -101,6 +104,7 @@ const showDate = ref();
 const dayDate = ref();
 const pickerValue = ref<Array<any>>([]);
 const clickFieldCode = ref('');
+const indexClick = ref();
 const areaList = computed({
   get() {
     return data.value.ocrSure['areaCode'];
@@ -113,7 +117,8 @@ const handleAreaConfirm = val => {
   const nameList = val.value.map(item => item.name);
   data.value.ocrSure['areaText'] = nameList.join('/');
 };
-const handleOpenSelect = val => {
+const handleOpenSelect = (val, index) => {
+  indexClick.value = index;
   clickFieldCode.value = val.fieldCode;
   pickerValue.value = [val.dict];
   proPickerRef.value.open();
@@ -126,6 +131,7 @@ const getReadonlyAreaBool = valueType => {
 };
 const handlePickerConfirm = e => {
   data.value[clickFieldCode.value] = e.value[0].code;
+  props.dynamicStateForm[indexClick.value].dictValue = e.value[0].name;
 };
 const handleConfirmDate = e => {
   dayDate.value = e.value;

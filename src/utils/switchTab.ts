@@ -17,16 +17,21 @@ export const loginJumpPage = () => {
   if (codeId === '-1') {
     switchFirstTab();
   } else {
-    getInvitationCodeScan(codeId).then(res => {
-      const current = dealStepCurrent(res);
-      if (current === -1) {
+    getInvitationCodeScan(codeId)
+      .then(res => {
+        const current = dealStepCurrent(res);
+        if (current === -1) {
+          switchFirstTab();
+        } else {
+          uni.reLaunch({
+            url: `/pagesAuth/realName/index?current=${current}`
+          });
+        }
+      })
+      .catch(err => {
+        uni.showToast({ title: err.response.data.message, icon: 'none' });
         switchFirstTab();
-      } else {
-        uni.reLaunch({
-          url: `/pagesAuth/realName/index?current=${current}`
-        });
-      }
-    });
+      });
   }
 };
 
