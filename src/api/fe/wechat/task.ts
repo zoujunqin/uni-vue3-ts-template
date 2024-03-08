@@ -33,6 +33,7 @@ export interface ITaskDetail {
   undertakingStatusName: string;
   taskName: string;
   taskTypeName: string;
+  taskTypeCategoryName: string;
   description: string;
   taskDetail: string;
 }

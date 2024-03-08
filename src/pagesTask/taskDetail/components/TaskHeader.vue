@@ -45,6 +45,11 @@
   </view>
 
   <view class="hx-flex hx-items-center">
+    <ProTags
+      class="hx-mr-[10px]"
+      :text="data.taskTypeCategoryName"
+      type="info"
+    />
     <ProTags class="hx-mr-[10px]" :text="data.taskTypeName" type="info" />
   </view>
 </template>
