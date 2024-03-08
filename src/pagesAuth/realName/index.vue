@@ -144,12 +144,13 @@ const { handleGetTaskSignUrl, handleGetCodeSignUrl } = useHandlerCode({
   signUrl
 });
 onLoad(query => {
+  const taskQueryParams = JSON.parse(query?.taskQueryParams);
   infoParams.value = {
     invitationCodeId:
       getInvitationCodeId() === '-1' ? '' : getInvitationCodeId(),
-    taskId: query.taskId ? query.taskId : ''
+    ...taskQueryParams
   };
-  current.value = Number(query?.current);
+  current.value = Number(taskQueryParams.current);
   if (current.value === 0) {
     handleGetRealNameInfo();
   } else if (current.value === 1) {

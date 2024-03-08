@@ -64,8 +64,15 @@ const handleApplyTask = () => {
       });
       handleGetTaskDetail();
     } else {
+      const taskQueryParams = {
+        taskId: queryParams.value.taskId,
+        orderDetailId: queryParams.value.orderDetailId,
+        current: current
+      };
       uni.navigateTo({
-        url: `/pagesAuth/realName/index?taskId=${queryParams.value.taskId}&current=${current}`
+        url: `/pagesAuth/realName/index?taskQueryParams=${JSON.stringify(
+          taskQueryParams
+        )}`
       });
     }
   });

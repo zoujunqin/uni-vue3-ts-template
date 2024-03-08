@@ -23,8 +23,11 @@ export const loginJumpPage = () => {
         if (current === -1) {
           switchFirstTab();
         } else {
+          const taskQueryParams = {
+            current: current
+          };
           uni.reLaunch({
-            url: `/pagesAuth/realName/index?current=${current}`
+            url: `/pagesAuth/realName/index?taskQueryParams=${taskQueryParams}`
           });
         }
       })

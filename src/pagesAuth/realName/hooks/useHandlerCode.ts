@@ -53,13 +53,12 @@ export const useHandlerCode = ({ infoParams, signUrl }) => {
   };
   // 申请任务进入未实名进入流程
   const handleApplyTask = () => {
-    const { taskId } = infoParams.value;
-    applyTask(taskId).then(res => {
+    applyTask(infoParams.value).then(res => {
       const current = dealStepCurrent(res);
       if (current === 1) {
         const params = {
           callbackPage: callBackUrl.value,
-          taskId: taskId
+          taskId: infoParams.value.taskId
         };
         getInvitationProtocolSignUrlForTask(params)
           .then(res => {
