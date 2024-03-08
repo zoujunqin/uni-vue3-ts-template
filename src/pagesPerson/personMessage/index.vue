@@ -88,20 +88,20 @@ onMounted(() => {
 const handleGetPersonalCenterInfo = () => {
   getPersonalCenterInfo().then(async res => {
     personData.value = res;
-    personData.value.idCardFront = res.idCardFront
-      ? await getPreviewUrl(res.idCardFront)
-      : '';
-    personData.value.idCardReverse = res.idCardReverse
-      ? await getPreviewUrl(res.idCardReverse)
-      : '';
-    imageList.value = [
-      personData.value.idCardFront,
-      personData.value.idCardReverse
-    ];
+    if (res.idCardFront) {
+      personData.value.idCardFront = await getPreviewUrl(res.idCardFront);
+      imageList.value.push(personData.value.idCardFront);
+    }
+    if (res.idCardReverse) {
+      personData.value.idCardReverse = await getPreviewUrl(res.idCardReverse);
+      imageList.value.push(personData.value.idCardReverse);
+    }
   });
 };
 
 const handleLookImg = (index: number) => {
+  if (index === 0 && !personData.value.idCardFront) return;
+  if (index === 1 && !personData.value.idCardReverse) return;
   uni.previewImage({
     current: index,
     urls: imageList.value
