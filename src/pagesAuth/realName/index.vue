@@ -116,7 +116,11 @@ import { getInvitationCodeId } from '@/utils/user';
 
 const bankInfoFormRef = ref();
 const current = ref(0);
-const infoParams = ref({ invitationCodeId: null, taskId: null });
+const infoParams = ref({
+  invitationCodeId: null,
+  taskId: null,
+  orderDetailId: null
+});
 const applyStatusMap = ref({
   appealStatus: '',
   rejectCause: ''
