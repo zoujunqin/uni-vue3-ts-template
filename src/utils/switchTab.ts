@@ -27,7 +27,9 @@ export const loginJumpPage = () => {
             current: current
           };
           uni.reLaunch({
-            url: `/pagesAuth/realName/index?taskQueryParams=${taskQueryParams}`
+            url: `/pagesAuth/realName/index?taskQueryParams=${JSON.stringify(
+              taskQueryParams
+            )}`
           });
         }
       })
