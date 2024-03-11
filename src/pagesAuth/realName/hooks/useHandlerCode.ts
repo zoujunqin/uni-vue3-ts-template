@@ -9,7 +9,7 @@ import { applyTask } from '@/api/fe/wechat/task';
 import { dealStepCurrent } from '@/utils';
 import { switchFirstTab } from '@/utils/switchTab';
 
-export const useHandlerCode = ({ infoParams, signUrl }) => {
+export const useHandlerCode = ({ infoParams, signUrl, current }) => {
   const callBackUrl = ref('http://47.96.112.174:8003/');
   const handleErrBack = err => {
     uni.showModal({
@@ -25,6 +25,7 @@ export const useHandlerCode = ({ infoParams, signUrl }) => {
   };
   // 申请任务进入已实名
   const handleGetTaskSignUrl = () => {
+    uni.showLoading({ title: '请求中...' });
     const params = {
       callbackPage: callBackUrl.value,
       taskId: infoParams.value.taskId
@@ -33,12 +34,16 @@ export const useHandlerCode = ({ infoParams, signUrl }) => {
       .then(res => {
         signUrl.value = res;
       })
+      .finally(() => {
+        uni.hideLoading();
+      })
       .catch(err => {
         handleErrBack(err);
       });
   };
   // 邀请码进入已实名
   const handleGetCodeSignUrl = () => {
+    uni.showLoading({ title: '请求中...' });
     const params = {
       callbackPage: callBackUrl.value,
       codeId: infoParams.value.invitationCodeId
@@ -47,6 +52,9 @@ export const useHandlerCode = ({ infoParams, signUrl }) => {
       .then(res => {
         signUrl.value = res;
       })
+      .finally(() => {
+        uni.hideLoading();
+      })
       .catch(err => {
         handleErrBack(err);
       });
@@ -54,15 +62,19 @@ export const useHandlerCode = ({ infoParams, signUrl }) => {
   // 申请任务进入未实名进入流程
   const handleApplyTask = () => {
     applyTask(infoParams.value).then(res => {
-      const current = dealStepCurrent(res);
-      if (current === 1) {
+      current.value = dealStepCurrent(res);
+      if (current.value === 1) {
         const params = {
           callbackPage: callBackUrl.value,
           taskId: infoParams.value.taskId
         };
+        uni.showLoading({ title: '请求中...' });
         getInvitationProtocolSignUrlForTask(params)
           .then(res => {
             signUrl.value = res;
+          })
+          .finally(() => {
+            uni.hideLoading();
           })
           .catch(err => {
             handleErrBack(err);
@@ -80,15 +92,19 @@ export const useHandlerCode = ({ infoParams, signUrl }) => {
   const handleGetInvitationCodeScan = () => {
     const { invitationCodeId } = infoParams.value;
     getInvitationCodeScan(invitationCodeId).then(res => {
-      const current = dealStepCurrent(res);
-      if (current === 1) {
+      current.value = dealStepCurrent(res);
+      if (current.value === 1) {
         const params = {
           callbackPage: callBackUrl.value,
           codeId: invitationCodeId
         };
+        uni.showLoading({ title: '请求中...' });
         getInvitationProtocolSignUrlForCode(params)
           .then(res => {
             signUrl.value = res;
+          })
+          .finally(() => {
+            uni.hideLoading();
           })
           .catch(err => {
             handleErrBack(err);

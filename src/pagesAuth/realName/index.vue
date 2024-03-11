@@ -137,12 +137,15 @@ const {
 } = useHandler({
   infoParams,
   applyStatusMap,
-  signUrl
+  signUrl,
+  current
 });
 const { handleGetTaskSignUrl, handleGetCodeSignUrl } = useHandlerCode({
   infoParams,
-  signUrl
+  signUrl,
+  current
 });
+
 onLoad(query => {
   const taskQueryParams = JSON.parse(query?.taskQueryParams);
   infoParams.value = {

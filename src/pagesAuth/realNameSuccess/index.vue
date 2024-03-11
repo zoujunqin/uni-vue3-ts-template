@@ -1,5 +1,6 @@
 <template>
   <ProPage
+    :showBack="false"
     show-navbar
     navbar-title="实名认证"
     class="hx-p-[156px_24px_0_24px] hx-bg-white"

@@ -11,10 +11,16 @@ import { getAreaListByDistrictId } from '@/api/system/area';
 import { APPLY_STATUS, REAL_TYPE, YES_NO_TYPE } from '@/constant/taskDetail';
 import { getRealName, setRealName, getInvitationCodeId } from '@/utils/user';
 
-export const useHandler = ({ infoParams, applyStatusMap, signUrl }) => {
+export const useHandler = ({
+  infoParams,
+  applyStatusMap,
+  signUrl,
+  current
+}) => {
   const { handleApplyTask, handleGetInvitationCodeScan } = useHandlerCode({
     infoParams,
-    signUrl
+    signUrl,
+    current
   });
   const formData = ref<any>({});
   const proFormRef = ref();
