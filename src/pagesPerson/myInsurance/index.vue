@@ -43,7 +43,6 @@ onMounted(() => {
   handleGetPersonalCenterInsurance();
 });
 onPullDownRefresh(() => {
-  uni.startPullDownRefresh();
   handleGetPersonalCenterInsurance();
 });
 const handleGetPersonalCenterInsurance = () => {

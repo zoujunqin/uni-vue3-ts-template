@@ -47,7 +47,6 @@ onMounted(() => {
   handleGetPersonalCenterBankCard();
 });
 onPullDownRefresh(() => {
-  uni.startPullDownRefresh();
   handleGetPersonalCenterBankCard();
 });
 const handleGetPersonalCenterBankCard = () => {
