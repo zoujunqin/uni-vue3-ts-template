@@ -154,11 +154,15 @@ const fetchMobileLogin = () => {
       const { mobile, captcha } = formData.value;
       const param = { mobile, smsCode: captcha };
       uni.showLoading({ title: '登录中...' });
-      loginWithSms(param).then(res => {
-        setToken(res.token);
-        fetchUserInfo();
-        loginJumpPage();
-      });
+      loginWithSms(param)
+        .then(res => {
+          setToken(res.token);
+          fetchUserInfo();
+          loginJumpPage();
+        })
+        .finally(() => {
+          uni.hideLoading();
+        });
     }
   });
 };

@@ -34,7 +34,9 @@ export const loginJumpPage = () => {
         }
       })
       .catch(err => {
-        uni.showToast({ title: err.response.data.message, icon: 'none' });
+        setTimeout(() => {
+          uni.showToast({ title: err.response.data.message, icon: 'none' });
+        }, 30);
         switchFirstTab();
       });
   }

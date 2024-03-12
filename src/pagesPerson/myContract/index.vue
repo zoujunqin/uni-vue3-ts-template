@@ -94,10 +94,13 @@ const handleLookContract = async (path: string) => {
         filePath: downloadResult.tempFilePath,
         showMenu: true
       });
-      uni.hideLoading();
     },
     fail: () => {
-      uni.showToast({ title: '加载失败', icon: 'none' });
+      setTimeout(() => {
+        uni.showToast({ title: '加载失败', icon: 'none' });
+      }, 30);
+    },
+    complete: () => {
       uni.hideLoading();
     }
   });

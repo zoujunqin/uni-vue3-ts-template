@@ -177,22 +177,23 @@ class PureHttp {
         // 跳转到登录页面 401、40102、40103、40104
         const loginFailureCodeList = ['401', '40102', '40103', '40104'];
         if (loginFailureCodeList.includes(responseData.code)) {
-          uni.showToast({ title: '授权过期，请重新登录', icon: 'none' });
+          setTimeout(() => {
+            uni.showToast({ title: '授权过期，请重新登录', icon: 'none' });
+          }, 30);
           removeToken();
           uni.reLaunch({ url: '/pages/login/index' });
         } else if (!customDealCodes.includes(responseData.code)) {
           if (!httpNoMessage.includes($error.config.url)) {
-            uni.showToast({
-              title: responseData.message || '接口异常',
-              icon: 'none'
-            });
+            setTimeout(() => {
+              uni.showToast({
+                title: responseData.message || '接口异常',
+                icon: 'none'
+              });
+            }, 30);
           }
         }
-
         $error.isCancelRequest = Axios.isCancel($error);
-        setTimeout(() => {
-          uni.hideLoading();
-        }, 1500);
+        uni.hideLoading();
         // 所有的响应异常 区分来源为取消请求/非取消请求
         return Promise.reject($error);
       }
