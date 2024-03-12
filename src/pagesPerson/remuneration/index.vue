@@ -154,6 +154,9 @@ const handleLookDetails = (id: string) => {
 </script>
 
 <style scoped lang="scss">
+:deep(.pro-navbar) {
+  background-color: #fff;
+}
 .remuneration-container {
   .remuneration-title {
     color: var(--hx-text-color-main);

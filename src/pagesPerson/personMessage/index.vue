@@ -110,6 +110,9 @@ const handleLookImg = (index: number) => {
 </script>
 
 <style scoped lang="scss">
+:deep(.pro-navbar) {
+  background-color: #fff;
+}
 .personMessage-container {
   .card-box {
     margin-bottom: 10px;

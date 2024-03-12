@@ -21,7 +21,7 @@
           <view class="hx-flex hx-flex-col">
             <p class="contract-title">{{ item?.protocolName }}</p>
             <span class="contract-text">{{ item?.customerName }}</span>
-            <span class="contract-text">{{ item?.uploadTime }}</span>
+            <span class="contract-text">{{ item?.workSignTime }}</span>
           </view>
           <image
             :src="import('@http/person/arrow-right.svg')"
@@ -108,6 +108,9 @@ const handleLookContract = async (path: string) => {
 </script>
 
 <style scoped lang="scss">
+:deep(.pro-navbar) {
+  background-color: #fff;
+}
 .myContract-container {
   .contract-title {
     color: var(--hx-text-color-main);

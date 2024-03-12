@@ -88,6 +88,9 @@ onLoad(query => {
 </script>
 
 <style scoped lang="scss">
+:deep(.pro-navbar) {
+  background-color: #fff;
+}
 .remunerationDetails-container {
   .monty-box {
     position: relative;
