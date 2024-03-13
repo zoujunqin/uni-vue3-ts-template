@@ -3,7 +3,7 @@ import { http } from '@/utils/http';
 const baseApi = '/fe/task/task_type';
 
 export interface ITreeTaskType {
-  categoryName: string;
+  name: string;
   children: Array<ITreeSubTaskType>;
 }
 

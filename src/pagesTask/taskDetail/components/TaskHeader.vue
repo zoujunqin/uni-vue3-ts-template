@@ -15,7 +15,7 @@
     <text
       class="hx-mt-[3px] hx-flex-1 hx-text-right hx-text-color-primary hx-text-[20px] hx-font-[600] hx-leading-[30px]"
     >
-      {{ hyphenAB(data.salaryMin, data.salaryMax) + data.costTypeName }}
+      {{ hyphenAB(data.salaryMin, data.salaryMax) + data.costTypeName || '' }}
     </text>
   </view>
 

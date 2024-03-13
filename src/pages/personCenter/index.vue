@@ -54,7 +54,7 @@
     </view>
 
     <view
-      class="hx-p-[16px] hx-flex hx-items-center hx-justify-between hx-bg-white hx-rounded-[8px] hx-shadow-card hx-mb-[10px]"
+      class="hx-h-[88px] hx-p-[16px] hx-flex hx-items-center hx-justify-between hx-bg-white hx-rounded-[8px] hx-shadow-card hx-mb-[10px]"
     >
       <view
         class="hx-h-[56px] hx-flex hx-flex-col hx-items-center"
@@ -152,7 +152,7 @@ const firstVerticalList = computed(() => {
       type: verticalListItemMap.remuneration.type,
       icon: import('@http/person/remuneration-icon.svg'),
       desc: '累计报酬(元)',
-      text: `¥${personalData.value?.totalAmount}`
+      text: `¥${personalData.value?.totalAmount || 0}`
     },
     {
       type: verticalListItemMap.agreement.type,

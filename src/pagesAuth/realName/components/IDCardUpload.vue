@@ -45,21 +45,11 @@ const handleUploadSuccess = (previewUrl, type) => {
   getOcrIdCard(params)
     .then(res => {
       if (type === 'Front') {
-        const {
-          name,
-          idNumber,
-          address,
-          domicileDistrictCode,
-          domicileProvince,
-          domicileCity,
-          domicileDistrict
-        } = res.face;
+        const { name, idNumber, address } = res.face;
         data.value.workerName = name;
         data.value.idCardNo = idNumber;
         data.value.domicileAddress = address;
         data.value.ocrSure.front = true;
-        data.value.ocrSure.areaText = `${domicileProvince}/${domicileCity}/${domicileDistrict}`;
-        data.value.domicileAreaCode = domicileDistrictCode.toString();
       } else {
         const { validPeriodBegin, validPeriodEnd, issueAuthority } = res.back;
         data.value.credentialStartDate = validPeriodBegin;

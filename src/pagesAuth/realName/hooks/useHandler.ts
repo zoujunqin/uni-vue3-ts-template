@@ -7,7 +7,6 @@ import {
   realNameAuth,
   postAppealSubmit
 } from '@/api/fe/wechat/worker';
-import { getAreaListByDistrictId } from '@/api/system/area';
 import { APPLY_STATUS, REAL_TYPE, YES_NO_TYPE } from '@/constant/taskDetail';
 import { getRealName, setRealName, getInvitationCodeId } from '@/utils/user';
 
@@ -63,10 +62,16 @@ export const useHandler = ({
       ? localFormData[subItem.fieldCode]
       : subItem.value;
     formData.value['ocrSure'] = {
-      front: localBool ? localFormData['ocrSure'].front : true,
-      reverse: localBool ? localFormData['ocrSure'].reverse : true,
-      areaText: '',
-      areaCode: []
+      front: localBool
+        ? localFormData['ocrSure'].front
+        : applyStatusMap.value.appealStatus === APPLY_STATUS.PASSED
+          ? true
+          : false,
+      reverse: localBool
+        ? localFormData['ocrSure'].reverse
+        : applyStatusMap.value.appealStatus === APPLY_STATUS.PASSED
+          ? true
+          : false
     };
   };
   const getFormDataRules = subItem => {
@@ -76,17 +81,6 @@ export const useHandler = ({
       trigger: ['blur', 'change']
     };
     formRules.value[subItem.fieldCode] = rule;
-    if (subItem.fieldCode === 'domicileAreaCode' && subItem.value) {
-      getAreaListByDistrictId({ districtId: subItem.value }).then(res => {
-        const { left, middle, right } = res;
-        formData.value['ocrSure'].areaCode = [left.id, middle.id, right.id];
-        formData.value['ocrSure'].areaText = [
-          left.name,
-          middle.name,
-          right.name
-        ].join('/');
-      });
-    }
   };
   const handleNext = async () => {
     if (!formData.value['idCardFront'] || !formData.value['idCardReverse']) {

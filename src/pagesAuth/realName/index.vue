@@ -72,8 +72,8 @@
           <ProButton
             class="hx-w-full"
             type="primary"
-            @tap.stop="handleNext"
-            v-if="!nextDisabled"
+            @click="handleNext"
+            :disabled="nextDisabled"
           >
             完成认证（下一步）
           </ProButton>

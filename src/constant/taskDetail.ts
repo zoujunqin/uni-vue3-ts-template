@@ -28,7 +28,7 @@ export const { APPLY_STATUS, APPLY_STATUS_MAP, APPLY_STATUS_LIST } =
   defineConstants(
     [
       {
-        label: '待处理',
+        label: '申述中',
         value: 'to_be_processed',
         className: 'warning-fixed-tip',
         textColor: 'warning-text-color'

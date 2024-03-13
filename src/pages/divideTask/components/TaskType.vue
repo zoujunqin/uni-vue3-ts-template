@@ -1,7 +1,7 @@
 <template>
   <template v-for="(item, index) in list" :key="index">
     <view class="section-title hx-leading-[19px] hx-mb-[16px]">
-      {{ item.categoryName }}
+      {{ item.name }}
     </view>
     <view class="hx-mb-[24px] hx-flex hx-flex-wrap">
       <view

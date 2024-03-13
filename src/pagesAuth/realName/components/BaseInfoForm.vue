@@ -43,25 +43,8 @@
           :placeholder="item?.labelName"
         />
       </view>
-      <view
-        v-if="getReadonlyAreaBool(item.valueType)"
-        @click="handleOpenArea()"
-      >
-        <ProInput
-          class="!hx-pr-0"
-          v-model="data.ocrSure['areaText']"
-          input-align="right"
-          readonly
-          :placeholder="item?.labelName"
-        />
-      </view>
     </ProFormItem>
   </view>
-  <ProAreaPicker
-    v-model="areaList"
-    ref="proAreaPickerRef"
-    @confirm="handleAreaConfirm"
-  />
   <ProDateTimePicker
     ref="datetimePickerRef"
     mode="date"
@@ -98,7 +81,6 @@ const props = defineProps({
 const data = useVModel(props, 'modelValue', undefined, {
   passive: true
 });
-const proAreaPickerRef = ref();
 const datetimePickerRef = ref();
 const proPickerRef = ref();
 const showDate = ref();
@@ -106,18 +88,6 @@ const dayDate = ref();
 const pickerValue = ref<Array<any>>([]);
 const clickFieldCode = ref('');
 const indexClick = ref();
-const areaList = computed({
-  get() {
-    return data.value.ocrSure['areaCode'];
-  },
-  set(val) {
-    data.value['domicileAreaCode'] = val[2].toString();
-  }
-});
-const handleAreaConfirm = val => {
-  const nameList = val.value.map(item => item.name);
-  data.value.ocrSure['areaText'] = nameList.join('/');
-};
 const handleOpenSelect = (val, index) => {
   indexClick.value = index;
   clickFieldCode.value = val.fieldCode;
@@ -126,9 +96,6 @@ const handleOpenSelect = (val, index) => {
 };
 const getReadonlyBool = valueType => {
   return ['date'].includes(valueType);
-};
-const getReadonlyAreaBool = valueType => {
-  return ['area'].includes(valueType);
 };
 const handlePickerConfirm = e => {
   data.value[clickFieldCode.value] = e.value[0].code;
@@ -144,9 +111,6 @@ const handleOpenDate = fieldCode => {
   nextTick(() => {
     datetimePickerRef.value.open();
   });
-};
-const handleOpenArea = () => {
-  proAreaPickerRef.value.open();
 };
 </script>
 
