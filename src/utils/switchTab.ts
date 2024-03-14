@@ -25,7 +25,7 @@ export const loginJumpPage = () => {
           switchFirstTab();
         } else {
           const taskQueryParams = {
-            id: codeId,
+            invitationCodeId: codeId,
             current: current,
             sourceType: PROTOCOL_TYPE.INVITATION_CODE
           };

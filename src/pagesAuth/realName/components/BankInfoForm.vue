@@ -48,6 +48,7 @@
           <ProInput
             class="!hx-pr-0"
             v-model="code"
+            type="number"
             placeholder="请输入验证码"
             input-align="right"
           />

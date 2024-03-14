@@ -24,11 +24,12 @@ export const useHandlerCode = ({ infoParams, signUrl, current }) => {
   };
   const handlePostWorkerProtocolSign = () => {
     uni.showLoading({ title: '请求中...' });
-    const { sourceType, orderDetailId, taskId, id } = infoParams.value;
+    const { sourceType, orderDetailId, taskId, invitationCodeId } =
+      infoParams.value;
     const idMap = {
       [PROTOCOL_TYPE.ORDER_DETAIL]: orderDetailId,
       [PROTOCOL_TYPE.TASK]: taskId,
-      [PROTOCOL_TYPE.INVITATION_CODE]: id
+      [PROTOCOL_TYPE.INVITATION_CODE]: invitationCodeId
     };
     const params = {
       callbackPage: callbackPage.value,
