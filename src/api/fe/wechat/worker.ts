@@ -20,3 +20,7 @@ export const getRealNameInfo = params => {
 export const postAppealSubmit = data => {
   return http.request('post', `${baseApi}/appeal/submit`, { data });
 };
+/* 【协议签署】协议签署 */
+export const postWorkerProtocolSign = data => {
+  return http.request('post', `${baseApi}_protocol/sign`, { data });
+};

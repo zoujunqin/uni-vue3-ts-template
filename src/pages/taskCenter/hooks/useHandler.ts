@@ -3,7 +3,7 @@ import { shallowRef } from 'vue';
 import { ITask, getTaskList } from '@/api/fe/wechat/task_center';
 import ProPageHeader from '@/components/ProPageHeader/ProPageHeader.vue';
 import ProScrollList from '@/components/ProScrollList/ProScrollList.vue';
-import { TASK_STATUS } from '@/constant/taskDetail';
+import { TASK_STATUS, PROTOCOL_TYPE } from '@/constant/taskDetail';
 import { getUUID } from '@/utils';
 
 export const useHandler = () => {
@@ -47,7 +47,8 @@ export const useHandler = () => {
   const navToTaskDetail = (row: ITask) => {
     const params = {
       taskId: row.taskId,
-      orderDetailId: row.orderDetailId
+      orderDetailId: row.orderDetailId,
+      sourceType: PROTOCOL_TYPE.ORDER_DETAIL
     };
     uni.navigateTo({
       url: `/pagesTask/taskDetail/index?params=${JSON.stringify(params)}`

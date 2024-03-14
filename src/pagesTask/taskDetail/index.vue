@@ -58,15 +58,19 @@ const handleApplyTask = () => {
   applyTask(queryParams.value).then(res => {
     const current = dealStepCurrent(res);
     if (current === -1) {
-      uni.showToast({
-        title: '申请成功',
-        icon: 'none'
-      });
+      setTimeout(() => {
+        uni.showToast({
+          title: '申请成功',
+          icon: 'none'
+        });
+      }, 30);
       handleGetTaskDetail();
     } else {
+      const { taskId, orderDetailId, sourceType } = queryParams.value;
       const taskQueryParams = {
-        taskId: queryParams.value.taskId,
-        orderDetailId: queryParams.value.orderDetailId,
+        taskId: taskId,
+        orderDetailId: orderDetailId,
+        sourceType: sourceType,
         current: current
       };
       uni.navigateTo({

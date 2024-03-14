@@ -1,16 +1,15 @@
 import { ref } from 'vue';
 
-import {
-  getInvitationProtocolSignUrlForCode,
-  getInvitationProtocolSignUrlForTask
-} from '@/api/fe/fe_worker_protocol';
 import { getInvitationCodeScan } from '@/api/fe/wechat/invitation_code';
 import { applyTask } from '@/api/fe/wechat/task';
+import { postWorkerProtocolSign } from '@/api/fe/wechat/worker';
+import { PROTOCOL_TYPE } from '@/constant/taskDetail';
 import { dealStepCurrent } from '@/utils';
 import { switchFirstTab } from '@/utils/switchTab';
+import { getInvitationCodeId } from '@/utils/user';
 
 export const useHandlerCode = ({ infoParams, signUrl, current }) => {
-  const callBackUrl = ref('http://47.96.112.174:8003/');
+  const callbackPage = ref('http://47.96.112.174:8003/');
   const handleErrBack = err => {
     uni.showModal({
       title: '提示',
@@ -23,32 +22,20 @@ export const useHandlerCode = ({ infoParams, signUrl, current }) => {
       }
     });
   };
-  // 申请任务进入已实名
-  const handleGetTaskSignUrl = () => {
+  const handlePostWorkerProtocolSign = () => {
     uni.showLoading({ title: '请求中...' });
-    const params = {
-      callbackPage: callBackUrl.value,
-      taskId: infoParams.value.taskId
+    const { sourceType, orderDetailId, taskId, id } = infoParams.value;
+    const idMap = {
+      [PROTOCOL_TYPE.ORDER_DETAIL]: orderDetailId,
+      [PROTOCOL_TYPE.TASK]: taskId,
+      [PROTOCOL_TYPE.INVITATION_CODE]: id
     };
-    getInvitationProtocolSignUrlForTask(params)
-      .then(res => {
-        signUrl.value = res;
-      })
-      .finally(() => {
-        uni.hideLoading();
-      })
-      .catch(err => {
-        handleErrBack(err);
-      });
-  };
-  // 邀请码进入已实名
-  const handleGetCodeSignUrl = () => {
-    uni.showLoading({ title: '请求中...' });
     const params = {
-      callbackPage: callBackUrl.value,
-      codeId: infoParams.value.invitationCodeId
+      callbackPage: callbackPage.value,
+      id: idMap[sourceType],
+      sourceType
     };
-    getInvitationProtocolSignUrlForCode(params)
+    postWorkerProtocolSign(params)
       .then(res => {
         signUrl.value = res;
       })
@@ -64,21 +51,7 @@ export const useHandlerCode = ({ infoParams, signUrl, current }) => {
     applyTask(infoParams.value).then(res => {
       current.value = dealStepCurrent(res);
       if (current.value === 1) {
-        const params = {
-          callbackPage: callBackUrl.value,
-          taskId: infoParams.value.taskId
-        };
-        uni.showLoading({ title: '请求中...' });
-        getInvitationProtocolSignUrlForTask(params)
-          .then(res => {
-            signUrl.value = res;
-          })
-          .finally(() => {
-            uni.hideLoading();
-          })
-          .catch(err => {
-            handleErrBack(err);
-          });
+        handlePostWorkerProtocolSign();
       } else {
         uni.showToast({
           title: '申请成功',
@@ -90,34 +63,19 @@ export const useHandlerCode = ({ infoParams, signUrl, current }) => {
   };
   //邀请码进入未实名进入流程
   const handleGetInvitationCodeScan = () => {
-    const { invitationCodeId } = infoParams.value;
+    const invitationCodeId = getInvitationCodeId();
     getInvitationCodeScan(invitationCodeId).then(res => {
       current.value = dealStepCurrent(res);
       if (current.value === 1) {
-        const params = {
-          callbackPage: callBackUrl.value,
-          codeId: invitationCodeId
-        };
-        uni.showLoading({ title: '请求中...' });
-        getInvitationProtocolSignUrlForCode(params)
-          .then(res => {
-            signUrl.value = res;
-          })
-          .finally(() => {
-            uni.hideLoading();
-          })
-          .catch(err => {
-            handleErrBack(err);
-          });
+        handlePostWorkerProtocolSign();
       } else {
         switchFirstTab();
       }
     });
   };
   return {
-    handleGetTaskSignUrl,
-    handleGetCodeSignUrl,
     handleApplyTask,
-    handleGetInvitationCodeScan
+    handleGetInvitationCodeScan,
+    handlePostWorkerProtocolSign
   };
 };

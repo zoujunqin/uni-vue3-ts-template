@@ -62,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, ref } from 'vue';
+import { nextTick, ref } from 'vue';
 
 import { useVModel } from '@/hooks/useVModel';
 import { handleDealTimestampDate } from '@/utils/processingText';

@@ -112,12 +112,11 @@ import {
   APPLY_STATUS,
   REAL_TYPE
 } from '@/constant/taskDetail';
-import { getInvitationCodeId } from '@/utils/user';
 
 const bankInfoFormRef = ref();
 const current = ref(0);
 const infoParams = ref({
-  invitationCodeId: null,
+  sourceType: null,
   taskId: null,
   orderDetailId: null
 });
@@ -144,7 +143,7 @@ const {
   signUrl,
   current
 });
-const { handleGetTaskSignUrl, handleGetCodeSignUrl } = useHandlerCode({
+const { handlePostWorkerProtocolSign } = useHandlerCode({
   infoParams,
   signUrl,
   current
@@ -153,19 +152,13 @@ const { handleGetTaskSignUrl, handleGetCodeSignUrl } = useHandlerCode({
 onLoad(query => {
   const taskQueryParams = JSON.parse(query?.taskQueryParams);
   infoParams.value = {
-    invitationCodeId:
-      getInvitationCodeId() === '-1' ? '' : getInvitationCodeId(),
     ...taskQueryParams
   };
   current.value = Number(taskQueryParams.current);
   if (current.value === 0) {
     handleGetRealNameInfo();
   } else if (current.value === 1) {
-    if (getInvitationCodeId() === '-1') {
-      handleGetTaskSignUrl();
-    } else {
-      handleGetCodeSignUrl();
-    }
+    handlePostWorkerProtocolSign();
   }
 });
 const nextDisabled = computed(() => {

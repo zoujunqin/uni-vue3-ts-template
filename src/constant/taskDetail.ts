@@ -85,3 +85,23 @@ export const { YES_NO_TYPE, YES_NO_TYPE_MAP, YES_NO_TYPE_LIST } =
     'YES_NO_TYPE',
     'value'
   );
+//协议签署类型
+export const { PROTOCOL_TYPE, PROTOCOL_TYPE_MAP, PROTOCOL_TYPE_LIST } =
+  defineConstants(
+    [
+      {
+        label: '邀请码',
+        value: 'invitation_code'
+      },
+      {
+        label: '订单详情',
+        value: 'order_detail'
+      },
+      {
+        label: '任务',
+        value: 'task'
+      }
+    ] as const,
+    'PROTOCOL_TYPE',
+    'value'
+  );

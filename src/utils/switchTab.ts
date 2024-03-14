@@ -1,5 +1,6 @@
 import { getInvitationCodeScan } from '@/api/fe/wechat/invitation_code';
 import { getAreaTreeProvinceCityDistrict } from '@/api/system/area';
+import { PROTOCOL_TYPE } from '@/constant/taskDetail';
 import pagesJson from '@/pages.json';
 import { useTabbarStore } from '@/pinia/modules/tabbar';
 import { dealStepCurrent } from '@/utils/index';
@@ -24,7 +25,9 @@ export const loginJumpPage = () => {
           switchFirstTab();
         } else {
           const taskQueryParams = {
-            current: current
+            id: codeId,
+            current: current,
+            sourceType: PROTOCOL_TYPE.INVITATION_CODE
           };
           uni.reLaunch({
             url: `/pagesAuth/realName/index?taskQueryParams=${JSON.stringify(

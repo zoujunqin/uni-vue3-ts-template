@@ -6,6 +6,7 @@ import TaskTypeDropDownPopup from '../components/TaskTypeDropDownPopup.vue';
 import { ITask } from '@/api/fe/wechat/task_center';
 import ProAreaPicker from '@/components/ProAreaPicker/ProAreaPicker.vue';
 import ProScrollList from '@/components/ProScrollList/ProScrollList.vue';
+import { PROTOCOL_TYPE } from '@/constant/taskDetail';
 
 const TASK_TYPE = 'taskType';
 const AREA = 'area';
@@ -72,7 +73,8 @@ export const useHandler = () => {
   /* 跳转到任务详情 */
   const navToTaskDetail = (row: ITask) => {
     const params = {
-      taskId: row.taskId
+      taskId: row.taskId,
+      sourceType: PROTOCOL_TYPE.TASK
     };
     uni.navigateTo({
       url: `/pagesTask/taskDetail/index?params=${JSON.stringify(params)}`
