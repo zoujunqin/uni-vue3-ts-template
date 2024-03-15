@@ -17,6 +17,15 @@
         label-width="250rpx"
       >
         <ProInput
+          v-if="item.valueType === 'text'"
+          class="!hx-pr-0"
+          v-model="data[item.fieldCode]"
+          input-align="right"
+          :placeholder="item?.labelName"
+        />
+        <ProInput
+          v-if="item.valueType === 'number'"
+          type="number"
           class="!hx-pr-0"
           v-model="data[item.fieldCode]"
           input-align="right"
