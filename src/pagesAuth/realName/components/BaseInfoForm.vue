@@ -49,6 +49,7 @@
     ref="datetimePickerRef"
     mode="date"
     :minDate="-631180800000"
+    :maxDate="2841840000000"
     v-model="dayDate"
     @confirm="handleConfirmDate"
   />
