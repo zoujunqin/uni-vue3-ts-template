@@ -90,7 +90,8 @@ export const useHandler = ({
       });
     }
     await proFormRef.value.validate();
-    if (!smsCode.value) {
+    const dataKeys = Object.keys(formData.value);
+    if (!smsCode.value && dataKeys.includes('mobile')) {
       return uni.showToast({
         title: '请输入验证码',
         icon: 'none'
