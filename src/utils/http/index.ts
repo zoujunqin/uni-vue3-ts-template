@@ -18,10 +18,7 @@ import {
 import { getUUID } from '@/utils';
 import { decryptString, encryptString } from '@/utils/crypto';
 import { formatToken, getToken, removeToken } from '@/utils/user';
-const httpNoMessage = [
-  '/fe/fe_worker_protocol/invitation_protocol_sign_url_for_task',
-  '/fe/fe_worker_protocol/invitation_protocol_sign_url_for_code'
-];
+const httpNoMessage = ['/fe/wechat/worker_protocol/sign'];
 const baseUrlMap = {
   // development: 'http://218.104.230.173:17054',
   development: 'https://localdev-hro-api.fjhxrl.com',
