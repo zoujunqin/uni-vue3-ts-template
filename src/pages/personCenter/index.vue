@@ -22,10 +22,12 @@
       class="hx-flex hx-items-center hx-justify-between hx-pl-[8px] hx-pr-[8px] hx-mt-[12px] hx-mb-[20px]"
     >
       <view class="hx-flex hx-flex-1">
-        <image
-          class="hx-w-[60px] hx-h-[60px] hx-mr-[12px]"
-          :src="import('@http/person/avatar-default.svg')"
-        />
+        <div class="img-box">
+          <image
+            class="hx-w-[54px] hx-h-[54px] hx-rounded-full"
+            :src="import('@http/person/avatar-default.svg')"
+          />
+        </div>
         <view class="hx-flex hx-flex-col hx-justify-center">
           <text
             class="hx-mb-[4px] hx-text-color-title hx-text-font-size-title hx-font-[600] hx-leading-[28px]"
@@ -186,8 +188,18 @@ const secondVerticalList = [
 }
 </style>
 
-<style>
+<style lang="scss" scoped>
 page {
   background: linear-gradient(180deg, #fff 18.25%, #f7f8fa 92.19%);
+}
+.img-box {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
