@@ -64,14 +64,10 @@ export const useHandler = ({
     formData.value['ocrSure'] = {
       front: localBool
         ? localFormData['ocrSure'].front
-        : applyStatusMap.value.appealStatus === APPLY_STATUS.PASSED
-          ? true
-          : false,
+        : applyStatusMap.value.appealStatus === APPLY_STATUS.PASSED,
       reverse: localBool
         ? localFormData['ocrSure'].reverse
         : applyStatusMap.value.appealStatus === APPLY_STATUS.PASSED
-          ? true
-          : false
     };
   };
   const getFormDataRules = subItem => {
