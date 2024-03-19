@@ -2,7 +2,7 @@
   <view class="hx-p-[16px_12.5px] hx-bg-[#fff]" @click="handleClick">
     <view class="hx-flex hx-items-end hx-justify-between hx-mb-[10px]">
       <text
-        class="hx-text-color-title hx-text-[20px] hx-font-[500] hx-leading-[27px]"
+        class="hx-text-color-title hx-text-[16px] hx-font-[500] hx-leading-[27px]"
       >
         {{ cardInfo.title }}
       </text>

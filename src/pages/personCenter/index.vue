@@ -78,22 +78,26 @@
     </view>
 
     <view
-      class="hx-bg-white hx-rounded-[8px] hx-pl-[12px] hx-pr-[12px] hx-mb-[10px]"
+      class="hx-bg-white hx-rounded-[8px] hx-pl-[12px] hx-pr-[12px] hx-mb-[10px] hx-pt-[16px]"
     >
       <vertical-list-item
         v-for="(item, index) in firstVerticalList"
         :key="index"
         :data="item"
-        class="hx-pt-[16px] hx-pb-[16px]"
+        :listLength="firstVerticalList.length"
+        class="hx-pb-[16px]"
         @click="verticalListItemMap[item.type]?.handler"
       />
     </view>
-    <view class="hx-bg-white hx-rounded-[8px] hx-pl-[12px] hx-pr-[12px]">
+    <view
+      class="hx-bg-white hx-rounded-[8px] hx-pl-[12px] hx-pr-[12px] hx-pt-[16px]"
+    >
       <vertical-list-item
         v-for="(item, index) in secondVerticalList"
         :key="index"
         :data="item"
-        class="hx-pt-[16px] hx-pb-[16px]"
+        :listLength="secondVerticalList.length"
+        class="hx-pb-[16px]"
         @click="verticalListItemMap[item.type]?.handler"
       />
     </view>
@@ -151,12 +155,14 @@ const panelItemList = computed(() => {
 const firstVerticalList = computed(() => {
   return [
     {
+      index: 0,
       type: verticalListItemMap.remuneration.type,
       icon: import('@http/person/remuneration-icon.svg'),
       desc: '累计报酬(元)',
       text: `¥${personalData.value?.totalAmount || 0}`
     },
     {
+      index: 1,
       type: verticalListItemMap.agreement.type,
       icon: import('@http/person/agreement-icon.svg'),
       desc: '用户隐私协议'
@@ -166,6 +172,7 @@ const firstVerticalList = computed(() => {
 
 const secondVerticalList = [
   {
+    index: 0,
     type: verticalListItemMap.contact.type,
     icon: import('@http/person/contact-icon.svg'),
     desc: '联系我们'

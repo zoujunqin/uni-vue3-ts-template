@@ -12,7 +12,7 @@
         @click="handleSelect(subItem.id)"
       >
         <view
-          class="icon-container hx-hidden hx-items-center hx-justify-center hx-absolute hx-w-[14px] hx-h-[8px] hx-bg-color-primary hx-rounded-tl-[6px] hx-rounded-br-[6px] hx-right-0 hx-bottom-0"
+          class="icon-container hx-hidden hx-items-center hx-justify-center hx-absolute hx-w-[14px] hx-h-[8px] hx-bg-color-primary hx-rounded-tl-[6px] hx-rounded-br-[4px] hx-right-0 hx-bottom-0"
         >
           <ProIcon name="checkmark" size="20rpx" color="white" />
         </view>
@@ -54,7 +54,7 @@ const handleSelect = (id: number) => {
 };
 
 const getClass = (subItem: ITreeSubTaskType) => {
-  return [selectIdList.value.includes(subItem.id) ? 'active' : null];
+  return [selectIdList.value.includes(subItem.id) ? 'active' : 'unchecked'];
 };
 </script>
 
@@ -69,7 +69,10 @@ export default { options: { name: 'TaskType', virtualHost: true } };
   background: rgb(61 134 242 / 10%);
   border: 1px solid var(--hx-color-primary);
 }
-
+.unchecked {
+  position: relative;
+  border: 1px solid var(--hx-bg-color);
+}
 .active > .icon-container {
   display: flex;
 }
