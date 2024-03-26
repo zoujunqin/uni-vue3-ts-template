@@ -15,7 +15,7 @@
         <view
           v-for="item in dataList"
           :key="item.id"
-          @click="handleLookContract(item?.path)"
+          @click="handleLookContract(item?.id)"
           class="hx-flex hx-items-center hx-justify-between hx-bg-white hx-p-[16px_12px] hx-mb-[10px]"
         >
           <view class="hx-flex hx-flex-col">
@@ -43,6 +43,9 @@
       @close="handleCloseDate"
     />
   </ProPage>
+  <view v-if="pathUrl !== ''">
+    <web-view :src="pathUrl" />
+  </view>
 </template>
 
 <script setup lang="ts">
@@ -50,13 +53,13 @@ import { onPullDownRefresh } from '@dcloudio/uni-app';
 import { computed, nextTick, onMounted, ref } from 'vue';
 
 import { getPersonalCenterContract } from '@/api/fe/wechat/personal_center';
-import { useOss } from '@/hooks/useOss';
+import { getWorkerProtocolByIdViewUrl } from '@/api/fe/wechat/worker';
 import { handleDealTimestamp } from '@/utils/processingText';
 const monthDatetime = ref(new Date());
 const conditionStatus = ref(false);
-const { getPreviewUrl } = useOss();
 const datetimePickerRef = ref();
 const dataList = ref<Array<any>>([]);
+const pathUrl = ref('');
 
 const monthDate = computed(() => {
   return handleDealTimestamp(monthDatetime.value);
@@ -84,25 +87,9 @@ const handleGetPersonalCenterContract = () => {
 const openDate = (bool: boolean) => {
   bool && datetimePickerRef.value.open();
 };
-const handleLookContract = async (path: string) => {
-  const pdfUrl = await getPreviewUrl(path);
-  uni.showLoading({ title: '加载中...' });
-  uni.downloadFile({
-    url: pdfUrl,
-    success: downloadResult => {
-      uni.openDocument({
-        filePath: downloadResult.tempFilePath,
-        showMenu: true
-      });
-    },
-    fail: () => {
-      setTimeout(() => {
-        uni.showToast({ title: '加载失败', icon: 'none' });
-      }, 30);
-    },
-    complete: () => {
-      uni.hideLoading();
-    }
+const handleLookContract = (id: string) => {
+  getWorkerProtocolByIdViewUrl(id).then(res => {
+    pathUrl.value = res;
   });
 };
 </script>

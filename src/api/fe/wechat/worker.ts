@@ -24,3 +24,7 @@ export const postAppealSubmit = data => {
 export const postWorkerProtocolSign = data => {
   return http.request('post', `${baseApi}_protocol/sign`, { data });
 };
+/* 【合同中心】协议预览链接 */
+export const getWorkerProtocolByIdViewUrl = id => {
+  return http.request('get', `${baseApi}_protocol/${id}/viewurl`);
+};
