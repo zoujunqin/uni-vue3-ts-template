@@ -35,6 +35,10 @@
       class="hx-text-[white] hx-mt-[56px] hx-bg-color-success hx-h-[44px] hx-flex hx-items-center hx-justify-center hx-rounded-[6px]"
       @getphonenumber="loginUnderWeChatAuth"
     >
+      <image
+        class="hx-w-[24px] hx-h-[24px] hx-mr-[2px]"
+        src="@/static/login/weixin-icon.png"
+      />
       <text> 微信授权登录 </text>
     </ProButton>
 
