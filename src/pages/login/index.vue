@@ -21,6 +21,10 @@
       class="hx-text-[white] hx-mt-[56px] hx-bg-color-success hx-h-[44px] hx-flex hx-items-center hx-justify-center hx-rounded-[6px]"
       @click="validate"
     >
+      <image
+        class="hx-w-[24px] hx-h-[24px] hx-mr-[2px]"
+        src="@/static/login/weixin-icon.png"
+      />
       <text> 微信授权登录 </text>
     </ProButton>
     <ProButton
@@ -39,6 +43,10 @@
       class="hx-text-[white] hx-mt-[18px] hx-bg-color-primary hx-h-[44px] hx-flex hx-items-center hx-justify-center hx-rounded-[6px]"
       @tap="navToMobileLogin"
     >
+      <image
+        class="hx-w-[24px] hx-h-[24px] hx-mr-[2px]"
+        src="@/static/login/phone-icon.png"
+      />
       <text> 手机号快捷登录 </text>
     </ProButton>
 
