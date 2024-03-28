@@ -24,6 +24,7 @@ export const REAL_NAME_KEY = 'real-name';
 export const INVITATION_ID_KEY = 'invitation-id';
 export const SIGN_CONTRACT_URL_KEY = 'sign-contract-url';
 export const AREA_KEY = 'area';
+export const IDCard_Message_KEY = 'idCard-message';
 
 export function getUserInfo(): string {
   return uni.getStorageSync(USER_INFO_KEY);
@@ -61,4 +62,13 @@ export function setArea(data: unknown) {
 
 export function getArea() {
   return uni.getStorageSync(AREA_KEY);
+}
+
+//实名身份信息
+export function setIdCardMessage(data: unknown) {
+  uni.setStorageSync(IDCard_Message_KEY, data);
+}
+
+export function getIdCardMessage() {
+  return uni.getStorageSync(IDCard_Message_KEY);
 }

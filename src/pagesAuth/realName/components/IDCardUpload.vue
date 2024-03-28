@@ -25,8 +25,9 @@
 </template>
 
 <script setup lang="ts">
-import { getOcrIdCard } from '@/api/system/ocr.ts';
+import { getOcrIdCard } from '@/api/system/ocr';
 import { useVModel } from '@/hooks/useVModel';
+import { setIdCardMessage } from '@/utils/user';
 
 const props = defineProps({
   modelValue: {
@@ -50,6 +51,10 @@ const handleUploadSuccess = (previewUrl, type) => {
         data.value.idCardNo = idNumber;
         data.value.domicileAddress = address;
         data.value.ocrSure.front = true;
+        setIdCardMessage({
+          name,
+          idNumber
+        });
       } else {
         const { validPeriodBegin, validPeriodEnd, issueAuthority } = res.back;
         data.value.credentialStartDate = validPeriodBegin;

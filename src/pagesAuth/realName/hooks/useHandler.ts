@@ -7,8 +7,11 @@ import {
   realNameAuth,
   postAppealSubmit
 } from '@/api/fe/wechat/worker';
+import { getOcrIdCard } from '@/api/system/ocr';
 import { APPLY_STATUS, REAL_TYPE, YES_NO_TYPE } from '@/constant/taskDetail';
+import { useOss } from '@/hooks/useOss';
 import { getRealName, setRealName, getInvitationCodeId } from '@/utils/user';
+import { getIdCardMessage, setIdCardMessage } from '@/utils/user';
 
 export const useHandler = ({
   infoParams,
@@ -21,6 +24,7 @@ export const useHandler = ({
     signUrl,
     current
   });
+  const { getPreviewUrl } = useOss();
   const formData = ref<any>({});
   const proFormRef = ref();
   const dynamicState = ref();
@@ -87,6 +91,7 @@ export const useHandler = ({
         icon: 'none'
       });
     }
+
     await proFormRef.value.validate();
     const dataKeys = Object.keys(formData.value);
     if (!smsCode.value && dataKeys.includes('mobile')) {
@@ -112,12 +117,34 @@ export const useHandler = ({
       }
     }
     const { front, reverse } = formData.value['ocrSure'];
-
-    if (front && reverse) {
+    if (!getIdCardMessage()) {
+      handleGetOcrIdCard();
+    }
+    const { name, idNumber } = getIdCardMessage();
+    if (
+      front &&
+      reverse &&
+      name === formData.value['workerName'] &&
+      idNumber === formData.value['idCardNo']
+    ) {
       handleRealNameAuth();
     } else {
       explainModalRef.value.open();
     }
+  };
+
+  const handleGetOcrIdCard = async () => {
+    const params = {
+      imageUrl: await getPreviewUrl(formData.value['idCardFront']),
+      needParse: true
+    };
+    getOcrIdCard(params).then(res => {
+      const { name, idNumber } = res.face;
+      setIdCardMessage({
+        name,
+        idNumber
+      });
+    });
   };
   const handleRealNameAuth = async () => {
     const keyList = Object.keys(formData.value);

@@ -88,7 +88,7 @@
   <ProModal
     ref="explainModalRef"
     title=""
-    content="您的身份证图片识别不通过，请重新上传或进行申述处理?"
+    content="您的身份证图片识别的姓名与身份证号与填写的不一致，请重新上传图片或进行申述处理?"
     confirm-button-text="申述"
     @confirm="handleExplainConfirm"
   />
