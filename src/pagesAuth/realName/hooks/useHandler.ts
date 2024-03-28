@@ -100,6 +100,17 @@ export const useHandler = ({
         icon: 'none'
       });
     }
+    if (
+      dataKeys.includes('credentialStartDate') &&
+      dataKeys.includes('credentialEndDate') &&
+      new Date(formData.value['credentialStartDate']).getTime() >=
+        new Date(formData.value['credentialEndDate']).getTime()
+    ) {
+      return uni.showToast({
+        title: '身份证有效期开始时间不能大于结束时间',
+        icon: 'none'
+      });
+    }
     const fIndex = dynamicState.value.findIndex(
       item => item.categoryCode === REAL_TYPE.CERTIFICATION_INFO
     );
