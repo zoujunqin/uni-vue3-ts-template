@@ -88,7 +88,7 @@ page {
 /* --------------------------- 覆盖组件样式 ------------------------------ */
 
 /* pro-count-down */
-.pro-count-down > text {
+.pro-count-down>text {
   color: var(--hx-color-primary);
 }
 
@@ -96,4 +96,8 @@ page {
   justify-content: unset !important;
   background-color: unset !important;
   border-bottom: unset !important;
+}
+
+.uv-button {
+  height: 48px !important;
 }
