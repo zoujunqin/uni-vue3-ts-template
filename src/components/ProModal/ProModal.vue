@@ -87,7 +87,7 @@ const handleConfirm = () => {
   emits('confirm');
 };
 
-defineExpose({ open });
+defineExpose({ open, close });
 </script>
 
 <script lang="ts">

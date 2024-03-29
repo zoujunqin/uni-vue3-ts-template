@@ -205,10 +205,13 @@ export const useHandler = ({
       mobile,
       bankName
     };
-    postAppealSubmit(params).then(() => {
-      uni.showToast({ title: '申述成功，请耐心等待', icon: 'none' });
-      uni.navigateBack();
-    });
+    postAppealSubmit(params)
+      .then(() => {
+        uni.showToast({ title: '申述成功，请耐心等待', icon: 'none' });
+      })
+      .finally(() => {
+        explainModalRef.value.close();
+      });
   };
   const applyTipText = computed(() => {
     return applyStatusMap.value['appealStatus'] === APPLY_STATUS.REJECT
