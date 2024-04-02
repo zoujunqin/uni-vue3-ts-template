@@ -33,6 +33,7 @@
 
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
+import { debounce } from 'lodash-es';
 import { ref, shallowRef } from 'vue';
 
 import BaseNeeds from './components/BaseNeeds.vue';
@@ -55,7 +56,7 @@ const handleGetTaskDetail = () => {
     taskDetail.value = res;
   });
 };
-const handleApplyTask = () => {
+const handleApplyTask = debounce(() => {
   applyTask(queryParams.value).then(res => {
     const current = dealStepCurrent(res);
     if (current === -1) {
@@ -81,7 +82,7 @@ const handleApplyTask = () => {
       });
     }
   });
-};
+}, 500);
 </script>
 
 <style scoped>

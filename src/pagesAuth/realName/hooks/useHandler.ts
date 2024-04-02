@@ -1,3 +1,4 @@
+import { debounce } from 'lodash-es';
 import { computed, ref } from 'vue';
 
 import { useHandlerCode } from './useHandlerCode';
@@ -84,7 +85,7 @@ export const useHandler = ({
     };
     formRules.value[subItem.fieldCode] = rule;
   };
-  const handleNext = async () => {
+  const handleNext = debounce(async () => {
     if (!formData.value['idCardFront'] || !formData.value['idCardReverse']) {
       return uni.showToast({
         title: '请先上传身份证',
@@ -142,7 +143,7 @@ export const useHandler = ({
     } else {
       explainModalRef.value.open();
     }
-  };
+  }, 500);
 
   const handleGetOcrIdCard = async () => {
     const params = {
@@ -186,7 +187,7 @@ export const useHandler = ({
   const handlePageBack = () => {
     setRealName(formData.value);
   };
-  const handleExplainConfirm = () => {
+  const handleExplainConfirm = debounce(() => {
     const {
       idCardNo,
       idCardReverse,
@@ -212,7 +213,7 @@ export const useHandler = ({
       .finally(() => {
         explainModalRef.value.close();
       });
-  };
+  }, 500);
   const applyTipText = computed(() => {
     return applyStatusMap.value['appealStatus'] === APPLY_STATUS.REJECT
       ? `申诉失败：原因(${applyStatusMap.value.rejectCause})`
