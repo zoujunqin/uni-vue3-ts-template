@@ -125,7 +125,7 @@ const handleLookImg = (index: number) => {
   }
   .title-tip {
     color: var(--hx-text-color-main);
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
   }
   .form-row {

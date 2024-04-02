@@ -5,7 +5,7 @@
     </view>
     <view class="hx-mb-[24px] hx-flex hx-flex-wrap">
       <view
-        class="hx-text-center hx-h-[30px] hx-p-[8px_11px] hx-text-[#303133] hx-text-[14px] hx-leading-[14px] hx-bg-[#F7F8FA] hx-rounded-[6px] hx-mr-[10px] hx-mb-[10px]"
+        class="hx-flex hx-justify-center hx-items-center hx-h-[36px] hx-px-[11px] hx-min-w-[78px] hx-text-[#303133] hx-text-[14px] hx-leading-[14px] hx-bg-[#F7F8FA] hx-rounded-[6px] hx-mr-[10px] hx-mb-[10px]"
         :class="getClass(subItem)"
         v-for="(subItem, subIndex) in item.children"
         :key="subIndex"

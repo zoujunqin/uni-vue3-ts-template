@@ -6,7 +6,7 @@
     @pageBack="handlePageBack"
   >
     <view class="step-container page-pt-with-navbar hx-h-[170px]">
-      <Steps class="hx-mt-[23px]" :current="current" />
+      <Steps class="hx-mt-[7px]" :current="current" />
     </view>
 
     <view class="hx-flex-1 hx-overflow-auto hx-pb-[54px]">
@@ -170,7 +170,7 @@ const nextDisabled = computed(() => {
 .step-container {
   background-image: url($http + '/real-name/real-name-bg.png');
   background-repeat: no-repeat;
-  background-size: 100% auto;
+  background-size: 100% 100%;
 }
 .info-content {
   padding: 20px 16px;

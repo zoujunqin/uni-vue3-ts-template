@@ -4,7 +4,7 @@
     navbar-title="任务详情"
     class="page-pt-with-navbar hx-bg-white"
   >
-    <view class="hx-p-[16px]">
+    <view class="hx-p-[16px_16px_54px_16px]">
       <TaskHeader
         :data="taskDetail"
         :statusShow="!!taskDetail?.undertakingStatusName"
@@ -18,14 +18,15 @@
       <TaskPlace :data="taskDetail" />
 
       <SecurityTip :data="taskDetail" />
-
-      <ProButton
-        v-if="taskDetail?.izApplied === 'no'"
-        type="primary"
-        @click="handleApplyTask"
-      >
-        申请任务
-      </ProButton>
+      <ProPageFooter>
+        <ProButton
+          v-if="taskDetail?.izApplied === 'no'"
+          type="primary"
+          @click="handleApplyTask"
+        >
+          申请任务
+        </ProButton>
+      </ProPageFooter>
     </view>
   </ProPage>
 </template>
