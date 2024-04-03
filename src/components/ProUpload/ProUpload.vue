@@ -59,7 +59,6 @@ const style = computed(() => {
     }
   );
 });
-
 watch(
   uploadValue,
   async () => {
@@ -74,6 +73,11 @@ const handleRemove = () => {
   previewPath.value = '';
   uploadValue.value = '';
   emit('handleRemovePath');
+};
+
+const clearPath = () => {
+  previewPath.value = '';
+  uploadValue.value = '';
 };
 
 const handleUpload = () => {
@@ -91,6 +95,7 @@ const handleUpload = () => {
     uploadFail: handleRemove
   });
 };
+defineExpose({ clearPath });
 </script>
 
 <script lang="ts">

@@ -7,6 +7,7 @@
   </view>
   <view class="hx-flex hx-flex-col hx-items-center">
     <ProUpload
+      ref="frontUploadRef"
       class="hx-mb-[16px]"
       v-model="data.idCardFront"
       background-name="front-id-card"
@@ -15,6 +16,7 @@
       @handleRemovePath="handleRemovePath('Front')"
     />
     <ProUpload
+      ref="reverseUploadRef"
       v-model="data.idCardReverse"
       background-name="back-id-card"
       upload-button-title="点击上传国徽面"
@@ -25,6 +27,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+
 import { getOcrIdCard } from '@/api/system/ocr';
 import { useVModel } from '@/hooks/useVModel';
 import { setIdCardMessage } from '@/utils/user';
@@ -38,6 +42,8 @@ const props = defineProps({
 const data = useVModel(props, 'modelValue', undefined, {
   passive: true
 });
+const frontUploadRef = ref();
+const reverseUploadRef = ref();
 const handleUploadSuccess = (previewUrl, type) => {
   const params = {
     imageUrl: previewUrl,
@@ -65,6 +71,7 @@ const handleUploadSuccess = (previewUrl, type) => {
     })
     .catch(() => {
       handleRemovePath(type);
+      handleClearPath(type);
     });
 };
 const handleRemovePath = type => {
@@ -72,6 +79,13 @@ const handleRemovePath = type => {
     data.value.ocrSure.front = false;
   } else {
     data.value.ocrSure.reverse = false;
+  }
+};
+const handleClearPath = type => {
+  if (type === 'Front') {
+    frontUploadRef.value.clearPath();
+  } else {
+    reverseUploadRef.value.clearPath();
   }
 };
 </script>
