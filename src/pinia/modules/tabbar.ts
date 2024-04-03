@@ -15,20 +15,20 @@ export const useTabbarStore = defineStore('tabbar', () => {
   const tabbarList: Ref<ITabbar[]> = ref([
     {
       pagePath: 'pages/taskCenter/index',
-      icon: '../../static/tab-bar/task.png',
-      selectedIcon: '../../static/tab-bar/task-hl.png',
+      icon: '../../static/tab-bar/task.svg',
+      selectedIcon: '../../static/tab-bar/task-hl.svg',
       text: '任务中心'
     },
     {
       pagePath: 'pages/divideTask/index',
-      icon: '../../static/tab-bar/divide.png',
-      selectedIcon: '../../static/tab-bar/divide-hl.png',
+      icon: '../../static/tab-bar/divide.svg',
+      selectedIcon: '../../static/tab-bar/divide-hl.svg',
       text: '推荐任务'
     },
     {
       pagePath: 'pages/personCenter/index',
-      icon: '../../static/tab-bar/person.png',
-      selectedIcon: '../../static/tab-bar/person-hl.png',
+      icon: '../../static/tab-bar/person.svg',
+      selectedIcon: '../../static/tab-bar/person-hl.svg',
       text: '个人中心'
     }
   ]);
