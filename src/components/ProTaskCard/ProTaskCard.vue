@@ -22,12 +22,13 @@
         color="var(--hx-text-color-tip)"
         bg-color="#f5f5f5"
         border-color="transparent"
-        class="hx-mb-[10px] !hx-inline-block"
+        class="!hx-inline-block"
       />
     </slot>
 
     <view
-      class="text-ellipsis hx-text-[13px] hx-font-[400] hx-leading-[18px] hx-text-text-color"
+      v-if="cardInfo.desc"
+      class="text-ellipsis hx-mt-[10px] hx-leading-[18px] hx-text-[13px] hx-font-[400] hx-text-text-color"
     >
       {{ cardInfo.desc }}
     </view>

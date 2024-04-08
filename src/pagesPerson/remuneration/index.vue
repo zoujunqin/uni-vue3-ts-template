@@ -160,7 +160,7 @@ const handleLookDetails = (id: string) => {
 .remuneration-container {
   .remuneration-title {
     color: var(--hx-text-color-main);
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     width: 220px;
   }

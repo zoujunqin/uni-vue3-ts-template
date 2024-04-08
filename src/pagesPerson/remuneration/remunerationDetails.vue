@@ -28,7 +28,7 @@
         />
       </view>
       <view class="details-content">
-        <p class="hx-text-text-color-main hx-text-[18px] hx-font-semibold">
+        <p class="hx-text-text-color-main hx-text-[16px] hx-font-semibold">
           详细信息
         </p>
         <view

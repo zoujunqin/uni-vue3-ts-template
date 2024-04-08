@@ -1,7 +1,19 @@
 <template>
   <ProPopup ref="uniPopupRef" bg-color="none" :safe-area-inset-bottom="false">
+    <view class="hx-w-[302px]" :style="{ height: topImgHeight + 'px' }">
+      <slot name="image" />
+    </view>
     <view
-      class="modal-content hx-flex hx-flex-col hx-justify-between hx-items-center hx-w-[302px] hx-p-[29px_24px] hx-rounded-[8px]"
+      :class="[
+        !topImgHeight ? 'hx-rounded-[8px]' : 'hx-rounded-b-[8px]',
+        'hx-flex',
+        'hx-flex-col',
+        'hx-justify-between',
+        'hx-items-center',
+        'hx-w-[302px]',
+        'hx-p-[24px_24px]'
+      ]"
+      :style="isTopImgStyle"
     >
       <slot name="title">
         <view class="hx-mb-[4px] hx-text-[17px] hx-font-bold hx-leading-[26px]">
@@ -10,7 +22,14 @@
       </slot>
 
       <slot name="content">
-        <view class="hx-mb-[24px] hx-text-[15px] hx-leading-[24px]">
+        <view
+          :class="[
+            !topImgHeight ? '' : 'hx-text-text-color-tip',
+            'hx-mb-[24px]',
+            'hx-text-[15px]',
+            ' hx-leading-[24px] '
+          ]"
+        >
           {{ content }}
         </view>
       </slot>
@@ -40,9 +59,9 @@
   </ProPopup>
 </template>
 <script setup lang="ts">
-import { shallowRef } from 'vue';
+import { computed, shallowRef } from 'vue';
 
-defineProps({
+const props = defineProps({
   showCancel: {
     type: Boolean,
     default: true
@@ -66,11 +85,22 @@ defineProps({
   content: {
     type: String,
     default: '内容'
+  },
+  topImgHeight: {
+    type: Number,
+    default: 0
   }
 });
 const emits = defineEmits(['cancel', 'confirm']);
 
 const uniPopupRef = shallowRef();
+const isTopImgStyle = computed(() => {
+  return {
+    background: !props.topImgHeight
+      ? 'linear-gradient(180deg, #ebf3ff 0%, #fff 37.77%)'
+      : '#fff'
+  };
+});
 const open = () => {
   uniPopupRef.value.open();
 };
@@ -94,8 +124,4 @@ defineExpose({ open, close });
 export default { options: { name: 'ProModal', virtualHost: true } };
 </script>
 
-<style scoped>
-.modal-content {
-  background: linear-gradient(180deg, #ebf3ff 0%, #fff 37.77%);
-}
-</style>
+<style scoped></style>

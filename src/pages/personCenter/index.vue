@@ -4,15 +4,31 @@
     title="退出登录"
     content="确认退出登录?"
     confirm-button-text="确认"
+    :topImgHeight="94"
     @confirm="handleLogoutConfirm"
-  />
+  >
+    <template #image>
+      <image
+        class="hx-w-[302px] hx-h-[94px]"
+        :src="import('@http/person/log-out-img.png')"
+      />
+    </template>
+  </ProModal>
   <ProModal
     ref="contactModalRef"
     title="联系我们"
     content="0591 - 40006464"
     confirm-button-text="联系我们"
+    :topImgHeight="116"
     @confirm="handleContactConfirm('0591 - 40006464')"
-  />
+  >
+    <template #image>
+      <image
+        class="hx-w-[302px] hx-h-[116px]"
+        :src="import('@http/person/connection-bg.png')"
+      />
+    </template>
+  </ProModal>
   <ProPage
     show-tabbar
     class="page-pt-with-navbar hx-pl-[8px] hx-pr-[8px] hx-bg-[length:100%_432px] hx-bg-no-repeat"
@@ -65,7 +81,7 @@
         @click="panelItemMap[item.type]?.handler"
       >
         <view class="hx-relative">
-          <image class="hx-w-[28px] hx-h-[28px] hx-mb-[8px]" :src="item.icon" />
+          <image class="hx-w-[36px] hx-h-[36px] hx-mb-[8px]" :src="item.icon" />
           <uv-badge :value="item.badge" absolute />
         </view>
 
@@ -200,9 +216,7 @@ page {
   background: linear-gradient(180deg, #fff 18.25%, #f7f8fa 92.19%);
 }
 .img-box {
-  width: 60px;
-  height: 60px;
-  border: 2px solid #fff;
+  border: 3px solid #fff;
   border-radius: 50%;
   margin-right: 12px;
   display: flex;

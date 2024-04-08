@@ -101,7 +101,7 @@ const handleLookContract = (id: string) => {
 .myContract-container {
   .contract-title {
     color: var(--hx-text-color-main);
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     margin-bottom: 4px;
   }
