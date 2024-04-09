@@ -52,6 +52,7 @@ const handleUploadSuccess = (previewUrl, type) => {
   getOcrIdCard(params)
     .then(res => {
       if (type === 'Front') {
+        if (!res.face) return handleImgError('Front');
         const { name, idNumber, address } = res.face;
         data.value.workerName = name;
         data.value.idCardNo = idNumber;
@@ -62,6 +63,7 @@ const handleUploadSuccess = (previewUrl, type) => {
           idNumber
         });
       } else {
+        if (!res.back) handleImgError('Reverse');
         const { validPeriodBegin, validPeriodEnd, issueAuthority } = res.back;
         data.value.credentialStartDate = validPeriodBegin;
         data.value.credentialEndDate = validPeriodEnd;
@@ -73,6 +75,17 @@ const handleUploadSuccess = (previewUrl, type) => {
       handleRemovePath(type);
       handleClearPath(type);
     });
+};
+const handleImgError = type => {
+  if (type === 'Front') {
+    frontUploadRef.value.clearPath();
+    uni.showToast({ title: '请上传身份证正面图片', icon: 'none' });
+    return;
+  } else {
+    reverseUploadRef.value.clearPath();
+    uni.showToast({ title: '请上传身份证反面图片', icon: 'none' });
+    return;
+  }
 };
 const handleRemovePath = type => {
   if (type === 'Front') {

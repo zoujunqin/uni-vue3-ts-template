@@ -1,59 +1,63 @@
 <template>
   <ProPopup ref="uniPopupRef" bg-color="none" :safe-area-inset-bottom="false">
-    <view class="hx-w-[302px]" :style="{ height: topImgHeight + 'px' }">
-      <slot name="image" />
-    </view>
-    <view
-      :class="[
-        !topImgHeight ? 'hx-rounded-[8px]' : 'hx-rounded-b-[8px]',
-        'hx-flex',
-        'hx-flex-col',
-        'hx-justify-between',
-        'hx-items-center',
-        'hx-w-[302px]',
-        'hx-p-[24px_24px]'
-      ]"
-      :style="isTopImgStyle"
-    >
-      <slot name="title">
-        <view class="hx-mb-[4px] hx-text-[17px] hx-font-bold hx-leading-[26px]">
-          {{ title }}
-        </view>
-      </slot>
+    <view class="hx-flex hx-flex-col hx-items-center">
+      <view class="hx-flex hx-w-full">
+        <slot name="image" />
+      </view>
+      <view
+        :class="[
+          !topImgHeight ? 'hx-rounded-[8px]' : 'hx-rounded-b-[8px]',
+          'hx-flex',
+          'hx-flex-col',
+          'hx-justify-between',
+          'hx-items-center',
+          'hx-w-[302px]',
+          'hx-p-[24px_24px]'
+        ]"
+        :style="isTopImgStyle"
+      >
+        <slot name="title">
+          <view
+            class="hx-mb-[4px] hx-text-[17px] hx-font-bold hx-leading-[26px]"
+          >
+            {{ title }}
+          </view>
+        </slot>
 
-      <slot name="content">
-        <view
-          :class="[
-            !topImgHeight ? '' : 'hx-text-text-color-tip',
-            'hx-mb-[24px]',
-            'hx-text-[15px]',
-            ' hx-leading-[24px] '
-          ]"
-        >
-          {{ content }}
-        </view>
-      </slot>
+        <slot name="content">
+          <view
+            :class="[
+              !topImgHeight ? '' : 'hx-text-text-color-tip',
+              'hx-mb-[24px]',
+              'hx-text-[15px]',
+              ' hx-leading-[24px] '
+            ]"
+          >
+            {{ content }}
+          </view>
+        </slot>
 
-      <view class="hx-flex">
-        <ProButton
-          class="hx-w-[122px] hx-mr-[10px]"
-          v-if="showCancel"
-          type="primary"
-          color="rgb(61 134 242 / 10%)"
-          @tap.stop="handleCancel"
-        >
-          <span class="hx-text-text-color-theme">
-            {{ cancelButtonText }}
-          </span>
-        </ProButton>
-        <ProButton
-          class="hx-w-[122px]"
-          v-if="showConfirm"
-          type="primary"
-          @tap.stop="handleConfirm"
-        >
-          <span>{{ confirmButtonText }}</span>
-        </ProButton>
+        <view class="hx-flex">
+          <ProButton
+            class="hx-w-[122px] hx-mr-[10px]"
+            v-if="showCancel"
+            type="primary"
+            color="rgb(61 134 242 / 10%)"
+            @tap.stop="handleCancel"
+          >
+            <span class="hx-text-text-color-theme">
+              {{ cancelButtonText }}
+            </span>
+          </ProButton>
+          <ProButton
+            class="hx-w-[122px]"
+            v-if="showConfirm"
+            type="primary"
+            @tap.stop="handleConfirm"
+          >
+            <span>{{ confirmButtonText }}</span>
+          </ProButton>
+        </view>
       </view>
     </view>
   </ProPopup>

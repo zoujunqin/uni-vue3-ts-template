@@ -9,7 +9,7 @@
   >
     <template #image>
       <image
-        class="hx-w-[302px] hx-h-[94px]"
+        class="hx-w-full hx-h-[94px]"
         :src="import('@http/person/log-out-img.png')"
       />
     </template>
@@ -24,7 +24,7 @@
   >
     <template #image>
       <image
-        class="hx-w-[302px] hx-h-[116px]"
+        class="hx-w-full hx-h-[116px]"
         :src="import('@http/person/connection-bg.png')"
       />
     </template>
