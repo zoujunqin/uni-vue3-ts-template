@@ -53,14 +53,14 @@ import { useVModel } from '@/hooks/useVModel';
 
 const props = defineProps(pageHeaderProps);
 
-const emit = defineEmits(['confirm', 'blur', 'inputClick']);
+const emit = defineEmits(['input-confirm', 'blur', 'inputClick']);
 const inputSearchValue = useVModel(props, 'modelValue', undefined, {
   passive: true
 });
 const confirmedInputValue = shallowRef('');
 const handleInputConfirm = () => {
   confirmedInputValue.value = inputSearchValue.value;
-  emit('confirm', confirmedInputValue.value);
+  emit('input-confirm', confirmedInputValue.value);
 };
 const handleInputClick = () => {
   emit('inputClick');
