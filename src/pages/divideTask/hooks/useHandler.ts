@@ -37,6 +37,10 @@ export const useHandler = () => {
   ];
   const conditionActive = shallowRef<ConditionActive>(null);
   const resetConditionActive = () => (conditionActive.value = null);
+  const handlePickerCancel = () => {
+    areaList.value = [];
+    reload();
+  };
   watch(conditionActive, (newVal: ConditionActive, oldVal: ConditionActive) => {
     for (const item of conditionList) {
       newVal === item.name && item.ref.value?.open();
@@ -107,6 +111,7 @@ export const useHandler = () => {
     conditionActive,
     handleTaskTypePopupChange,
     resetConditionActive,
+    handlePickerCancel,
 
     navToTaskDetail
   };
