@@ -21,6 +21,7 @@
           <view class="hx-flex hx-flex-col hx-items-center">
             <image
               class="hx-w-[170px] hx-h-[107px] hx-mb-[8px]"
+              mode="aspectFill"
               @tap="handleLookImg(0)"
               :src="
                 personData.idCardFront || import('@http/person/card-front.svg')
@@ -31,6 +32,7 @@
           <view class="hx-flex hx-flex-col hx-items-center">
             <image
               class="hx-w-[170px] hx-h-[107px] hx-mb-[8px]"
+              mode="aspectFill"
               @tap="handleLookImg(1)"
               :src="
                 personData.idCardReverse ||
