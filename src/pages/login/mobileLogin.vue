@@ -91,6 +91,7 @@
 </template>
 
 <script setup lang="ts">
+import { debounce } from 'lodash-es';
 import { ref, shallowRef } from 'vue';
 
 import { loginUnderWeChatAuth } from './utils/weChat';
@@ -130,7 +131,7 @@ const formRules = {
 const captchaIsValid = shallowRef(false);
 
 /* 获取验证码 */
-const fetchCaptcha = () => {
+const fetchCaptcha = debounce(() => {
   const { mobile } = formData.value;
   if (!mobile) return uni.showToast({ title: '请输入手机号码', icon: 'none' });
 
@@ -139,7 +140,7 @@ const fetchCaptcha = () => {
     uni.showToast({ title: '验证码获取成功', icon: 'none' });
     captchaIsValid.value = true;
   });
-};
+}, 500);
 
 /* 验证码过期 */
 const handleFinish = () => {
