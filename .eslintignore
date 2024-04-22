@@ -14,6 +14,7 @@ index.html
 postcss.config.js
 tailwind.config.js
 
+/build
 /src/static
 /src/components/ProForm/*
 /src/components/ProFormItem/*
