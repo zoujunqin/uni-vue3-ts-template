@@ -14,6 +14,14 @@ import {
 export const useUserStore = defineStore('user', () => {
   /* --------------------- 用户信息 ↓ ---------------------- */
   const userInfo = shallowRef<IPersonInfo | null>();
+  //扫码登录用户二维码id
+  const userCodeID = shallowRef<string | null>();
+  const setUserCodeID = (code: string) => {
+    userCodeID.value = code;
+  };
+  const getUserCodeID = () => {
+    return userCodeID.value || '-1';
+  };
   const setUserInfo = (info: IPersonInfo) => {
     userInfo.value = info;
     setUserInfoPersist(info);
@@ -62,6 +70,9 @@ export const useUserStore = defineStore('user', () => {
     getToken,
     removeToken,
 
-    logout
+    logout,
+
+    setUserCodeID,
+    getUserCodeID
   };
 });

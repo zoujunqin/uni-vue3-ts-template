@@ -171,7 +171,8 @@ class PureHttp {
         if (isNeedDecrypt($error.response)) {
           responseData = JSON.parse(decryptString(responseData));
         }
-        const customDealCodes = ['50004'];
+        //邀请码已失效70001
+        const customDealCodes = ['50004', '70001'];
         // 跳转到登录页面 401、40102、40103、40104
         const loginFailureCodeList = ['401', '40102', '40103', '40104'];
         if (loginFailureCodeList.includes(responseData.code)) {

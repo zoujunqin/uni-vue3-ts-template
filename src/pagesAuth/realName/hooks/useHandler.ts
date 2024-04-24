@@ -11,7 +11,8 @@ import {
 import { getOcrIdCard } from '@/api/system/ocr';
 import { APPLY_STATUS, REAL_TYPE, YES_NO_TYPE } from '@/constant/taskDetail';
 import { useOss } from '@/hooks/useOss';
-import { getRealName, setRealName, getInvitationCodeId } from '@/utils/user';
+import { useUserStore } from '@/pinia/modules/user';
+import { getRealName, setRealName } from '@/utils/user';
 import { getIdCardMessage, setIdCardMessage } from '@/utils/user';
 
 export const useHandler = ({
@@ -34,6 +35,8 @@ export const useHandler = ({
   const explainModalRef = ref();
   const localFormData = getRealName() || {};
   const localBool = Object.keys(localFormData).length > 0;
+  const { getUserCodeID } = useUserStore();
+
   const handleGetRealNameInfo = () => {
     getRealNameInfo(infoParams.value).then(async res => {
       applyStatusMap.value = {
@@ -176,7 +179,7 @@ export const useHandler = ({
     };
     realNameAuth(params).then(() => {
       handlePageBack();
-      if (getInvitationCodeId() === '-1') {
+      if (getUserCodeID() === '-1') {
         handleApplyTask();
       } else {
         handleGetInvitationCodeScan();

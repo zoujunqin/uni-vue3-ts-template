@@ -1,20 +1,25 @@
 <script setup lang="ts">
-import { onHide, onLaunch, onShow } from '@dcloudio/uni-app';
+import { onHide, onLaunch } from '@dcloudio/uni-app';
 
 import { useUserStore } from './pinia/modules/user';
 import { switchFirstTab } from './utils/switchTab';
 
 import { useSystemStore } from '@/pinia/modules/system';
 
-onLaunch(() => {
+onLaunch(option => {
   uni.getSystemInfo().then(data => {
     useSystemStore().setSystemInfo(data);
   });
-
-  useUserStore().getToken() && switchFirstTab();
+  const { setUserCodeID } = useUserStore();
+  if (option.query.scene) {
+    setUserCodeID(option.query.scene);
+    uni.redirectTo({
+      url: '/pages/login/index'
+    });
+  } else {
+    useUserStore().getToken() && switchFirstTab();
+  }
 });
-
-onShow(() => {});
 
 onHide(() => {});
 </script>

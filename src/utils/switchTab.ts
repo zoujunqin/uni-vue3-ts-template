@@ -3,8 +3,9 @@ import { getAreaTreeProvinceCityDistrict } from '@/api/system/area';
 import { PROTOCOL_TYPE } from '@/constant/taskDetail';
 import pagesJson from '@/pages.json';
 import { useTabbarStore } from '@/pinia/modules/tabbar';
+import { useUserStore } from '@/pinia/modules/user';
 import { dealStepCurrent } from '@/utils/index';
-import { getInvitationCodeId, setArea } from '@/utils/user';
+import { setArea } from '@/utils/user';
 
 export const switchFirstTab = () => {
   const tabbarStore = useTabbarStore();
@@ -13,8 +14,10 @@ export const switchFirstTab = () => {
 };
 
 export const loginJumpPage = () => {
+  const { getUserCodeID } = useUserStore();
+
   handleGetArea();
-  const codeId = getInvitationCodeId();
+  const codeId = getUserCodeID();
   if (codeId === '-1') {
     switchFirstTab();
   } else {
@@ -38,8 +41,12 @@ export const loginJumpPage = () => {
       })
       .catch(err => {
         setTimeout(() => {
-          uni.showToast({ title: err.response.data.message, icon: 'none' });
-        }, 30);
+          uni.showToast({
+            title: err.response.data.message,
+            duration: 3000,
+            icon: 'none'
+          });
+        }, 1000);
         switchFirstTab();
       });
   }
