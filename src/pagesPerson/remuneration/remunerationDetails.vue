@@ -23,7 +23,7 @@
           </view>
         </view>
         <image
-          :src="import('@http/person/shield-big.svg')"
+          :src="import('@http/person/shield-big.png')"
           class="shieldBig-img"
         />
       </view>

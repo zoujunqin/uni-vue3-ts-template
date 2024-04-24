@@ -4,12 +4,6 @@
     navbar-title="合同记录"
     class="myContract-container page-pt-with-navbar hx-bg-white hx-flex hx-flex-col"
   >
-    <ProCondition
-      v-model="conditionStatus"
-      @change="openDate"
-      name="contractType"
-      :title="monthDate"
-    />
     <view class="hx-bg-bg-color-grey hx-flex-1 hx-pt-[10px]">
       <template v-if="dataList.length > 0">
         <view
@@ -35,13 +29,6 @@
         @refresh="handleGetPersonalCenterContract"
       />
     </view>
-    <ProDateTimePicker
-      ref="datetimePickerRef"
-      v-model="monthDatetime"
-      mode="year-month"
-      @confirm="handleGetPersonalCenterContract"
-      @close="handleCloseDate"
-    />
   </ProPage>
   <view v-if="pathUrl !== ''">
     <web-view :src="pathUrl" />
@@ -50,23 +37,15 @@
 
 <script setup lang="ts">
 import { onPullDownRefresh } from '@dcloudio/uni-app';
-import { computed, nextTick, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import { getPersonalCenterContract } from '@/api/fe/wechat/personal_center';
 import { getWorkerProtocolByIdViewUrl } from '@/api/fe/wechat/worker';
 import { useOss } from '@/hooks/useOss';
-import { handleDealTimestamp } from '@/utils/processingText';
 const { getPreviewUrl } = useOss();
-const monthDatetime = ref(new Date());
-const conditionStatus = ref(false);
-const datetimePickerRef = ref();
 const dataList = ref<Array<any>>([]);
 const pathUrl = ref('');
 const path = ref('');
-
-const monthDate = computed(() => {
-  return handleDealTimestamp(monthDatetime.value);
-});
 
 onMounted(() => {
   handleGetPersonalCenterContract();
@@ -74,21 +53,11 @@ onMounted(() => {
 onPullDownRefresh(() => {
   handleGetPersonalCenterContract();
 });
-const handleCloseDate = () => {
-  conditionStatus.value = false;
-};
 const handleGetPersonalCenterContract = () => {
-  nextTick(() => {
-    const timeData =
-      monthDate.value.slice(0, 4) + '-' + monthDate.value.slice(5, 7);
-    getPersonalCenterContract({ month: timeData }).then(res => {
-      dataList.value = res;
-      uni.stopPullDownRefresh();
-    });
+  getPersonalCenterContract().then(res => {
+    dataList.value = res;
+    uni.stopPullDownRefresh();
   });
-};
-const openDate = (bool: boolean) => {
-  bool && datetimePickerRef.value.open();
 };
 const handleLookContract = val => {
   path.value = val.path;

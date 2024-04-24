@@ -166,6 +166,7 @@ class PureHttp {
       },
       (error: PureHttpError) => {
         const $error = error;
+        console.log('Error: ', $error);
         let responseData: any = $error.response.data;
         if (isNeedDecrypt($error.response)) {
           responseData = JSON.parse(decryptString(responseData));
