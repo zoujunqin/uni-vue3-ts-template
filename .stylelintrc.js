@@ -17,6 +17,7 @@ module.exports = {
     }
   ],
   rules: {
+    'string-quotes': 'single',
     'selector-class-pattern': null,
     'keyframes-name-pattern': null,
     'no-descending-specificity': null,

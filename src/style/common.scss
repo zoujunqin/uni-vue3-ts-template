@@ -14,10 +14,10 @@ page {
   padding-top: 88px;
 }
 
-.page-pb-with-tabbar {
-  /* 安全区 + tabbar高度 */
-  padding-bottom: calc(var(--hx-tabbar-height) + env(safe-area-inset-bottom));
-}
+//.page-pb-with-tabbar {
+//  /* 安全区 + tabbar高度 */
+//  padding-bottom: calc(var(--hx-tabbar-height) + env(safe-area-inset-bottom));
+//}
 
 /* 文字超出显示省略号 */
 .text-ellipsis {
