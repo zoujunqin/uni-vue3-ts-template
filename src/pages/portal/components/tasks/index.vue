@@ -1,16 +1,11 @@
 <template>
-  <ProPage
-    show-navbar
-    show-tabbar
-    navbar-title="任务中心"
-    class="hx-bg-[#F7F8FA] hx-flex hx-flex-col"
-  >
+  <view class="hx-h-full hx-flex hx-flex-col">
     <ProPageHeader
       ref="proPageHeaderRef"
-      class="hx-relative hx-z-1"
+      :bg-img-url="import('@http/task/task-bg.png')"
       :tab-index="tabIndex"
       :tab-list="tabList"
-      :bg-img-url="import('@http/task/task-bg.png')"
+      class="hx-relative hx-z-1"
       @tab-change="handleTabChange"
       @input-confirm="(val: string) => handleInputConfirm(val, tabIndex)"
     />
@@ -22,12 +17,12 @@
     >
       <swiper-item v-for="(item, index) in tabList" :key="index">
         <ProScrollList
-          ref="proScrollListRef"
           :key="componentKey + index"
-          :fetch="item.fetch"
-          :initial-index="index"
+          ref="proScrollListRef"
           :current-index="swiperIndex"
           :extend-params="getExtendParams(item.type)"
+          :fetch="item.fetch"
+          :initial-index="index"
           class="hx-h-full hx-pb-[10px] hx-box-border"
         >
           <template #default="{ row }">
@@ -41,9 +36,9 @@
         </ProScrollList>
       </swiper-item>
     </swiper>
-  </ProPage>
+  </view>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onPullDownRefresh } from '@dcloudio/uni-app';
 
 import { useHandler } from './hooks/useHandler';
@@ -75,4 +70,10 @@ onPullDownRefresh(() => {
   handleInputConfirm('', tabIndex.value);
   uni.stopPullDownRefresh();
 });
+</script>
+
+<script lang="ts">
+export default {
+  options: { name: 'TaskCenter', virtualHost: false }
+};
 </script>

@@ -1,30 +1,30 @@
 <template>
   <ProModal
     ref="logoutModalRef"
-    title="退出登录"
-    content="确认退出登录?"
     confirm-button-text="确认"
+    content="确认退出登录?"
+    title="退出登录"
     @confirm="handleLogoutConfirm"
   />
   <ProModal
     ref="contactModalRef"
-    title="联系我们"
-    content="(0591) - 40006464"
     confirm-button-text="联系我们"
+    content="(0591) - 40006464"
+    title="联系我们"
     @confirm="handleContactConfirm('(0591) - 40006464')"
   />
-  <ProPage
-    show-tabbar
-    class="page-pt-with-navbar hx-pl-[8px] hx-pr-[8px] hx-bg-[length:100%_432px] hx-bg-no-repeat"
+
+  <view
     :style="`background-image: url(${import('@http/person/nav-bar-bg.svg')});`"
+    class="page-pt-with-navbar hx-pl-[8px] hx-pr-[8px] hx-bg-[length:100%_432px] hx-bg-no-repeat"
   >
     <view
       class="hx-flex hx-items-center hx-justify-between hx-pl-[8px] hx-pr-[8px] hx-mt-[12px] hx-mb-[20px]"
     >
       <view class="hx-flex hx-flex-1">
         <image
-          class="hx-w-[60px] hx-h-[60px] hx-mr-[12px]"
           :src="import('@http/person/avatar-default.svg')"
+          class="hx-w-[60px] hx-h-[60px] hx-mr-[12px]"
         />
         <view class="hx-flex hx-flex-col hx-justify-center">
           <text
@@ -44,8 +44,8 @@
         @click="logout"
       >
         <image
-          class="hx-w-[14px] hx-h-[14px] hx-mr-[4px]"
           :src="import('@http/person/exit.svg')"
+          class="hx-w-[14px] hx-h-[14px] hx-mr-[4px]"
         />
         <text class="hx-text-font-size-sm hx-leading-[20px] hx-text-text-color">
           退出登录
@@ -57,13 +57,13 @@
       class="hx-p-[16px] hx-flex hx-items-center hx-justify-between hx-bg-white hx-rounded-[8px] hx-shadow-card hx-mb-[10px]"
     >
       <view
-        class="hx-h-[56px] hx-flex hx-flex-col hx-items-center"
         v-for="(item, index) in panelItemList"
         :key="index"
+        class="hx-h-[56px] hx-flex hx-flex-col hx-items-center"
         @click="panelItemMap[item.type]?.handler"
       >
         <view class="hx-relative">
-          <image class="hx-w-[28px] hx-h-[28px] hx-mb-[8px]" :src="item.icon" />
+          <image :src="item.icon" class="hx-w-[28px] hx-h-[28px] hx-mb-[8px]" />
           <uv-badge :value="item.badge" absolute />
         </view>
 
@@ -95,10 +95,10 @@
         @click="verticalListItemMap[item.type]?.handler"
       />
     </view>
-  </ProPage>
+  </view>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue';
 
 import VerticalListItem from './components/VerticalListItem.vue';
@@ -170,6 +170,15 @@ const secondVerticalList = [
   }
 ];
 </script>
+<script lang="ts">
+export default {
+  options: {
+    name: 'PersonCenter',
+    virtualHost: false,
+    styleIsolation: 'shared'
+  }
+};
+</script>
 
 <style scoped>
 :deep(.hx-relative .uv-badge) {
@@ -183,11 +192,5 @@ const secondVerticalList = [
   background-color: #f7534f;
   border-radius: 6px 0 4px !important;
   transform: translate(80%, -50%);
-}
-</style>
-
-<style>
-page {
-  background: linear-gradient(180deg, #fff 18.25%, #f7f8fa 92.19%);
 }
 </style>

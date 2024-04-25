@@ -1,11 +1,12 @@
 import { resolve } from 'path';
 
+import uni from '@dcloudio/vite-plugin-uni';
 import uniAxiosAdapter from '@uni-helper/axios-adapter/vite';
 import { defineConfig } from 'vite';
 import { UnifiedViteWeappTailwindcssPlugin as uvtw } from 'weapp-tailwindcss/vite';
 
 import { ossServerUrl } from './build/config';
-import uni from './build/packages/vite-plugin-uni/index';
+// import uni from './build/packages/vite-plugin-uni/index';
 import { plugins as postcssPlugins } from './postcss.config';
 import { getStaticServer } from './scripts/utils';
 

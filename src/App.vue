@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { onHide, onLaunch, onShow } from '@dcloudio/uni-app';
 
-// import { useUserStore } from './pinia/modules/user';
-// import { switchFirstTab } from './utils/switchTab';
+import { useUserStore } from './pinia/modules/user';
+
 import { useSystemStore } from '@/pinia/modules/system';
 
 onLaunch(() => {
@@ -10,7 +10,11 @@ onLaunch(() => {
     useSystemStore().setSystemInfo(data);
   });
 
-  // useUserStore().getToken() && switchFirstTab();
+  if (!useUserStore().getToken()) {
+    setTimeout(() => {
+      uni.navigateTo({ url: '/pages/login/index' });
+    }, 2000);
+  }
 });
 
 onShow(() => {});

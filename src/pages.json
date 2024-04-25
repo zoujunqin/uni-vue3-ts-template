@@ -10,29 +10,14 @@
   "pages": [
     //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
     {
-      "path": "pages/personCenter/index"
+      "path": "pages/portal/index"
     },
     {
       "path": "pages/login/index"
     },
     {
-      "path": "pages/divideTask/index",
-      "style": {
-        "enablePullDownRefresh": true
-      }
-    },
-    {
       "path": "pages/login/mobileLogin"
-    },
-    {
-      "path": "pages/taskCenter/index",
-      "style": {
-        "enablePullDownRefresh": true
-      }
-    },
-//    {
-//      "path": "pages/personCenter/index"
-//    }
+    }
   ],
   "subPackages": [
     {

@@ -1,22 +1,20 @@
 <template>
-  <view class="hx-h-full hx-overflow-auto" :class="pageClass">
+  <view class="hx-h-full hx-overflow-auto">
     <ProNavbar
       v-if="showNavbar"
       :style="navbarStyle"
       :text="navbarTitle"
       @navBack="handleNavBack"
     />
-    <ProTabbar v-if="showTabbar" />
 
     <slot />
   </view>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue';
 
 const props = defineProps({
   showNavbar: Boolean,
-  showTabbar: Boolean,
   navbarTitle: {
     type: String,
     default: '导航栏'
@@ -27,11 +25,6 @@ const props = defineProps({
   }
 });
 const emit = defineEmits(['pageBack']);
-const pageClass = computed(() => {
-  return {
-    'page-pb-with-tabbar': props.showTabbar
-  };
-});
 
 const navbarStyle = computed(() => {
   return {

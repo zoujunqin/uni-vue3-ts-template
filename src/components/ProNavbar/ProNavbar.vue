@@ -1,20 +1,26 @@
 <template>
   <view
-    class="pro-navbar hx-flex hx-items-center hx-justify-between hx-absolute hx-z-[200] hx-top-0 hx-left-0 hx-w-full hx-pl-[12px] hx-pr-[12px]"
     :style="style"
+    class="pro-navbar hx-flex hx-items-center hx-justify-between hx-absolute hx-z-[200] hx-top-0 hx-left-0 hx-w-full hx-pl-[12px] hx-pr-[12px]"
   >
-    <image
-      v-if="showBackIcon"
-      class="hx-w-[18PX] hx-h-[18PX]"
-      src="@/static/navbar/back-icon.png"
-      @click="handleBack"
-    />
-    <text v-else />
+    <slot name="left">
+      <image
+        v-if="showBackIcon"
+        class="hx-w-[18PX] hx-h-[18PX]"
+        src="@/static/navbar/back-icon.png"
+        @click="handleBack"
+      />
+      <text v-else />
+    </slot>
+
     <text class="hx-font-[600]">{{ text }}</text>
-    <text />
+
+    <slot name="right">
+      <text />
+    </slot>
   </view>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
 

@@ -1,14 +1,9 @@
 <template>
-  <ProPage
-    show-navbar
-    show-tabbar
-    navbar-title="推荐任务"
-    class="hx-bg-[#F7F8FA] hx-flex hx-flex-col"
-  >
+  <view class="hx-h-full hx-flex hx-flex-col">
     <ProPageHeader
       ref="proPageHeaderRef"
-      class="hx-relative hx-z-[11]"
       :bg-img-url="import('@http/task/task-bg.png')"
+      class="hx-relative hx-z-[11]"
       @input-confirm="handleInputConfirm"
       @input-focus="resetConditionActive"
     >
@@ -25,42 +20,42 @@
     </ProPageHeader>
 
     <ProScrollList
-      :fetch="getRecommendTaskList"
-      :extend-params="getExtendParams()"
       ref="proScrollListRef"
+      :extend-params="getExtendParams()"
+      :fetch="getRecommendTaskList"
       class="hx-flex-1"
     >
       <template #default="{ row }">
         <ProTaskCard
           id="card"
-          class="hx-mt-[10px]"
           :card-info="getHandledTaskInfo(row)"
+          class="hx-mt-[10px]"
           @click="navToTaskDetail(row)"
         />
       </template>
     </ProScrollList>
-  </ProPage>
+  </view>
 
   <!--  任务类型  -->
   <TaskTypeDropDownPopup
-    v-model="taskTypeList"
     ref="taskTypeDropDownPopupRef"
+    v-model="taskTypeList"
     sign="sign"
-    @popup-change="handleTaskTypePopupChange"
     @confirm="reload"
+    @popup-change="handleTaskTypePopupChange"
   />
 
   <!-- 地点选择 -->
   <ProAreaPicker
-    v-model="areaList"
     ref="proAreaPickerRef"
+    v-model="areaList"
     @close="resetConditionActive"
     @confirm="reload"
   />
 </template>
 
-<script setup lang="ts">
-import { getHandledTaskInfo } from '../taskCenter/utils/handleDataStruct';
+<script lang="ts" setup>
+import { getHandledTaskInfo } from '../tasks/utils/handleDataStruct';
 
 import TaskTypeDropDownPopup from './components/TaskTypeDropDownPopup.vue';
 import { useHandler } from './hooks/useHandler';
@@ -88,4 +83,10 @@ const {
 
   navToTaskDetail
 } = useHandler();
+</script>
+
+<script lang="ts">
+export default {
+  options: { name: 'TaskRecommend', virtualHost: false }
+};
 </script>

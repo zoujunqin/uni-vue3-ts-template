@@ -22,6 +22,12 @@ module.exports = {
     'no-descending-specificity': null,
     'scss/dollar-variable-pattern': null,
     'unit-case': null,
+    'selector-type-no-unknown': [
+      true,
+      {
+        ignoreTypes: ['page']
+      }
+    ],
     'selector-pseudo-class-no-unknown': [
       true,
       {
