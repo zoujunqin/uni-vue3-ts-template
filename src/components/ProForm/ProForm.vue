@@ -1,5 +1,5 @@
 <template>
-  <uv-form ref="uvFormRef" v-bind="$attrs">
+  <uv-form ref="parentInstance" v-bind="$attrs">
     <slot></slot>
   </uv-form>
 </template>
@@ -10,45 +10,13 @@
  * 修复: 将 pro-form 仿冒为 uv-form, 复制 uv-form 的数据到当前组件供子组件初始化, 然后去更新子组件的 parent 为 uv-form
  * */
 
-import { getCurrentInstance, onMounted, ref } from 'vue';
 import { useBridgedMethods } from '../../hooks/useBridgedMethods';
 import { uvMethods } from './methods';
+import { useNextedCompatible } from '../../hooks/useNextedCompatible';
 
-const uvFormRef = ref();
+const { parentInstance } = useNextedCompatible('uv-form');
 
-const { ctx } = getCurrentInstance();
-ctx.children = [];
-// 这里 name 为 uv-form 是为了 uv-form-item 内部的查找机制
-ctx.$options = Object.assign(ctx.$options || {}, { name: 'uv-form' });
-
-// 更新 uv-form-item 的 parent 为 uv-form, 保证执行原有逻辑
-function updateUvFormParent() {
-  uvFormRef.value.children = ctx.children.map(child => {
-    return Object.assign(child, { parent: uvFormRef.value });
-  });
-}
-
-onMounted(() => {
-  // 将 uv-form 的数据暂时绑定到 pro-form, uv-form-item 就能获取到 uv-form 的数据
-  const { $props, $data } = uvFormRef.value;
-  const mergedData = { ...$props, ...$data };
-  for (const key in mergedData) {
-    ctx[key] = mergedData[key];
-  }
-
-  // 重写 updateParentData 方法, 不然没次执行都会变更 child 的 parent 导致错误
-  ctx.children.forEach(child => {
-    const originUpdateParentData = child.updateParentData;
-    child.updateParentData = function () {
-      originUpdateParentData();
-      updateUvFormParent();
-    };
-    // 重新初始化数据
-    child.init();
-  });
-});
-
-const { bridgedMethods } = useBridgedMethods(uvMethods, uvFormRef);
+const { bridgedMethods } = useBridgedMethods(uvMethods, parentInstance);
 
 defineExpose({ ...bridgedMethods });
 </script>

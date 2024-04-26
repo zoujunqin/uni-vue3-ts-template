@@ -1,1 +1,1 @@
-export const events = ['click'];
+export const uvEvents = ['click'];
