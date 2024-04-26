@@ -7,6 +7,11 @@ import {
   rewriteViteCssPostPlugin
 } from '../uni-mp-vite/index';
 import { options } from '../uni-mp-weixin/src/compiler/options';
+import {
+  uniEntryPluginName,
+  uniMpPluginName,
+  uniPagesJsonPluginName
+} from '../uni-cli-shared/const';
 
 export default function vitePluginUni(...args) {
   const uniPlugins = uni.call(this, ...args);
@@ -17,12 +22,12 @@ export default function vitePluginUni(...args) {
     uniPlugins.push(rewriteViteCssPostPlugin(options));
 
     const uniEntryPluginIndex = uniPlugins.findIndex(
-      uniPlugin => uniPlugin.name === 'uni:virtual'
+      uniPlugin => uniPlugin.name === uniEntryPluginName
     );
     uniPlugins.splice(uniEntryPluginIndex, 1, rewirteUniEntryPlugin(options));
 
     const pagesJsonPluginIndex = uniPlugins.findIndex(
-      uniPlugin => uniPlugin.name === 'uni:mp-pages-json'
+      uniPlugin => uniPlugin.name === uniPagesJsonPluginName
     );
     uniPlugins.splice(
       pagesJsonPluginIndex,
@@ -31,7 +36,7 @@ export default function vitePluginUni(...args) {
     );
 
     const uniMpPluginIndex = uniPlugins.findIndex(
-      uniPlugin => uniPlugin.name === 'uni:mp'
+      uniPlugin => uniPlugin.name === uniMpPluginName
     );
     uniPlugins.splice(
       uniMpPluginIndex,

@@ -2,6 +2,7 @@ import { injectCssPostPlugin, removeExt } from '@dcloudio/uni-cli-shared';
 import { UniMiniProgramPluginOptions } from '@dcloudio/uni-mp-vite';
 
 import { updateFilename } from '../../uni-cli-shared/utils';
+import { viteCssPostPluginName } from '../../uni-cli-shared/const';
 
 export function rewriteViteCssPostPlugin(options: UniMiniProgramPluginOptions) {
   const {
@@ -13,7 +14,7 @@ export function rewriteViteCssPostPlugin(options: UniMiniProgramPluginOptions) {
     configResolved(resolvedConfig) {
       const { plugins } = resolvedConfig;
       const cssPostPlugin = plugins.find(
-        plugin => plugin.name === 'vite:css-post'
+        plugin => plugin.name === viteCssPostPluginName
       );
       const originGenerateBundle = cssPostPlugin.generateBundle;
 
@@ -47,7 +48,7 @@ export function rewriteViteCssPostPlugin(options: UniMiniProgramPluginOptions) {
       }
 
       injectCssPostPlugin(resolvedConfig, {
-        name: 'vite:css-post',
+        name: viteCssPostPluginName,
         generateBundle
       });
 

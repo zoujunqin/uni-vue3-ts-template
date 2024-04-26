@@ -18,6 +18,7 @@ import {
 import { Plugin } from 'vite';
 
 import { _addMiniProgramComponentJson } from '../../uni-cli-shared/jsonCache';
+import { uniEntryPluginName } from '../../uni-cli-shared/const';
 
 const styleIsolationRE =
   /export\s+default\s+[\s\S]*?styleIsolation\s*:\s*['|"](isolated|apply-shared|shared)['|"]/;
@@ -37,7 +38,7 @@ export function rewirteUniEntryPlugin({
   const manifestJson = parseManifestJsonOnce(inputDir);
   const platformOptions = manifestJson[process.env.UNI_PLATFORM] || {};
   return {
-    name: 'uni:virtual',
+    name: uniEntryPluginName,
     enforce: 'pre',
     resolveId(id) {
       if (isUniPageUrl(id) || isUniComponentUrl(id)) {

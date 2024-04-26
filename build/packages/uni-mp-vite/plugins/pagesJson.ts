@@ -13,6 +13,7 @@ import {
   _addMiniProgramPageJson,
   _findChangedJsonFiles
 } from '../../uni-cli-shared/jsonCache';
+import { uniPagesJsonPluginName } from '../../uni-cli-shared/const';
 
 const debugPagesJson = debug('uni:pages-json');
 
@@ -25,7 +26,7 @@ export function rewriteUniPagesJsonPlugin(
   return defineUniPagesJsonPlugin(opts => {
     // FIXME: 以下部分为源码, 有删减
     return {
-      name: 'uni:mp-pages-json',
+      name: uniPagesJsonPluginName,
       enforce: 'pre',
       transform(code, id) {
         const transformRes = originPlugin.transform?.call(this, code, id);
