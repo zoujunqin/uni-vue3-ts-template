@@ -1,8 +1,8 @@
 <template>
   <ProPage
-    show-navbar
-    navbar-title=""
     class="login hx-p-[128px_24px_0_24px] hx-h-full hx-flex hx-flex-col"
+    navbar-title=""
+    show-navbar
   >
     <text
       class="hx-text-[26px] hx-leading-[30px] hx-font-[600] hx-text-color-title"
@@ -19,23 +19,24 @@
       ref="proFormRef"
       :model="formData"
       :rules="formRules"
-      error-type="border-bottom"
       class="hx-mt-[24px]"
+      error-type="toast"
     >
       <ProFormItem prop="mobile">
         <ProInput
           v-model="formData.mobile"
+          class="hx-bg-white hx-h-[44px] !hx-flex-none"
           clearable
           placeholder="输入手机号"
-          class="hx-bg-white hx-h-[44px] !hx-flex-none"
         />
       </ProFormItem>
+
       <ProFormItem prop="captcha">
         <ProInput
           v-model="formData.captcha"
+          class="hx-bg-white hx-h-[44px] !hx-flex-none"
           clearable
           placeholder="输入验证码"
-          class="hx-bg-white hx-h-[44px] !hx-flex-none"
         >
           <template #suffix>
             <view class="hx-w-[84px] hx-flex hx-items-center">
@@ -52,8 +53,8 @@
               <view v-else class="hx-flex hx-items-center hx-justify-center">
                 <ProCountDown
                   :time="60000"
-                  format="ss"
                   class="hx-font-[400] hx-leading-[21px]"
+                  format="ss"
                   @finish="handleFinish"
                 />
                 <text
@@ -74,9 +75,9 @@
 
     <ProButton
       :hairline="false"
+      class="login-with-wechat hx-mt-[24px]"
       hover-start-time="50000"
       open-type="getPhoneNumber"
-      class="login-with-wechat hx-mt-[24px]"
       @getphonenumber="loginUnderWeChatAuth"
     >
       <text
@@ -88,7 +89,7 @@
   </ProPage>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref, shallowRef } from 'vue';
 
 import { loginUnderWeChatAuth } from './utils/weChat';
@@ -157,15 +158,16 @@ const fetchMobileLogin = () => {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .login {
-  background: linear-gradient(
-    180deg,
-    #fff 0%,
-    #eef8ff 46.47%,
-    #e8efff 73.17%,
-    #e7e6fd 100%
-  );
+  background:
+    linear-gradient(
+      180deg,
+      #fff 0%,
+      #eef8ff 46.47%,
+      #e8efff 73.17%,
+      #e7e6fd 100%
+    );
 }
 
 :deep(.pro-count-down text) {

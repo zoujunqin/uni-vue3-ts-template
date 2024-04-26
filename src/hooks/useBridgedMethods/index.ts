@@ -6,10 +6,18 @@ export const useBridgedMethods = <T extends ReadonlyArray<string>>(
 ) => {
   const bridgedMethods = methods.reduce(
     (result, method) => {
-      result[method] = (...args: unknown[]) => {
-        // @ts-ignore
-        componentInstance.value[method](...args);
-      };
+      const [keyword, methodName] = method.split(' ');
+
+      if (keyword === 'async') {
+        result[methodName] = async (...args: unknown[]) => {
+          return componentInstance.value[methodName](...args);
+        };
+      } else {
+        result[methodName] = (...args: unknown[]) => {
+          return componentInstance.value[methodName](...args);
+        };
+      }
+
       return result;
     },
     {} as Record<T[number], Function>

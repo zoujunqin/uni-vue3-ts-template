@@ -14,8 +14,9 @@
 <script lang="ts" setup>
 /*
  * 问题: uv-tabbar-item 一级一级向上查找数据, 因为插槽, 所以查找不到 uv-tabbar, 就无法构建上下级数据更新
- * 逻辑: 将 pro-tabbar 仿冒为 uv-tabbar, 复制 uv-tabbar 的数据到当前组件供子组件初始化, 然后去更新子组件的 parent 为 uv-tabbar
+ * 修复: 将 pro-tabbar 仿冒为 uv-tabbar, 复制 uv-tabbar 的数据到当前组件供子组件初始化, 然后去更新子组件的 parent 为 uv-tabbar
  * */
+
 import { getCurrentInstance, onMounted, ref } from 'vue';
 
 import { useVModel } from '@/hooks/useVModel';
@@ -30,7 +31,7 @@ const uvTabbarRef = ref();
 
 const { ctx } = getCurrentInstance();
 ctx.children = [];
-// 这你 name 为 uv-tabbar 是为了 uv-tabbar-item 内部的查找机制
+// 这里 name 为 uv-tabbar 是为了 uv-tabbar-item 内部的查找机制
 ctx.$options = Object.assign(ctx.$options || {}, { name: 'uv-tabbar' });
 
 const tabbarChange = name => {
