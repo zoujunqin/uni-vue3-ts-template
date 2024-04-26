@@ -42,5 +42,5 @@ export const useNextedCompatible = (name: string) => {
     });
   });
 
-  return { parentInstance };
+  return { ctx, parentInstance };
 };

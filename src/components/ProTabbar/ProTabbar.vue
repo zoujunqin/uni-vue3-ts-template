@@ -25,6 +25,8 @@ const props = defineProps({
 });
 const emit = defineEmits(['update:modelValue', 'change']);
 
+const { ctx, parentInstance } = useNextedCompatible('uv-tabbar');
+
 const value = useVModel(props, 'modelValue', emit);
 
 const tabbarChange = name => {
@@ -32,8 +34,6 @@ const tabbarChange = name => {
   ctx.value = name;
   emit('change', name);
 };
-
-const { parentInstance } = useNextedCompatible('uv-tabbar');
 </script>
 
 <script lang="ts">
