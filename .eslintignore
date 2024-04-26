@@ -16,9 +16,4 @@ tailwind.config.js
 
 /build
 /src/static
-/src/components/ProForm/*
-/src/components/ProFormItem/*
-/src/components/ProCheckbox/*
-/src/components/ProCheckboxGroup/*
-/src/components/ProSteps/*
-/src/components/ProStepsItem/*
+

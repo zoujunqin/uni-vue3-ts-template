@@ -1,90 +1,22 @@
 <template>
-  <view
-    :class="['uv-steps', `uv-steps--${direction}`]"
-    :style="[$uv.addStyle(customStyle)]"
-  >
+  <uv-steps ref="parentInstance" v-bind="$attrs">
     <slot />
-  </view>
+  </uv-steps>
 </template>
 
-<script>
-import { func } from '@climblee/uv-ui/libs/function/test.js';
-import mpMixin from '@climblee/uv-ui/libs/mixin/mpMixin.js';
-import mixin from '@climblee/uv-ui/libs/mixin/mixin.js';
-import props from './props.ts';
-/**
- * Steps 步骤条
- * @description 该组件一般用于完成一个任务要分几个步骤，标识目前处于第几步的场景。
- * @tutorial https://www.uvui.cn/components/steps.html
- * @property {String}			direction		row-横向，column-竖向 (默认 'row' )
- * @property {String | Number}	current			设置当前处于第几步 (默认 0 )
- * @property {String}			activeColor		激活状态颜色 (默认 '#3c9cff' )
- * @property {String}			inactiveColor	未激活状态颜色 (默认 '#969799' )
- * @property {String}			activeIcon		激活状态的图标
- * @property {String}			inactiveIcon	未激活状态图标
- * @property {Boolean}			dot				是否显示点类型 (默认 false )
- * @example <uv-steps current="0"><uv-steps-item title="已出库" desc="10:35" ></uv-steps-item></uv-steps>
- */
-export default {
-  name: 'uv-steps',
-  mixins: [mpMixin, mixin, props],
-  data() {
-    return {};
-  },
-  watch: {
-    children() {
-      this.updateChildData();
-    },
-    parentData() {
-      this.updateChildData();
-    }
-  },
-  computed: {
-    // 监听参数的变化，通过watch中，手动去更新子组件的数据，否则子组件不会自动变化
-    parentData() {
-      return [
-        this.current,
-        this.direction,
-        this.activeColor,
-        this.inactiveColor,
-        this.activeIcon,
-        this.inactiveIcon,
-        this.dot
-      ];
-    }
-  },
-  methods: {
-    // 更新子组件的数据
-    updateChildData() {
-      this.children.map(child => {
-        // 先判断子组件是否存在对应的方法
-        func((child || {}).updateFromParent()) && child.updateFromParent();
-      });
-    },
-    // 接受子组件的通知，去修改其他子组件的数据
-    updateFromChild() {
-      this.updateChildData();
-    }
-  },
-  created() {
-    this.children = [];
-  }
-};
+<script lang="ts" setup>
+/*
+ * 问题: uv-steps-item 一级一级向上查找数据, 因为插槽, 所以查找不到 uv-steps, 就无法构建上下级数据更新
+ * 修复: 将 pro-steps 仿冒为 uv-steps, 复制 uv-steps 的数据到当前组件供子组件初始化, 然后去更新子组件的 parent 为 uv-steps
+ * */
+
+import { useNextedCompatible } from '@/hooks/useNextedCompatible';
+
+const { parentInstance } = useNextedCompatible('uv-steps');
 </script>
 
-<style lang="scss" scoped>
-@import '@climblee/uv-ui/libs/css/components.scss';
-
-.uv-steps {
-  @include flex;
-
-  &--column {
-    flex-direction: column;
-  }
-
-  &--row {
-    flex: 1;
-    flex-direction: row;
-  }
-}
-</style>
+<script lang="ts">
+export default {
+  options: { name: 'ProSteps', virtualHost: true }
+};
+</script>

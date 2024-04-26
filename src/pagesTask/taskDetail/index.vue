@@ -1,8 +1,8 @@
 <template>
   <ProPage
-    show-navbar
-    navbar-title="任务详情"
     class="page-pt-with-navbar hx-bg-white"
+    navbar-title="任务详情"
+    show-navbar
   >
     <view class="hx-p-[16px]">
       <TaskHeader
@@ -26,7 +26,7 @@
   </ProPage>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onLoad } from '@dcloudio/uni-app';
 import { shallowRef } from 'vue';
 
@@ -36,7 +36,7 @@ import TaskDescribe from './components/TaskDescribe.vue';
 import TaskHeader from './components/TaskHeader.vue';
 import TaskPlace from './components/TaskPlace.vue';
 
-import { ITaskDetail, getTaskDetail, applyTask } from '@/api/fe/wechat/task';
+import { applyTask, getTaskDetail, ITaskDetail } from '@/api/fe/wechat/task';
 import { dealStepCurrent } from '@/utils/index';
 
 const taskDetail = shallowRef<ITaskDetail>();
@@ -53,6 +53,9 @@ const handleGetTaskDetail = () => {
   });
 };
 const handleApplyTask = () => {
+  uni.navigateTo({
+    url: `/pagesAuth/realName/index`
+  });
   applyTask(taskId.value).then(res => {
     const current = dealStepCurrent(res);
     console.log('current:', current);
