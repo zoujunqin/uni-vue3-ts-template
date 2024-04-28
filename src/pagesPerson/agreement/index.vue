@@ -428,4 +428,8 @@
 
 <script setup lang="ts"></script>
 
-<style scoped></style>
+<style scoped lang="scss">
+:deep(.pro-navbar) {
+  background-color: #fff;
+}
+</style>

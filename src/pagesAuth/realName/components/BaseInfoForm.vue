@@ -4,7 +4,7 @@
   <view class="hx-flex hx-flex-col hx-items-center">
     <ProFormItem
       borderBottom
-      v-for="item in dynamicStateForm"
+      v-for="(item, index) in dynamicStateForm"
       :key="item.fieldCode"
       :required="item.izRequired === 'yes'"
       class="hx-w-full"
@@ -19,7 +19,10 @@
         input-align="right"
         :placeholder="item?.labelName"
       />
-      <view v-if="item.valueType === 'select'" @click="handleOpenSelect(item)">
+      <view
+        v-if="item.valueType === 'select'"
+        @click="handleOpenSelect(item, index)"
+      >
         <ProInput
           class="!hx-pr-0"
           v-model="item.dictValue"
@@ -40,28 +43,13 @@
           :placeholder="item?.labelName"
         />
       </view>
-      <view
-        v-if="getReadonlyAreaBool(item.valueType)"
-        @click="handleOpenArea()"
-      >
-        <ProInput
-          class="!hx-pr-0"
-          v-model="data.ocrSure['areaText']"
-          input-align="right"
-          readonly
-          :placeholder="item?.labelName"
-        />
-      </view>
     </ProFormItem>
   </view>
-  <ProAreaPicker
-    v-model="areaList"
-    ref="proAreaPickerRef"
-    @confirm="handleAreaConfirm"
-  />
   <ProDateTimePicker
     ref="datetimePickerRef"
     mode="date"
+    :minDate="-631180800000"
+    :maxDate="2841840000000"
     v-model="dayDate"
     @confirm="handleConfirmDate"
   />
@@ -75,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, ref } from 'vue';
+import { nextTick, ref } from 'vue';
 
 import { useVModel } from '@/hooks/useVModel';
 import { handleDealTimestampDate } from '@/utils/processingText';
@@ -94,26 +82,15 @@ const props = defineProps({
 const data = useVModel(props, 'modelValue', undefined, {
   passive: true
 });
-const proAreaPickerRef = ref();
 const datetimePickerRef = ref();
 const proPickerRef = ref();
 const showDate = ref();
 const dayDate = ref();
 const pickerValue = ref<Array<any>>([]);
 const clickFieldCode = ref('');
-const areaList = computed({
-  get() {
-    return data.value.ocrSure['areaCode'];
-  },
-  set(val) {
-    data.value['domicileAreaCode'] = val[2].toString();
-  }
-});
-const handleAreaConfirm = val => {
-  const nameList = val.value.map(item => item.name);
-  data.value.ocrSure['areaText'] = nameList.join('/');
-};
-const handleOpenSelect = val => {
+const indexClick = ref();
+const handleOpenSelect = (val, index) => {
+  indexClick.value = index;
   clickFieldCode.value = val.fieldCode;
   pickerValue.value = [val.dict];
   proPickerRef.value.open();
@@ -121,11 +98,9 @@ const handleOpenSelect = val => {
 const getReadonlyBool = valueType => {
   return ['date'].includes(valueType);
 };
-const getReadonlyAreaBool = valueType => {
-  return ['area'].includes(valueType);
-};
 const handlePickerConfirm = e => {
   data.value[clickFieldCode.value] = e.value[0].code;
+  props.dynamicStateForm[indexClick.value].dictValue = e.value[0].name;
 };
 const handleConfirmDate = e => {
   dayDate.value = e.value;
@@ -137,9 +112,6 @@ const handleOpenDate = fieldCode => {
   nextTick(() => {
     datetimePickerRef.value.open();
   });
-};
-const handleOpenArea = () => {
-  proAreaPickerRef.value.open();
 };
 </script>
 

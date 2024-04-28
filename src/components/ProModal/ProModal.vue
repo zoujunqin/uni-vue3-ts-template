@@ -1,45 +1,53 @@
 <template>
-  <ProPopup ref="uniPopupRef" bg-color="none" :safe-area-inset-bottom="false">
+  <ProPopup ref="uniPopupRef" :safe-area-inset-bottom="false" bg-color="none">
     <view
-      class="modal-content hx-flex hx-flex-col hx-justify-between hx-items-center hx-w-[302px] hx-p-[29px_24px] hx-rounded-[8px]"
+      class="hx-flex hx-flex-col hx-justify-between hx-w-[302px] hx-rounded-[8px] hx-overflow-hidden"
     >
-      <slot name="title">
-        <view class="hx-mb-[4px] hx-text-[17px] hx-font-bold hx-leading-[26px]">
-          {{ title }}
-        </view>
-      </slot>
+      <slot name="image" />
 
-      <slot name="content">
-        <view class="hx-mb-[24px] hx-text-[15px] hx-leading-[24px]">
-          {{ content }}
-        </view>
-      </slot>
+      <view class="hx-text-center hx-p-[24px] hx-bg-white">
+        <slot name="title">
+          <view
+            class="hx-mb-[4px] hx-text-[17px] hx-font-bold hx-leading-[26px]"
+          >
+            {{ title }}
+          </view>
+        </slot>
 
-      <view class="hx-flex">
-        <ProButton
-          class="hx-w-[122px] hx-mr-[10px]"
-          v-if="showCancel"
-          type="primary"
-          color="rgb(61 134 242 / 10%)"
-          @tap.stop="handleCancel"
-        >
-          <span class="hx-text-text-color-theme">
-            {{ cancelButtonText }}
-          </span>
-        </ProButton>
-        <ProButton
-          class="hx-w-[122px]"
-          v-if="showConfirm"
-          type="primary"
-          @tap.stop="handleConfirm"
-        >
-          <span>{{ confirmButtonText }}</span>
-        </ProButton>
+        <slot name="content">
+          <view
+            class="hx-mb-[24px] hx-text-[15px] hx-leading-[24px] hx-text-text-color-tip"
+          >
+            {{ content }}
+          </view>
+        </slot>
+
+        <view class="hx-flex">
+          <ProButton
+            v-if="showCancel"
+            class="hx-w-[122px] hx-mr-[10px]"
+            color="rgb(61 134 242 / 10%)"
+            type="primary"
+            @click="handleCancel"
+          >
+            <span class="hx-text-text-color-theme">
+              {{ cancelButtonText }}
+            </span>
+          </ProButton>
+          <ProButton
+            v-if="showConfirm"
+            class="hx-w-[122px]"
+            type="primary"
+            @click="handleConfirm"
+          >
+            <span>{{ confirmButtonText }}</span>
+          </ProButton>
+        </view>
       </view>
     </view>
   </ProPopup>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 import { shallowRef } from 'vue';
 
 defineProps({
@@ -71,6 +79,7 @@ defineProps({
 const emits = defineEmits(['cancel', 'confirm']);
 
 const uniPopupRef = shallowRef();
+
 const open = () => {
   uniPopupRef.value.open();
 };
@@ -87,15 +96,9 @@ const handleConfirm = () => {
   emits('confirm');
 };
 
-defineExpose({ open });
+defineExpose({ open, close });
 </script>
 
 <script lang="ts">
 export default { options: { name: 'ProModal', virtualHost: true } };
 </script>
-
-<style scoped>
-.modal-content {
-  background: linear-gradient(180deg, #ebf3ff 0%, #fff 37.77%);
-}
-</style>

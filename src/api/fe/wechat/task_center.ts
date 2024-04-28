@@ -6,6 +6,7 @@ const baseApi = '/fe/wechat/task_center';
 export interface ITask {
   costTypeName: string;
   taskContent: string;
+  taskDescription: string;
   taskId: number;
   taskSalaryMax: number;
   taskSalaryMin: number;
@@ -13,6 +14,7 @@ export interface ITask {
   statusName: string;
   taskName: string;
   taskTypeName: string;
+  orderDetailId: string;
 }
 export interface ITaskParam {
   status: string;

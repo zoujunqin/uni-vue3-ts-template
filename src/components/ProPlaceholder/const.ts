@@ -34,7 +34,7 @@ export const typeMap = {
   [NO_DATA]: {
     title: '暂无数据！',
     subTitle: '数据列表空空如也~',
-    image: import('@http/placeholder/no-msg.png')
+    image: import('@http/placeholder/no-page-info.png')
   }
 } as const;
 

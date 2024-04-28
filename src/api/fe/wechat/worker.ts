@@ -3,39 +3,15 @@ import { http } from '@/utils/http';
 const baseApi = '/fe/wechat/worker';
 
 export interface IRealNameAuthParam {
-  invitationCodeId?: number;
+  invitationCodeId?: string;
   properties?: Array<{ fieldCode: string; value: Record<string, any> }>;
-  taskId?: number;
+  orderDetailId?: string;
 }
 /* 实名认证 */
 export const realNameAuth = (data: IRealNameAuthParam): Promise<{}> => {
   return http.request('put', `${baseApi}/realname_authentication`, { data });
 };
 
-export interface IGetRealNameInfoParam {
-  invitationCodeId?: number;
-  taskId?: number;
-}
-// export interface IRealNameInfo {
-//   appealStatus: string;
-//   propertyGroups: Array<{
-//     properties: Array<{
-//       fieldCode: string;
-//       izRequired: boolean;
-//       labelName: string;
-//       sort: number;
-//       value: string;
-//       valueType: string;
-//     }>;
-//   }>;
-//   rejectCause: string;
-// }
-/* 获取实名信息 */
-// export const getRealNameInfo = (
-//   params: IGetRealNameInfoParam
-// ): Promise<IRealNameInfo> => {
-//   return http.request('get', `${baseApi}/realname_info`, { params });
-// };
 /* 获取实名信息 */
 export const getRealNameInfo = params => {
   return http.request('get', `${baseApi}/realname_info`, { params });
@@ -43,4 +19,12 @@ export const getRealNameInfo = params => {
 /* 实名认证-用户申诉 */
 export const postAppealSubmit = data => {
   return http.request('post', `${baseApi}/appeal/submit`, { data });
+};
+/* 【协议签署】协议签署 */
+export const postWorkerProtocolSign = data => {
+  return http.request('post', `${baseApi}_protocol/sign`, { data });
+};
+/* 【合同中心】协议预览链接 */
+export const getWorkerProtocolByIdViewUrl = id => {
+  return http.request('get', `${baseApi}_protocol/${id}/viewurl`);
 };

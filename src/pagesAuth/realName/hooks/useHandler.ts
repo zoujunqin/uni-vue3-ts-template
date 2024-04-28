@@ -1,3 +1,4 @@
+import { debounce } from 'lodash-es';
 import { computed, ref } from 'vue';
 
 import { useHandlerCode } from './useHandlerCode';
@@ -7,15 +8,23 @@ import {
   realNameAuth,
   postAppealSubmit
 } from '@/api/fe/wechat/worker';
-import { getAreaListByDistrictId } from '@/api/system/area';
+import { getOcrIdCard } from '@/api/system/ocr';
 import { APPLY_STATUS, REAL_TYPE, YES_NO_TYPE } from '@/constant/taskDetail';
 import { useOss } from '@/hooks/useOss';
-import { getRealName, setRealName, getInvitationCodeId } from '@/utils/user';
+import { useUserStore } from '@/pinia/modules/user';
+import { getRealName, setRealName } from '@/utils/user';
+import { getIdCardMessage, setIdCardMessage } from '@/utils/user';
 
-export const useHandler = ({ infoParams, applyStatusMap, signUrl }) => {
+export const useHandler = ({
+  infoParams,
+  applyStatusMap,
+  signUrl,
+  current
+}) => {
   const { handleApplyTask, handleGetInvitationCodeScan } = useHandlerCode({
     infoParams,
-    signUrl
+    signUrl,
+    current
   });
   const { getPreviewUrl } = useOss();
   const formData = ref<any>({});
@@ -26,6 +35,8 @@ export const useHandler = ({ infoParams, applyStatusMap, signUrl }) => {
   const explainModalRef = ref();
   const localFormData = getRealName() || {};
   const localBool = Object.keys(localFormData).length > 0;
+  const { getUserCodeID } = useUserStore();
+
   const handleGetRealNameInfo = () => {
     getRealNameInfo(infoParams.value).then(async res => {
       applyStatusMap.value = {
@@ -59,10 +70,14 @@ export const useHandler = ({ infoParams, applyStatusMap, signUrl }) => {
       ? localFormData[subItem.fieldCode]
       : subItem.value;
     formData.value['ocrSure'] = {
-      front: localBool ? localFormData['ocrSure'].front : true,
-      reverse: localBool ? localFormData['ocrSure'].reverse : true,
-      areaText: '',
-      areaCode: []
+      front: localBool
+        ? localFormData['ocrSure'].front
+        : applyStatusMap.value.appealStatus === APPLY_STATUS.PASSED ||
+          applyStatusMap.value.appealStatus === null,
+      reverse: localBool
+        ? localFormData['ocrSure'].reverse
+        : applyStatusMap.value.appealStatus === APPLY_STATUS.PASSED ||
+          applyStatusMap.value.appealStatus === null
     };
   };
   const getFormDataRules = subItem => {
@@ -72,29 +87,31 @@ export const useHandler = ({ infoParams, applyStatusMap, signUrl }) => {
       trigger: ['blur', 'change']
     };
     formRules.value[subItem.fieldCode] = rule;
-    if (subItem.fieldCode === 'domicileAreaCode' && subItem.value) {
-      getAreaListByDistrictId({ districtId: subItem.value }).then(res => {
-        const { left, middle, right } = res;
-        formData.value['ocrSure'].areaCode = [left.id, middle.id, right.id];
-        formData.value['ocrSure'].areaText = [
-          left.name,
-          middle.name,
-          right.name
-        ].join('/');
-      });
-    }
   };
-  const handleNext = async () => {
+  const handleNext = debounce(async () => {
     if (!formData.value['idCardFront'] || !formData.value['idCardReverse']) {
       return uni.showToast({
         title: '请先上传身份证',
         icon: 'none'
       });
     }
+
     await proFormRef.value.validate();
-    if (!smsCode.value) {
+    const dataKeys = Object.keys(formData.value);
+    if (!smsCode.value && dataKeys.includes('mobile')) {
       return uni.showToast({
         title: '请输入验证码',
+        icon: 'none'
+      });
+    }
+    if (
+      dataKeys.includes('credentialStartDate') &&
+      dataKeys.includes('credentialEndDate') &&
+      new Date(formData.value['credentialStartDate']).getTime() >=
+        new Date(formData.value['credentialEndDate']).getTime()
+    ) {
+      return uni.showToast({
+        title: '身份证有效期开始时间不能大于结束时间',
         icon: 'none'
       });
     }
@@ -115,12 +132,34 @@ export const useHandler = ({ infoParams, applyStatusMap, signUrl }) => {
       }
     }
     const { front, reverse } = formData.value['ocrSure'];
-
-    if (front && reverse) {
+    if (!getIdCardMessage()) {
+      handleGetOcrIdCard();
+    }
+    const { name, idNumber } = getIdCardMessage();
+    if (
+      front &&
+      reverse &&
+      name === formData.value['workerName'] &&
+      idNumber === formData.value['idCardNo']
+    ) {
       handleRealNameAuth();
     } else {
       explainModalRef.value.open();
     }
+  }, 500);
+
+  const handleGetOcrIdCard = async () => {
+    const params = {
+      imageUrl: await getPreviewUrl(formData.value['idCardFront']),
+      needParse: true
+    };
+    getOcrIdCard(params).then(res => {
+      const { name, idNumber } = res.face;
+      setIdCardMessage({
+        name,
+        idNumber
+      });
+    });
   };
   const handleRealNameAuth = async () => {
     const keyList = Object.keys(formData.value);
@@ -140,7 +179,7 @@ export const useHandler = ({ infoParams, applyStatusMap, signUrl }) => {
     };
     realNameAuth(params).then(() => {
       handlePageBack();
-      if (getInvitationCodeId() === '-1') {
+      if (getUserCodeID() === '-1') {
         handleApplyTask();
       } else {
         handleGetInvitationCodeScan();
@@ -151,7 +190,7 @@ export const useHandler = ({ infoParams, applyStatusMap, signUrl }) => {
   const handlePageBack = () => {
     setRealName(formData.value);
   };
-  const handleExplainConfirm = () => {
+  const handleExplainConfirm = debounce(() => {
     const {
       idCardNo,
       idCardReverse,
@@ -170,11 +209,14 @@ export const useHandler = ({ infoParams, applyStatusMap, signUrl }) => {
       mobile,
       bankName
     };
-    postAppealSubmit(params).then(() => {
-      uni.showToast({ title: '申述成功，请耐心等待', icon: 'none' });
-      uni.navigateBack();
-    });
-  };
+    postAppealSubmit(params)
+      .then(() => {
+        uni.showToast({ title: '申述成功，请耐心等待', icon: 'none' });
+      })
+      .finally(() => {
+        explainModalRef.value.close();
+      });
+  }, 500);
   const applyTipText = computed(() => {
     return applyStatusMap.value['appealStatus'] === APPLY_STATUS.REJECT
       ? `申诉失败：原因(${applyStatusMap.value.rejectCause})`

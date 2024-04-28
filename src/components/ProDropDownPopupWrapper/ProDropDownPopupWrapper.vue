@@ -1,6 +1,7 @@
 <template>
   <ProDropDownPopup
     ref="proDropDownPopupRef"
+    :click-overlay-on-close="false"
     v-bind="{ ...$attrs, ...bridgedEvents }"
   >
     <view class="hx-flex hx-flex-col">

@@ -15,7 +15,7 @@
     <text
       class="hx-mt-[3px] hx-flex-1 hx-text-right hx-text-color-primary hx-text-[20px] hx-font-[600] hx-leading-[30px]"
     >
-      {{ hyphenAB(data.salaryMin, data.salaryMax) + data.costTypeName }}
+      {{ hyphenAB(data.salaryMin, data.salaryMax) + data.costTypeName || '' }}
     </text>
   </view>
 
@@ -45,6 +45,11 @@
   </view>
 
   <view class="hx-flex hx-items-center">
+    <ProTags
+      class="hx-mr-[10px]"
+      :text="data.taskTypeCategoryName"
+      type="info"
+    />
     <ProTags class="hx-mr-[10px]" :text="data.taskTypeName" type="info" />
   </view>
 </template>

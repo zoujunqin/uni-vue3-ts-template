@@ -19,10 +19,7 @@ import { getUUID } from '@/utils';
 import { decryptString, encryptString } from '@/utils/crypto';
 import { formatToken, getToken, removeToken } from '@/utils/user';
 
-const httpNoMessage = [
-  '/fe/fe_worker_protocol/invitation_protocol_sign_url_for_task',
-  '/fe/fe_worker_protocol/invitation_protocol_sign_url_for_code'
-];
+const httpNoMessage = ['/fe/wechat/worker_protocol/sign'];
 
 const baseURL = 'http://218.104.230.173:17054'; // 开发环境
 // const baseURL = 'https://localdev-hro-api.fjhxrl.com'; // 测试环境
@@ -66,61 +63,16 @@ const isNeedDecrypt = response =>
   response.headers['Enable-Response-Decrypt'] !== 'False';
 
 class PureHttp {
-  /** 初始化配置对象 */
-  private static initConfig: PureHttpRequestConfig = {};
-  /** 保存当前Axios实例对象 */
-  private static axiosInstance: AxiosInstance = Axios.create(defaultConfig);
-  public baseUrl = defaultConfig.baseURL;
-
   constructor() {
     this.httpInterceptorsRequest();
     this.httpInterceptorsResponse();
   }
 
-  /** 通用请求工具函数 */
-  public request<T = any>(
-    method: RequestMethods,
-    url: string,
-    param?: AxiosRequestConfig,
-    axiosConfig?: PureHttpRequestConfig
-  ): Promise<T> {
-    const config = {
-      method,
-      url,
-      ...param,
-      ...axiosConfig
-    } as PureHttpRequestConfig;
+  /** 初始化配置对象 */
+  private static initConfig: PureHttpRequestConfig = {};
 
-    // 单独处理自定义请求/响应回掉
-    return new Promise((resolve, reject) => {
-      PureHttp.axiosInstance
-        .request(config)
-        .then((response: any) => {
-          resolve(response);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  }
-
-  /** 单独抽离的post工具函数 */
-  public post<T, P>(
-    url: string,
-    params?: AxiosRequestConfig<T>,
-    config?: PureHttpRequestConfig
-  ): Promise<P> {
-    return this.request<P>('post', url, params, config);
-  }
-
-  /** 单独抽离的get工具函数 */
-  public get<T, P>(
-    url: string,
-    params?: AxiosRequestConfig<T>,
-    config?: PureHttpRequestConfig
-  ): Promise<P> {
-    return this.request<P>('get', url, params, config);
-  }
+  /** 保存当前Axios实例对象 */
+  private static axiosInstance: AxiosInstance = Axios.create(defaultConfig);
 
   /** 请求拦截 */
   private httpInterceptorsRequest(): void {
@@ -217,20 +169,24 @@ class PureHttp {
         if (isNeedDecrypt($error.response)) {
           responseData = JSON.parse(decryptString(responseData));
         }
-        const customDealCodes = ['50004'];
+        //邀请码已失效70001
+        const customDealCodes = ['70001'];
         // 跳转到登录页面 401、40102、40103、40104
         const loginFailureCodeList = ['401', '40102', '40103', '40104'];
         if (loginFailureCodeList.includes(responseData.code)) {
-          uni.showToast({ title: '授权过期，请重新登录', icon: 'none' });
+          setTimeout(() => {
+            uni.showToast({ title: '授权过期，请重新登录', icon: 'none' });
+          }, 30);
           removeToken();
-          /* TODO: 暂时注释 */
-          // uni.reLaunch({ url: '/pages/login/index' });
+          uni.reLaunch({ url: '/pages/login/index' });
         } else if (!customDealCodes.includes(responseData.code)) {
           if (!httpNoMessage.includes($error.config.url)) {
-            uni.showToast({
-              title: responseData.message || '接口异常',
-              icon: 'none'
-            });
+            setTimeout(() => {
+              uni.showToast({
+                title: responseData.message || '接口异常',
+                icon: 'none'
+              });
+            }, 30);
           }
         }
 
@@ -241,6 +197,53 @@ class PureHttp {
       }
     );
   }
+
+  /** 通用请求工具函数 */
+  public request<T = any>(
+    method: RequestMethods,
+    url: string,
+    param?: AxiosRequestConfig,
+    axiosConfig?: PureHttpRequestConfig
+  ): Promise<T> {
+    const config = {
+      method,
+      url,
+      ...param,
+      ...axiosConfig
+    } as PureHttpRequestConfig;
+
+    // 单独处理自定义请求/响应回掉
+    return new Promise((resolve, reject) => {
+      PureHttp.axiosInstance
+        .request(config)
+        .then((response: any) => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+
+  /** 单独抽离的post工具函数 */
+  public post<T, P>(
+    url: string,
+    params?: AxiosRequestConfig<T>,
+    config?: PureHttpRequestConfig
+  ): Promise<P> {
+    return this.request<P>('post', url, params, config);
+  }
+
+  /** 单独抽离的get工具函数 */
+  public get<T, P>(
+    url: string,
+    params?: AxiosRequestConfig<T>,
+    config?: PureHttpRequestConfig
+  ): Promise<P> {
+    return this.request<P>('get', url, params, config);
+  }
+
+  public baseUrl = defaultConfig.baseURL;
 }
 
 export const http = new PureHttp();

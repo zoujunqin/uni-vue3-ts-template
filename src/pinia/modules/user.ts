@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { shallowRef } from 'vue';
 
-import { IPersonInfo, getPersonInfo } from '@/api/fe/wechat/personal_center';
+import { getPersonInfo, IPersonInfo } from '@/api/fe/wechat/personal_center';
 import {
   getToken as getPersistenceToken,
   getUserInfo as getPersistenceUserInfo,
@@ -12,7 +12,7 @@ import {
 } from '@/utils/user';
 
 export const useUserStore = defineStore('user', () => {
-  /* --------------------- 用户信息 ↓ ---------------------- */
+  // 用户信息
   const userInfo = shallowRef<IPersonInfo | null>();
   const setUserInfo = (info: IPersonInfo) => {
     userInfo.value = info;
@@ -29,7 +29,16 @@ export const useUserStore = defineStore('user', () => {
     getPersonInfo().then(setUserInfo);
   };
 
-  /* --------------------- token ↓ ---------------------- */
+  // 扫码登录用户二维码id
+  const userCodeID = shallowRef<string | null>();
+  const setUserCodeID = (code: string) => {
+    userCodeID.value = code;
+  };
+  const getUserCodeID = () => {
+    return userCodeID.value || '-1';
+  };
+
+  // token
   const token = shallowRef('');
   const setToken = (val: string) => {
     token.value = val;
@@ -62,6 +71,9 @@ export const useUserStore = defineStore('user', () => {
     getToken,
     removeToken,
 
-    logout
+    logout,
+
+    setUserCodeID,
+    getUserCodeID
   };
 });

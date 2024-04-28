@@ -21,5 +21,3 @@ export default {
   options: { name: 'ProStepsItem', virtualHost: true }
 };
 </script>
-
-<style></style>

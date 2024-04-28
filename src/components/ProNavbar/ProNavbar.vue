@@ -26,8 +26,9 @@ import { computed } from 'vue';
 
 import { useSystemStore } from '@/pinia/modules/system';
 
-defineProps({
-  text: { type: String, default: '导航栏' }
+const props = defineProps({
+  text: { type: String, default: '导航栏' },
+  showBack: { type: Boolean, default: true }
 });
 const emit = defineEmits(['navBack']);
 
@@ -41,7 +42,7 @@ const style = computed(() => {
 });
 
 const currentPages = getCurrentPages();
-const showBackIcon = currentPages.length > 1;
+const showBackIcon = currentPages.length > 1 && props.showBack;
 
 const handleBack = () => {
   emit('navBack');

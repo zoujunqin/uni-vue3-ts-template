@@ -1,3 +1,4 @@
+import { onShow } from '@dcloudio/uni-app';
 import { onMounted, shallowRef } from 'vue';
 
 import { getPersonCenter } from '@/api/fe/wechat/personal_center';
@@ -75,12 +76,17 @@ export const useHandler = () => {
     }
   } as const;
 
-  getPersonCenter().then(res => {
-    personalData.value = res;
-  });
   onMounted(() => {
     getTokenValue();
   });
+  onShow(() => {
+    handleGetPersonCenter();
+  });
+  const handleGetPersonCenter = () => {
+    getPersonCenter().then(res => {
+      personalData.value = res;
+    });
+  };
   const getTokenValue = () => {
     token.value = getToken();
   };

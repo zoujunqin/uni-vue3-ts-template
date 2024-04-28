@@ -4,6 +4,7 @@
       v-if="showNavbar"
       :style="navbarStyle"
       :text="navbarTitle"
+      :showBack="showBack"
       @navBack="handleNavBack"
     />
 
@@ -22,6 +23,10 @@ const props = defineProps({
   navbarVisibility: {
     type: String,
     default: 'unset'
+  },
+  showBack: {
+    type: Boolean,
+    default: true
   }
 });
 const emit = defineEmits(['pageBack']);

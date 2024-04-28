@@ -1,18 +1,18 @@
 <template>
   <template v-for="(item, index) in list" :key="index">
     <view class="section-title hx-leading-[19px] hx-mb-[16px]">
-      {{ item.categoryName }}
+      {{ item.name }}
     </view>
     <view class="hx-mb-[24px] hx-flex hx-flex-wrap">
       <view
-        class="hx-text-center hx-h-[30px] hx-p-[8px_11px] hx-text-[#303133] hx-text-[14px] hx-leading-[14px] hx-bg-[#F7F8FA] hx-rounded-[6px] hx-mr-[10px] hx-mb-[10px]"
+        class="hx-flex hx-justify-center hx-items-center hx-h-[36px] hx-px-[11px] hx-min-w-[78px] hx-text-[#303133] hx-text-[14px] hx-leading-[14px] hx-bg-[#F7F8FA] hx-rounded-[6px] hx-mr-[10px] hx-mb-[10px]"
         :class="getClass(subItem)"
         v-for="(subItem, subIndex) in item.children"
         :key="subIndex"
         @click="handleSelect(subItem.id)"
       >
         <view
-          class="icon-container hx-hidden hx-items-center hx-justify-center hx-absolute hx-w-[14px] hx-h-[8px] hx-bg-color-primary hx-rounded-tl-[6px] hx-rounded-br-[6px] hx-right-0 hx-bottom-0"
+          class="icon-container hx-hidden hx-items-center hx-justify-center hx-absolute hx-w-[14px] hx-h-[8px] hx-bg-color-primary hx-rounded-tl-[6px] hx-rounded-br-[4px] hx-right-0 hx-bottom-0"
         >
           <ProIcon name="checkmark" size="20rpx" color="white" />
         </view>
@@ -54,7 +54,7 @@ const handleSelect = (id: number) => {
 };
 
 const getClass = (subItem: ITreeSubTaskType) => {
-  return [selectIdList.value.includes(subItem.id) ? 'active' : null];
+  return [selectIdList.value.includes(subItem.id) ? 'active' : 'unchecked'];
 };
 </script>
 
@@ -68,6 +68,11 @@ export default { options: { name: 'TaskType', virtualHost: true } };
   color: var(--hx-color-primary);
   background: rgb(61 134 242 / 10%);
   border: 1px solid var(--hx-color-primary);
+}
+
+.unchecked {
+  position: relative;
+  border: 1px solid var(--hx-bg-color);
 }
 
 .active > .icon-container {

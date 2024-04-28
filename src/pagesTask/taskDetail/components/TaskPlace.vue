@@ -26,9 +26,9 @@ const longitude = shallowRef(0);
 const latitude = shallowRef(0);
 
 const getPositionByAddress = () => {
-  const { province, city, area } = props.data;
+  const { province, city, area, address } = props.data;
 
-  getGeo({ address: province + city + area }).then(res => {
+  getGeo({ address: province + city + area + address }).then(res => {
     const { location } = res.data.geocodes[0];
     const [lng, lat] = location.split(',');
     longitude.value = lng;

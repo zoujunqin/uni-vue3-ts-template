@@ -2,20 +2,26 @@
   <ProPage
     show-navbar
     navbar-title="个人信息"
-    class="personCenter-container page-pt-with-navbar hx-bg-white"
+    class="personMessage-container page-pt-with-navbar hx-bg-white"
   >
     <view class="hx-bg-bg-color-grey hx-h-full hx-pt-[10px]">
       <view class="card-box">
         <view class="hx-flex hx-justify-between hx-mb-[12px]">
           <span class="title-tip"> 证件信息 </span>
-          <span class="hx-text-color-success hx-text-[14px]">
-            {{ personData.appealStatus }}
+          <span
+            :class="[
+              APPLY_STATUS_MAP[personData.appealStatus]?.textColor,
+              'hx-text-[14px]'
+            ]"
+          >
+            {{ personData.appealStatusName }}
           </span>
         </view>
         <view class="hx-flex hx-justify-between">
           <view class="hx-flex hx-flex-col hx-items-center">
             <image
               class="hx-w-[170px] hx-h-[107px] hx-mb-[8px]"
+              mode="aspectFill"
               @tap="handleLookImg(0)"
               :src="
                 personData.idCardFront || import('@http/person/card-front.svg')
@@ -26,6 +32,7 @@
           <view class="hx-flex hx-flex-col hx-items-center">
             <image
               class="hx-w-[170px] hx-h-[107px] hx-mb-[8px]"
+              mode="aspectFill"
               @tap="handleLookImg(1)"
               :src="
                 personData.idCardReverse ||
@@ -59,6 +66,7 @@
 import { onMounted, ref } from 'vue';
 
 import { getPersonalCenterInfo } from '@/api/fe/wechat/personal_center';
+import { APPLY_STATUS_MAP } from '@/constant/taskDetail';
 import { useOss } from '@/hooks/useOss';
 
 const { getPreviewUrl } = useOss();
@@ -71,7 +79,8 @@ const personData = ref({
   idCardNo: '',
   idCardFront: '',
   idCardReverse: '',
-  mobile: ''
+  mobile: '',
+  appealStatusName: ''
 });
 
 onMounted(() => {
@@ -81,20 +90,20 @@ onMounted(() => {
 const handleGetPersonalCenterInfo = () => {
   getPersonalCenterInfo().then(async res => {
     personData.value = res;
-    personData.value.idCardFront = res.idCardFront
-      ? await getPreviewUrl(res.idCardFront)
-      : '';
-    personData.value.idCardReverse = res.idCardReverse
-      ? await getPreviewUrl(res.idCardReverse)
-      : '';
-    imageList.value = [
-      personData.value.idCardFront,
-      personData.value.idCardReverse
-    ];
+    if (res.idCardFront) {
+      personData.value.idCardFront = await getPreviewUrl(res.idCardFront);
+      imageList.value.push(personData.value.idCardFront);
+    }
+    if (res.idCardReverse) {
+      personData.value.idCardReverse = await getPreviewUrl(res.idCardReverse);
+      imageList.value.push(personData.value.idCardReverse);
+    }
   });
 };
 
 const handleLookImg = (index: number) => {
+  if (index === 0 && !personData.value.idCardFront) return;
+  if (index === 1 && !personData.value.idCardReverse) return;
   uni.previewImage({
     current: index,
     urls: imageList.value
@@ -103,34 +112,55 @@ const handleLookImg = (index: number) => {
 </script>
 
 <style scoped lang="scss">
-.personCenter-container {
+:deep(.pro-navbar) {
+  background-color: #fff;
+}
+
+.personMessage-container {
   .card-box {
-    margin-bottom: 10px;
     padding: 16px 12px;
+    margin-bottom: 10px;
     background-color: var(--hx-bg-color);
   }
+
   .card-tip {
     font-size: 12px;
     color: var(--hx-text-color-regular);
   }
+
   .title-tip {
-    color: var(--hx-text-color-main);
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
+    color: var(--hx-text-color-main);
   }
+
   .form-row {
     display: flex;
     margin-top: 12px;
   }
+
   .form-label {
     display: block;
     width: 80px;
     font-size: 14px;
     color: var(--hx-text-color-tip);
   }
+
   .form-text {
-    color: var(--hx-text-color-main);
     font-size: 14px;
+    color: var(--hx-text-color-main);
+  }
+
+  .warning-text-color {
+    color: var(--hx-color-warning-active);
+  }
+
+  .passed-text-color {
+    color: var(--hx-color-success-active);
+  }
+
+  .error-text-color {
+    color: var(--hx-color-error-active);
   }
 }
 </style>

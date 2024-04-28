@@ -1,15 +1,16 @@
 import { ref } from 'vue';
 
-import {
-  getInvitationProtocolSignUrlForCode,
-  getInvitationProtocolSignUrlForTask
-} from '@/api/fe/fe_worker_protocol';
 import { getInvitationCodeScan } from '@/api/fe/wechat/invitation_code';
 import { applyTask } from '@/api/fe/wechat/task';
+import { postWorkerProtocolSign } from '@/api/fe/wechat/worker';
+import { PROTOCOL_TYPE } from '@/constant/taskDetail';
+import { useUserStore } from '@/pinia/modules/user';
 import { dealStepCurrent } from '@/utils';
 
-export const useHandlerCode = ({ infoParams, signUrl }) => {
-  const callBackUrl = ref('http://47.96.112.174:8003/');
+export const useHandlerCode = ({ infoParams, signUrl, current }) => {
+  const { getUserCodeID } = useUserStore();
+
+  const callbackPage = ref('http://47.96.112.174:8003/');
   const handleErrBack = err => {
     uni.showModal({
       title: '提示',
@@ -22,29 +23,26 @@ export const useHandlerCode = ({ infoParams, signUrl }) => {
       }
     });
   };
-  // 申请任务进入已实名
-  const handleGetTaskSignUrl = () => {
-    const params = {
-      callbackPage: callBackUrl.value,
-      taskId: infoParams.value.taskId
+  const handlePostWorkerProtocolSign = () => {
+    uni.showLoading({ title: '请求中...' });
+    const { sourceType, orderDetailId, taskId, invitationCodeId } =
+      infoParams.value;
+    const idMap = {
+      [PROTOCOL_TYPE.ORDER_DETAIL]: orderDetailId,
+      [PROTOCOL_TYPE.TASK]: taskId,
+      [PROTOCOL_TYPE.INVITATION_CODE]: invitationCodeId
     };
-    getInvitationProtocolSignUrlForTask(params)
+    const params = {
+      callbackPage: callbackPage.value,
+      id: idMap[sourceType],
+      sourceType
+    };
+    postWorkerProtocolSign(params)
       .then(res => {
         signUrl.value = res;
       })
-      .catch(err => {
-        handleErrBack(err);
-      });
-  };
-  // 邀请码进入已实名
-  const handleGetCodeSignUrl = () => {
-    const params = {
-      callbackPage: callBackUrl.value,
-      codeId: infoParams.value.invitationCodeId
-    };
-    getInvitationProtocolSignUrlForCode(params)
-      .then(res => {
-        signUrl.value = res;
+      .finally(() => {
+        uni.hideLoading();
       })
       .catch(err => {
         handleErrBack(err);
@@ -52,54 +50,34 @@ export const useHandlerCode = ({ infoParams, signUrl }) => {
   };
   // 申请任务进入未实名进入流程
   const handleApplyTask = () => {
-    const { taskId } = infoParams.value;
-    applyTask(taskId).then(res => {
-      const current = dealStepCurrent(res);
-      // TODO 税局三方对接
-      if (current === 1) {
-        const params = {
-          callbackPage: callBackUrl.value,
-          taskId: taskId
-        };
-        getInvitationProtocolSignUrlForTask(params)
-          .then(res => {
-            signUrl.value = res;
-          })
-          .catch(err => {
-            handleErrBack(err);
-          });
+    applyTask(infoParams.value).then(res => {
+      current.value = dealStepCurrent(res);
+      if (current.value === 1) {
+        handlePostWorkerProtocolSign();
       } else {
-        console.log('进入活体认证');
+        uni.showToast({
+          title: '申请成功',
+          icon: 'none'
+        });
+        uni.reLaunch({ url: '/pages/portal/index' });
       }
     });
   };
   //邀请码进入未实名进入流程
   const handleGetInvitationCodeScan = () => {
-    const { invitationCodeId } = infoParams.value;
+    const invitationCodeId = getUserCodeID();
     getInvitationCodeScan(invitationCodeId).then(res => {
-      const current = dealStepCurrent(res);
-      // TODO 税局三方对接
-      if (current === 1) {
-        const params = {
-          callbackPage: callBackUrl.value,
-          codeId: invitationCodeId
-        };
-        getInvitationProtocolSignUrlForCode(params)
-          .then(res => {
-            signUrl.value = res;
-          })
-          .catch(err => {
-            handleErrBack(err);
-          });
+      current.value = dealStepCurrent(res);
+      if (current.value === 1) {
+        handlePostWorkerProtocolSign();
       } else {
-        console.log('进入活体认证');
+        uni.reLaunch({ url: '/pages/portal/index' });
       }
     });
   };
   return {
-    handleGetTaskSignUrl,
-    handleGetCodeSignUrl,
     handleApplyTask,
-    handleGetInvitationCodeScan
+    handleGetInvitationCodeScan,
+    handlePostWorkerProtocolSign
   };
 };

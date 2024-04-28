@@ -28,15 +28,16 @@
           class="hx-bg-white hx-h-[44px] !hx-flex-none"
           clearable
           placeholder="输入手机号"
+          type="number"
         />
       </ProFormItem>
-
       <ProFormItem prop="captcha">
         <ProInput
           v-model="formData.captcha"
           class="hx-bg-white hx-h-[44px] !hx-flex-none"
           clearable
           placeholder="输入验证码"
+          type="number"
         >
           <template #suffix>
             <view class="hx-w-[84px] hx-flex hx-items-center">
@@ -78,7 +79,7 @@
       class="login-with-wechat hx-mt-[24px]"
       hover-start-time="50000"
       open-type="getPhoneNumber"
-      @getphonenumber="loginUnderWeChatAuth"
+      @getphonenumber="weChatAuthLogin"
     >
       <text
         class="hx-text-[15px] hx-font-[400] hx-leading-[24px] hx-text-text-color-tip"
@@ -90,14 +91,13 @@
 </template>
 
 <script lang="ts" setup>
+import { debounce } from 'lodash-es';
 import { ref, shallowRef } from 'vue';
 
-import { loginUnderWeChatAuth } from './utils/weChat';
+import { mobileLogin, weChatAuthLogin } from './login';
 
-import { loginWithSms } from '@/api/fe/wechat';
 import { sms } from '@/api/system/sms';
-import { useUserStore } from '@/pinia/modules/user';
-import { loginJumpPage } from '@/utils/switchTab';
+import { mobileValidator } from '@/utils/formValidator';
 
 const proFormRef = shallowRef();
 const formData = ref({
@@ -105,12 +105,18 @@ const formData = ref({
   captcha: ''
 });
 const formRules = {
-  mobile: {
-    type: 'string',
-    required: true,
-    message: '请输入手机号',
-    trigger: ['blur', 'change']
-  },
+  mobile: [
+    {
+      type: 'string',
+      required: true,
+      message: '请输入手机号',
+      trigger: ['blur', 'change']
+    },
+    {
+      validator: mobileValidator,
+      message: '手机号码错误'
+    }
+  ],
   captcha: {
     type: 'string',
     required: true,
@@ -122,39 +128,29 @@ const formRules = {
 const captchaIsValid = shallowRef(false);
 
 /* 获取验证码 */
-const fetchCaptcha = () => {
+const fetchCaptcha = debounce(() => {
   const { mobile } = formData.value;
+  const param = { mobile, type: 'fe_login' };
+
   if (!mobile) return uni.showToast({ title: '请输入手机号码', icon: 'none' });
 
-  const param = { mobile, type: 'fe_login' };
   sms(param).then(() => {
     uni.showToast({ title: '验证码获取成功', icon: 'none' });
     captchaIsValid.value = true;
   });
-};
+}, 500);
 
 /* 验证码过期 */
 const handleFinish = () => {
   captchaIsValid.value = false;
 };
 
-const { setToken, fetchUserInfo } = useUserStore();
 /* 调用登录接口 */
-const fetchMobileLogin = () => {
-  proFormRef.value.validate().then((valid: boolean) => {
-    if (valid) {
-      const { mobile, captcha } = formData.value;
-      const param = { mobile, smsCode: captcha };
-      uni.showLoading({ title: '登录中...' });
-      loginWithSms(param)
-        .then(res => {
-          setToken(res.token);
-          fetchUserInfo();
-          loginJumpPage();
-        })
-        .finally(uni.hideLoading);
-    }
-  });
+const fetchMobileLogin = async () => {
+  await proFormRef.value.validate();
+  const { mobile, captcha } = formData.value;
+  const param = { mobile, smsCode: captcha };
+  mobileLogin(param);
 };
 </script>
 

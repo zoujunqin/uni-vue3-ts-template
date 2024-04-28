@@ -51,6 +51,8 @@
     v-model="areaList"
     @close="resetConditionActive"
     @confirm="reload"
+    cancelText="重置"
+    @cancel="handlePickerCancel"
   />
 </template>
 
@@ -80,6 +82,7 @@ const {
   conditionList,
   conditionActive,
   resetConditionActive,
+  handlePickerCancel,
 
   navToTaskDetail
 } = useHandler();

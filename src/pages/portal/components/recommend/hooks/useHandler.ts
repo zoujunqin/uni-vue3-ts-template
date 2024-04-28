@@ -6,6 +6,7 @@ import TaskTypeDropDownPopup from '../components/TaskTypeDropDownPopup.vue';
 import { ITask } from '@/api/fe/wechat/task_center';
 import ProAreaPicker from '@/components/ProAreaPicker/ProAreaPicker.vue';
 import ProScrollList from '@/components/ProScrollList/ProScrollList.vue';
+import { PROTOCOL_TYPE } from '@/constant/taskDetail';
 
 const TASK_TYPE = 'taskType';
 const AREA = 'area';
@@ -36,6 +37,10 @@ export const useHandler = () => {
   ];
   const conditionActive = shallowRef<ConditionActive>(null);
   const resetConditionActive = () => (conditionActive.value = null);
+  const handlePickerCancel = () => {
+    areaList.value = [];
+    reload();
+  };
   watch(conditionActive, (newVal: ConditionActive, oldVal: ConditionActive) => {
     for (const item of conditionList) {
       newVal === item.name && item.ref.value?.open();
@@ -71,8 +76,12 @@ export const useHandler = () => {
 
   /* 跳转到任务详情 */
   const navToTaskDetail = (row: ITask) => {
+    const params = {
+      taskId: row.taskId,
+      sourceType: PROTOCOL_TYPE.TASK
+    };
     uni.navigateTo({
-      url: `/pagesTask/taskDetail/index?id=${row.taskId}&status=${false}`
+      url: `/pagesTask/taskDetail/index?params=${JSON.stringify(params)}`
     });
   };
 
@@ -102,6 +111,7 @@ export const useHandler = () => {
     conditionActive,
     handleTaskTypePopupChange,
     resetConditionActive,
+    handlePickerCancel,
 
     navToTaskDetail
   };

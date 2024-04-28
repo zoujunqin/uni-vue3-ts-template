@@ -43,8 +43,8 @@ export const getPersonalCenterInsurance = () => {
 };
 
 /** 获取我的合同 */
-export const getPersonalCenterContract = (params: unknown) => {
-  return http.request('get', `${baseApi}/contract`, { params });
+export const getPersonalCenterContract = () => {
+  return http.request('get', `${baseApi}/contract`);
 };
 
 /** 获取收入明细列表 */

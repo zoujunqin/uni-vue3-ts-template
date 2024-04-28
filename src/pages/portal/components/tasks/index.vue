@@ -46,13 +46,8 @@ import { getHandledTaskInfo } from './utils/handleDataStruct';
 
 import { useTabLinkSwiper } from '@/hooks/useTabLinkSwiper';
 
-const {
-  tabIndex,
-  swiperIndex,
-  handleTabChange,
-  handleSwiperChange,
-  resetIndex
-} = useTabLinkSwiper();
+const { tabIndex, swiperIndex, handleTabChange, handleSwiperChange } =
+  useTabLinkSwiper();
 
 const {
   proScrollListRef,
@@ -65,7 +60,6 @@ const {
 } = useHandler();
 
 onPullDownRefresh(() => {
-  resetIndex();
   proPageHeaderRef.value?.clearInput();
   handleInputConfirm('', tabIndex.value);
   uni.stopPullDownRefresh();

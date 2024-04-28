@@ -8,13 +8,13 @@ export const getHandledTaskInfo = (row: ITask) => {
     costTypeName,
     taskTypeName,
     taskName,
-    taskContent
+    taskDescription
   } = row;
   return {
     ...row,
     cost: hyphenAB(taskSalaryMin, taskSalaryMax) + costTypeName,
     title: taskName,
-    desc: taskContent,
+    desc: taskDescription,
     tag: taskTypeName
   };
 };

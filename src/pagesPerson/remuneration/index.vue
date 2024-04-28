@@ -154,22 +154,28 @@ const handleLookDetails = (id: string) => {
 </script>
 
 <style scoped lang="scss">
+:deep(.pro-navbar) {
+  background-color: #fff;
+}
+
 .remuneration-container {
   .remuneration-title {
-    color: var(--hx-text-color-main);
-    font-size: 18px;
-    font-weight: 600;
     width: 220px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--hx-text-color-main);
   }
+
   .remuneration-text {
-    color: var(--hx-text-color);
-    font-size: 14px;
     margin-top: 8px;
+    font-size: 14px;
+    color: var(--hx-text-color);
   }
+
   .remuneration-money {
-    color: var(--hx-text-color-theme);
     font-size: 18px;
     font-weight: bold;
+    color: var(--hx-text-color-theme);
   }
 }
 </style>

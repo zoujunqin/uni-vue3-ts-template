@@ -28,19 +28,22 @@ export const { APPLY_STATUS, APPLY_STATUS_MAP, APPLY_STATUS_LIST } =
   defineConstants(
     [
       {
-        label: '待处理',
+        label: '申述中',
         value: 'to_be_processed',
-        className: 'warning-fixed-tip'
+        className: 'warning-fixed-tip',
+        textColor: 'warning-text-color'
       },
       {
         label: '通过',
         value: 'passed',
-        className: ''
+        className: '',
+        textColor: 'passed-text-color'
       },
       {
         label: '驳回',
         value: 'reject',
-        className: 'error-fixed-tip'
+        className: 'error-fixed-tip',
+        textColor: 'error-text-color'
       }
     ] as const,
     'APPLY_STATUS',
@@ -80,5 +83,25 @@ export const { YES_NO_TYPE, YES_NO_TYPE_MAP, YES_NO_TYPE_LIST } =
       }
     ] as const,
     'YES_NO_TYPE',
+    'value'
+  );
+//协议签署类型
+export const { PROTOCOL_TYPE, PROTOCOL_TYPE_MAP, PROTOCOL_TYPE_LIST } =
+  defineConstants(
+    [
+      {
+        label: '邀请码',
+        value: 'invitation_code'
+      },
+      {
+        label: '订单详情',
+        value: 'order_detail'
+      },
+      {
+        label: '任务',
+        value: 'task'
+      }
+    ] as const,
+    'PROTOCOL_TYPE',
     'value'
   );

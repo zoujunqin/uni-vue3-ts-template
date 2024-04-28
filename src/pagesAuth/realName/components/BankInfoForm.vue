@@ -17,6 +17,15 @@
         label-width="250rpx"
       >
         <ProInput
+          v-if="item.valueType === 'text'"
+          class="!hx-pr-0"
+          v-model="data[item.fieldCode]"
+          input-align="right"
+          :placeholder="item?.labelName"
+        />
+        <ProInput
+          v-if="item.valueType === 'number'"
+          type="number"
           class="!hx-pr-0"
           v-model="data[item.fieldCode]"
           input-align="right"
@@ -48,6 +57,7 @@
           <ProInput
             class="!hx-pr-0"
             v-model="code"
+            type="number"
             placeholder="请输入验证码"
             input-align="right"
           />
@@ -58,6 +68,7 @@
 </template>
 
 <script setup lang="ts">
+import { debounce } from 'lodash-es';
 import { ref, shallowRef } from 'vue';
 
 import { sms } from '@/api/system/sms';
@@ -86,7 +97,7 @@ const data = useVModel(props, 'modelValue', undefined, {
 });
 
 const captchaIsValid = shallowRef(false);
-const handleGetCaptcha = () => {
+const handleGetCaptcha = debounce(() => {
   const { mobile } = data.value;
   if (!mobile) return uni.showToast({ title: '请输入手机号码', icon: 'none' });
   const param = { mobile, type: 'normal' };
@@ -94,7 +105,7 @@ const handleGetCaptcha = () => {
     uni.showToast({ title: '验证码获取成功', icon: 'none' });
     captchaIsValid.value = true;
   });
-};
+}, 500);
 const handleFinish = () => {
   captchaIsValid.value = false;
 };

@@ -47,7 +47,6 @@ onMounted(() => {
   handleGetPersonalCenterBankCard();
 });
 onPullDownRefresh(() => {
-  uni.startPullDownRefresh();
   handleGetPersonalCenterBankCard();
 });
 const handleGetPersonalCenterBankCard = () => {
@@ -58,4 +57,8 @@ const handleGetPersonalCenterBankCard = () => {
 };
 </script>
 
-<style></style>
+<style scoped lang="scss">
+:deep(.pro-navbar) {
+  background-color: #fff;
+}
+</style>
