@@ -10,13 +10,7 @@ onLaunch(option => {
   uni.getSystemInfo().then(data => {
     useSystemStore().setSystemInfo(data);
   });
-  const { setUserCodeID } = useUserStore();
-  if (option.query.scene) {
-    setUserCodeID(option.query.scene);
-    uni.redirectTo({
-      url: '/pages/login/index'
-    });
-  } else {
+  if (!option?.query?.scene) {
     useUserStore().getToken() && switchFirstTab();
   }
 });

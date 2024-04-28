@@ -15,43 +15,43 @@ export const switchFirstTab = () => {
 
 export const loginJumpPage = () => {
   const { getUserCodeID } = useUserStore();
-
-  handleGetArea();
   const codeId = getUserCodeID();
   if (codeId === '-1') {
     switchFirstTab();
   } else {
-    getInvitationCodeScan(codeId)
-      .then(res => {
-        const current = dealStepCurrent(res);
-        if (current === -1) {
-          switchFirstTab();
-        } else {
-          const taskQueryParams = {
-            invitationCodeId: codeId,
-            current: current,
-            sourceType: PROTOCOL_TYPE.INVITATION_CODE
-          };
-          uni.reLaunch({
-            url: `/pagesAuth/realName/index?taskQueryParams=${JSON.stringify(
-              taskQueryParams
-            )}`
-          });
-        }
-      })
-      .catch(err => {
-        setTimeout(() => {
-          uni.showToast({
-            title: err.response.data.message,
-            duration: 3000,
-            icon: 'none'
-          });
-        }, 1000);
-        switchFirstTab();
-      });
+    handleGetInvitationCodeScan(codeId);
   }
 };
-
+export const handleGetInvitationCodeScan = codeId => {
+  getInvitationCodeScan(codeId)
+    .then(res => {
+      const current = dealStepCurrent(res);
+      if (current === -1) {
+        switchFirstTab();
+      } else {
+        const taskQueryParams = {
+          invitationCodeId: codeId,
+          current: current,
+          sourceType: PROTOCOL_TYPE.INVITATION_CODE
+        };
+        uni.reLaunch({
+          url: `/pagesAuth/realName/index?taskQueryParams=${JSON.stringify(
+            taskQueryParams
+          )}`
+        });
+      }
+    })
+    .catch(err => {
+      setTimeout(() => {
+        uni.showToast({
+          title: err.response.data.message,
+          duration: 3000,
+          icon: 'none'
+        });
+      }, 1000);
+      switchFirstTab();
+    });
+};
 export const handleGetArea = () => {
   getAreaTreeProvinceCityDistrict().then(res => {
     setArea(JSON.stringify(res));

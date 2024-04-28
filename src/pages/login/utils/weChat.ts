@@ -1,6 +1,6 @@
 import { loginWithWeChat } from '@/api/fe/wechat';
 import { useUserStore } from '@/pinia/modules/user';
-import { loginJumpPage } from '@/utils/switchTab';
+import { loginJumpPage, handleGetArea } from '@/utils/switchTab';
 
 export interface IPhoneNumberResult {
   iv: string;
@@ -19,6 +19,7 @@ export const loginUnderWeChatAuth = (res: IPhoneNumberResult) => {
       .then(res => {
         setToken(res.token);
         fetchUserInfo();
+        handleGetArea();
         loginJumpPage();
       })
       .finally(() => {
