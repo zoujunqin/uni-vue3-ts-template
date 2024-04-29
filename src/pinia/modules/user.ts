@@ -30,12 +30,12 @@ export const useUserStore = defineStore('user', () => {
   };
 
   // 扫码登录用户二维码id
-  const userCodeID = shallowRef<string | null>();
+  const userCodeID = shallowRef<string | null>(null);
   const setUserCodeID = (code: string) => {
     userCodeID.value = code;
   };
   const getUserCodeID = () => {
-    return userCodeID.value || '-1';
+    return userCodeID.value;
   };
 
   // token

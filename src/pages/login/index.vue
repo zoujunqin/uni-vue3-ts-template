@@ -21,7 +21,7 @@
       type="success"
       @click="validate"
     >
-      <text> 微信授权登录 </text>
+      <text class="hx-text-[15px]"> 微信授权登录 </text>
     </ProButton>
     <ProButton
       :class="[!valid && '!hx-hidden']"
@@ -31,7 +31,7 @@
       type="success"
       @getphonenumber="weChatAuthLogin"
     >
-      <text> 微信授权登录 </text>
+      <text class="hx-text-[15px]"> 微信授权登录 </text>
     </ProButton>
 
     <ProButton
@@ -39,7 +39,7 @@
       type="primary"
       @tap="navToMobileLogin"
     >
-      <text> 手机号快捷登录 </text>
+      <text class="hx-text-[15px]"> 手机号快捷登录 </text>
     </ProButton>
 
     <view class="hx-mt-[24px] hx-flex hx-items-center hx-justify-center">
@@ -159,9 +159,5 @@ const closeTooltip = () => {
 
 :deep(.uv-tooltip__wrapper__popup__indicator) {
   background-color: unset !important;
-}
-
-:deep(.uv-button) {
-  height: 100% !important;
 }
 </style>

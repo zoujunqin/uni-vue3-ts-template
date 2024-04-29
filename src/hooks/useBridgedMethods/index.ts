@@ -6,15 +6,14 @@ export const useBridgedMethods = <T extends ReadonlyArray<string>>(
 ) => {
   const bridgedMethods = methods.reduce(
     (result, method) => {
-      const [keyword, methodName] = method.split(' ');
-
-      if (keyword === 'async') {
+      if (method.startsWith('async ')) {
+        const methodName = method.replace('async ', '');
         result[methodName] = async (...args: unknown[]) => {
-          return componentInstance.value[methodName](...args);
+          return await componentInstance.value[methodName](...args);
         };
       } else {
-        result[methodName] = (...args: unknown[]) => {
-          return componentInstance.value[methodName](...args);
+        result[method] = (...args: unknown[]) => {
+          return componentInstance.value[method as string](...args);
         };
       }
 

@@ -32,7 +32,7 @@ function callback(res) {
 
   const codeId = getUserCodeID();
   if (!codeId) {
-    uni.redirectTo({ url: '/pages/portal/index' });
+    uni.reLaunch({ url: '/pages/portal/index' });
   } else {
     sceneCodeMap[codeId]?.();
   }

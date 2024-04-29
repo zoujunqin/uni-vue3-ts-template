@@ -71,7 +71,7 @@
     </ProForm>
 
     <ProButton class="hx-mt-[40px]" type="primary" @click="fetchMobileLogin">
-      立即登录
+      <text class="hx-text-[15px]">立即登录</text>
     </ProButton>
 
     <ProButton

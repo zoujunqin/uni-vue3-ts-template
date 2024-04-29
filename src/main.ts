@@ -2,11 +2,14 @@ import { createSSRApp } from 'vue';
 
 import App from './App.vue';
 import { setupPinia } from './pinia';
-import Mixin from './utils/mixin';
+
+import { shareMixin } from '@/mixins/share';
 
 export function createApp() {
   const app = createSSRApp(App);
+
+  app.mixin(shareMixin);
   setupPinia(app);
-  app.mixin(Mixin);
+
   return { app };
 }

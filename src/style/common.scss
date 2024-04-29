@@ -80,10 +80,9 @@ page {
   }
 }
 
-/* --------------------------- 覆盖组件样式 ------------------------------ */
+// 覆盖 uv 样式
 
-/* pro-count-down */
-.pro-count-down > text {
+.uv-count-down > text {
   color: var(--hx-color-primary);
 }
 
@@ -95,8 +94,4 @@ page {
 
 .uv-steps .uv-steps-item .uv-steps-item__wrapper {
   background-color: transparent;
-}
-
-.uv-button {
-  height: 48px !important;
 }

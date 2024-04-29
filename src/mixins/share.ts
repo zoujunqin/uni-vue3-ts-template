@@ -1,4 +1,4 @@
-const shareMethod = {
+export const shareMixin = {
   // 分享到微信好友功能
   onShareAppMessage() {
     return {
@@ -8,5 +8,3 @@ const shareMethod = {
     };
   }
 };
-
-export default shareMethod;
