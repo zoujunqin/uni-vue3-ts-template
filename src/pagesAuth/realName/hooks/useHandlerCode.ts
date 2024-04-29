@@ -24,7 +24,7 @@ export const useHandlerCode = ({ infoParams, signUrl, current }) => {
     });
   };
   const handlePostWorkerProtocolSign = () => {
-    uni.showLoading({ title: '请求中...' });
+    uni.showLoading();
     const { sourceType, orderDetailId, taskId, invitationCodeId } =
       infoParams.value;
     const idMap = {
@@ -40,9 +40,6 @@ export const useHandlerCode = ({ infoParams, signUrl, current }) => {
     postWorkerProtocolSign(params)
       .then(res => {
         signUrl.value = res;
-      })
-      .finally(() => {
-        uni.hideLoading();
       })
       .catch(err => {
         handleErrBack(err);

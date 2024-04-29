@@ -12,18 +12,18 @@ export interface IPhoneNumberResult {
 const { setToken, fetchUserInfo, getUserCodeID } = useUserStore();
 export const weChatAuthLogin = (res: IPhoneNumberResult) => {
   const { code, errMsg } = res;
+  const okMsg = 'getPhoneNumber:ok';
+  const denyMsg = 'getPhoneNumber:fail user deny';
 
-  if (errMsg === 'getPhoneNumber:ok') {
-    uni.showLoading({ title: '登录中...' });
-    weChatLogin({ code }).then(callback).finally(uni.hideLoading);
-  } else if (errMsg === 'getPhoneNumber:fail user deny') {
+  if (errMsg === okMsg) {
+    weChatLogin({ code }).then(callback);
+  } else if (errMsg === denyMsg) {
     uni.showToast({ title: '您已取消授权', icon: 'none' });
   }
 };
 
 export const mobileLogin = (param: ISmsParam) => {
-  uni.showLoading({ title: '登录中...' });
-  smsLogin(param).then(callback).finally(uni.hideLoading);
+  smsLogin(param).then(callback);
 };
 
 function callback(res) {

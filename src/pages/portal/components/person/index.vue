@@ -27,10 +27,9 @@
       />
     </template>
   </ProModal>
-  <ProPage
+  <view
     :style="`background-image: url(${import('@http/person/nav-bar-bg.svg')});`"
     class="page-pt-with-navbar hx-pl-[8px] hx-pr-[8px] hx-bg-[length:100%_432px] hx-bg-no-repeat"
-    show-tabbar
   >
     <view
       class="hx-flex hx-items-center hx-justify-between hx-pl-[8px] hx-pr-[8px] hx-mt-[12px] hx-mb-[20px]"
@@ -115,7 +114,7 @@
         @click="verticalListItemMap[item.type]?.handler"
       />
     </view>
-  </ProPage>
+  </view>
 </template>
 
 <script lang="ts" setup>

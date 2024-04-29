@@ -1,16 +1,16 @@
 <template>
   <ProPage
-    show-navbar
-    navbar-title="合同记录"
     class="myContract-container page-pt-with-navbar hx-bg-white hx-flex hx-flex-col"
+    navbar-title="合同记录"
+    show-navbar
   >
     <view class="hx-bg-bg-color-grey hx-flex-1 hx-pt-[10px]">
       <template v-if="dataList.length > 0">
         <view
           v-for="item in dataList"
           :key="item.id"
-          @click="handleLookContract(item)"
           class="hx-flex hx-items-center hx-justify-between hx-bg-white hx-p-[16px_12px] hx-mb-[10px]"
+          @click="handleLookContract(item)"
         >
           <view class="hx-flex hx-flex-col">
             <p class="contract-title">{{ item?.protocolName }}</p>
@@ -35,13 +35,14 @@
   </view>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onPullDownRefresh } from '@dcloudio/uni-app';
 import { onMounted, ref } from 'vue';
 
 import { getPersonalCenterContract } from '@/api/fe/wechat/personal_center';
 import { getWorkerProtocolByIdViewUrl } from '@/api/fe/wechat/worker';
 import { useOss } from '@/hooks/useOss';
+
 const { getPreviewUrl } = useOss();
 const dataList = ref<Array<any>>([]);
 const pathUrl = ref('');
@@ -71,7 +72,7 @@ const handleLookContract = val => {
 };
 const handleGetPath = async () => {
   const pdfUrl = await getPreviewUrl(path.value);
-  uni.showLoading({ title: '加载中...' });
+  uni.showLoading();
   uni.downloadFile({
     url: pdfUrl,
     success: downloadResult => {
@@ -81,9 +82,7 @@ const handleGetPath = async () => {
       });
     },
     fail: () => {
-      setTimeout(() => {
-        uni.showToast({ title: '加载失败', icon: 'none' });
-      }, 30);
+      uni.showToast({ title: '加载失败', icon: 'none' });
     },
     complete: () => {
       uni.hideLoading();
@@ -92,7 +91,7 @@ const handleGetPath = async () => {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 :deep(.pro-navbar) {
   background-color: #fff;
 }

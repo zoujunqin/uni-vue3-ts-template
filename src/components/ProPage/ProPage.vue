@@ -2,13 +2,15 @@
   <view class="hx-h-full hx-overflow-auto">
     <ProNavbar
       v-if="showNavbar"
+      :showBack="showBack"
       :style="navbarStyle"
       :text="navbarTitle"
-      :showBack="showBack"
       @navBack="handleNavBack"
     />
 
     <slot />
+
+    <ProLoading />
   </view>
 </template>
 <script lang="ts" setup>

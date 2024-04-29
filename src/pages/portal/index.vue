@@ -1,52 +1,52 @@
 <template>
-  <ProNavbar :text="activeTabbar.text" />
-  <view class="hx-h-full hx-flex hx-flex-col">
-    <Tasks
-      v-if="tabbarList[0].load"
-      v-show="tabbarList[0].visible"
-      class="hx-flex-1"
-    />
+  <ProPage show-navbar>
+    <view class="hx-h-full hx-flex hx-flex-col">
+      <Tasks
+        v-if="tabbarList[0].load"
+        v-show="tabbarList[0].visible"
+        class="hx-flex-1"
+      />
 
-    <Recommend
-      v-if="tabbarList[1].load"
-      v-show="tabbarList[1].visible"
-      class="hx-flex-1"
-    />
+      <Recommend
+        v-if="tabbarList[1].load"
+        v-show="tabbarList[1].visible"
+        class="hx-flex-1"
+      />
 
-    <Person
-      v-if="tabbarList[2].load"
-      v-show="tabbarList[2].visible"
-      class="hx-flex-1"
-    />
+      <Person
+        v-if="tabbarList[2].load"
+        v-show="tabbarList[2].visible"
+        class="hx-flex-1"
+      />
 
-    <ProTabbar
-      v-model="tabbarValue"
-      :fixed="false"
-      :placeholder="false"
-      class="portal-tabbar"
-      @change="tabbarChange"
-    >
-      <ProTabbarItem
-        v-for="item in tabbarList"
-        :key="item.name"
-        :name="item.name"
-        :text="item.text"
+      <ProTabbar
+        v-model="tabbarValue"
+        :fixed="false"
+        :placeholder="false"
+        class="portal-tabbar"
+        @change="tabbarChange"
       >
-        <template #active-icon>
-          <image :src="item.activeIcon" class="hx-h-[24px] hx-w-[24px]" />
-        </template>
+        <ProTabbarItem
+          v-for="item in tabbarList"
+          :key="item.name"
+          :name="item.name"
+          :text="item.text"
+        >
+          <template #active-icon>
+            <image :src="item.activeIcon" class="hx-h-[24px] hx-w-[24px]" />
+          </template>
 
-        <template #inactive-icon>
-          <image :src="item.icon" class="hx-h-[24px] hx-w-[24px]" />
-        </template>
-      </ProTabbarItem>
-    </ProTabbar>
-  </view>
+          <template #inactive-icon>
+            <image :src="item.icon" class="hx-h-[24px] hx-w-[24px]" />
+          </template>
+        </ProTabbarItem>
+      </ProTabbar>
+    </view>
+  </ProPage>
 </template>
 
 <script lang="ts" setup>
 import { ref, shallowRef } from 'vue';
-import { computed } from 'vue-demi';
 
 import Person from '@/pages/portal/components/person/index.vue';
 import Recommend from '@/pages/portal/components/recommend/index.vue';
@@ -79,9 +79,6 @@ const tabbarList = ref([
     visible: false
   }
 ]);
-const activeTabbar = computed(() => {
-  return tabbarList.value.find(item => item.name === tabbarValue.value);
-});
 
 const tabbarChange = name => {
   tabbarList.value.forEach(item => {

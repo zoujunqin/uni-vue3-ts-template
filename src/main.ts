@@ -2,6 +2,7 @@ import { createSSRApp } from 'vue';
 
 import App from './App.vue';
 import { setupPinia } from './pinia';
+import '@/framework/rewiteFn';
 
 import { shareMixin } from '@/mixins/share';
 
