@@ -1,20 +1,29 @@
 <template>
   <uv-steps-item v-bind="$attrs">
-    <template v-if="$slots.icon" #icon>
+    <template #icon>
       <slot name="icon" />
     </template>
 
-    <template v-if="$slots.title" #title>
-      <slot name="title" />
-    </template>
+    <!--  FIXME: 动态判断插槽有问题  -->
+    <view v-if="$attrs.title">
+      <template #title>
+        <slot name="title" />
+      </template>
+    </view>
 
-    <template v-if="$slots.desc" #desc>
-      <slot name="desc" />
-    </template>
+    <view v-if="$attrs.desc">
+      <template #desc>
+        <slot name="desc" />
+      </template>
+    </view>
   </uv-steps-item>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { useSlots } from 'vue';
+
+console.log(useSlots());
+</script>
 
 <script lang="ts">
 export default {

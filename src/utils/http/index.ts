@@ -18,7 +18,7 @@ import {
 import { useUserStore } from '@/pinia/modules/user';
 import { getUUID } from '@/utils';
 import { decryptString, encryptString } from '@/utils/crypto';
-import { formatToken } from '@/utils/user';
+import { formatToken } from '@/utils/storage';
 
 const httpNoMessage = ['/fe/wechat/worker_protocol/sign'];
 

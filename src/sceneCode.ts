@@ -1,15 +1,11 @@
 import { getInvitationCodeScan } from '@/api/fe/wechat/invitation_code';
 import { PROTOCOL_TYPE } from '@/constant/taskDetail';
-import { useUserStore } from '@/pinia/modules/user';
 import { dealStepCurrent } from '@/utils';
 
 export const sceneCodeMap = {
   // 扫小程序码, 进入实名认证页面
   '1783764846524317698': async option => {
-    const { setUserCodeID } = useUserStore();
     const { scene: codeId } = option;
-
-    setUserCodeID(codeId);
 
     try {
       const res = await getInvitationCodeScan(codeId);

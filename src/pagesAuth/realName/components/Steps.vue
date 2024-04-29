@@ -3,10 +3,10 @@
     <ProStepsItem v-for="(item, index) in stepItems" :key="index" :title="item">
       <template #icon>
         <ProIcon
-          class="step-active-icon"
           v-if="index < Number(current)"
-          name="checkmark-circle-fill"
+          class="step-active-icon"
           color="primary"
+          name="checkmark-circle-fill"
           size="40rpx"
         />
         <view
@@ -15,15 +15,15 @@
         />
         <image
           v-else
-          class="hx-w-[16px] hx-h-[16px]"
           :src="import('@http/real-name/step-inactive-icon.png')"
+          class="hx-w-[16px] hx-h-[16px]"
         />
       </template>
     </ProStepsItem>
   </ProSteps>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 defineProps({
   current: {
     type: [Number, String],

@@ -7,20 +7,20 @@ export const useUserStore = defineStore(
   'user',
   () => {
     const userInfo = shallowRef<{
-      workerName: string;
-      mobile: string;
-      izRealNameAuthenticationName: string;
-      izBindBankCard: string;
-      totalAmount: number;
+      workerName?: string;
+      mobile?: string;
+      izRealNameAuthenticationName?: string;
+      izBindBankCard?: string;
+      totalAmount?: number;
     }>();
     const setUserInfo = async () => {
-      userInfo.value = await getPersonInfo();
+      userInfo.value = (await getPersonInfo()) || {};
     };
 
     // 扫码登录用户二维码 id
-    const userCodeID = shallowRef<string | null>(null);
-    const setUserCodeID = (code: string) => {
-      userCodeID.value = code;
+    const userCodeOption = shallowRef<{ scene: string } | null>(null);
+    const setUserCodeOption = (option: { scene: string }) => {
+      userCodeOption.value = option;
     };
 
     const token = shallowRef('');
@@ -35,8 +35,8 @@ export const useUserStore = defineStore(
       token,
       setToken,
 
-      userCodeID,
-      setUserCodeID
+      userCodeOption,
+      setUserCodeOption
     };
   },
   {

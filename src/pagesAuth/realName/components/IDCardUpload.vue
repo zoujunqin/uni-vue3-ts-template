@@ -29,7 +29,7 @@
 <script lang="ts" setup>
 import { getOcrIdCard } from '@/api/system/ocr';
 import { useVModel } from '@/hooks/useVModel';
-import { setIdCardMessage } from '@/utils/user';
+import { setIdCardMessage } from '@/utils/storage';
 
 const props = defineProps({
   modelValue: {

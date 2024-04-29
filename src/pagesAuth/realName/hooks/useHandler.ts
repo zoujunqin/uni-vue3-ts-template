@@ -17,7 +17,7 @@ import {
   getRealName,
   setIdCardMessage,
   setRealName
-} from '@/utils/user';
+} from '@/utils/storage';
 
 export const useHandler = ({
   infoParams,
@@ -183,8 +183,10 @@ export const useHandler = ({
     realNameAuth(params).then(() => {
       handlePageBack();
 
-      const { userCodeID } = useUserStore();
-      if (!userCodeID) {
+      const {
+        userCodeOption: { scene }
+      } = useUserStore();
+      if (!scene) {
         handleApplyTask();
       } else {
         handleGetInvitationCodeScan();

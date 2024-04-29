@@ -153,7 +153,7 @@ const panelItemList = computed(() => {
       type: panelItemMap.bankCard.type,
       icon: import('@http/person/bank-card-icon.svg'),
       name: '银行卡',
-      badge: `${BANK_STATUS_MAP[userInfo.value?.izBindBankCard].label}`
+      badge: `${BANK_STATUS_MAP[userInfo.value?.izBindBankCard]?.label}`
     },
     {
       type: panelItemMap.contract.type,

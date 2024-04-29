@@ -8,9 +8,11 @@ import { useUserStore } from '@/pinia/modules/user';
 import { sceneCodeMap } from '@/sceneCode';
 
 onLoad(option => {
+  const { setUserCodeOption } = useUserStore();
   const hasToken = !!useUserStore().token;
   // 这里的 scene 不是小程序的场景值, 是自定义的
   const { scene } = option;
+  setUserCodeOption(option);
 
   if (hasToken && scene) {
     sceneCodeMap[scene]?.(option);

@@ -60,9 +60,11 @@ export const useHandlerCode = ({ infoParams, signUrl, current }) => {
   };
   //邀请码进入未实名进入流程
   const handleGetInvitationCodeScan = () => {
-    const { userCodeID } = useUserStore();
+    const {
+      userCodeOption: { scene }
+    } = useUserStore();
 
-    getInvitationCodeScan(userCodeID).then(res => {
+    getInvitationCodeScan(scene).then(res => {
       current.value = dealStepCurrent(res);
       if (current.value === 1) {
         handlePostWorkerProtocolSign();

@@ -9,7 +9,7 @@ export const useAreaStore = defineStore(
     const areaData = shallowRef([]);
 
     const setAreaData = async () => {
-      areaData.value = await getAreaTreeProvinceCityDistrict();
+      areaData.value = (await getAreaTreeProvinceCityDistrict()) || [];
     };
 
     return { areaData, setAreaData };
