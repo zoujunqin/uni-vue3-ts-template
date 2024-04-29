@@ -1,5 +1,5 @@
 <template>
-  <ProPage show-navbar>
+  <ProPage :navbar-title="activeTabbar.text" show-navbar>
     <view class="hx-h-full hx-flex hx-flex-col">
       <Tasks
         v-if="tabbarList[0].load"
@@ -47,7 +47,7 @@
 
 <script lang="ts" setup>
 import { onShow } from '@dcloudio/uni-app';
-import { ref, shallowRef } from 'vue';
+import { computed, ref, shallowRef } from 'vue';
 
 import Person from '@/pages/portal/components/person/index.vue';
 import Recommend from '@/pages/portal/components/recommend/index.vue';
@@ -81,6 +81,10 @@ const tabbarList = ref([
     visible: false
   }
 ]);
+
+const activeTabbar = computed(() => {
+  return tabbarList.value.find(item => item.name === tabbarValue.value);
+});
 
 const tabbarChange = name => {
   tabbarList.value.forEach(item => {
