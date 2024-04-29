@@ -5,15 +5,19 @@ import { useHandlerCode } from './useHandlerCode';
 
 import {
   getRealNameInfo,
-  realNameAuth,
-  postAppealSubmit
+  postAppealSubmit,
+  realNameAuth
 } from '@/api/fe/wechat/worker';
 import { getOcrIdCard } from '@/api/system/ocr';
 import { APPLY_STATUS, REAL_TYPE, YES_NO_TYPE } from '@/constant/taskDetail';
 import { useOss } from '@/hooks/useOss';
 import { useUserStore } from '@/pinia/modules/user';
-import { getRealName, setRealName } from '@/utils/user';
-import { getIdCardMessage, setIdCardMessage } from '@/utils/user';
+import {
+  getIdCardMessage,
+  getRealName,
+  setIdCardMessage,
+  setRealName
+} from '@/utils/user';
 
 export const useHandler = ({
   infoParams,
@@ -35,7 +39,6 @@ export const useHandler = ({
   const explainModalRef = ref();
   const localFormData = getRealName() || {};
   const localBool = Object.keys(localFormData).length > 0;
-  const { getUserCodeID } = useUserStore();
 
   const handleGetRealNameInfo = () => {
     getRealNameInfo(infoParams.value).then(async res => {
@@ -179,7 +182,9 @@ export const useHandler = ({
     };
     realNameAuth(params).then(() => {
       handlePageBack();
-      if (getUserCodeID() === '-1') {
+
+      const { userCodeID } = useUserStore();
+      if (!userCodeID) {
         handleApplyTask();
       } else {
         handleGetInvitationCodeScan();

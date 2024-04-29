@@ -15,9 +15,10 @@ import {
   RequestMethods
 } from './types.d';
 
+import { useUserStore } from '@/pinia/modules/user';
 import { getUUID } from '@/utils';
 import { decryptString, encryptString } from '@/utils/crypto';
-import { formatToken, getToken, removeToken } from '@/utils/user';
+import { formatToken } from '@/utils/user';
 
 const httpNoMessage = ['/fe/wechat/worker_protocol/sign'];
 
@@ -137,7 +138,7 @@ class PureHttp {
             : requestBodyString;
         }
         const apiUrl = config.url;
-        const authorization = getToken();
+        const authorization = useUserStore().token;
         const randomString = getUUID();
 
         const timestamp = Date.now().toString();
@@ -224,7 +225,7 @@ class PureHttp {
         const loginFailureCodeList = ['401', '40102', '40103', '40104'];
 
         if (loginFailureCodeList.includes(code)) {
-          removeToken();
+          uni.clearStorageSync();
           uni.reLaunch({ url: '/pages/login/index' });
           uni.showToast({
             title: message || '授权过期，请重新登录',

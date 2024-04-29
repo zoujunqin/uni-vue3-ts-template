@@ -13,6 +13,7 @@
       />
     </template>
   </ProModal>
+
   <ProModal
     ref="contactModalRef"
     confirm-button-text="联系我们"
@@ -27,6 +28,7 @@
       />
     </template>
   </ProModal>
+
   <view
     :style="`background-image: url(${import('@http/person/nav-bar-bg.svg')});`"
     class="page-pt-with-navbar hx-pl-[8px] hx-pr-[8px] hx-bg-[length:100%_432px] hx-bg-no-repeat"
@@ -45,12 +47,12 @@
           <text
             class="hx-mb-[4px] hx-text-color-title hx-text-font-size-title hx-font-[600] hx-leading-[28px]"
           >
-            {{ token ? personalData?.workerName : '未登录' }}
+            {{ token ? userInfo?.workerName : '未登录' }}
           </text>
           <text
             class="hx-text-text-color hx-text-font-size-base hx-leading-[20px] hx-font-[500]"
           >
-            {{ token ? personalData?.mobile : '点击登录，查看更多信息' }}
+            {{ token ? userInfo?.mobile : '点击登录，查看更多信息' }}
           </text>
         </view>
       </view>
@@ -118,12 +120,16 @@
 </template>
 
 <script lang="ts" setup>
+import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
 
 import VerticalListItem from './components/VerticalListItem.vue';
 import { useHandler } from './hooks/useHandler';
 
 import { BANK_STATUS_MAP } from '@/constant/personCenter';
+import { useUserStore } from '@/pinia/modules/user';
+
+const { token, userInfo } = storeToRefs(useUserStore());
 
 const {
   contactModalRef,
@@ -132,23 +138,22 @@ const {
   handleLogoutConfirm,
   handleContactConfirm,
   panelItemMap,
-  verticalListItemMap,
-  personalData,
-  token
+  verticalListItemMap
 } = useHandler();
+
 const panelItemList = computed(() => {
   return [
     {
       type: panelItemMap.personInfo.type,
       icon: import('@http/person/info-icon.svg'),
       name: '个人信息',
-      badge: `${personalData.value?.izRealNameAuthenticationName}`
+      badge: `${userInfo.value?.izRealNameAuthenticationName}`
     },
     {
       type: panelItemMap.bankCard.type,
       icon: import('@http/person/bank-card-icon.svg'),
       name: '银行卡',
-      badge: `${BANK_STATUS_MAP[personalData.value?.izBindBankCard].label}`
+      badge: `${BANK_STATUS_MAP[userInfo.value?.izBindBankCard].label}`
     },
     {
       type: panelItemMap.contract.type,
@@ -172,7 +177,7 @@ const firstVerticalList = computed(() => {
       type: verticalListItemMap.remuneration.type,
       icon: import('@http/person/remuneration-icon.svg'),
       desc: '累计报酬(元)',
-      text: `¥${personalData.value?.totalAmount || 0}`
+      text: `¥${userInfo.value?.totalAmount || 0}`
     },
     {
       index: 1,

@@ -46,11 +46,13 @@
 </template>
 
 <script lang="ts" setup>
+import { onShow } from '@dcloudio/uni-app';
 import { ref, shallowRef } from 'vue';
 
 import Person from '@/pages/portal/components/person/index.vue';
 import Recommend from '@/pages/portal/components/recommend/index.vue';
 import Tasks from '@/pages/portal/components/tasks/index.vue';
+import { useUserStore } from '@/pinia/modules/user';
 
 const tabbarValue = shallowRef('tasks');
 const tabbarList = ref([
@@ -89,6 +91,8 @@ const tabbarChange = name => {
     item.visible = flag;
   });
 };
+
+onShow(useUserStore().setUserInfo);
 </script>
 
 <style>

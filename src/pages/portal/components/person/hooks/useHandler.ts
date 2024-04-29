@@ -1,20 +1,8 @@
-import { onShow } from '@dcloudio/uni-app';
-import { onMounted, shallowRef } from 'vue';
-
-import { getPersonCenter } from '@/api/fe/wechat/personal_center';
-import { getToken } from '@/utils/user';
+import { shallowRef } from 'vue';
 
 export const useHandler = () => {
   const contactModalRef = shallowRef();
   const logoutModalRef = shallowRef();
-  const token = shallowRef();
-  const personalData = shallowRef({
-    izBindBankCard: '',
-    izRealNameAuthenticationName: '',
-    mobile: '',
-    totalAmount: null,
-    workerName: ''
-  });
 
   const panelItemMap = {
     personInfo: {
@@ -76,20 +64,6 @@ export const useHandler = () => {
     }
   } as const;
 
-  onMounted(() => {
-    getTokenValue();
-  });
-  onShow(() => {
-    handleGetPersonCenter();
-  });
-  const handleGetPersonCenter = () => {
-    getPersonCenter().then(res => {
-      personalData.value = res;
-    });
-  };
-  const getTokenValue = () => {
-    token.value = getToken();
-  };
   const logout = () => {
     logoutModalRef.value.open();
   };
@@ -114,8 +88,6 @@ export const useHandler = () => {
     contactModalRef,
     logoutModalRef,
     panelItemMap,
-    verticalListItemMap,
-    personalData,
-    token
+    verticalListItemMap
   };
 };

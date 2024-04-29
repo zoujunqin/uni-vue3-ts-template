@@ -1,13 +1,13 @@
 <template>
   <view
-    class="hx-page-header page-pt-with-navbar hx-z-[1] hx-h-[176px] hx-bg-[length:100%_100%] hx-bg-no-repeat"
     :style="headerStyle"
+    class="hx-page-header page-pt-with-navbar hx-z-[1] hx-h-[176px] hx-bg-[length:100%_100%] hx-bg-no-repeat"
   >
     <slot>
       <view
-        @click="handleInputClick"
         v-if="showInput"
         class="hx-pl-[16px] hx-pr-[16px] hx-mb-[4px]"
+        @click="handleInputClick"
       >
         <ProInput
           v-model="inputSearchValue"
@@ -32,16 +32,16 @@
     <slot name="bottom">
       <view v-if="showTabList" class="hx-p-[2px_4px]">
         <ProTabs
-          v-bind="{ ...$attrs, ...tabBridgedEvents }"
           :current="tabIndex"
           :list="tabList"
+          v-bind="{ ...$attrs, ...tabBridgedEvents }"
         />
       </view>
     </slot>
   </view>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, shallowRef } from 'vue';
 
 import { pageHeaderProps } from './props';

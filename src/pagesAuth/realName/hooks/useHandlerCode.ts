@@ -8,8 +8,6 @@ import { useUserStore } from '@/pinia/modules/user';
 import { dealStepCurrent } from '@/utils';
 
 export const useHandlerCode = ({ infoParams, signUrl, current }) => {
-  const { getUserCodeID } = useUserStore();
-
   const callbackPage = ref('http://47.96.112.174:8003/');
   const handleErrBack = err => {
     uni.showModal({
@@ -62,8 +60,9 @@ export const useHandlerCode = ({ infoParams, signUrl, current }) => {
   };
   //邀请码进入未实名进入流程
   const handleGetInvitationCodeScan = () => {
-    const invitationCodeId = getUserCodeID();
-    getInvitationCodeScan(invitationCodeId).then(res => {
+    const { userCodeID } = useUserStore();
+
+    getInvitationCodeScan(userCodeID).then(res => {
       current.value = dealStepCurrent(res);
       if (current.value === 1) {
         handlePostWorkerProtocolSign();

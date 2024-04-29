@@ -39,8 +39,6 @@
   </view>
 </template>
 <script lang="ts" setup>
-import { onPullDownRefresh } from '@dcloudio/uni-app';
-
 import { useHandler } from './hooks/useHandler';
 import { getHandledTaskInfo } from './utils/handleDataStruct';
 
@@ -58,12 +56,6 @@ const {
   handleInputConfirm,
   getExtendParams
 } = useHandler();
-
-onPullDownRefresh(() => {
-  proPageHeaderRef.value?.clearInput();
-  handleInputConfirm('', tabIndex.value);
-  uni.stopPullDownRefresh();
-});
 </script>
 
 <script lang="ts">

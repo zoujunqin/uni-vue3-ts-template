@@ -1,4 +1,5 @@
 import { ISmsParam, smsLogin, weChatLogin } from '@/api/fe/wechat';
+import { useAreaStore } from '@/pinia/modules/area';
 import { useUserStore } from '@/pinia/modules/user';
 import { sceneCodeMap } from '@/sceneCode';
 
@@ -9,7 +10,9 @@ export interface IPhoneNumberResult {
   code: string;
 }
 
-const { setToken, fetchUserInfo, getUserCodeID } = useUserStore();
+const { setToken, setUserInfo } = useUserStore();
+const { setAreaData } = useAreaStore();
+
 export const weChatAuthLogin = (res: IPhoneNumberResult) => {
   const { code, errMsg } = res;
   const okMsg = 'getPhoneNumber:ok';
@@ -28,12 +31,13 @@ export const mobileLogin = (param: ISmsParam) => {
 
 function callback(res) {
   setToken(res.token);
-  fetchUserInfo();
+  setUserInfo();
+  setAreaData();
 
-  const codeId = getUserCodeID();
-  if (!codeId) {
+  const { userCodeID } = useUserStore();
+  if (!userCodeID) {
     uni.reLaunch({ url: '/pages/portal/index' });
   } else {
-    sceneCodeMap[codeId]?.();
+    sceneCodeMap[userCodeID]?.();
   }
 }

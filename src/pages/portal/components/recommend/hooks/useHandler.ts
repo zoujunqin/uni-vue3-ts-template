@@ -1,4 +1,3 @@
-import { onPullDownRefresh } from '@dcloudio/uni-app';
 import { shallowRef, watch } from 'vue';
 
 import TaskTypeDropDownPopup from '../components/TaskTypeDropDownPopup.vue';
@@ -84,14 +83,6 @@ export const useHandler = () => {
       url: `/pagesTask/taskDetail/index?params=${JSON.stringify(params)}`
     });
   };
-
-  onPullDownRefresh(() => {
-    taskTypeList.value = [];
-    areaList.value = [];
-    proPageHeaderRef.value.clearInput();
-    handleInputConfirm('');
-    uni.stopPullDownRefresh();
-  });
 
   return {
     proScrollListRef,
