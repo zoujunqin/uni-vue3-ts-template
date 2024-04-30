@@ -19,11 +19,7 @@
   </uv-steps-item>
 </template>
 
-<script lang="ts" setup>
-import { useSlots } from 'vue';
-
-console.log(useSlots());
-</script>
+<script lang="ts" setup></script>
 
 <script lang="ts">
 export default {

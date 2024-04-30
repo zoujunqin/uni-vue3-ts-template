@@ -14,11 +14,11 @@
   </view>
 </template>
 
-<script setup lang="ts">
-import { PropType, computed } from 'vue';
+<script lang="ts" setup>
+import { computed, PropType } from 'vue';
 
 import { ITaskDetail } from '@/api/fe/wechat/task';
-import { hyphenAB } from '@/utils/processingText';
+import { hyphenAB } from '@/utils/text';
 
 const props = defineProps({
   data: {

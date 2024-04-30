@@ -49,15 +49,15 @@
   <ProAreaPicker
     ref="proAreaPickerRef"
     v-model="areaList"
-    @close="resetConditionActive"
-    @confirm="reload"
     cancelText="重置"
     @cancel="handlePickerCancel"
+    @close="resetConditionActive"
+    @confirm="reload"
   />
 </template>
 
 <script lang="ts" setup>
-import { getHandledTaskInfo } from '../tasks/utils/handleDataStruct';
+import { getHandledTaskInfo } from '../../utils/handleDataStruct';
 
 import TaskTypeDropDownPopup from './components/TaskTypeDropDownPopup.vue';
 import { useHandler } from './hooks/useHandler';

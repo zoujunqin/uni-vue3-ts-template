@@ -1,3 +1,4 @@
+// 需要到小程序平台配置本地 ip 白名单
 const chalk = require('chalk');
 const ci = require('miniprogram-ci');
 

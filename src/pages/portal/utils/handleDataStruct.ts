@@ -1,5 +1,5 @@
 import { ITask } from '@/api/fe/wechat/task_center';
-import { hyphenAB } from '@/utils/processingText';
+import { hyphenAB } from '@/utils/text';
 
 export const getHandledTaskInfo = (row: ITask) => {
   const {

@@ -39,8 +39,9 @@
   </view>
 </template>
 <script lang="ts" setup>
+import { getHandledTaskInfo } from '../../utils/handleDataStruct';
+
 import { useHandler } from './hooks/useHandler';
-import { getHandledTaskInfo } from './utils/handleDataStruct';
 
 import { useTabLinkSwiper } from '@/hooks/useTabLinkSwiper';
 

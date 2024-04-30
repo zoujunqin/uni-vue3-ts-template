@@ -1,23 +1,23 @@
 <template>
   <ProPage
-    show-navbar
-    navbar-title="收入明细"
     class="remuneration-container hx-bg-white hx-flex hx-flex-col"
+    navbar-title="收入明细"
+    show-navbar
   >
     <ProPageHeader
       ref="proPageHeaderRef"
+      v-model="inputSearchValue"
+      :readonly="true"
       class="hx-relative hx-z-[11]"
       placeholder="请选择企业"
-      :readonly="true"
-      v-model="inputSearchValue"
       @inputClick="handleInputClick"
     >
       <template #bottom>
         <ProCondition
           v-model="conditionStatus"
-          @change="openDate"
-          name="remunerationType"
           :title="monthDate"
+          name="remunerationType"
+          @change="openDate"
         />
       </template>
     </ProPageHeader>
@@ -26,8 +26,8 @@
         <view
           v-for="item in dataList"
           :key="item.commissionDetailId"
-          @click="handleLookDetails(item?.commissionDetailId)"
           class="hx-flex hx-items-center hx-justify-between hx-bg-white hx-p-[16px_12px] hx-mb-[10px]"
+          @click="handleLookDetails(item?.commissionDetailId)"
         >
           <p class="remuneration-title hx-truncate">
             {{ item?.customerName }}
@@ -53,29 +53,30 @@
       ref="datetimePickerRef"
       v-model="monthDatetime"
       mode="year-month"
-      @confirm="handleGetPersonalCenterIncomeList"
       @close="handleCloseDate"
+      @confirm="handleGetPersonalCenterIncomeList"
     />
     <ProPicker
       ref="proPickerRef"
-      keyName="customerName"
       :columns="pickerValue"
       cancelText="重置"
-      @confirm="handlePickerConfirm"
+      keyName="customerName"
       @cancel="handlePickerCancel"
+      @confirm="handlePickerConfirm"
     />
   </ProPage>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onPullDownRefresh } from '@dcloudio/uni-app';
 import { computed, nextTick, onMounted, ref } from 'vue';
 
 import {
-  getPersonalCenterIncomeList,
-  getPersonalCenterIncomeCustomer
+  getPersonalCenterIncomeCustomer,
+  getPersonalCenterIncomeList
 } from '@/api/fe/wechat/personal_center';
-import { handleDealTimestamp } from '@/utils/processingText';
+import { handleDealTimestamp } from '@/utils/date';
+
 const formData = ref({
   salaryIssueMonth: '',
   customerId: ''
@@ -153,7 +154,7 @@ const handleLookDetails = (id: string) => {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 :deep(.pro-navbar) {
   background-color: #fff;
 }

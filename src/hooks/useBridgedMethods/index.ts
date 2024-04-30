@@ -8,11 +8,11 @@ export const useBridgedMethods = <T extends ReadonlyArray<string>>(
     (result, method) => {
       if (method.startsWith('async ')) {
         const methodName = method.replace('async ', '');
-        result[methodName] = async (...args: unknown[]) => {
+        result[methodName] = async function (...args: unknown[]) {
           return await componentInstance.value[methodName](...args);
         };
       } else {
-        result[method] = (...args: unknown[]) => {
+        result[method] = function (...args: unknown[]) {
           return componentInstance.value[method as string](...args);
         };
       }

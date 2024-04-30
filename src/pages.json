@@ -90,6 +90,12 @@
       ]
     }
   ],
+  "preloadRule": {
+    "pages/portal/index": {
+      "network": "all",
+      "packages": ["pagesTask", "pagesPerson"]
+    }
+  },
   "globalStyle": {
     "navigationStyle": "custom"
   }
