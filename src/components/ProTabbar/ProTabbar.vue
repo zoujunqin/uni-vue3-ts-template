@@ -25,7 +25,7 @@ const props = defineProps({
 });
 const emit = defineEmits(['update:modelValue', 'change']);
 
-const { ctx, parentInstance } = useNextedCompatible('uv-tabbar');
+const { ctx, parentInstance } = useNextedCompatible();
 
 const value = useVModel(props, 'modelValue', emit);
 
@@ -38,6 +38,8 @@ const tabbarChange = name => {
 
 <script lang="ts">
 export default {
+  // 这里 name 为 uv-tabbar 是为了 uv-tabbar-item 内部的查找机制
+  name: 'uv-tabbar',
   options: { name: 'ProTabbar', virtualHost: true }
 };
 </script>

@@ -1,15 +1,11 @@
 // 为了 uv 某些组件嵌套问题做兼容, eg: uv-checkbox-group, uv-checkbox
 import { getCurrentInstance, onMounted, ref } from 'vue';
 
-export const useNextedCompatible = (name: string) => {
+export const useNextedCompatible = () => {
   const parentInstance = ref();
   const { ctx } = getCurrentInstance();
 
   ctx.children = [];
-  // 这里 name 为 uv-checkbox-group 是为了 uv-checkbox 内部的查找机制
-  ctx.$options = Object.assign(ctx.$options || {}, {
-    name
-  });
 
   // 更新 uv-checkbox 的 parent 为 uv-checkbox-group, 保证执行原有逻辑
   function updateUvCheckboxGroupParent() {

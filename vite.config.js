@@ -39,6 +39,7 @@ const alias = createAlias();
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  mode: 'strict',
   resolve: {
     alias,
     extensions: ['ts', 'js', 'vue', 'nvue', 'css', 'scss']

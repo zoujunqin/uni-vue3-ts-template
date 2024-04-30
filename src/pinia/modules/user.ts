@@ -18,7 +18,7 @@ export const useUserStore = defineStore(
     };
 
     // 扫码登录用户二维码 id
-    const userCodeOption = shallowRef<{ scene: string } | null>(null);
+    const userCodeOption = shallowRef<{ scene?: string }>({});
     const setUserCodeOption = (option: { scene: string }) => {
       userCodeOption.value = option;
     };

@@ -10,7 +10,7 @@ export interface IPhoneNumberResult {
   code: string;
 }
 
-const { setToken } = useUserStore();
+const { setToken, setUserInfo } = useUserStore();
 const { setAreaData } = useAreaStore();
 
 export const weChatAuthLogin = (res: IPhoneNumberResult) => {
@@ -31,6 +31,7 @@ export const mobileLogin = (param: ISmsParam) => {
 
 function callback(res) {
   setToken(res.token);
+  setUserInfo();
   setAreaData();
 
   const { userCodeOption } = useUserStore();

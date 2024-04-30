@@ -12,11 +12,13 @@
 
 import { useNextedCompatible } from '@/hooks/useNextedCompatible';
 
-const { parentInstance } = useNextedCompatible('uv-steps');
+const { parentInstance } = useNextedCompatible();
 </script>
 
 <script lang="ts">
 export default {
+  // 这里 name 为 uv-steps 是为了 uv-steps-item 内部的查找机制
+  name: 'uv-steps',
   options: { name: 'ProSteps', virtualHost: true }
 };
 </script>

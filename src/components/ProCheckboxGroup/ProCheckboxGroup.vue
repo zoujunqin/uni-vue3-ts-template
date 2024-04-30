@@ -4,15 +4,16 @@
     v-model="modelValue"
     v-bind="{ ...$attrs, ...bridgedEvents, value: props.value }"
   >
-    <slot></slot>
+    <slot />
   </uv-checkbox-group>
 </template>
 
 <script lang="ts" setup>
 import { useBridgedEmits } from '../../hooks/useBridgedEmits';
-import { uvEvents } from './events';
-import { useVModel } from '../../hooks/useVModel';
 import { useNextedCompatible } from '../../hooks/useNextedCompatible';
+import { useVModel } from '../../hooks/useVModel';
+
+import { uvEvents } from './events';
 
 const props = defineProps({
   modelValue: {
@@ -30,11 +31,13 @@ const modelValue = useVModel(props, 'modelValue', emit);
 
 const { bridgedEvents } = useBridgedEmits(uvEvents);
 
-const { parentInstance } = useNextedCompatible('uv-checkbox-group');
+const { parentInstance } = useNextedCompatible();
 </script>
 
 <script lang="ts">
 export default {
+  // 这里 name 为 uv-checkbox-group 是为了 uv-checkbox 内部的查找机制
+  name: 'uv-checkbox-group',
   options: { name: 'ProCheckboxGroup', virtualHost: true }
 };
 </script>
