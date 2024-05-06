@@ -1,5 +1,7 @@
 import { shallowRef } from 'vue';
 
+import { clearStore } from '@/pinia/index';
+
 export const useHandler = () => {
   const contactModalRef = shallowRef();
   const logoutModalRef = shallowRef();
@@ -71,6 +73,7 @@ export const useHandler = () => {
   /* 确认退出登录 */
   const handleLogoutConfirm = () => {
     uni.clearStorage();
+    clearStore();
     uni.reLaunch({
       url: '/pages/login/index'
     });

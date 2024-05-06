@@ -8,15 +8,20 @@ import { useUserStore } from '@/pinia/modules/user';
 import { sceneCodeMap } from '@/sceneCode';
 
 onLoad(option => {
-  const { setUserCodeOption } = useUserStore();
+  const { setSceneOption } = useUserStore();
   const hasToken = !!useUserStore().token;
   // 这里的 scene 不是小程序的场景值, 是自定义的
-  const { scene } = option;
-  setUserCodeOption(option);
-
-  if (hasToken && scene) {
-    sceneCodeMap[scene]?.(option);
-  } else if (hasToken && !scene) {
+  const sceneList = decodeURIComponent(option.scene).split('&');
+  const sceneObj = { t: '', c: '' };
+  sceneList.forEach(item => {
+    const keyList = item.split('=');
+    sceneObj[keyList[0]] = keyList[1];
+  });
+  const { t, c } = sceneObj;
+  setSceneOption(sceneObj);
+  if (hasToken && t === '1001') {
+    sceneCodeMap[t]?.(c);
+  } else if (hasToken && !t) {
     uni.redirectTo({
       url: '/pages/portal/index'
     });

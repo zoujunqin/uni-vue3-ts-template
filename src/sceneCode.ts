@@ -4,18 +4,16 @@ import { dealStepCurrent } from '@/utils';
 
 export const sceneCodeMap = {
   // 扫小程序码, 进入实名认证页面
-  '1783764846524317698': async option => {
-    const { scene: codeId } = option;
-
+  '1001': async option => {
     try {
-      const res = await getInvitationCodeScan(codeId);
+      const res = await getInvitationCodeScan(option);
       const current = dealStepCurrent(res);
 
       if (current === -1) {
         uni.redirectTo({ url: '/page/portal/index' });
       } else {
         const taskQueryParams = {
-          invitationCodeId: codeId,
+          invitationCodeId: option,
           current: current,
           sourceType: PROTOCOL_TYPE.INVITATION_CODE
         };

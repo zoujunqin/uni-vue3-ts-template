@@ -184,9 +184,9 @@ export const useHandler = ({
       handlePageBack();
 
       const {
-        userCodeOption: { scene }
+        sceneOption: { c }
       } = useUserStore();
-      if (!scene) {
+      if (!c) {
         handleApplyTask();
       } else {
         handleGetInvitationCodeScan();

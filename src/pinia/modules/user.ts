@@ -18,11 +18,10 @@ export const useUserStore = defineStore(
     };
 
     // 扫码登录用户二维码 id
-    const userCodeOption = shallowRef<{ scene?: string }>({});
-    const setUserCodeOption = (option: { scene: string }) => {
-      userCodeOption.value = option;
+    const sceneOption = shallowRef<{ t?: string; c?: string }>({});
+    const setSceneOption = (option: { t: string; c?: string }) => {
+      sceneOption.value = option;
     };
-
     const token = shallowRef('');
     const setToken = (val: string) => {
       token.value = val;
@@ -35,8 +34,11 @@ export const useUserStore = defineStore(
       token,
       setToken,
 
-      userCodeOption,
-      setUserCodeOption
+      // userCodeOption,
+      // setUserCodeOption,
+
+      sceneOption,
+      setSceneOption
     };
   },
   {

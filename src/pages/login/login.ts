@@ -10,7 +10,7 @@ export interface IPhoneNumberResult {
   code: string;
 }
 
-const { setToken, setUserInfo } = useUserStore();
+const { setToken } = useUserStore();
 const { setAreaData } = useAreaStore();
 
 export const weChatAuthLogin = (res: IPhoneNumberResult) => {
@@ -31,14 +31,13 @@ export const mobileLogin = (param: ISmsParam) => {
 
 function callback(res) {
   setToken(res.token);
-  setUserInfo();
   setAreaData();
 
-  const { userCodeOption } = useUserStore();
-  const { scene } = userCodeOption;
-  if (!scene) {
+  const { sceneOption } = useUserStore();
+  const { t, c } = sceneOption;
+  if (!t) {
     uni.reLaunch({ url: '/pages/portal/index' });
   } else {
-    sceneCodeMap[scene]?.(userCodeOption);
+    sceneCodeMap[t]?.(c);
   }
 }

@@ -14,7 +14,7 @@ export const useHandlerCode = ({ infoParams, signUrl, current }) => {
       title: '提示',
       content: err.response.data.message,
       showCancel: false,
-      success: function (res) {
+      success: res => {
         if (res.confirm) {
           uni.navigateBack();
         }
@@ -61,10 +61,10 @@ export const useHandlerCode = ({ infoParams, signUrl, current }) => {
   //邀请码进入未实名进入流程
   const handleGetInvitationCodeScan = () => {
     const {
-      userCodeOption: { scene }
+      sceneOption: { c }
     } = useUserStore();
 
-    getInvitationCodeScan(scene).then(res => {
+    getInvitationCodeScan(c).then(res => {
       current.value = dealStepCurrent(res);
       if (current.value === 1) {
         handlePostWorkerProtocolSign();
