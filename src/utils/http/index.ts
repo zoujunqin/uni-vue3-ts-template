@@ -22,8 +22,9 @@ import { formatToken } from '@/utils/storage';
 
 const httpNoMessage = ['/fe/wechat/worker_protocol/sign'];
 
-const baseURL = 'http://218.104.230.173:17054'; // 开发环境
+// const baseURL = 'http://218.104.230.173:17054'; // 开发环境
 // const baseURL = 'https://localdev-hro-api.fjhxrl.com'; // 测试环境
+const baseURL = 'https://localtest-hro-api.fjhxrl.com'; // 测试环境
 // const baseURL = 'http://192.168.3.48:8100'; // 林伦
 // const baseURL = 'http://192.168.117.86:8100'; // 大立
 

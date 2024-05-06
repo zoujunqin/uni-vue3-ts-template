@@ -84,8 +84,7 @@ module.exports = {
         'font-size-paragraph': 'var(--hx-font-size-paragraph)'
       },
       height: {
-        'navbar-height': 'var(--hx-navbar-height)',
-        'tabbar-height': 'var(--hx-tabbar-height)'
+        'navbar-height': 'var(--hx-navbar-height)'
       }
     },
     boxShadow: {

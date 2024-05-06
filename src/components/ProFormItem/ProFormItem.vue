@@ -32,6 +32,7 @@ const { parentInstance } = useNextedCompatible();
 export default {
   // 这里 name 为 uv-form-item 是为了 uv-input 以及其他的表单组件内部的查找机制
   name: 'uv-form-item',
+  nameFake: true,
   options: { name: 'ProFormItem', virtualHost: true }
 };
 </script>

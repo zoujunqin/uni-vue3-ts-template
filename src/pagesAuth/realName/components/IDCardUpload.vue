@@ -10,18 +10,18 @@
   <view class="hx-flex hx-flex-col hx-items-center">
     <ProUpload
       v-model="data.idCardFront"
-      :do-after-upload-success="path => handleUploadSuccess(path, 'Front')"
+      :do-after-upload-success="ocrFrontOfCard"
       background-name="front-id-card"
       class="hx-mb-[16px]"
       upload-button-title="点击上传人像面"
-      @remove="handleRemovePath('Front')"
+      @remove="removeFrontOfCard"
     />
     <ProUpload
       v-model="data.idCardReverse"
-      :do-after-upload-success="path => handleUploadSuccess(path, 'Reverse')"
+      :do-after-upload-success="ocrReverseSideOfCard"
       background-name="back-id-card"
       upload-button-title="点击上传国徽面"
-      @remove="handleRemovePath('Reverse')"
+      @remove="removeReverseSideOfCard"
     />
   </view>
 </template>
@@ -41,21 +41,21 @@ const data = useVModel(props, 'modelValue', undefined, {
   passive: true
 });
 
-const handleUploadSuccess = async (previewUrl, type) => {
+const ocr = async imageUrl => {
   const params = {
-    imageUrl: previewUrl,
+    imageUrl,
     needParse: true
   };
+  return await getOcrIdCard(params);
+};
 
+// 身份证正面 ocr 识别
+const ocrFrontOfCard = async previewUrl => {
   try {
-    const res = await getOcrIdCard(params);
-    if (type === 'Front') {
-      if (!res.face) {
-        uni.showToast({ title: '请上传身份证正面图片', icon: 'none' });
-        return;
-      }
+    const { face } = await ocr(previewUrl);
 
-      const { name, idNumber, address } = res.face;
+    if (face) {
+      const { name, idNumber, address } = face;
       data.value.workerName = name;
       data.value.idCardNo = idNumber;
       data.value.domicileAddress = address;
@@ -64,29 +64,44 @@ const handleUploadSuccess = async (previewUrl, type) => {
         name,
         idNumber
       });
-    } else {
-      if (!res.back) {
-        uni.showToast({ title: '请上传身份证反面图片', icon: 'none' });
-        return;
-      }
 
-      const { validPeriodBegin, validPeriodEnd, issueAuthority } = res.back;
+      return true;
+    } else {
+      uni.showToast({ title: '请上传身份证正面图片', icon: 'none' });
+    }
+  } catch {
+    removeFrontOfCard();
+  }
+  return false;
+};
+
+const removeFrontOfCard = () => {
+  data.value.ocrSure.front = false;
+};
+
+// 身份证反面 ocr 识别
+const ocrReverseSideOfCard = async previewUrl => {
+  try {
+    const { back } = await ocr(previewUrl);
+
+    if (back) {
+      const { validPeriodBegin, validPeriodEnd, issueAuthority } = back;
       data.value.credentialStartDate = validPeriodBegin;
       data.value.credentialEndDate = validPeriodEnd;
       data.value.issuingAuthority = issueAuthority;
       data.value.ocrSure.reverse = true;
+      return true;
+    } else {
+      uni.showToast({ title: '请上传身份证反面图片', icon: 'none' });
     }
   } catch {
-    handleRemovePath(type);
+    removeReverseSideOfCard();
   }
+  return false;
 };
 
-const handleRemovePath = type => {
-  if (type === 'Front') {
-    data.value.ocrSure.front = false;
-  } else {
-    data.value.ocrSure.reverse = false;
-  }
+const removeReverseSideOfCard = () => {
+  data.value.ocrSure.reverse = false;
 };
 </script>
 

@@ -33,7 +33,6 @@ import { uploadProps } from './props';
 
 import { useOssUploadImage } from '@/hooks/useOssUploadImage';
 import { useVModel } from '@/hooks/useVModel';
-import { isAsync } from '@/utils/es';
 
 const props = defineProps(uploadProps);
 
@@ -69,18 +68,11 @@ const handleUpload = () => {
       previewPath.value = tempFilePath;
     },
     uploadSuccess: async ({ previewUrl }) => {
-      emit('uploadSuccess', previewUrl);
-
       const { doAfterUploadSuccess } = props;
-      let flag = true;
-
-      if (isAsync(doAfterUploadSuccess)) {
-        flag = await doAfterUploadSuccess(previewUrl);
-      } else {
-        flag = doAfterUploadSuccess(previewUrl);
-      }
+      const flag = await doAfterUploadSuccess(previewUrl);
 
       previewPath.value = flag ? previewUrl : '';
+      emit('uploadSuccess', previewUrl);
     },
     uploadFail: handleRemove
   });

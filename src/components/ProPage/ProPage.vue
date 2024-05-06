@@ -3,7 +3,6 @@
     <ProNavbar
       v-if="showNavbar"
       :showBack="showBack"
-      :style="navbarStyle"
       :text="navbarTitle"
       @navBack="handleNavBack"
     />
@@ -14,17 +13,11 @@
   </view>
 </template>
 <script lang="ts" setup>
-import { computed } from 'vue';
-
-const props = defineProps({
+defineProps({
   showNavbar: Boolean,
   navbarTitle: {
     type: String,
     default: '导航栏'
-  },
-  navbarVisibility: {
-    type: String,
-    default: 'unset'
   },
   showBack: {
     type: Boolean,
@@ -33,11 +26,6 @@ const props = defineProps({
 });
 const emit = defineEmits(['pageBack']);
 
-const navbarStyle = computed(() => {
-  return {
-    visibility: props.navbarVisibility
-  };
-});
 const handleNavBack = () => {
   emit('pageBack');
 };

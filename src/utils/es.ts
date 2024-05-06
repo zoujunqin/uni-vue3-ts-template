@@ -1,8 +1,3 @@
-/* 判断 async 函数 */
-export const isAsync = fn => {
-  return Object.prototype.toString.call(fn) === '[object AsyncFunction]';
-};
-
 export type CloneFn<F, T = F> = (x: F) => T;
 
 export function cloneFnJSON<T>(source: T): T {
