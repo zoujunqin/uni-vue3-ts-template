@@ -1,14 +1,15 @@
+import { TypeCode } from './constant/typeCode';
+
 import { getInvitationCodeScan } from '@/api/fe/wechat/invitation_code';
 import { PROTOCOL_TYPE } from '@/constant/taskDetail';
 import { dealStepCurrent } from '@/utils';
 
 export const sceneCodeMap = {
   // 扫小程序码, 进入实名认证页面
-  '1001': async option => {
+  [TypeCode.INVITE]: async option => {
     try {
       const res = await getInvitationCodeScan(option);
       const current = dealStepCurrent(res);
-
       if (current === -1) {
         uni.redirectTo({ url: '/page/portal/index' });
       } else {

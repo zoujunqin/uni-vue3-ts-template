@@ -4,6 +4,7 @@
 <script lang="ts" setup>
 import { onLoad } from '@dcloudio/uni-app';
 
+import { TypeCode } from '@/constant/typeCode';
 import { useUserStore } from '@/pinia/modules/user';
 import { sceneCodeMap } from '@/sceneCode';
 
@@ -19,7 +20,7 @@ onLoad(option => {
   });
   const { t, c } = sceneObj;
   setSceneOption(sceneObj);
-  if (hasToken && t === '1001') {
+  if (hasToken && t === TypeCode.INVITE) {
     sceneCodeMap[t]?.(c);
   } else if (hasToken && !t) {
     uni.redirectTo({

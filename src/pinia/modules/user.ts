@@ -34,9 +34,6 @@ export const useUserStore = defineStore(
       token,
       setToken,
 
-      // userCodeOption,
-      // setUserCodeOption,
-
       sceneOption,
       setSceneOption
     };

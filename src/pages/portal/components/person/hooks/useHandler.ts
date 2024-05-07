@@ -65,7 +65,6 @@ export const useHandler = () => {
       }
     }
   } as const;
-
   const logout = () => {
     logoutModalRef.value.open();
   };
