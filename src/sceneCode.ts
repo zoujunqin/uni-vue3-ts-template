@@ -11,7 +11,7 @@ export const sceneCodeMap = {
       const res = await getInvitationCodeScan(option);
       const current = dealStepCurrent(res);
       if (current === -1) {
-        uni.redirectTo({ url: '/page/portal/index' });
+        uni.redirectTo({ url: '/pages/portal/index' });
       } else {
         const taskQueryParams = {
           invitationCodeId: option,

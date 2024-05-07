@@ -95,8 +95,9 @@ const tabbarChange = name => {
     item.visible = flag;
   });
 };
-
-onShow(useUserStore().setUserInfo);
+onShow(() => {
+  useUserStore().setUserInfo();
+});
 </script>
 
 <style>
