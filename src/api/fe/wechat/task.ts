@@ -21,9 +21,7 @@ export interface ITaskDetail {
   gender: string;
   genderName: string;
   id: number;
-  imgUrl: string;
   individualContractName: string;
-  individualContractPath: string;
   izAgeRestrict: string;
   province: string;
   provinceCode: number;

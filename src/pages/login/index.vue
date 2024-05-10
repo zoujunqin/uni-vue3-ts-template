@@ -1,8 +1,5 @@
 <template>
-  <view
-    class="login hx-p-[128px_24px_0_24px] hx-h-full hx-flex hx-flex-col"
-    @click="closeTooltip"
-  >
+  <view class="login hx-p-[128px_24px_0_24px] hx-h-full hx-flex hx-flex-col">
     <text
       class="hx-text-[26px] hx-leading-[30px] hx-font-[600] hx-text-color-title"
     >
@@ -43,16 +40,14 @@
     </ProButton>
 
     <view class="hx-mt-[24px] hx-flex hx-items-center hx-justify-center">
-      <ProCheckboxGroup v-model="isAgree" class="!hx-flex-none">
+      <ProCheckboxGroup
+        v-model="isAgree"
+        class="!hx-flex-none hx-relative"
+        @change="handleIsAgreeChange"
+      >
         <ProCheckbox name="true" shape="circle" size="mini" />
+        <ProTooltipPer ref="proTooltipPerRef" text="请阅读并勾选用户协议" />
       </ProCheckboxGroup>
-      <ProTooltip
-        ref="proTooltipRef"
-        :buttons="['请阅读并勾选用户协议']"
-        :show-copy="false"
-        bg-color="transparent"
-        class="hx-pointer-events-none"
-      />
       <text
         class="hx-text-font-size-base hx-leading-[24px] hx-text-text-color-tip"
       >
@@ -91,12 +86,12 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, shallowRef } from 'vue';
+import { computed, ref, shallowRef } from 'vue';
 
 import { weChatAuthLogin } from './login';
 
 const isAgree = shallowRef([]);
-const proTooltipRef = shallowRef();
+const proTooltipPerRef = ref();
 const valid = computed(() => isAgree.value.length === 1);
 
 const proPopupRef = shallowRef();
@@ -112,52 +107,13 @@ const navToMobileLogin = () => {
 };
 
 const validate = () => {
-  if (!valid.value) proTooltipRef.value.open();
+  if (!valid.value) proTooltipPerRef.value.open();
+
   return valid.value;
 };
-
-const closeTooltip = () => {
-  !valid.value && proTooltipRef.value.close();
+const handleIsAgreeChange = () => {
+  proTooltipPerRef.value.close();
 };
 </script>
 
-<style lang="scss" scoped>
-.login {
-  background:
-    linear-gradient(
-      180deg,
-      #fff 0%,
-      #eef8ff 46.47%,
-      #e8efff 73.17%,
-      #e7e6fd 100%
-    );
-}
-
-:deep(.uv-tooltip__wrapper__popup__list) {
-  align-items: unset !important;
-  justify-content: center;
-  width: 154px;
-  height: 42px;
-  background-color: unset !important;
-  background-image: url($http + '/login/login-tip-bg.png');
-  background-repeat: no-repeat;
-  background-position: -7px -5px;
-  background-size: 169px 57px;
-}
-
-:deep(.uv-tooltip__wrapper__popup__list__btn) {
-  display: unset !important;
-  padding: 8px 0 0 !important;
-}
-
-:deep(.uv-tooltip__wrapper__popup__list__btn__text) {
-  font-size: 13px !important;
-  font-weight: 400 !important;
-  line-height: 14px !important;
-  color: var(--hx-text-color) !important;
-}
-
-:deep(.uv-tooltip__wrapper__popup__indicator) {
-  background-color: unset !important;
-}
-</style>
+<style lang="scss" scoped></style>
