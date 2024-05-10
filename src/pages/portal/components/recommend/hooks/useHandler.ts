@@ -3,7 +3,6 @@ import { shallowRef, watch } from 'vue';
 import TaskTypeDropDownPopup from '../components/TaskTypeDropDownPopup.vue';
 
 import { ITask } from '@/api/fe/wechat/task_center';
-import ProAreaPicker from '@/components/ProAreaPicker/ProAreaPicker.vue';
 import ProScrollList from '@/components/ProScrollList/ProScrollList.vue';
 import { PROTOCOL_TYPE } from '@/constant/taskDetail';
 
@@ -17,29 +16,16 @@ export const useHandler = () => {
   const taskTypeDropDownPopupRef =
     shallowRef<InstanceType<typeof TaskTypeDropDownPopup>>();
 
-  /* 地区选择 */
-  const areaList = shallowRef<Array<number>>([]);
-  const proAreaPickerRef = shallowRef<InstanceType<typeof ProAreaPicker>>();
-
   /* 条件 */
   const conditionList = [
     {
       name: TASK_TYPE,
       title: '任务类型',
       ref: taskTypeDropDownPopupRef
-    },
-    {
-      name: AREA,
-      title: '地点',
-      ref: proAreaPickerRef
     }
   ];
   const conditionActive = shallowRef<ConditionActive>(null);
   const resetConditionActive = () => (conditionActive.value = null);
-  const handlePickerCancel = () => {
-    areaList.value = [];
-    reload();
-  };
   watch(conditionActive, (newVal: ConditionActive, oldVal: ConditionActive) => {
     for (const item of conditionList) {
       newVal === item.name && item.ref.value?.open();
@@ -68,7 +54,6 @@ export const useHandler = () => {
   const getExtendParams = () => {
     return {
       taskName: confirmedInputSearchValue.value,
-      areaCode: areaList.value[2],
       taskTypeIds: taskTypeList.value.join(',')
     };
   };
@@ -95,14 +80,10 @@ export const useHandler = () => {
     taskTypeList,
     taskTypeDropDownPopupRef,
 
-    areaList,
-    proAreaPickerRef,
-
     conditionList,
     conditionActive,
     handleTaskTypePopupChange,
     resetConditionActive,
-    handlePickerCancel,
 
     navToTaskDetail
   };

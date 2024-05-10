@@ -44,16 +44,6 @@
     @confirm="reload"
     @popup-change="handleTaskTypePopupChange"
   />
-
-  <!-- 地点选择 -->
-  <ProAreaPicker
-    ref="proAreaPickerRef"
-    v-model="areaList"
-    cancelText="重置"
-    @cancel="handlePickerCancel"
-    @close="resetConditionActive"
-    @confirm="reload"
-  />
 </template>
 
 <script lang="ts" setup>
@@ -76,14 +66,9 @@ const {
   taskTypeDropDownPopupRef,
   handleTaskTypePopupChange,
 
-  areaList,
-  proAreaPickerRef,
-
   conditionList,
   conditionActive,
   resetConditionActive,
-  handlePickerCancel,
-
   navToTaskDetail
 } = useHandler();
 </script>
