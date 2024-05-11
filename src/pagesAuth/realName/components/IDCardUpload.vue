@@ -50,9 +50,9 @@ const ocr = async imageUrl => {
 };
 
 // 身份证正面 ocr 识别
-const ocrFrontOfCard = async previewUrl => {
+const ocrFrontOfCard = async ({ httpUrl }) => {
   try {
-    const { face } = await ocr(previewUrl);
+    const { face } = await ocr(httpUrl);
 
     if (face) {
       const { name, idNumber, address } = face;
@@ -80,9 +80,9 @@ const removeFrontOfCard = () => {
 };
 
 // 身份证反面 ocr 识别
-const ocrReverseSideOfCard = async previewUrl => {
+const ocrReverseSideOfCard = async ({ httpUrl }) => {
   try {
-    const { back } = await ocr(previewUrl);
+    const { back } = await ocr(httpUrl);
 
     if (back) {
       const { validPeriodBegin, validPeriodEnd, issueAuthority } = back;

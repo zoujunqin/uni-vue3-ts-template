@@ -5,7 +5,7 @@
     class="pro-upload hx-relative hx-flex hx-justify-center hx-items-center hx-w-[250px] hx-h-[158px] hx-rounded-[6px] hx-bg-contain hx-bg-no-repeat"
   >
     <view
-      v-if="previewPath"
+      v-if="filePath"
       class="pro-remove-button hx-absolute hx-top-0 hx-right-0 hx-rounded-[0_6px_0_8px] hx-p-[2px] hx-flex hx-items-center hx-justify-center"
     >
       <ProIcon
@@ -18,7 +18,7 @@
 
     <ProLoadingIcon v-if="loading" mode="circle" show />
     <ProUploadButton
-      v-if="!loading && !previewPath"
+      v-if="!loading && !filePath"
       :title="uploadButtonTitle"
       @tap.stop="handleUpload"
     />
@@ -26,22 +26,36 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, shallowRef, watch } from 'vue';
 
 import ProUploadButton from './components/ProUploadButton.vue';
 import { uploadProps } from './props';
 
+import { useOss } from '@/hooks/useOss';
 import { useOssUploadImage } from '@/hooks/useOssUploadImage';
 import { useVModel } from '@/hooks/useVModel';
 
 const props = defineProps(uploadProps);
+const emit = defineEmits(['uploadSuccess', 'remove']);
 
 const { loading, upload } = useOssUploadImage({ count: 1 });
 
-const previewPath = useVModel(props, 'modelValue', undefined, {
+const filePath = useVModel(props, 'modelValue', undefined, {
   passive: true
 });
-const emit = defineEmits(['uploadSuccess', 'remove']);
+
+const previewUrl = shallowRef('');
+watch(
+  filePath,
+  async path => {
+    if (!path) {
+      previewUrl.value = '';
+    } else {
+      previewUrl.value = await useOss().getPreviewUrl(path);
+    }
+  },
+  { immediate: true }
+);
 
 const backgroundImageClass = computed(
   () => props.backgroundName + '-background'
@@ -49,15 +63,15 @@ const backgroundImageClass = computed(
 
 const style = computed(() => {
   return (
-    previewPath.value && {
-      backgroundImage: `url(${previewPath.value})`,
+    previewUrl.value && {
+      backgroundImage: `url(${previewUrl.value})`,
       backgroundSize: 'cover'
     }
   );
 });
 
 const handleRemove = () => {
-  previewPath.value = '';
+  filePath.value = '';
   emit('remove');
 };
 
@@ -65,14 +79,14 @@ const handleUpload = () => {
   upload({
     chooseSuccess: res => {
       const { tempFilePath } = res.tempFiles[0];
-      previewPath.value = tempFilePath;
+      previewUrl.value = tempFilePath;
     },
-    uploadSuccess: async ({ previewUrl }) => {
+    uploadSuccess: async ({ filePath: ossPath, previewUrl: httpUrl }) => {
       const { doAfterUploadSuccess } = props;
-      const flag = await doAfterUploadSuccess(previewUrl);
+      const flag = await doAfterUploadSuccess({ ossPath, httpUrl });
 
-      previewPath.value = flag ? previewUrl : '';
-      emit('uploadSuccess', previewUrl);
+      filePath.value = flag ? ossPath : '';
+      emit('uploadSuccess', ossPath);
     },
     uploadFail: handleRemove
   });
