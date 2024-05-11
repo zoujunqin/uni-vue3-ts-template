@@ -39,7 +39,12 @@
       class="hx-mr-[10px]"
       type="info"
     />
-    <ProTags :text="data.taskTypeName" class="hx-mr-[10px]" type="info" />
+    <ProTags
+      v-if="data.taskTypeName"
+      :text="data.taskTypeName"
+      class="hx-mr-[10px]"
+      type="info"
+    />
   </view>
 </template>
 

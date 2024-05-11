@@ -7,7 +7,7 @@
       人员要求：
       {{ getPersonRequire }}
     </view>
-    <view class="hx-mb-[10px]">
+    <view class="hx-mb-[10px]" v-if="data.endDate">
       任务时间： {{ hyphenAB(data.beginDate, data.endDate) }}
     </view>
     <view v-if="data.description"> 任务需求： {{ data.description }} </view>

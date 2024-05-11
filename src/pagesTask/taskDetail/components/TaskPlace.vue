@@ -1,11 +1,13 @@
 <template>
-  <view class="section-title hx-mb-[10px]"> 任务地点 </view>
-  <map
-    class="hx-h-[186px] hx-w-full hx-mb-[16px]"
-    :latitude="latitude"
-    :longitude="longitude"
-    :markers="markers"
-  />
+  <view v-if="data.address">
+    <view class="section-title hx-mb-[10px]"> 任务地点 </view>
+    <map
+      class="hx-h-[186px] hx-w-full hx-mb-[16px]"
+      :latitude="latitude"
+      :longitude="longitude"
+      :markers="markers"
+    />
+  </view>
 </template>
 
 <script setup lang="ts">
