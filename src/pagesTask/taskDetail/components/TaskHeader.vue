@@ -15,37 +15,26 @@
     <text
       class="hx-mt-[3px] hx-flex-1 hx-text-right hx-text-color-primary hx-text-[20px] hx-font-[600] hx-leading-[30px]"
     >
-      {{ hyphenAB(data.salaryMin, data.salaryMax) + data.costTypeName || '' }}
+      {{ hyphenAB(data.salaryMin, data.salaryMax) }}
+      {{ data.costTypeName || '' }}
     </text>
   </view>
 
-  <view class="hx-flex hx-items-center hx-mb-[16px]">
-    <view class="hx-flex hx-items-center hx-mr-[16px]">
-      <image
-        class="hx-w-[16px] hx-h-[16px] hx-mr-[4px] hx-mb-[1px]"
-        src="@/static/task-detail/position.png"
-      />
-      <text
-        class="hx-text-[14px] hx-font-[400] hx-leading-[14px] hx-text-text-color"
-      >
-        {{ hyphenAB(data.city, data.area, ' ') }}
-      </text>
-    </view>
-    <view class="hx-flex hx-items-center">
-      <image
-        class="hx-w-[16px] hx-h-[16px] hx-mr-[4px] hx-mb-[1px]"
-        src="@/static/task-detail/education.png"
-      />
-      <text
-        class="hx-text-[14px] hx-font-[400] hx-leading-[14px] hx-text-text-color"
-      >
-        {{ data.educationName }}
-      </text>
-    </view>
+  <view class="hx-flex hx-items-center hx-mb-[16px]" v-if="data.educationName">
+    <image
+      class="hx-w-[16px] hx-h-[16px] hx-mr-[4px] hx-mb-[1px]"
+      src="@/static/task-detail/education.png"
+    />
+    <text
+      class="hx-text-[14px] hx-font-[400] hx-leading-[14px] hx-text-text-color"
+    >
+      {{ data.educationName }}
+    </text>
   </view>
 
   <view class="hx-flex hx-items-center">
     <ProTags
+      v-if="data.taskTypeCategoryName"
       :text="data.taskTypeCategoryName"
       class="hx-mr-[10px]"
       type="info"

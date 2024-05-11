@@ -10,7 +10,7 @@
     <view class="hx-mb-[10px]">
       任务时间： {{ hyphenAB(data.beginDate, data.endDate) }}
     </view>
-    <view> 任务需求： {{ data.description }} </view>
+    <view v-if="data.description"> 任务需求： {{ data.description }} </view>
   </view>
 </template>
 
@@ -36,7 +36,7 @@ const getPersonRequire = computed(() => {
         ? hyphenAB(data.ageMin, data.ageMax, '-')
         : getUnLimitText(data.ageMin)
     }` +
-    `、${getUnLimitText(data.educationName)}`
+    `、学历${getUnLimitText(data.educationName)}`
   );
 });
 
