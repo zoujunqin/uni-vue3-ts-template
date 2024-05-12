@@ -212,6 +212,17 @@ class PureHttp {
       },
       (error: PureHttpError) => {
         const $error = error;
+
+        if (!$error.code) {
+          uni.showToast({ title: '网络错误', icon: 'none' });
+          uni.hideLoading();
+          return;
+        } else if ($error.code === 'ETIMEDOUT') {
+          uni.showToast({ title: '请求超时', icon: 'none' });
+          uni.hideLoading();
+          return;
+        }
+
         let responseData: any = $error.response.data;
 
         if (isNeedDecrypt($error.response)) {
