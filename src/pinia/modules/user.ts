@@ -42,6 +42,8 @@ export const useUserStore = defineStore(
   {
     // 开启持久化缓存
     // @ts-ignore
-    unistorage: true
+    unistorage: {
+      paths: ['userInfo', 'token']
+    }
   }
 );
