@@ -71,7 +71,6 @@ export const useHandler = () => {
 
   /* 确认退出登录 */
   const handleLogoutConfirm = () => {
-    uni.clearStorage();
     clearStore();
     uni.reLaunch({
       url: '/pages/login/index'

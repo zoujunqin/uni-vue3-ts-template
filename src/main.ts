@@ -1,5 +1,5 @@
 import { createPinia } from 'pinia';
-// import { createUnistorage } from 'pinia-plugin-unistorage';
+import { createUnistorage } from 'pinia-plugin-unistorage';
 import { createSSRApp } from 'vue';
 
 import App from './App.vue';
@@ -18,6 +18,8 @@ export function createApp() {
       store.$patch(initialState);
     };
   });
+  store.use(createUnistorage());
+
   app.use(store);
 
   app.mixin(shareMixin);
