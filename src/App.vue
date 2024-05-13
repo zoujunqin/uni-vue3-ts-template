@@ -1,11 +1,19 @@
 <script lang="ts" setup>
-import { onLaunch } from '@dcloudio/uni-app';
+import { onLaunch, onShow } from '@dcloudio/uni-app';
 
 import { useSystemStore } from '@/pinia/modules/system';
 
 onLaunch(() => {
   uni.getSystemInfo().then(data => {
     useSystemStore().setSystemInfo(data);
+  });
+});
+
+onShow(() => {
+  const { setNetworkStatus } = useSystemStore();
+
+  uni.onNetworkStatusChange(res => {
+    setNetworkStatus(res);
   });
 });
 </script>

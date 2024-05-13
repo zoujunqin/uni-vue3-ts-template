@@ -1,5 +1,5 @@
 <template>
-  <view class="login hx-p-[128px_24px_0_24px] hx-h-full hx-flex hx-flex-col">
+  <ProPage class="login hx-p-[128px_24px_0_24px] hx-h-full hx-flex hx-flex-col">
     <text
       class="hx-text-[26px] hx-leading-[30px] hx-font-[600] hx-text-color-title"
     >
@@ -61,7 +61,7 @@
         </text>
       </text>
     </view>
-  </view>
+  </ProPage>
 
   <ProPopup ref="proPopupRef" closeable mode="bottom" round="10">
     <view class="hx-p-[18px_12px]">

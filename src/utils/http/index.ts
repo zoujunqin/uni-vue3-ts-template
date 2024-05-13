@@ -32,7 +32,7 @@ const baseURL = 'https://localtest-hro-api.fjhxrl.com'; // 测试环境
 const defaultConfig: AxiosRequestConfig = {
   baseURL: import.meta.env.VITE_BASE_URL || baseURL,
   // 请求超时时间
-  timeout: 30 * 1000,
+  timeout: 5 * 1000,
   headers: {
     Accept: 'application/json, text/plain, */*',
     'Content-Type': 'application/json',
@@ -212,6 +212,20 @@ class PureHttp {
       },
       (error: PureHttpError) => {
         const $error = error;
+
+        if (!$error.code && $error.message === 'request:fail ') {
+          uni.showToast({ title: '网络错误', icon: 'none' });
+          uni.hideLoading();
+          return;
+        } else if (
+          $error.code === 'ETIMEDOUT' &&
+          $error.message === 'request:fail timeout'
+        ) {
+          uni.showToast({ title: '请求超时', icon: 'none' });
+          uni.hideLoading();
+          return;
+        }
+
         let responseData: any = $error.response.data;
 
         if (isNeedDecrypt($error.response)) {
