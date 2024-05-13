@@ -1,5 +1,7 @@
 <template>
   <view class="hx-h-full hx-overflow-auto">
+    <ProNetworkTip />
+
     <ProNavbar
       v-if="showNavbar"
       :showBack="showBack"

@@ -12,7 +12,14 @@ export const useSystemStore = defineStore(
       systemInfo.value = info;
     };
 
-    return { systemInfo, setSystemInfo };
+    const networkStatus = shallowRef<
+      Partial<UniNamespace.OnNetworkStatusChangeSuccess>
+    >({ isConnected: true });
+    const setNetworkStatus = status => {
+      networkStatus.value = status;
+    };
+
+    return { systemInfo, setSystemInfo, networkStatus, setNetworkStatus };
   },
   {
     // 开启持久化缓存

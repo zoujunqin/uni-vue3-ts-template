@@ -1,5 +1,5 @@
 <template>
-  <view
+  <ProPage
     class="login hx-p-[128px_24px_0_24px] hx-h-full hx-flex hx-flex-col"
     @click="closeTooltip"
   >
@@ -66,7 +66,7 @@
         </text>
       </text>
     </view>
-  </view>
+  </ProPage>
 
   <ProPopup ref="proPopupRef" closeable mode="bottom" round="10">
     <view class="hx-p-[18px_12px]">
@@ -123,14 +123,13 @@ const closeTooltip = () => {
 
 <style lang="scss" scoped>
 .login {
-  background:
-    linear-gradient(
-      180deg,
-      #fff 0%,
-      #eef8ff 46.47%,
-      #e8efff 73.17%,
-      #e7e6fd 100%
-    );
+  background: linear-gradient(
+    180deg,
+    #fff 0%,
+    #eef8ff 46.47%,
+    #e8efff 73.17%,
+    #e7e6fd 100%
+  );
 }
 
 :deep(.uv-tooltip__wrapper__popup__list) {
