@@ -39,21 +39,23 @@
       <text class="hx-text-[15px]"> 手机号快捷登录 </text>
     </ProButton>
 
-    <view class="hx-mt-[24px] hx-flex hx-items-center hx-justify-center">
+    <view
+      class="hx-mt-[24px] hx-flex hx-items-center hx-justify-center hx-relative"
+    >
+      <ProTooltipPer ref="proTooltipPerRef" text="请阅读并勾选用户协议" />
       <ProCheckboxGroup
         v-model="isAgree"
-        class="!hx-flex-none hx-relative"
+        class="!hx-flex-none"
         @change="handleIsAgreeChange"
       >
         <ProCheckbox name="true" shape="circle" size="mini" />
-        <ProTooltipPer ref="proTooltipPerRef" text="请阅读并勾选用户协议" />
       </ProCheckboxGroup>
       <text
         class="hx-text-font-size-base hx-leading-[24px] hx-text-text-color-tip"
       >
         已阅读并同意
         <text class="hx-text-color-primary" @click="openPopup">
-          《用户协议 》
+          《用户协议》
         </text>
         和
         <text class="hx-text-color-primary" @click="openPopup">

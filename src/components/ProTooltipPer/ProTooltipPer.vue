@@ -1,6 +1,6 @@
 <template>
-  <div class="tip-box" v-if="tipShow" :style="{ width: boxWidth }">
-    <span class="tip-text">请阅读并勾选用户协议</span>
+  <div class="tip-box" v-if="tipShow">
+    <div class="tip-text">请阅读并勾选用户协议</div>
     <div class="triangle-div" />
   </div>
 </template>
@@ -11,10 +11,6 @@ defineProps({
   text: {
     type: String,
     default: ''
-  },
-  boxWidth: {
-    type: String,
-    default: '160px'
   }
 });
 const tipShow = ref(false);
@@ -39,17 +35,20 @@ export default { options: { name: 'ProTooltipPer', virtualHost: true } };
 .tip-box {
   z-index: 999;
   position: absolute;
-  padding: 6px 14px;
-  top: -50px;
-  left: -21px;
-  background-color: #fff;
-  border-radius: 30px;
+  top: -40px;
+  left: 0px;
   transition: opacity 3s ease-in-out;
+  height: 36px;
 
   .tip-text {
     font-size: 13px;
     color: #595865;
     line-height: 14px;
+    background-color: #fff;
+    border-radius: 30px;
+    height: 26px;
+    line-height: 26px;
+    padding: 0 14px;
   }
   .triangle-div {
     width: 0px;
@@ -57,8 +56,8 @@ export default { options: { name: 'ProTooltipPer', virtualHost: true } };
     border: 10px solid transparent;
     border-top-color: #fff;
     position: absolute;
-    bottom: -20px;
-    left: 20px;
+    bottom: -8px;
+    left: 15px;
   }
 }
 </style>
