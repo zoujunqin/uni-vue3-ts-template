@@ -11,11 +11,15 @@ export const useLoadingStore = defineStore('loading', () => {
       loadingText.value = option.title;
     }
     loadingVisible.value = true;
+
     loadingCount += 1;
   };
 
   const hideLoading = () => {
-    loadingCount -= 1;
+    if (loadingCount) {
+      loadingCount -= 1;
+    }
+
     if (loadingCount === 0) {
       loadingVisible.value = false;
     }
