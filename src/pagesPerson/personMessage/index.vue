@@ -136,6 +136,7 @@ const handleLookImg = (index: number) => {
 
   .form-row {
     display: flex;
+    align-items: center;
     margin-top: 12px;
   }
 

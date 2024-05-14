@@ -1,4 +1,4 @@
-import { TypeCode } from './constant/typeCode';
+import { TYPE_CODE } from './constant/typeCode';
 
 import { getInvitationCodeScan } from '@/api/fe/wechat/invitation_code';
 import { PROTOCOL_TYPE } from '@/constant/taskDetail';
@@ -6,7 +6,7 @@ import { dealStepCurrent } from '@/utils';
 
 export const sceneCodeMap = {
   // 扫小程序码, 进入实名认证页面
-  [TypeCode.INVITE]: async option => {
+  [TYPE_CODE.INVITE]: async option => {
     try {
       const res = await getInvitationCodeScan(option);
       const current = dealStepCurrent(res);
