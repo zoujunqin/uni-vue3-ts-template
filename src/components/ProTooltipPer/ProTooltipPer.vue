@@ -35,10 +35,11 @@ export default { options: { name: 'ProTooltipPer', virtualHost: true } };
 .tip-box {
   z-index: 999;
   position: absolute;
-  top: -40px;
-  left: 0px;
+  top: -43px;
+  left: -17px;
   transition: opacity 3s ease-in-out;
   height: 36px;
+  white-space: nowrap;
 
   .tip-text {
     font-size: 13px;
@@ -56,7 +57,6 @@ export default { options: { name: 'ProTooltipPer', virtualHost: true } };
     border: 10px solid transparent;
     border-top-color: #fff;
     position: absolute;
-    bottom: -8px;
     left: 15px;
   }
 }

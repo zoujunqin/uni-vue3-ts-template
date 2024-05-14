@@ -4,18 +4,21 @@
     navbar-title="合同记录"
     show-navbar
   >
-    <view class="hx-bg-bg-color-grey hx-flex-1 hx-pt-[10px]">
-      <template v-if="dataList.length > 0">
+    <ProScrollList
+      ref="proScrollListRef"
+      :fetch="getPersonalCenterContract"
+      class="hx-h-full hx-pb-[10px] hx-box-border"
+    >
+      <!-- <view class="hx-bg-bg-color-grey hx-flex-1 hx-pt-[10px]"> -->
+      <template #default="{ row }">
         <view
-          v-for="item in dataList"
-          :key="item.id"
           class="hx-flex hx-items-center hx-justify-between hx-bg-white hx-p-[16px_12px] hx-mb-[10px]"
-          @click="handleLookContract(item)"
+          @click="handleLookContract(row)"
         >
           <view class="hx-flex hx-flex-col">
-            <p class="contract-title">{{ item?.protocolName }}</p>
-            <span class="contract-text">{{ item?.customerName }}</span>
-            <span class="contract-text">{{ item?.workSignTime }}</span>
+            <p class="contract-title">{{ row?.protocolName }}</p>
+            <span class="contract-text">{{ row?.customerName }}</span>
+            <span class="contract-text">{{ row?.workSignTime }}</span>
           </view>
           <image
             :src="import('@http/person/arrow-right.svg')"
@@ -23,12 +26,8 @@
           />
         </view>
       </template>
-      <ProPlaceholder
-        v-else
-        type="noData"
-        @refresh="handleGetPersonalCenterContract"
-      />
-    </view>
+      <!-- </view> -->
+    </ProScrollList>
   </ProPage>
   <view v-if="pathUrl !== ''">
     <web-view :src="pathUrl" />
@@ -44,22 +43,22 @@ import { getWorkerProtocolByIdViewUrl } from '@/api/fe/wechat/worker';
 import { useOss } from '@/hooks/useOss';
 
 const { getPreviewUrl } = useOss();
-const dataList = ref<Array<any>>([]);
+// const dataList = ref<Array<any>>([]);
 const pathUrl = ref('');
 const path = ref('');
 
-onMounted(() => {
-  handleGetPersonalCenterContract();
-});
-onPullDownRefresh(() => {
-  handleGetPersonalCenterContract();
-});
-const handleGetPersonalCenterContract = () => {
-  getPersonalCenterContract().then(res => {
-    dataList.value = res;
-    uni.stopPullDownRefresh();
-  });
-};
+// onMounted(() => {
+//   handleGetPersonalCenterContract();
+// });
+// onPullDownRefresh(() => {
+//   handleGetPersonalCenterContract();
+// });
+// const handleGetPersonalCenterContract = () => {
+//   getPersonalCenterContract().then(res => {
+//     dataList.value = res;
+//     // uni.stopPullDownRefresh();
+//   });
+// };
 const handleLookContract = val => {
   path.value = val.path;
   if (path.value) {

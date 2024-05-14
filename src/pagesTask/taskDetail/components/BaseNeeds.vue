@@ -3,14 +3,16 @@
   <view
     class="section-content hx-mb-[16px] hx-rounded-[6px] hx-p-[12px] hx-text-text-color hx-text-[13px] hx-font-[400] hx-leading-[18px]"
   >
-    <view class="hx-mb-[10px]">
+    <view>
       人员要求：
       {{ getPersonRequire }}
     </view>
-    <view class="hx-mb-[10px]" v-if="data.endDate">
+    <view class="hx-mt-[10px]" v-if="data.endDate">
       任务时间： {{ hyphenAB(data.beginDate, data.endDate) }}
     </view>
-    <view v-if="data.description"> 任务需求： {{ data.description }} </view>
+    <view class="hx-mt-[10px]" v-if="data.description">
+      任务需求： {{ data.description }}
+    </view>
   </view>
 </template>
 

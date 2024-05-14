@@ -39,16 +39,14 @@
       <text class="hx-text-[15px]"> 手机号快捷登录 </text>
     </ProButton>
 
-    <view
-      class="hx-mt-[24px] hx-flex hx-items-center hx-justify-center hx-relative"
-    >
-      <ProTooltipPer ref="proTooltipPerRef" text="请阅读并勾选用户协议" />
+    <view class="hx-mt-[24px] hx-flex hx-items-center hx-justify-center">
       <ProCheckboxGroup
         v-model="isAgree"
-        class="!hx-flex-none"
+        class="!hx-flex-none hx-relative"
         @change="handleIsAgreeChange"
       >
         <ProCheckbox name="true" shape="circle" size="mini" />
+        <ProTooltipPer ref="proTooltipPerRef" text="请阅读并勾选用户协议" />
       </ProCheckboxGroup>
       <text
         class="hx-text-font-size-base hx-leading-[24px] hx-text-text-color-tip"
