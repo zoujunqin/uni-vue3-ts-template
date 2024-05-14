@@ -20,7 +20,7 @@ export interface IPersonCenterInfo {
 
 /* 获取个人中心数据 */
 export const getPersonInfo = (): Promise<IPersonCenterInfo> => {
-  return http.request('get', `${baseApi}`);
+  return http.request('get', `${baseApi}`, { loading: false });
 };
 
 /** 获取银行卡 */

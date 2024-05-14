@@ -43,6 +43,7 @@ const defaultConfig: AxiosRequestConfig = {
   paramsSerializer: {
     serialize: stringify as unknown as CustomParamsSerializer
   },
+  loading: true,
   adapter: createUniAppAxiosAdapter()
 };
 
@@ -125,7 +126,7 @@ class PureHttp {
   private httpInterceptorsRequest(): void {
     PureHttp.axiosInstance.interceptors.request.use(
       async (config: PureHttpRequestConfig): Promise<any> => {
-        uni.showLoading();
+        config.loading && uni.showLoading();
         // 验签步骤
         const formData = config.params || '';
         const requestBody = config.data || '';
