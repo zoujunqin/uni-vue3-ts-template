@@ -21,20 +21,23 @@
         />
       </template>
     </ProPageHeader>
-    <view class="hx-bg-bg-color-grey hx-flex-1 hx-pt-[10px]">
-      <template v-if="dataList.length > 0">
+    <ProScrollList
+      ref="proScrollListRef"
+      :fetch="getPersonalCenterIncomeList"
+      :extend-params="getExtendParams()"
+      class="hx-h-full hx-pb-[10px] hx-pt-[10px] hx-box-border hx-bg-bg-color-grey"
+    >
+      <template #default="{ row }">
         <view
-          v-for="item in dataList"
-          :key="item.commissionDetailId"
           class="hx-flex hx-items-center hx-justify-between hx-bg-white hx-p-[16px_12px] hx-mb-[10px]"
-          @click="handleLookDetails(item?.commissionDetailId)"
+          @click="handleLookDetails(row?.commissionDetailId)"
         >
           <p class="remuneration-title hx-truncate">
-            {{ item?.customerName }}
+            {{ row?.customerName }}
           </p>
           <view class="hx-flex hx-items-center">
             <span class="remuneration-money">
-              +{{ item?.finalPayingAmount }}元
+              +{{ row?.finalPayingAmount }}元
             </span>
             <image
               :src="import('@http/person/arrow-right.svg')"
@@ -43,12 +46,7 @@
           </view>
         </view>
       </template>
-      <ProPlaceholder
-        v-else
-        type="noData"
-        @refresh="handleGetPersonalCenterIncomeList"
-      />
-    </view>
+    </ProScrollList>
     <ProDateTimePicker
       ref="datetimePickerRef"
       v-model="monthDatetime"
@@ -68,8 +66,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onPullDownRefresh } from '@dcloudio/uni-app';
-import { computed, nextTick, onMounted, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 
 import {
   getPersonalCenterIncomeCustomer,
@@ -93,14 +90,6 @@ getPersonalCenterIncomeCustomer().then(res => {
 });
 const pickerValue = computed(() => {
   return [customerList.value];
-});
-
-onMounted(() => {
-  handleGetPersonalCenterIncomeList();
-});
-
-onPullDownRefresh(() => {
-  handleGetPersonalCenterIncomeList();
 });
 
 const proPickerRef = ref();
@@ -134,7 +123,11 @@ const conditionStatus = ref(false);
 const handleCloseDate = () => {
   conditionStatus.value = false;
 };
-
+const getExtendParams = () => {
+  formData.value.salaryIssueMonth =
+    monthDate.value.slice(0, 4) + '-' + monthDate.value.slice(5, 7);
+  return formData.value;
+};
 const dataList = ref<Array<any>>([]);
 const handleGetPersonalCenterIncomeList = () => {
   nextTick(() => {

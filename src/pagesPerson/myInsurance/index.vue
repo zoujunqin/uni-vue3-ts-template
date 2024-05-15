@@ -2,13 +2,15 @@
   <ProPage
     show-navbar
     navbar-title="我的商保"
-    class="page-pt-with-navbar hx-bg-white"
+    class="page-pt-with-navbar hx-flex hx-flex-col"
   >
-    <view class="hx-bg-bg-color-grey hx-h-full hx-py-[10px]">
-      <template v-if="insuranceList.length > 0">
+    <ProScrollList
+      ref="proScrollListRef"
+      :fetch="getPersonalCenterInsurance"
+      class="hx-h-full hx-pb-[10px] hx-pt-[10px] hx-box-border hx-bg-bg-color-grey"
+    >
+      <template #default="{ row }">
         <view
-          v-for="(item, index) in insuranceList"
-          :key="index"
           class="hx-flex hx-items-center hx-bg-white hx-mb-[10px] hx-pl-[15px] hx-py-[17px]"
         >
           <image
@@ -17,40 +19,17 @@
           />
           <view class="hx-w-[250px]">
             <p class="hx-text-text-color hx-text-[16px] hx-truncate">
-              {{ item?.insuranceName }}
+              {{ row?.insuranceName }}
             </p>
           </view>
         </view>
       </template>
-      <ProPlaceholder
-        v-else
-        type="noData"
-        @refresh="handleGetPersonalCenterInsurance"
-      />
-    </view>
+    </ProScrollList>
   </ProPage>
 </template>
 
 <script setup lang="ts">
-import { onPullDownRefresh } from '@dcloudio/uni-app';
-import { onMounted, ref } from 'vue';
-
 import { getPersonalCenterInsurance } from '@/api/fe/wechat/personal_center';
-
-const insuranceList = ref<Array<any>>([]);
-
-onMounted(() => {
-  handleGetPersonalCenterInsurance();
-});
-onPullDownRefresh(() => {
-  handleGetPersonalCenterInsurance();
-});
-const handleGetPersonalCenterInsurance = () => {
-  getPersonalCenterInsurance().then(res => {
-    insuranceList.value = res;
-    uni.stopPullDownRefresh();
-  });
-};
 </script>
 
 <style scoped lang="scss">

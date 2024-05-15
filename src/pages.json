@@ -52,25 +52,25 @@
         {
           "path": "bankCard/index",
           "style": {
-            "enablePullDownRefresh": true
+            "enablePullDownRefresh": false
           }
         },
         {
           "path": "myContract/index",
           "style": {
-            "enablePullDownRefresh": true
+            "enablePullDownRefresh": false
           }
         },
         {
           "path": "myInsurance/index",
           "style": {
-            "enablePullDownRefresh": true
+            "enablePullDownRefresh": false
           }
         },
         {
           "path": "remuneration/index",
           "style": {
-            "enablePullDownRefresh": true
+            "enablePullDownRefresh": false
           }
         },
         {

@@ -1,15 +1,14 @@
 <template>
   <ProPage
-    class="myContract-container page-pt-with-navbar hx-bg-white hx-flex hx-flex-col"
+    class="myContract-container page-pt-with-navbar hx-flex hx-flex-col"
     navbar-title="合同记录"
     show-navbar
   >
     <ProScrollList
       ref="proScrollListRef"
       :fetch="getPersonalCenterContract"
-      class="hx-h-full hx-pb-[10px] hx-box-border"
+      class="hx-h-full hx-pb-[10px] hx-pt-[10px] hx-box-border hx-bg-bg-color-grey"
     >
-      <!-- <view class="hx-bg-bg-color-grey hx-flex-1 hx-pt-[10px]"> -->
       <template #default="{ row }">
         <view
           class="hx-flex hx-items-center hx-justify-between hx-bg-white hx-p-[16px_12px] hx-mb-[10px]"
@@ -26,7 +25,6 @@
           />
         </view>
       </template>
-      <!-- </view> -->
     </ProScrollList>
   </ProPage>
   <view v-if="pathUrl !== ''">
@@ -35,30 +33,16 @@
 </template>
 
 <script lang="ts" setup>
-import { onPullDownRefresh } from '@dcloudio/uni-app';
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 
 import { getPersonalCenterContract } from '@/api/fe/wechat/personal_center';
 import { getWorkerProtocolByIdViewUrl } from '@/api/fe/wechat/worker';
 import { useOss } from '@/hooks/useOss';
 
 const { getPreviewUrl } = useOss();
-// const dataList = ref<Array<any>>([]);
 const pathUrl = ref('');
 const path = ref('');
 
-// onMounted(() => {
-//   handleGetPersonalCenterContract();
-// });
-// onPullDownRefresh(() => {
-//   handleGetPersonalCenterContract();
-// });
-// const handleGetPersonalCenterContract = () => {
-//   getPersonalCenterContract().then(res => {
-//     dataList.value = res;
-//     // uni.stopPullDownRefresh();
-//   });
-// };
 const handleLookContract = val => {
   path.value = val.path;
   if (path.value) {
