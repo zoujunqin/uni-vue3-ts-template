@@ -1,3 +1,5 @@
+import { REAL_STATUS, YES_NO_TYPE } from '@/constant/taskDetail';
+
 export const getUUID = (len = 32) => {
   const characters =
     'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -12,8 +14,16 @@ export const getUUID = (len = 32) => {
   return randomString;
 };
 
-export const dealStepCurrent = val => {
-  const { izRealname: izName, izSignProtocol: izSign } = val;
-  const current = izName === 'no' ? 0 : izSign === 'no' ? 1 : -1;
-  return current;
+export const getRealStatus = val => {
+  const { izRealname, izSignProtocol } = val;
+
+  if (izRealname === YES_NO_TYPE.NO) {
+    return REAL_STATUS.NEED_REAL;
+  }
+
+  if (izSignProtocol === YES_NO_TYPE.NO) {
+    return REAL_STATUS.NEED_SIGN;
+  }
+
+  return REAL_STATUS.ALREADY_REAL;
 };

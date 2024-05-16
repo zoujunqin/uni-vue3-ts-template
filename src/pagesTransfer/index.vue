@@ -4,7 +4,6 @@
 <script lang="ts" setup>
 import { onLoad } from '@dcloudio/uni-app';
 
-import { TYPE_CODE } from '@/constant/typeCode';
 import { useUserStore } from '@/pinia/modules/user';
 import { sceneCodeMap } from '@/sceneCode';
 
@@ -14,14 +13,16 @@ onLoad(option => {
   // 这里的 scene 不是小程序的场景值, 是自定义的
   const sceneList = decodeURIComponent(option.scene).split('&');
   const sceneObj = { t: '', c: '' };
+
   sceneList.forEach(item => {
     const keyList = item.split('=');
     sceneObj[keyList[0]] = keyList[1];
   });
-  const { t, c } = sceneObj;
+  const { t } = sceneObj;
   setSceneOption(sceneObj);
+
   if (hasToken && t) {
-    sceneCodeMap[t]?.(c);
+    sceneCodeMap[t]?.(sceneObj);
   } else if (hasToken && !t) {
     uni.redirectTo({
       url: '/pages/portal/index'

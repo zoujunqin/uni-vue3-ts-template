@@ -32,7 +32,7 @@ const baseURL = 'https://localtest-hro-api.fjhxrl.com'; // 测试环境
 const defaultConfig: AxiosRequestConfig = {
   baseURL: import.meta.env.VITE_BASE_URL || baseURL,
   // 请求超时时间
-  timeout: 5 * 1000,
+  timeout: 30 * 1000,
   headers: {
     Accept: 'application/json, text/plain, */*',
     'Content-Type': 'application/json',

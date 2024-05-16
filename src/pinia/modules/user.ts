@@ -17,11 +17,12 @@ export const useUserStore = defineStore(
       userInfo.value = (await getPersonInfo()) || {};
     };
 
-    // 扫码登录用户二维码 id
+    // t 是场景， c 是参数
     const sceneOption = shallowRef<{ t?: string; c?: string }>({});
     const setSceneOption = (option: { t: string; c?: string }) => {
       sceneOption.value = option;
     };
+
     const token = shallowRef('');
     const setToken = (val: string) => {
       token.value = val;

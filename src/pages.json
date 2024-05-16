@@ -35,6 +35,9 @@
       "name": "pagesAuth",
       "pages": [
         {
+          "path": "contractSign/index"
+        },
+        {
           "path": "realName/index"
         },
         {
@@ -94,7 +97,10 @@
   "preloadRule": {
     "pages/portal/index": {
       "network": "all",
-      "packages": ["pagesTask", "pagesPerson"]
+      "packages": [
+        "pagesTask",
+        "pagesPerson"
+      ]
     }
   },
   "globalStyle": {

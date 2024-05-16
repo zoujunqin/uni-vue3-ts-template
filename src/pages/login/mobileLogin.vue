@@ -40,30 +40,18 @@
           type="number"
         >
           <template #suffix>
-            <view class="hx-w-[84px] hx-flex hx-items-center">
+            <view class="hx-min-w-[84px] hx-flex hx-items-center">
               <view
                 class="hx-mr-[12px] hx-w-[2px] hx-h-[16px] hx-bg-[#f2f2f2]"
               />
-              <text
-                v-if="!captchaIsValid"
-                class="hx-text-color-primary hx-text-font-size-base hx-font-[400] hx-leading-[21px]"
-                @click="fetchCaptcha"
-              >
-                获取验证码
-              </text>
-              <view v-else class="hx-flex hx-items-center hx-justify-center">
-                <ProCountDown
-                  :time="60000"
-                  class="hx-font-[400] hx-leading-[21px]"
-                  format="ss"
-                  @finish="handleFinish"
-                />
-                <text
-                  class="hx-text-color-primary hx-text-font-size-base hx-font-[400] hx-leading-[21px]"
-                >
-                  s后失效
-                </text>
-              </view>
+              <ProCode
+                :fetch="fetchCaptcha"
+                :valid-phone="validMobile"
+                ref="proCodeRef"
+                change-text="xs重新获取"
+                end-text="获取验证码"
+                text-class="hx-text-color-primary hx-text-font-size-base hx-font-[400] hx-leading-[21px]"
+              />
             </view>
           </template>
         </ProInput>
@@ -91,7 +79,6 @@
 </template>
 
 <script lang="ts" setup>
-import { debounce } from 'lodash-es';
 import { ref, shallowRef } from 'vue';
 
 import { mobileLogin, weChatAuthLogin } from './login';
@@ -125,24 +112,25 @@ const formRules = {
   }
 };
 
-const captchaIsValid = shallowRef(false);
+const validMobile = () => {
+  const { mobile } = formData.value;
+  if (!mobile) return uni.showToast({ title: '请输入手机号码', icon: 'none' });
+  return !!mobile;
+};
 
+const proCodeRef = shallowRef();
 /* 获取验证码 */
-const fetchCaptcha = debounce(() => {
+const fetchCaptcha = () => {
   const { mobile } = formData.value;
   const param = { mobile, type: 'fe_login' };
 
-  if (!mobile) return uni.showToast({ title: '请输入手机号码', icon: 'none' });
-
-  sms(param).then(() => {
-    uni.showToast({ title: '验证码获取成功', icon: 'none' });
-    captchaIsValid.value = true;
-  });
-}, 500);
-
-/* 验证码过期 */
-const handleFinish = () => {
-  captchaIsValid.value = false;
+  return sms(param)
+    .then(() => {
+      uni.showToast({ title: '验证码获取成功', icon: 'none' });
+    })
+    .finally(() => {
+      proCodeRef.value.reset();
+    });
 };
 
 /* 调用登录接口 */
@@ -156,14 +144,13 @@ const fetchMobileLogin = async () => {
 
 <style lang="scss" scoped>
 .login {
-  background:
-    linear-gradient(
-      180deg,
-      #fff 0%,
-      #eef8ff 46.47%,
-      #e8efff 73.17%,
-      #e7e6fd 100%
-    );
+  background: linear-gradient(
+    180deg,
+    #fff 0%,
+    #eef8ff 46.47%,
+    #e8efff 73.17%,
+    #e7e6fd 100%
+  );
 }
 
 :deep(.pro-count-down text) {
