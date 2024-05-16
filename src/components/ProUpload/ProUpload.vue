@@ -113,7 +113,7 @@ export default { options: { name: 'ProUpload', virtualHost: true } };
 }
 
 /* 驾驶证 */
-.driving-license-background {
+.driving-licence-background {
   background-image: url($http + '/upload/driving-license.png');
 }
 
@@ -128,7 +128,7 @@ export default { options: { name: 'ProUpload', virtualHost: true } };
 }
 
 /* 营业执照 */
-.business-license-background {
+.business-licence-background {
   background-image: url($http + '/upload/business-license.png');
 }
 </style>
