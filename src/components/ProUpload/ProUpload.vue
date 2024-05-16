@@ -5,7 +5,7 @@
     class="pro-upload hx-relative hx-flex hx-justify-center hx-items-center hx-w-[250px] hx-h-[158px] hx-rounded-[6px] hx-bg-contain hx-bg-no-repeat"
   >
     <view
-      v-if="filePath"
+      v-if="filePath && !props.readonly"
       class="pro-remove-button hx-absolute hx-top-0 hx-right-0 hx-rounded-[0_6px_0_8px] hx-p-[2px] hx-flex hx-items-center hx-justify-center"
     >
       <ProIcon
@@ -18,7 +18,7 @@
 
     <ProLoadingIcon v-if="loading" mode="circle" show />
     <ProUploadButton
-      v-if="!loading && !filePath"
+      v-if="!loading && !filePath && !props.readonly"
       :title="uploadButtonTitle"
       @tap.stop="handleUpload"
     />

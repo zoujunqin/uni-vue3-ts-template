@@ -31,19 +31,22 @@ export const { APPLY_STATUS, APPLY_STATUS_MAP, APPLY_STATUS_LIST } =
         label: '申述中',
         value: 'to_be_processed',
         className: 'warning-fixed-tip',
-        textColor: 'warning-text-color'
+        textColor: 'warning-text-color',
+        getTip: () => '申述中：正在申述请耐心等待～'
       },
       {
         label: '通过',
         value: 'passed',
         className: '',
-        textColor: 'passed-text-color'
+        textColor: 'passed-text-color',
+        getTip: () => ''
       },
       {
         label: '驳回',
         value: 'reject',
         className: 'error-fixed-tip',
-        textColor: 'error-text-color'
+        textColor: 'error-text-color',
+        getTip: cause => `申诉失败：原因(${cause})`
       }
     ] as const,
     'APPLY_STATUS',
@@ -53,11 +56,15 @@ export const { APPLY_STATUS, APPLY_STATUS_MAP, APPLY_STATUS_LIST } =
 export const { REAL_TYPE, REAL_TYPE_MAP, REAL_TYPE_LIST } = defineConstants(
   [
     {
+      label: '上传身份证',
+      value: 'id_card'
+    },
+    {
       label: '银行信息',
       value: 'bank_info'
     },
     {
-      label: '员工信息',
+      label: '基本信息',
       value: 'base_info'
     },
     {
@@ -75,10 +82,12 @@ export const { YES_NO_TYPE, YES_NO_TYPE_MAP, YES_NO_TYPE_LIST } =
     [
       {
         label: '是',
+        bindLabel: '已绑定',
         value: 'yes'
       },
       {
         label: '否',
+        bindLabel: '未绑定',
         value: 'no'
       }
     ] as const,
@@ -103,5 +112,29 @@ export const { PROTOCOL_TYPE, PROTOCOL_TYPE_MAP, PROTOCOL_TYPE_LIST } =
       }
     ] as const,
     'PROTOCOL_TYPE',
+    'value'
+  );
+
+// 实名状态
+export const { REAL_STATUS, REAL_STATUS_MAP, REAL_STATUS_LIST } =
+  defineConstants(
+    [
+      {
+        label: '已经实名',
+        value: 'already_real',
+        pagePath: '/pages/portal/index'
+      },
+      {
+        label: '需要实名认证',
+        value: 'need_real',
+        pagePath: '/pagesAuth/realName/index'
+      },
+      {
+        label: '需要合同签署',
+        value: 'need_sign',
+        pagePath: '/pagesAuth/contractSign/index'
+      }
+    ] as const,
+    'REAL_STATUS',
     'value'
   );

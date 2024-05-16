@@ -3,6 +3,8 @@ import { PropType } from 'vue';
 import { BACKGROUND_NAMES, FILE, IMAGE } from './const';
 
 export const uploadProps = {
+  readonly: Boolean,
+
   uploadType: {
     type: String as PropType<typeof FILE | typeof IMAGE>,
     default: IMAGE
