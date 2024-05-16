@@ -26,7 +26,8 @@ const props = defineProps({
   modelValue: {
     type: String,
     default: new Date().getTime()
-  }
+  },
+  readonly: Boolean
 });
 const emit = defineEmits(['update:modelValue', 'confirm']);
 
@@ -34,6 +35,7 @@ const modelValue = useVModel(props, 'modelValue', emit);
 
 const proDateTimePickerRef = ref();
 const openDatePicker = () => {
+  if (props.readonly) return;
   proDateTimePickerRef.value.open();
 };
 </script>

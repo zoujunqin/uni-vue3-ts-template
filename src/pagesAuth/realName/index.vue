@@ -20,6 +20,7 @@
         ref="proFormRef"
         :model="formData"
         :rules="formRules"
+        :disabled="nextDisabled"
         border-bottom
         error-type="border-bottom"
         label-position="left"
@@ -30,7 +31,7 @@
             v-if="item.categoryCode === REAL_TYPE.ID_CARD"
             class="hx-p-[16px_20px] hx-bg-white hx-mb-[10px]"
           >
-            <IDCardUpload v-model="formData" />
+            <IDCardUpload v-model="formData" :readonly="nextDisabled" />
           </view>
 
           <view
@@ -54,6 +55,7 @@
               <ProUpload
                 class="hx-mb-[16px]"
                 v-model="formData[prop.fieldCode]"
+                :readonly="nextDisabled"
                 :background-name="1"
                 :upload-button-title="`点击上传${prop.labelName}`"
                 :maxSize="5 * 1024 * 1024"
@@ -77,6 +79,7 @@
                   v-model="formData[prop.fieldCode]"
                   mode="date"
                   input-align="right"
+                  :readonly="nextDisabled"
                   :type="prop.valueType"
                   :options="[prop.dict]"
                   :placeholder="prop.labelName"
@@ -96,7 +99,7 @@
                       () => sms({ mobile: formData.mobile, type: 'normal' })
                     "
                     :valid-phone="validMobile"
-                    text-class="hx-text-color-primary hx-text-font-size-base hx-font-[400] hx-leading-[21px]"
+                    :readonly="nextDisabled"
                   />
                 </template>
                 <ProInput
@@ -104,6 +107,7 @@
                   type="number"
                   input-align="right"
                   placeholder="验证码"
+                  :readonly="nextDisabled"
                 />
               </ProFormItem>
             </template>
@@ -137,7 +141,7 @@
 
 <script lang="ts" setup>
 import { onLoad } from '@dcloudio/uni-app';
-import { computed, onMounted, shallowRef } from 'vue';
+import { computed, onMounted, readonly, shallowRef } from 'vue';
 
 import IDCardUpload from './components/IDCardUpload.vue';
 import OperateTip from './components/OperateTip.vue';
@@ -159,7 +163,6 @@ const routeParams = shallowRef({
   orderDetailId: null
 });
 onLoad(({ taskQueryParams = {} }) => {
-  console.log(taskQueryParams);
   routeParams.value = JSON.parse(taskQueryParams);
 });
 

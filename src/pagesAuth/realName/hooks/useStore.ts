@@ -19,8 +19,6 @@ export const useRealNameStore = defineStore(
   {
     // 开启持久化缓存
     // @ts-ignore
-    unistorage: {
-      paths: ['formData']
-    }
+    unistorage: true
   }
 );

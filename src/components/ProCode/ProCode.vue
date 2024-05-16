@@ -8,7 +8,15 @@
     <ProButton v-if="!props.text" v-bind="props.buttonProps" @click="getCode">
       {{ buttonText }}
     </ProButton>
-    <span v-else :class="props.textClass" @click="getCode">
+    <span
+      v-else
+      :class="[
+        props.textClass,
+        props.readonly ? 'hx-text-text-color-disable' : 'hx-text-color-primary',
+        'hx-text-font-size-base hx-font-[400] hx-leading-[21px]'
+      ]"
+      @click="getCode"
+    >
       {{ buttonText }}
     </span>
   </view>
@@ -44,11 +52,15 @@ const props = defineProps({
   buttonProps: {
     type: Object,
     default: () => ({})
-  }
+  },
+
+  readonly: Boolean
 });
 
 const uvCodeRef = shallowRef();
 const getCode = async () => {
+  if (props.readonly) return;
+
   if (uvCodeRef.value.canGetCode && props.validPhone()) {
     await props.fetch();
     uvCodeRef.value.start();

@@ -39,7 +39,9 @@ const props = defineProps({
   valueKey: {
     type: String,
     default: 'code'
-  }
+  },
+
+  readonly: Boolean
 });
 const emit = defineEmits(['update:modelValue', 'confirm']);
 
@@ -48,6 +50,7 @@ const pickerName = useVModel(props, 'pickerName', undefined, { passive: true });
 
 const proPickerRef = ref();
 const openPicker = () => {
+  if (props.readonly) return;
   proPickerRef.value.open();
 };
 const handlePickerConfirm = e => {

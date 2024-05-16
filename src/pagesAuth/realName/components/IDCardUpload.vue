@@ -10,6 +10,7 @@
   <view class="hx-flex hx-flex-col hx-items-center">
     <ProUpload
       v-model="data.idCardFront"
+      :readonly="props.readonly"
       :do-after-upload-success="ocrFrontOfCard"
       background-name="front-id-card"
       class="hx-mb-[16px]"
@@ -18,6 +19,7 @@
     />
     <ProUpload
       v-model="data.idCardReverse"
+      :readonly="props.readonly"
       :do-after-upload-success="ocrReverseSideOfCard"
       background-name="back-id-card"
       upload-button-title="点击上传国徽面"
@@ -35,7 +37,8 @@ const props = defineProps({
   modelValue: {
     type: Object,
     default: () => ({})
-  }
+  },
+  readonly: Boolean
 });
 const data = useVModel(props, 'modelValue', undefined, {
   passive: true

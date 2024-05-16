@@ -66,6 +66,7 @@ onLoad(query => {
 const handleApplyTask = () => {
   applyTask(routeParams.value).then(res => {
     const realStatus = getRealStatus(res);
+    console.log(realStatus);
 
     // 已经实名并且签署合同了
     if (realStatus === REAL_STATUS.ALREADY_REAL) {
@@ -85,7 +86,9 @@ const handleApplyTask = () => {
     });
 
     uni.navigateTo({
-      url: REAL_STATUS_MAP[realStatus].pagePath + taskQueryParams
+      url:
+        REAL_STATUS_MAP[realStatus].pagePath +
+        `?taskQueryParams=${taskQueryParams}`
     });
   });
 };

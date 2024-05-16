@@ -160,7 +160,7 @@ export const useHandler = ({ routeParams }) => {
       }
     }
 
-    handleRealNameAuth();
+    // handleRealNameAuth();
   };
 
   const handleRealNameAuth = async () => {
