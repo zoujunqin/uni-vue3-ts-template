@@ -23,8 +23,8 @@ import { formatToken } from '@/utils/storage';
 const httpNoMessage = ['/fe/wechat/worker_protocol/sign'];
 
 // const baseURL = 'http://218.104.230.173:17054'; // 开发环境
-// const baseURL = 'https://localdev-hro-api.fjhxrl.com'; // 测试环境
-const baseURL = 'https://localtest-hro-api.fjhxrl.com'; // 测试环境
+const baseURL = 'https://localdev-hro-api.fjhxrl.com'; // 测试环境
+// const baseURL = 'https://localtest-hro-api.fjhxrl.com'; // 测试环境
 // const baseURL = 'http://192.168.3.73:8100'; // 林伦
 // const baseURL = 'http://192.168.117.86:8100'; // 大立
 
@@ -62,8 +62,15 @@ const getQueryString = (params): string => {
   return queryString;
 };
 
-const isNeedDecrypt = response =>
-  response.headers['Enable-Response-Decrypt'] !== 'False';
+const isNeedDecrypt = response => {
+  if (response.headers['Enable-Response-Decrypt']) {
+    return response.headers['Enable-Response-Decrypt'] !== 'False';
+  }
+
+  if (response.headers['enable-response-decrypt']) {
+    return response.headers['enable-response-decrypt'] !== 'False';
+  }
+};
 
 class PureHttp {
   /** 初始化配置对象 */
