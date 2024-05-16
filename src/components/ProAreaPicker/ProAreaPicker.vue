@@ -1,32 +1,32 @@
 <template>
   <ProPicker
     ref="proPickerRef"
-    round="20rpx"
-    key-name="name"
-    active-color="var(--hx-color-primary)"
     :columns="addressList"
-    @confirm="handleConfirm"
+    active-color="var(--hx-color-primary)"
+    key-name="name"
+    round="20rpx"
+    v-bind="{ ...$attrs, ...bridgedEvents }"
     @change="handleChange"
     @close="handleClose"
-    v-bind="{ ...$attrs, ...bridgedEvents }"
+    @confirm="handleConfirm"
   />
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import {
-  ShallowRef,
-  shallowRef,
   computed,
+  onMounted,
   PropType,
-  watch,
-  onMounted
+  shallowRef,
+  ShallowRef,
+  watch
 } from 'vue';
 
 import { uvEvents } from '@/components/ProPicker/events';
 import { uvMethods } from '@/components/ProPicker/methods';
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
 import { useBridgedMethods } from '@/hooks/useBridgedMethods';
-import { getArea } from '@/utils/user';
+import { useAreaStore } from '@/pinia/modules/area';
 
 interface IRegion {
   id: number;
@@ -61,7 +61,7 @@ const handleConfirm = (e: ShallowRef<Array<IRegion>>) => {
   emit('confirm', e.value);
 };
 
-const provinces = shallowRef<Array<IRegion>>(JSON.parse(getArea()));
+const provinces = shallowRef<Array<IRegion>>(useAreaStore().areaData);
 const citys = shallowRef<Array<IRegion>>([]);
 const areas = shallowRef<Array<IRegion>>([]);
 const addressList = computed(() => [provinces.value, citys.value, areas.value]);

@@ -57,7 +57,8 @@
     "usingComponents": true,
     "libVersion": "latest",
     "mergeVirtualHostAttributes": true,
-    "optimization": { "subPackages": true }
+    "optimization": { "subPackages": true },
+    "lazyCodeLoading": "requiredComponents"
   },
   "mp-alipay": {
     "usingComponents": true

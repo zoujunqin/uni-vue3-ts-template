@@ -1,10 +1,10 @@
 <template>
   <ProPage
-    show-navbar
-    navbar-title="任务详情"
     class="page-pt-with-navbar hx-bg-white"
+    navbar-title="任务详情"
+    show-navbar
   >
-    <view class="hx-p-[16px]">
+    <view class="hx-p-[16px_16px_54px_16px]">
       <TaskHeader
         :data="taskDetail"
         :statusShow="!!taskDetail?.undertakingStatusName"
@@ -18,20 +18,22 @@
       <TaskPlace :data="taskDetail" />
 
       <SecurityTip :data="taskDetail" />
-
-      <ProButton
-        v-if="taskDetail?.izApplied === 'no'"
-        type="primary"
-        @click="handleApplyTask"
-      >
-        申请任务
-      </ProButton>
+      <ProPageFooter>
+        <ProButton
+          v-if="taskDetail?.izApplied === 'no'"
+          type="primary"
+          @click="handleApplyTask"
+        >
+          申请任务
+        </ProButton>
+      </ProPageFooter>
     </view>
   </ProPage>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onLoad } from '@dcloudio/uni-app';
+import { debounce } from 'lodash-es';
 import { ref, shallowRef } from 'vue';
 
 import BaseNeeds from './components/BaseNeeds.vue';
@@ -40,7 +42,7 @@ import TaskDescribe from './components/TaskDescribe.vue';
 import TaskHeader from './components/TaskHeader.vue';
 import TaskPlace from './components/TaskPlace.vue';
 
-import { ITaskDetail, getTaskDetail, applyTask } from '@/api/fe/wechat/task';
+import { applyTask, getTaskDetail, ITaskDetail } from '@/api/fe/wechat/task';
 import { dealStepCurrent } from '@/utils/index';
 
 const taskDetail = shallowRef<ITaskDetail>();
@@ -54,16 +56,14 @@ const handleGetTaskDetail = () => {
     taskDetail.value = res;
   });
 };
-const handleApplyTask = () => {
+const handleApplyTask = debounce(() => {
   applyTask(queryParams.value).then(res => {
     const current = dealStepCurrent(res);
     if (current === -1) {
-      setTimeout(() => {
-        uni.showToast({
-          title: '申请成功',
-          icon: 'none'
-        });
-      }, 30);
+      uni.showToast({
+        title: '申请成功',
+        icon: 'none'
+      });
       handleGetTaskDetail();
     } else {
       const { taskId, orderDetailId, sourceType } = queryParams.value;
@@ -80,7 +80,7 @@ const handleApplyTask = () => {
       });
     }
   });
-};
+}, 500);
 </script>
 
 <style scoped>

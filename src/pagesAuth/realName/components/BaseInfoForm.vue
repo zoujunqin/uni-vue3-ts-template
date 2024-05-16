@@ -3,32 +3,32 @@
 
   <view class="hx-flex hx-flex-col hx-items-center">
     <ProFormItem
-      borderBottom
       v-for="(item, index) in dynamicStateForm"
       :key="item.fieldCode"
-      :required="item.izRequired === 'yes'"
-      class="hx-w-full"
       :label="item.labelName"
       :prop="item.fieldCode"
+      :required="item.izRequired === 'yes'"
+      borderBottom
+      class="hx-w-full"
       label-width="250rpx"
     >
       <ProInput
         v-if="item.valueType === 'text'"
-        class="!hx-pr-0"
         v-model="data[item.fieldCode]"
-        input-align="right"
         :placeholder="item?.labelName"
+        class="!hx-pr-0"
+        input-align="right"
       />
       <view
         v-if="item.valueType === 'select'"
         @click="handleOpenSelect(item, index)"
       >
         <ProInput
-          class="!hx-pr-0"
           v-model="item.dictValue"
+          :placeholder="item?.labelName"
+          class="!hx-pr-0"
           input-align="right"
           readonly
-          :placeholder="item?.labelName"
         />
       </view>
       <view
@@ -36,37 +36,37 @@
         @click="handleOpenDate(item.fieldCode)"
       >
         <ProInput
-          class="!hx-pr-0"
           v-model="data[item.fieldCode]"
+          :placeholder="item?.labelName"
+          class="!hx-pr-0"
           input-align="right"
           readonly
-          :placeholder="item?.labelName"
         />
       </view>
     </ProFormItem>
   </view>
   <ProDateTimePicker
     ref="datetimePickerRef"
-    mode="date"
-    :minDate="-631180800000"
-    :maxDate="2841840000000"
     v-model="dayDate"
+    :maxDate="2841840000000"
+    :minDate="-631180800000"
+    mode="date"
     @confirm="handleConfirmDate"
   />
   <ProPicker
     ref="proPickerRef"
-    keyName="name"
     :columns="pickerValue"
     cancelText="重置"
+    keyName="name"
     @confirm="handlePickerConfirm"
   />
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { nextTick, ref } from 'vue';
 
 import { useVModel } from '@/hooks/useVModel';
-import { handleDealTimestampDate } from '@/utils/processingText';
+import { handleDealTimestampDate } from '@/utils/date';
 
 const props = defineProps({
   modelValue: {

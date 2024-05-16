@@ -3,9 +3,9 @@
 </template>
 
 <script setup lang="ts">
-import { shallowRef } from 'vue';
+import { ref } from 'vue';
 
-const uvTooltipRef = shallowRef();
+const uvTooltipRef = ref();
 
 const open = () => {
   uvTooltipRef.value.tooltipTop = 0;

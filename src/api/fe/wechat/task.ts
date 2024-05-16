@@ -21,9 +21,7 @@ export interface ITaskDetail {
   gender: string;
   genderName: string;
   id: number;
-  imgUrl: string;
   individualContractName: string;
-  individualContractPath: string;
   izAgeRestrict: string;
   province: string;
   provinceCode: number;
@@ -36,6 +34,7 @@ export interface ITaskDetail {
   taskTypeCategoryName: string;
   description: string;
   taskDetail: string;
+  remark: string;
 }
 /* 获取任务详情 */
 export const getTaskDetail = (params): Promise<ITaskDetail> => {

@@ -17,11 +17,18 @@ module.exports = {
     }
   ],
   rules: {
+    'string-quotes': 'single',
     'selector-class-pattern': null,
     'keyframes-name-pattern': null,
     'no-descending-specificity': null,
     'scss/dollar-variable-pattern': null,
     'unit-case': null,
+    'selector-type-no-unknown': [
+      true,
+      {
+        ignoreTypes: ['page']
+      }
+    ],
     'selector-pseudo-class-no-unknown': [
       true,
       {

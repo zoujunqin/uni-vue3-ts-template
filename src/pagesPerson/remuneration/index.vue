@@ -1,40 +1,43 @@
 <template>
   <ProPage
-    show-navbar
-    navbar-title="收入明细"
     class="remuneration-container hx-bg-white hx-flex hx-flex-col"
+    navbar-title="收入明细"
+    show-navbar
   >
     <ProPageHeader
       ref="proPageHeaderRef"
+      v-model="inputSearchValue"
+      :readonly="true"
       class="hx-relative hx-z-[11]"
       placeholder="请选择企业"
-      :readonly="true"
-      v-model="inputSearchValue"
       @inputClick="handleInputClick"
     >
       <template #bottom>
         <ProCondition
           v-model="conditionStatus"
-          @change="openDate"
-          name="remunerationType"
           :title="monthDate"
+          name="remunerationType"
+          @change="openDate"
         />
       </template>
     </ProPageHeader>
-    <view class="hx-bg-bg-color-grey hx-flex-1 hx-pt-[10px]">
-      <template v-if="dataList.length > 0">
+    <ProScrollList
+      ref="proScrollListRef"
+      :fetch="getPersonalCenterIncomeList"
+      :extend-params="getExtendParams()"
+      class="hx-h-full hx-pb-[10px] hx-pt-[10px] hx-box-border hx-bg-bg-color-grey"
+    >
+      <template #default="{ row }">
         <view
-          v-for="item in dataList"
-          :key="item.commissionDetailId"
-          @click="handleLookDetails(item?.commissionDetailId)"
           class="hx-flex hx-items-center hx-justify-between hx-bg-white hx-p-[16px_12px] hx-mb-[10px]"
+          @click="handleLookDetails(row?.commissionDetailId)"
         >
           <p class="remuneration-title hx-truncate">
-            {{ item?.customerName }}
+            {{ row?.customerName }}
           </p>
           <view class="hx-flex hx-items-center">
             <span class="remuneration-money">
-              +{{ item?.finalPayingAmount }}元
+              +{{ row?.finalPayingAmount }}元
             </span>
             <image
               :src="import('@http/person/arrow-right.svg')"
@@ -43,39 +46,34 @@
           </view>
         </view>
       </template>
-      <ProPlaceholder
-        v-else
-        type="noData"
-        @refresh="handleGetPersonalCenterIncomeList"
-      />
-    </view>
+    </ProScrollList>
     <ProDateTimePicker
       ref="datetimePickerRef"
       v-model="monthDatetime"
       mode="year-month"
-      @confirm="handleGetPersonalCenterIncomeList"
       @close="handleCloseDate"
+      @confirm="handleGetPersonalCenterIncomeList"
     />
     <ProPicker
       ref="proPickerRef"
-      keyName="customerName"
       :columns="pickerValue"
       cancelText="重置"
-      @confirm="handlePickerConfirm"
+      keyName="customerName"
       @cancel="handlePickerCancel"
+      @confirm="handlePickerConfirm"
     />
   </ProPage>
 </template>
 
-<script setup lang="ts">
-import { onPullDownRefresh } from '@dcloudio/uni-app';
-import { computed, nextTick, onMounted, ref } from 'vue';
+<script lang="ts" setup>
+import { computed, nextTick, ref } from 'vue';
 
 import {
-  getPersonalCenterIncomeList,
-  getPersonalCenterIncomeCustomer
+  getPersonalCenterIncomeCustomer,
+  getPersonalCenterIncomeList
 } from '@/api/fe/wechat/personal_center';
-import { handleDealTimestamp } from '@/utils/processingText';
+import { handleDealTimestamp } from '@/utils/date';
+
 const formData = ref({
   salaryIssueMonth: '',
   customerId: ''
@@ -92,14 +90,6 @@ getPersonalCenterIncomeCustomer().then(res => {
 });
 const pickerValue = computed(() => {
   return [customerList.value];
-});
-
-onMounted(() => {
-  handleGetPersonalCenterIncomeList();
-});
-
-onPullDownRefresh(() => {
-  handleGetPersonalCenterIncomeList();
 });
 
 const proPickerRef = ref();
@@ -133,7 +123,11 @@ const conditionStatus = ref(false);
 const handleCloseDate = () => {
   conditionStatus.value = false;
 };
-
+const getExtendParams = () => {
+  formData.value.salaryIssueMonth =
+    monthDate.value.slice(0, 4) + '-' + monthDate.value.slice(5, 7);
+  return formData.value;
+};
 const dataList = ref<Array<any>>([]);
 const handleGetPersonalCenterIncomeList = () => {
   nextTick(() => {
@@ -153,26 +147,29 @@ const handleLookDetails = (id: string) => {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 :deep(.pro-navbar) {
   background-color: #fff;
 }
+
 .remuneration-container {
   .remuneration-title {
-    color: var(--hx-text-color-main);
-    font-size: 18px;
-    font-weight: 600;
     width: 220px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--hx-text-color-main);
   }
+
   .remuneration-text {
-    color: var(--hx-text-color);
-    font-size: 14px;
     margin-top: 8px;
+    font-size: 14px;
+    color: var(--hx-text-color);
   }
+
   .remuneration-money {
-    color: var(--hx-text-color-theme);
     font-size: 18px;
     font-weight: bold;
+    color: var(--hx-text-color-theme);
   }
 }
 </style>

@@ -21,6 +21,7 @@
           <view class="hx-flex hx-flex-col hx-items-center">
             <image
               class="hx-w-[170px] hx-h-[107px] hx-mb-[8px]"
+              mode="aspectFill"
               @tap="handleLookImg(0)"
               :src="
                 personData.idCardFront || import('@http/person/card-front.svg')
@@ -31,6 +32,7 @@
           <view class="hx-flex hx-flex-col hx-items-center">
             <image
               class="hx-w-[170px] hx-h-[107px] hx-mb-[8px]"
+              mode="aspectFill"
               @tap="handleLookImg(1)"
               :src="
                 personData.idCardReverse ||
@@ -113,41 +115,51 @@ const handleLookImg = (index: number) => {
 :deep(.pro-navbar) {
   background-color: #fff;
 }
+
 .personMessage-container {
   .card-box {
-    margin-bottom: 10px;
     padding: 16px 12px;
+    margin-bottom: 10px;
     background-color: var(--hx-bg-color);
   }
+
   .card-tip {
     font-size: 12px;
     color: var(--hx-text-color-regular);
   }
+
   .title-tip {
-    color: var(--hx-text-color-main);
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
+    color: var(--hx-text-color-main);
   }
+
   .form-row {
     display: flex;
+    align-items: center;
     margin-top: 12px;
   }
+
   .form-label {
     display: block;
     width: 80px;
     font-size: 14px;
     color: var(--hx-text-color-tip);
   }
+
   .form-text {
-    color: var(--hx-text-color-main);
     font-size: 14px;
+    color: var(--hx-text-color-main);
   }
+
   .warning-text-color {
     color: var(--hx-color-warning-active);
   }
+
   .passed-text-color {
     color: var(--hx-color-success-active);
   }
+
   .error-text-color {
     color: var(--hx-color-error-active);
   }

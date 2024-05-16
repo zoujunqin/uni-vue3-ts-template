@@ -4,31 +4,20 @@
     "custom": {
       "^uv-(.*)": "@climblee/uv-ui/components/uv-$1/uv-$1.vue",
       "^Pro(.*)": "@/components/Pro$1/Pro$1.vue",
+      "^Pro(.*)": "@/components/Pro/Pro$1/Pro$1.vue",
       "^(?!z-paging-refresh|z-paging-load-more)z-paging(.*)": "z-paging/components/z-paging$1/z-paging$1.vue"
     }
   },
   "pages": [
     //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
     {
+      "path": "pages/portal/index"
+    },
+    {
       "path": "pages/login/index"
     },
     {
-      "path": "pages/divideTask/index",
-      "style": {
-        "enablePullDownRefresh": true
-      }
-    },
-    {
       "path": "pages/login/mobileLogin"
-    },
-    {
-      "path": "pages/taskCenter/index",
-      "style": {
-        "enablePullDownRefresh": true
-      }
-    },
-    {
-      "path": "pages/personCenter/index"
     }
   ],
   "subPackages": [
@@ -63,25 +52,25 @@
         {
           "path": "bankCard/index",
           "style": {
-            "enablePullDownRefresh": true
+            "enablePullDownRefresh": false
           }
         },
         {
           "path": "myContract/index",
           "style": {
-            "enablePullDownRefresh": true
+            "enablePullDownRefresh": false
           }
         },
         {
           "path": "myInsurance/index",
           "style": {
-            "enablePullDownRefresh": true
+            "enablePullDownRefresh": false
           }
         },
         {
           "path": "remuneration/index",
           "style": {
-            "enablePullDownRefresh": true
+            "enablePullDownRefresh": false
           }
         },
         {
@@ -91,27 +80,22 @@
           "path": "remuneration/remunerationDetails"
         }
       ]
+    },
+    {
+      "root": "pagesTransfer",
+      "name": "pagesTransfer",
+      "pages": [
+        {
+          "path": "index"
+        }
+      ]
     }
   ],
   "preloadRule": {
-    "pages/login/index": {
+    "pages/portal/index": {
       "network": "all",
-      "packages": ["pagesAuth", "pagesTask", "pagesPerson"]
+      "packages": ["pagesTask", "pagesPerson"]
     }
-  },
-  "tabBar": {
-    "height": "0",
-    "list": [
-      {
-        "pagePath": "pages/taskCenter/index"
-      },
-      {
-        "pagePath": "pages/divideTask/index"
-      },
-      {
-        "pagePath": "pages/personCenter/index"
-      }
-    ]
   },
   "globalStyle": {
     "navigationStyle": "custom"

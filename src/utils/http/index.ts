@@ -15,23 +15,24 @@ import {
   RequestMethods
 } from './types.d';
 
+import { useUserStore } from '@/pinia/modules/user';
 import { getUUID } from '@/utils';
 import { decryptString, encryptString } from '@/utils/crypto';
-import { formatToken, getToken, removeToken } from '@/utils/user';
+import { formatToken } from '@/utils/storage';
+
 const httpNoMessage = ['/fe/wechat/worker_protocol/sign'];
-const baseUrlMap = {
-  // development: 'http://218.104.230.173:17054',
-  development: 'https://localdev-hro-api.fjhxrl.com',
-  // development: 'http://192.168.3.48:8100', // 林伦
-  // development: 'https://localtest-hro-api.fjhxrl.com/',
-  production: 'https://localtest-hro-api.fjhxrl.com/'
-};
+
+// const baseURL = 'http://218.104.230.173:17054'; // 开发环境
+// const baseURL = 'https://localdev-hro-api.fjhxrl.com'; // 测试环境
+const baseURL = 'https://localtest-hro-api.fjhxrl.com'; // 测试环境
+// const baseURL = 'http://192.168.3.73:8100'; // 林伦
+// const baseURL = 'http://192.168.117.86:8100'; // 大立
 
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {
-  baseURL: baseUrlMap[import.meta.env.MODE],
+  baseURL: import.meta.env.VITE_BASE_URL || baseURL,
   // 请求超时时间
-  timeout: 30 * 1000,
+  timeout: 5 * 1000,
   headers: {
     Accept: 'application/json, text/plain, */*',
     'Content-Type': 'application/json',
@@ -42,6 +43,7 @@ const defaultConfig: AxiosRequestConfig = {
   paramsSerializer: {
     serialize: stringify as unknown as CustomParamsSerializer
   },
+  loading: true,
   adapter: createUniAppAxiosAdapter()
 };
 
@@ -64,22 +66,67 @@ const isNeedDecrypt = response =>
   response.headers['Enable-Response-Decrypt'] !== 'False';
 
 class PureHttp {
+  /** 初始化配置对象 */
+  private static initConfig: PureHttpRequestConfig = {};
+  /** 保存当前Axios实例对象 */
+  private static axiosInstance: AxiosInstance = Axios.create(defaultConfig);
+  public baseUrl = defaultConfig.baseURL;
+
   constructor() {
     this.httpInterceptorsRequest();
     this.httpInterceptorsResponse();
   }
 
-  /** 初始化配置对象 */
-  private static initConfig: PureHttpRequestConfig = {};
+  /** 通用请求工具函数 */
+  public request<T = any>(
+    method: RequestMethods,
+    url: string,
+    param?: AxiosRequestConfig,
+    axiosConfig?: PureHttpRequestConfig
+  ): Promise<T> {
+    const config = {
+      method,
+      url,
+      ...param,
+      ...axiosConfig
+    } as PureHttpRequestConfig;
 
-  /** 保存当前Axios实例对象 */
-  private static axiosInstance: AxiosInstance = Axios.create(defaultConfig);
+    // 单独处理自定义请求/响应回掉
+    return new Promise((resolve, reject) => {
+      PureHttp.axiosInstance
+        .request(config)
+        .then((response: any) => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+
+  /** 单独抽离的post工具函数 */
+  public post<T, P>(
+    url: string,
+    params?: AxiosRequestConfig<T>,
+    config?: PureHttpRequestConfig
+  ): Promise<P> {
+    return this.request<P>('post', url, params, config);
+  }
+
+  /** 单独抽离的get工具函数 */
+  public get<T, P>(
+    url: string,
+    params?: AxiosRequestConfig<T>,
+    config?: PureHttpRequestConfig
+  ): Promise<P> {
+    return this.request<P>('get', url, params, config);
+  }
 
   /** 请求拦截 */
   private httpInterceptorsRequest(): void {
     PureHttp.axiosInstance.interceptors.request.use(
       async (config: PureHttpRequestConfig): Promise<any> => {
-        config.loading && uni.showLoading({ title: '加载中...' });
+        config.loading && uni.showLoading();
         // 验签步骤
         const formData = config.params || '';
         const requestBody = config.data || '';
@@ -93,7 +140,7 @@ class PureHttp {
             : requestBodyString;
         }
         const apiUrl = config.url;
-        const authorization = getToken();
+        const authorization = useUserStore().token;
         const randomString = getUUID();
 
         const timestamp = Date.now().toString();
@@ -166,29 +213,50 @@ class PureHttp {
       },
       (error: PureHttpError) => {
         const $error = error;
+
+        if (!$error.code && $error.message === 'request:fail ') {
+          uni.showToast({ title: '网络错误', icon: 'none' });
+          uni.hideLoading();
+          return;
+        } else if (
+          $error.code === 'ETIMEDOUT' &&
+          $error.message === 'request:fail timeout'
+        ) {
+          uni.showToast({ title: '请求超时', icon: 'none' });
+          uni.hideLoading();
+          return;
+        }
+
         let responseData: any = $error.response.data;
+
         if (isNeedDecrypt($error.response)) {
           responseData = JSON.parse(decryptString(responseData));
         }
-        const customDealCodes = ['50004'];
-        // 跳转到登录页面 401、40102、40103、40104
+
+        const { message, code } = responseData;
+
+        //邀请码已失效70001
+        const customDealCodes = ['70001'];
+        // 跳转到登录页面 401
         const loginFailureCodeList = ['401', '40102', '40103', '40104'];
-        if (loginFailureCodeList.includes(responseData.code)) {
-          setTimeout(() => {
-            uni.showToast({ title: '授权过期，请重新登录', icon: 'none' });
-          }, 30);
-          removeToken();
+
+        if (loginFailureCodeList.includes(code)) {
+          uni.clearStorageSync();
           uni.reLaunch({ url: '/pages/login/index' });
-        } else if (!customDealCodes.includes(responseData.code)) {
+          uni.showToast({
+            title: message || '授权过期，请重新登录',
+            icon: 'none'
+          });
+        } else if (!customDealCodes.includes(code)) {
+          // FIXME: 接口统一需要返回 code 70001
           if (!httpNoMessage.includes($error.config.url)) {
-            setTimeout(() => {
-              uni.showToast({
-                title: responseData.message || '接口异常',
-                icon: 'none'
-              });
-            }, 30);
+            uni.showToast({
+              title: message || '接口异常',
+              icon: 'none'
+            });
           }
         }
+
         $error.isCancelRequest = Axios.isCancel($error);
         uni.hideLoading();
         // 所有的响应异常 区分来源为取消请求/非取消请求
@@ -196,53 +264,6 @@ class PureHttp {
       }
     );
   }
-
-  /** 通用请求工具函数 */
-  public request<T = any>(
-    method: RequestMethods,
-    url: string,
-    param?: AxiosRequestConfig,
-    axiosConfig?: PureHttpRequestConfig
-  ): Promise<T> {
-    const config = {
-      method,
-      url,
-      ...param,
-      ...axiosConfig
-    } as PureHttpRequestConfig;
-
-    // 单独处理自定义请求/响应回掉
-    return new Promise((resolve, reject) => {
-      PureHttp.axiosInstance
-        .request(config)
-        .then((response: any) => {
-          resolve(response);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  }
-
-  /** 单独抽离的post工具函数 */
-  public post<T, P>(
-    url: string,
-    params?: AxiosRequestConfig<T>,
-    config?: PureHttpRequestConfig
-  ): Promise<P> {
-    return this.request<P>('post', url, params, config);
-  }
-
-  /** 单独抽离的get工具函数 */
-  public get<T, P>(
-    url: string,
-    params?: AxiosRequestConfig<T>,
-    config?: PureHttpRequestConfig
-  ): Promise<P> {
-    return this.request<P>('get', url, params, config);
-  }
-
-  public baseUrl = defaultConfig.baseURL;
 }
 
 export const http = new PureHttp();

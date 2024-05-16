@@ -8,8 +8,7 @@ import {
   watch
 } from 'vue-demi';
 
-import { isDef } from '@/utils';
-import { CloneFn, cloneFnJSON } from '@/utils/clone';
+import { CloneFn, cloneFnJSON, isDef } from '@/utils/es';
 
 export interface UseVModelOptions<T, Passive extends boolean = false> {
   /**

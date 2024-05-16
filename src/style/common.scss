@@ -14,11 +14,6 @@ page {
   padding-top: 88px;
 }
 
-.page-pb-with-tabbar {
-  /* 安全区 + tabbar高度 */
-  padding-bottom: calc(var(--hx-tabbar-height) + env(safe-area-inset-bottom));
-}
-
 /* 文字超出显示省略号 */
 .text-ellipsis {
   overflow: hidden;
@@ -85,10 +80,9 @@ page {
   }
 }
 
-/* --------------------------- 覆盖组件样式 ------------------------------ */
+// 覆盖 uv 样式
 
-/* pro-count-down */
-.pro-count-down > text {
+.uv-count-down > text {
   color: var(--hx-color-primary);
 }
 
@@ -96,4 +90,8 @@ page {
   justify-content: unset !important;
   background-color: unset !important;
   border-bottom: unset !important;
+}
+
+.uv-steps .uv-steps-item .uv-steps-item__wrapper {
+  background-color: transparent;
 }

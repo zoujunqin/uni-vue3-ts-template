@@ -1,14 +1,23 @@
+import { debounce } from 'lodash-es';
 import { computed, ref } from 'vue';
 
 import { useHandlerCode } from './useHandlerCode';
 
 import {
   getRealNameInfo,
-  realNameAuth,
-  postAppealSubmit
+  postAppealSubmit,
+  realNameAuth
 } from '@/api/fe/wechat/worker';
+import { getOcrIdCard } from '@/api/system/ocr';
 import { APPLY_STATUS, REAL_TYPE, YES_NO_TYPE } from '@/constant/taskDetail';
-import { getRealName, setRealName, getInvitationCodeId } from '@/utils/user';
+import { useOss } from '@/hooks/useOss';
+import { useUserStore } from '@/pinia/modules/user';
+import {
+  getIdCardMessage,
+  getRealName,
+  setIdCardMessage,
+  setRealName
+} from '@/utils/storage';
 
 export const useHandler = ({
   infoParams,
@@ -21,6 +30,7 @@ export const useHandler = ({
     signUrl,
     current
   });
+  const { getPreviewUrl } = useOss();
   const formData = ref<any>({});
   const proFormRef = ref();
   const dynamicState = ref();
@@ -29,6 +39,7 @@ export const useHandler = ({
   const explainModalRef = ref();
   const localFormData = getRealName() || {};
   const localBool = Object.keys(localFormData).length > 0;
+
   const handleGetRealNameInfo = () => {
     getRealNameInfo(infoParams.value).then(async res => {
       applyStatusMap.value = {
@@ -64,10 +75,12 @@ export const useHandler = ({
     formData.value['ocrSure'] = {
       front: localBool
         ? localFormData['ocrSure'].front
-        : applyStatusMap.value.appealStatus === APPLY_STATUS.PASSED,
+        : applyStatusMap.value.appealStatus === APPLY_STATUS.PASSED ||
+          applyStatusMap.value.appealStatus === null,
       reverse: localBool
         ? localFormData['ocrSure'].reverse
-        : applyStatusMap.value.appealStatus === APPLY_STATUS.PASSED
+        : applyStatusMap.value.appealStatus === APPLY_STATUS.PASSED ||
+          applyStatusMap.value.appealStatus === null
     };
   };
   const getFormDataRules = subItem => {
@@ -78,18 +91,30 @@ export const useHandler = ({
     };
     formRules.value[subItem.fieldCode] = rule;
   };
-  const handleNext = async () => {
+  const handleNext = debounce(async () => {
     if (!formData.value['idCardFront'] || !formData.value['idCardReverse']) {
       return uni.showToast({
         title: '请先上传身份证',
         icon: 'none'
       });
     }
+
     await proFormRef.value.validate();
     const dataKeys = Object.keys(formData.value);
     if (!smsCode.value && dataKeys.includes('mobile')) {
       return uni.showToast({
         title: '请输入验证码',
+        icon: 'none'
+      });
+    }
+    if (
+      dataKeys.includes('credentialStartDate') &&
+      dataKeys.includes('credentialEndDate') &&
+      new Date(formData.value['credentialStartDate']).getTime() >=
+        new Date(formData.value['credentialEndDate']).getTime()
+    ) {
+      return uni.showToast({
+        title: '身份证有效期开始时间不能大于结束时间',
         icon: 'none'
       });
     }
@@ -110,12 +135,34 @@ export const useHandler = ({
       }
     }
     const { front, reverse } = formData.value['ocrSure'];
-
-    if (front && reverse) {
+    if (!getIdCardMessage()) {
+      handleGetOcrIdCard();
+    }
+    const { name, idNumber } = getIdCardMessage();
+    if (
+      front &&
+      reverse &&
+      name === formData.value['workerName'] &&
+      idNumber === formData.value['idCardNo']
+    ) {
       handleRealNameAuth();
     } else {
       explainModalRef.value.open();
     }
+  }, 500);
+
+  const handleGetOcrIdCard = async () => {
+    const params = {
+      imageUrl: await getPreviewUrl(formData.value['idCardFront']),
+      needParse: true
+    };
+    getOcrIdCard(params).then(res => {
+      const { name, idNumber } = res.face;
+      setIdCardMessage({
+        name,
+        idNumber
+      });
+    });
   };
   const handleRealNameAuth = async () => {
     const keyList = Object.keys(formData.value);
@@ -135,7 +182,11 @@ export const useHandler = ({
     };
     realNameAuth(params).then(() => {
       handlePageBack();
-      if (getInvitationCodeId() === '-1') {
+
+      const {
+        sceneOption: { c }
+      } = useUserStore();
+      if (!c) {
         handleApplyTask();
       } else {
         handleGetInvitationCodeScan();
@@ -146,7 +197,7 @@ export const useHandler = ({
   const handlePageBack = () => {
     setRealName(formData.value);
   };
-  const handleExplainConfirm = () => {
+  const handleExplainConfirm = debounce(() => {
     const {
       idCardNo,
       idCardReverse,
@@ -165,11 +216,14 @@ export const useHandler = ({
       mobile,
       bankName
     };
-    postAppealSubmit(params).then(() => {
-      uni.showToast({ title: '申述成功，请耐心等待', icon: 'none' });
-      uni.navigateBack();
-    });
-  };
+    postAppealSubmit(params)
+      .then(() => {
+        uni.showToast({ title: '申述成功，请耐心等待', icon: 'none' });
+      })
+      .finally(() => {
+        explainModalRef.value.close();
+      });
+  }, 500);
   const applyTipText = computed(() => {
     return applyStatusMap.value['appealStatus'] === APPLY_STATUS.REJECT
       ? `申诉失败：原因(${applyStatusMap.value.rejectCause})`

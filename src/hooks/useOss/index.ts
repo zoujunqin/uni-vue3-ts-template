@@ -3,9 +3,9 @@
 import AliOss from 'ali-oss';
 import axios from 'axios';
 
-import { OssUploadConfig, OSSCredentialConfig, ModuleType } from './types';
+import { ModuleType, OSSCredentialConfig, OssUploadConfig } from './types';
 
-import { getOssPolicy, getOssCredential } from '@/api/system/oss';
+import { getOssCredential, getOssPolicy } from '@/api/system/oss';
 import { getUUID } from '@/utils';
 
 const OSS_CREDENTIAL_KEY = 'oss_creadential_key';
@@ -27,7 +27,7 @@ export const useOss = () => {
       const { accessid, host, key, policy, signature } = ossConfig;
       uni.uploadFile({
         url: host,
-        filePath: filePath,
+        filePath,
         name: 'file', // 必须填file。
         formData: {
           key,

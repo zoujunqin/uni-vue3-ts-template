@@ -1,11 +1,13 @@
 <template>
-  <view class="section-title hx-mb-[10px]"> 任务地点 </view>
-  <map
-    class="hx-h-[186px] hx-w-full hx-mb-[16px]"
-    :latitude="latitude"
-    :longitude="longitude"
-    :markers="markers"
-  />
+  <view v-if="data.address">
+    <view class="section-title hx-mb-[10px]"> 任务地点 </view>
+    <map
+      class="hx-h-[186px] hx-w-full hx-mb-[16px]"
+      :latitude="latitude"
+      :longitude="longitude"
+      :markers="markers"
+    />
+  </view>
 </template>
 
 <script setup lang="ts">
@@ -26,9 +28,9 @@ const longitude = shallowRef(0);
 const latitude = shallowRef(0);
 
 const getPositionByAddress = () => {
-  const { province, city, area, address } = props.data;
+  const { address } = props.data;
 
-  getGeo({ address: province + city + area + address }).then(res => {
+  getGeo({ address: address }).then(res => {
     const { location } = res.data.geocodes[0];
     const [lng, lat] = location.split(',');
     longitude.value = lng;
@@ -43,7 +45,7 @@ const getPositionByAddress = () => {
         height: 20,
         callout: {
           //可根据需求是否展示经纬度
-          content: city + area,
+          content: address,
           color: '#000',
           display: 'ALWAYS'
         }

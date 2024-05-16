@@ -1,6 +1,6 @@
 import { PropType } from 'vue';
 
-import { FILE, IMAGE, BACKGROUND_NAMES } from './const';
+import { BACKGROUND_NAMES, FILE, IMAGE } from './const';
 
 export const uploadProps = {
   uploadType: {
@@ -30,5 +30,11 @@ export const uploadProps = {
   modelValue: {
     type: String,
     default: ''
+  },
+
+  /* 上传成功后需要特别处理的钩子, 返回 Boolean 类型 */
+  doAfterUploadSuccess: {
+    type: Function,
+    default: () => true
   }
 };

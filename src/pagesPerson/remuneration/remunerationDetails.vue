@@ -23,12 +23,12 @@
           </view>
         </view>
         <image
-          :src="import('@http/person/shield-big.svg')"
+          :src="import('@http/person/shield-big.png')"
           class="shieldBig-img"
         />
       </view>
       <view class="details-content">
-        <p class="hx-text-text-color-main hx-text-[18px] hx-font-semibold">
+        <p class="hx-text-text-color-main hx-text-[16px] hx-font-semibold">
           详细信息
         </p>
         <view
@@ -91,13 +91,15 @@ onLoad(query => {
 :deep(.pro-navbar) {
   background-color: #fff;
 }
+
 .remunerationDetails-container {
   .monty-box {
     position: relative;
-    height: 138px;
     width: 343px;
+    height: 138px;
+    background: rgb(255 255 255 / 40%);
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.4);
+
     .top-content {
       position: absolute;
       top: 11px;
@@ -105,31 +107,34 @@ onLoad(query => {
       display: flex;
       align-items: center;
     }
+
     .footer-content {
       position: absolute;
       bottom: 0;
-      background-color: #fff;
-      height: 96px;
-      width: 343px;
-      border-radius: 12px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      width: 343px;
+      height: 96px;
+      background-color: #fff;
+      border-radius: 12px;
     }
+
     .shieldBig-img {
       position: absolute;
+      top: 0;
+      right: 0;
       width: 136px;
       height: 127px;
-      right: 0;
-      top: 0;
     }
   }
+
   .details-content {
     width: 343px;
+    padding: 16px 12px 22px;
+    margin: 10px 0;
     background-color: #fff;
     border-radius: 12px;
-    padding: 16px 12px 22px 12px;
-    margin: 10px 0;
   }
 }
 </style>

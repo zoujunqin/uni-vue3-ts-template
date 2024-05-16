@@ -1,0 +1,16 @@
+{
+  "name": "uni-mp-vite",
+  "version": "3.0.0-alpha-4000020240117001",
+  "description": "Optimize the original uni-mp-vite plugin",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/oxcode/mp-flexible-staffing.git"
+  },
+  "dependencies": {
+    "debug": "4.3.3"
+  }
+}

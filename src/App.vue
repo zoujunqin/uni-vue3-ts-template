@@ -1,8 +1,5 @@
-<script setup lang="ts">
-import { onHide, onLaunch, onShow } from '@dcloudio/uni-app';
-
-import { useUserStore } from './pinia/modules/user';
-import { switchFirstTab } from './utils/switchTab';
+<script lang="ts" setup>
+import { onLaunch, onShow } from '@dcloudio/uni-app';
 
 import { useSystemStore } from '@/pinia/modules/system';
 
@@ -10,16 +7,20 @@ onLaunch(() => {
   uni.getSystemInfo().then(data => {
     useSystemStore().setSystemInfo(data);
   });
-
-  useUserStore().getToken() && switchFirstTab();
 });
 
-onShow(() => {});
+onShow(() => {
+  const { setNetworkStatus } = useSystemStore();
 
-onHide(() => {});
+  uni.onNetworkStatusChange(res => {
+    setNetworkStatus(res);
+  });
+});
 </script>
 
 <style lang="scss">
+@import '@/style/common.scss';
+@import '@/style/variable.scss';
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';

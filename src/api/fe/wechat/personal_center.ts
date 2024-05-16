@@ -17,14 +17,10 @@ export interface IPersonCenterInfo {
   totalAmount: number;
   workerName: string;
 }
-/* 获取个人信息 */
-export const getPersonInfo = (): Promise<IPersonInfo> => {
-  return http.request('get', `${baseApi}/info`);
-};
 
 /* 获取个人中心数据 */
-export const getPersonCenter = (): Promise<IPersonCenterInfo> => {
-  return http.request('get', `${baseApi}`);
+export const getPersonInfo = (): Promise<IPersonCenterInfo> => {
+  return http.request('get', `${baseApi}`, { loading: false });
 };
 
 /** 获取银行卡 */
@@ -43,8 +39,8 @@ export const getPersonalCenterInsurance = () => {
 };
 
 /** 获取我的合同 */
-export const getPersonalCenterContract = (params: unknown) => {
-  return http.request('get', `${baseApi}/contract`, { params });
+export const getPersonalCenterContract = () => {
+  return http.request('get', `${baseApi}/contract`);
 };
 
 /** 获取收入明细列表 */

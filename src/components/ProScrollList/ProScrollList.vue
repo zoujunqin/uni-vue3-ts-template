@@ -6,7 +6,7 @@
     loading-more-enabled
     :fixed="false"
     :auto="false"
-    :refresher-enabled="false"
+    :refresher-enabled="true"
     :use-virtual-list="true"
     :default-page-size="10"
     :empty-view-center="false"

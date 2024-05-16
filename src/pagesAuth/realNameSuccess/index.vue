@@ -1,14 +1,14 @@
 <template>
   <ProPage
     :showBack="false"
-    show-navbar
-    navbar-title="实名认证"
     class="hx-p-[156px_24px_0_24px] hx-bg-white"
+    navbar-title="实名认证"
+    show-navbar
   >
     <view class="hx-flex hx-items-center hx-justify-center hx-mb-[20px]">
       <image
-        class="hx-w-[32px] hx-h-[32px] hx-mr-[8px] hx-mt-[8px]"
         :src="import('@http/real-name-success/success-icon-blue.png')"
+        class="hx-w-[32px] hx-h-[32px] hx-mr-[8px] hx-mt-[8px]"
       />
       <text class="hx-text-[30px] hx-font-[600] hx-leading-[30px]">
         认证成功
@@ -17,8 +17,8 @@
 
     <view class="hx-flex hx-items-center hx-justify-center hx-mb-[45px]">
       <image
-        class="hx-w-[16px] hx-h-[16px] hx-mr-[4px]"
         :src="import('@http/real-name-success/success-icon-green.png')"
+        class="hx-w-[16px] hx-h-[16px] hx-mr-[4px]"
       />
       <text
         class="hx-text-text-color-tip hx-font-[600] hx-text-[14px] hx-leading-[14px]"
@@ -55,15 +55,13 @@
   </ProPage>
 </template>
 
-<script setup lang="ts">
-import { switchFirstTab } from '@/utils/switchTab';
-
+<script lang="ts" setup>
 const toTaskCenter = () => {
-  switchFirstTab();
+  uni.reLaunch({ url: '/pages/portal/index' });
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .to-task-list-panel {
   background-image: url($http + '/real-name-success/bg.png');
 }

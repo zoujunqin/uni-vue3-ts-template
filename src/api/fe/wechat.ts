@@ -7,9 +7,7 @@ export interface IWeChatParma {
   invitationCodeId?: number;
 }
 /* 手机号获取凭证登录 - 微信登录 */
-export const loginWithWeChat = (
-  data: IWeChatParma
-): Promise<{ token: string }> => {
+export const weChatLogin = (data: IWeChatParma): Promise<{ token: string }> => {
   return http.request('post', `${baseApi}/code_login`, { data });
 };
 
@@ -19,7 +17,7 @@ export interface ISmsParam {
   smsCode: string;
 }
 /* 手机号验证码登录 */
-export const loginWithSms = (data: ISmsParam): Promise<{ token: string }> => {
+export const smsLogin = (data: ISmsParam): Promise<{ token: string }> => {
   return http.request('post', `${baseApi}/sms_login`, { data });
 };
 

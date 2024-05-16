@@ -1,30 +1,25 @@
 <template>
-  <view class="hx-h-full hx-overflow-auto" :class="pageClass">
+  <view class="hx-h-full hx-overflow-auto">
+    <ProNetworkTip />
+
     <ProNavbar
       v-if="showNavbar"
-      :style="navbarStyle"
-      :text="navbarTitle"
       :showBack="showBack"
+      :text="navbarTitle"
       @navBack="handleNavBack"
     />
-    <ProTabbar v-if="showTabbar" />
 
     <slot />
+
+    <ProLoading />
   </view>
 </template>
-<script setup lang="ts">
-import { computed } from 'vue';
-
-const props = defineProps({
+<script lang="ts" setup>
+defineProps({
   showNavbar: Boolean,
-  showTabbar: Boolean,
   navbarTitle: {
     type: String,
     default: '导航栏'
-  },
-  navbarVisibility: {
-    type: String,
-    default: 'unset'
   },
   showBack: {
     type: Boolean,
@@ -32,17 +27,7 @@ const props = defineProps({
   }
 });
 const emit = defineEmits(['pageBack']);
-const pageClass = computed(() => {
-  return {
-    'page-pb-with-tabbar': props.showTabbar
-  };
-});
 
-const navbarStyle = computed(() => {
-  return {
-    visibility: props.navbarVisibility
-  };
-});
 const handleNavBack = () => {
   emit('pageBack');
 };

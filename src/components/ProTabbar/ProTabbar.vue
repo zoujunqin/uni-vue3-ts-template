@@ -1,57 +1,45 @@
 <template>
-  <view
-    class="tabbar hx-w-full hx-fixed hx-bottom-0 hx-left-0 hx-flex hx-items-center hx-justify-center hx-pt-[4px] hx-pb-4px] hx-bg-white"
+  <uv-tabbar
+    ref="parentInstance"
+    :border="false"
+    :value="value"
+    class="!hx-flex-none"
+    v-bind="$attrs"
+    @change="tabbarChange"
   >
-    <view
-      v-for="(item, index) in tabbarList"
-      :key="index"
-      class="hx-flex-1 hx-flex hx-flex-col hx-items-center hx-pl-[19px] hx-pr-[19px]"
-      @click="switchTabbar(item.pagePath)"
-    >
-      <image
-        :src="getSelectedConfig(item).icon"
-        class="hx-h-[24px] hx-w-[24px]"
-      />
-      <text
-        class="hx-text-[10px] hx-font-[500] hx-leading-[16px]"
-        :class="getSelectedConfig(item).textClass"
-      >
-        {{ item.text }}
-      </text>
-    </view>
-  </view>
+    <slot />
+  </uv-tabbar>
 </template>
-<script setup lang="ts">
-import { storeToRefs } from 'pinia';
 
-import { ITabbar, useTabbarStore } from '@/pinia/modules/tabbar';
+<script lang="ts" setup>
+/*
+ * 问题: uv-tabbar-item 一级一级向上查找数据, 因为插槽, 所以查找不到 uv-tabbar, 就无法构建上下级数据更新
+ * 修复: 将 pro-tabbar 仿冒为 uv-tabbar, 复制 uv-tabbar 的数据到当前组件供子组件初始化, 然后去更新子组件的 parent 为 uv-tabbar
+ * */
 
-const tabbarStore = useTabbarStore();
+import { useNextedCompatible } from '@/hooks/useNextedCompatible';
+import { useVModel } from '@/hooks/useVModel';
 
-const { switchTabbar, initTabbar } = tabbarStore;
-const { tabbarList, currentTabbar } = storeToRefs(tabbarStore);
+const props = defineProps({
+  modelValue: String
+});
+const emit = defineEmits(['update:modelValue', 'change']);
 
-const getSelectedConfig = (data: ITabbar) => {
-  const { pagePath, selectedIcon } = currentTabbar.value;
+const { ctx, parentInstance } = useNextedCompatible();
 
-  return {
-    icon: data.pagePath === pagePath ? selectedIcon : data.icon,
-    textClass:
-      data.pagePath === pagePath ? ['hx-text-[#007AFF]'] : ['hx-text-[#7A7E83]']
-  };
+const value = useVModel(props, 'modelValue', emit);
+
+const tabbarChange = name => {
+  value.value = name;
+  ctx.value = name;
+  emit('change', name);
 };
-
-initTabbar();
 </script>
 
 <script lang="ts">
-export default { options: { name: 'ProTabbar', virtualHost: true } };
+export default {
+  // 这里 name 为 uv-tabbar 是为了 uv-tabbar-item 内部的查找机制
+  name: 'uv-tabbar',
+  options: { name: 'ProTabbar', virtualHost: true }
+};
 </script>
-
-<style scoped>
-/* 安全区适配 */
-.tabbar {
-  height: calc(var(--hx-tabbar-height) + env(safe-area-inset-bottom));
-  padding-bottom: env(safe-area-inset-bottom);
-}
-</style>

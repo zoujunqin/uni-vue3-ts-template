@@ -1,23 +1,23 @@
 <template>
   <ProPage
-    show-navbar
-    navbar-title="实名认证"
     class="hx-flex hx-flex-col"
+    navbar-title="实名认证"
+    show-navbar
     @pageBack="handlePageBack"
   >
     <view class="step-container page-pt-with-navbar hx-h-[170px]">
-      <Steps class="hx-mt-[23px]" :current="current" />
+      <Steps :current="current" class="hx-mt-[7px]" />
     </view>
 
     <view class="hx-flex-1 hx-overflow-auto hx-pb-[54px]">
       <view v-if="current === 0">
         <ProForm
           ref="proFormRef"
-          borderBottom
-          label-position="left"
-          error-type="border-bottom"
           :model="formData"
           :rules="formRules"
+          borderBottom
+          error-type="border-bottom"
+          label-position="left"
         >
           <view class="hx-p-[16px_20px] hx-bg-white hx-mb-[10px]">
             <text
@@ -37,32 +37,32 @@
           </view>
           <view v-for="(item, index) in dynamicState" :key="index">
             <view
-              class="info-content"
               v-if="item.categoryCode === REAL_TYPE.BANK_INFO"
+              class="info-content"
             >
               <BankInfoForm
-                :dynamicStateForm="item.properties"
+                ref="bankInfoFormRef"
                 v-model="formData"
                 v-model:smsCode="smsCode"
-                ref="bankInfoFormRef"
+                :dynamicStateForm="item.properties"
               />
             </view>
             <view
-              class="info-content"
               v-if="item.categoryCode === REAL_TYPE.BASE_INFO"
+              class="info-content"
             >
               <BaseInfoForm
-                :dynamicStateForm="item.properties"
                 v-model="formData"
+                :dynamicStateForm="item.properties"
               />
             </view>
             <view
-              class="info-content"
               v-if="item.categoryCode === REAL_TYPE.CERTIFICATION_INFO"
+              class="info-content"
             >
               <QualificationUpload
-                :dynamicStateForm="item.properties"
                 v-model="formData"
+                :dynamicStateForm="item.properties"
               />
             </view>
           </view>
@@ -70,10 +70,10 @@
 
         <ProPageFooter>
           <ProButton
+            :disabled="nextDisabled"
             class="hx-w-full"
             type="primary"
             @click="handleNext"
-            :disabled="nextDisabled"
           >
             完成认证（下一步）
           </ProButton>
@@ -84,17 +84,19 @@
       </view>
     </view>
   </ProPage>
+
   <OperateTip />
+
   <ProModal
     ref="explainModalRef"
-    title=""
-    content="您的身份证图片识别不通过，请重新上传或进行申述处理?"
     confirm-button-text="申述"
+    content="您的身份证图片识别的姓名与身份证号与填写的不一致，请重新上传图片或进行申述处理?"
+    title=""
     @confirm="handleExplainConfirm"
   />
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onLoad } from '@dcloudio/uni-app';
 import { computed, ref } from 'vue';
 
@@ -108,8 +110,8 @@ import { useHandler } from './hooks/useHandler';
 import { useHandlerCode } from './hooks/useHandlerCode';
 
 import {
-  APPLY_STATUS_MAP,
   APPLY_STATUS,
+  APPLY_STATUS_MAP,
   REAL_TYPE
 } from '@/constant/taskDetail';
 
@@ -166,15 +168,16 @@ const nextDisabled = computed(() => {
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .step-container {
   background-image: url($http + '/real-name/real-name-bg.png');
   background-repeat: no-repeat;
-  background-size: 100% auto;
+  background-size: 100% 100%;
 }
+
 .info-content {
   padding: 20px 16px;
-  background-color: #fff;
   margin-bottom: 10px;
+  background-color: #fff;
 }
 </style>

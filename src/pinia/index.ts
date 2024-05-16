@@ -1,8 +1,12 @@
-import { createPinia } from 'pinia';
-import type { App } from 'vue';
+import { useAreaStore } from './modules/area';
+import { useLoadingStore } from './modules/loading';
+import { useUserStore } from './modules/user';
 
-const pinia = createPinia();
-
-export const setupPinia = (app: App<Element>) => {
-  app.use(pinia);
-};
+const userStore = useUserStore();
+const areaStore = useAreaStore();
+const loadingStore = useLoadingStore();
+export function clearStore() {
+  userStore.$reset();
+  areaStore.$reset();
+  loadingStore.$reset();
+}
