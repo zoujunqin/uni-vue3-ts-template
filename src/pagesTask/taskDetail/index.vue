@@ -66,7 +66,6 @@ onLoad(query => {
 const handleApplyTask = () => {
   applyTask(routeParams.value).then(res => {
     const realStatus = getRealStatus(res);
-    console.log(realStatus);
 
     // 已经实名并且签署合同了
     if (realStatus === REAL_STATUS.ALREADY_REAL) {

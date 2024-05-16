@@ -42,7 +42,7 @@ const getWorkerProtocolSign = query => {
     });
 };
 
-onLoad(query => {
-  getWorkerProtocolSign(query);
+onLoad(({ taskQueryParams = {} }) => {
+  getWorkerProtocolSign(JSON.parse(taskQueryParams));
 });
 </script>
