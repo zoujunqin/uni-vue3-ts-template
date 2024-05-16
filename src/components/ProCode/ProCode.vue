@@ -28,15 +28,13 @@ const { bridgedEvents } = useBridgedEmits(uvEvents);
 const props = defineProps({
   fetch: {
     type: Function,
+    required: true,
     default: () => {}
   },
   validPhone: {
     type: Function,
     required: true,
-    default: () => {
-      uni.showToast({ title: '请输入手机号', icon: 'none' });
-      return false;
-    }
+    default: () => false
   },
   text: {
     type: Boolean,
@@ -50,10 +48,10 @@ const props = defineProps({
 });
 
 const uvCodeRef = shallowRef();
-const getCode = () => {
+const getCode = async () => {
   if (uvCodeRef.value.canGetCode && props.validPhone()) {
+    await props.fetch();
     uvCodeRef.value.start();
-    props.fetch();
   }
 };
 
