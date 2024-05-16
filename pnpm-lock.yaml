@@ -62,6 +62,9 @@ dependencies:
   crypto-js:
     specifier: 4.1.1
     version: 4.1.1
+  dayjs:
+    specifier: 1.11.11
+    version: 1.11.11
   lodash-es:
     specifier: 4.17.21
     version: 4.17.21
@@ -7826,6 +7829,10 @@ packages:
 
   /dateformat@2.2.0:
     resolution: {integrity: sha512-GODcnWq3YGoTnygPfi02ygEiRxqUxpJwuRHjdhJYuxpcZmDq4rjBiXYmbCCzStxo176ixfLT6i4NPwQooRySnw==}
+    dev: false
+
+  /dayjs@1.11.11:
+    resolution: {integrity: sha512-okzr3f11N6WuqYtZSvm+F776mB41wRZMhKP+hc34YdW+KmtYYK9iqvHSwo2k9FEH3fhGXvOPV6yz2IcSrfRUDg==}
     dev: false
 
   /debounce-fn@4.0.0:

@@ -1,24 +1,24 @@
 <template>
   <uv-form-item ref="parentInstance" v-bind="{ ...$attrs, ...bridgedEvents }">
-    <template v-if="$slots.label">
+    <template v-slot:[labelSlot]>
       <slot name="label" />
     </template>
 
-    <template v-if="$slots.default">
-      <slot />
-    </template>
+    <slot />
 
-    <template v-if="$slots.right">
+    <template v-slot:[rightSlot]>
       <slot name="right" />
     </template>
 
-    <template v-if="$slots.error">
+    <template v-slot:[errorSlot]>
       <slot name="error" />
     </template>
   </uv-form-item>
 </template>
 
 <script lang="ts" setup>
+import { computed, useSlots } from 'vue';
+
 import { useBridgedEmits } from '../../hooks/useBridgedEmits';
 import { useNextedCompatible } from '../../hooks/useNextedCompatible';
 
@@ -26,6 +26,10 @@ import { uvEvents } from './events';
 
 const { bridgedEvents } = useBridgedEmits(uvEvents);
 const { parentInstance } = useNextedCompatible();
+
+const labelSlot = computed(() => (useSlots()?.label ? 'label' : ''));
+const rightSlot = computed(() => (useSlots()?.right ? 'right' : ''));
+const errorSlot = computed(() => (useSlots()?.error ? 'error' : ''));
 </script>
 
 <script lang="ts">

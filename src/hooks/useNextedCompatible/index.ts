@@ -15,7 +15,7 @@ export const useNextedCompatible = () => {
   }
 
   onMounted(() => {
-    // FIXME: nextTick 无效, 展示用定时器
+    // FIXME: nextTick 无效, 用定时器
     setTimeout(() => {
       updateContext();
     }, 300);

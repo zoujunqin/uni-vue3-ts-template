@@ -34,10 +34,10 @@ function callback(res) {
   setAreaData();
 
   const { sceneOption } = useUserStore();
-  const { t, c } = sceneOption;
+  const { t } = sceneOption;
   if (!t) {
     uni.reLaunch({ url: '/pages/portal/index' });
   } else {
-    sceneCodeMap[t]?.(c);
+    sceneCodeMap[t]?.(sceneOption);
   }
 }

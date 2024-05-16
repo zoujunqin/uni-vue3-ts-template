@@ -20,7 +20,7 @@
       <SecurityTip :data="taskDetail" />
       <ProPageFooter>
         <ProButton
-          v-if="taskDetail?.izApplied === 'no'"
+          v-if="taskDetail?.izApplied === YES_NO_TYPE.NO"
           type="primary"
           @click="handleApplyTask"
         >
@@ -33,8 +33,7 @@
 
 <script lang="ts" setup>
 import { onLoad } from '@dcloudio/uni-app';
-import { debounce } from 'lodash-es';
-import { ref, shallowRef } from 'vue';
+import { shallowRef } from 'vue';
 
 import BaseNeeds from './components/BaseNeeds.vue';
 import SecurityTip from './components/SecurityTip.vue';
@@ -43,44 +42,53 @@ import TaskHeader from './components/TaskHeader.vue';
 import TaskPlace from './components/TaskPlace.vue';
 
 import { applyTask, getTaskDetail, ITaskDetail } from '@/api/fe/wechat/task';
-import { dealStepCurrent } from '@/utils/index';
+import {
+  REAL_STATUS,
+  REAL_STATUS_MAP,
+  YES_NO_TYPE
+} from '@/constant/taskDetail';
+import { getRealStatus } from '@/utils/index';
 
 const taskDetail = shallowRef<ITaskDetail>();
-const queryParams = ref();
-onLoad(query => {
-  queryParams.value = JSON.parse(query?.params);
-  handleGetTaskDetail();
-});
+const routeParams = shallowRef<Record<string, any>>({});
+
 const handleGetTaskDetail = () => {
-  getTaskDetail(queryParams.value).then(res => {
+  getTaskDetail(routeParams.value).then(res => {
     taskDetail.value = res;
   });
 };
-const handleApplyTask = debounce(() => {
-  applyTask(queryParams.value).then(res => {
-    const current = dealStepCurrent(res);
-    if (current === -1) {
+
+onLoad(query => {
+  routeParams.value = JSON.parse(query?.params);
+  handleGetTaskDetail();
+});
+
+const handleApplyTask = () => {
+  applyTask(routeParams.value).then(res => {
+    const realStatus = getRealStatus(res);
+
+    // 已经实名并且签署合同了
+    if (realStatus === REAL_STATUS.ALREADY_REAL) {
       uni.showToast({
         title: '申请成功',
         icon: 'none'
       });
       handleGetTaskDetail();
-    } else {
-      const { taskId, orderDetailId, sourceType } = queryParams.value;
-      const taskQueryParams = {
-        taskId: taskId,
-        orderDetailId: orderDetailId,
-        sourceType: sourceType,
-        current: current
-      };
-      uni.navigateTo({
-        url: `/pagesAuth/realName/index?taskQueryParams=${JSON.stringify(
-          taskQueryParams
-        )}`
-      });
+      return;
     }
+
+    const { taskId, orderDetailId, sourceType } = routeParams.value;
+    const taskQueryParams = JSON.stringify({
+      taskId: taskId,
+      orderDetailId: orderDetailId,
+      sourceType: sourceType
+    });
+
+    uni.navigateTo({
+      url: REAL_STATUS_MAP[realStatus].pagePath + taskQueryParams
+    });
   });
-}, 500);
+};
 </script>
 
 <style scoped>

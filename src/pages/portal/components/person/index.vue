@@ -126,7 +126,7 @@ import { computed } from 'vue';
 import VerticalListItem from './components/VerticalListItem.vue';
 import { useHandler } from './hooks/useHandler';
 
-import { BANK_STATUS_MAP } from '@/constant/personCenter';
+import { YES_NO_TYPE_MAP } from '@/constant/taskDetail';
 import { useUserStore } from '@/pinia/modules/user';
 
 const { token, userInfo } = storeToRefs(useUserStore());
@@ -153,7 +153,7 @@ const panelItemList = computed(() => {
       type: panelItemMap.bankCard.type,
       icon: import('@http/person/bank-card-icon.svg'),
       name: '银行卡',
-      badge: `${BANK_STATUS_MAP[userInfo.value?.izBindBankCard]?.label}`
+      badge: `${YES_NO_TYPE_MAP[userInfo.value?.izBindBankCard]?.bindLabel}`
     },
     {
       type: panelItemMap.contract.type,

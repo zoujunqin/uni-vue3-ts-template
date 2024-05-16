@@ -21,15 +21,15 @@
       :do-after-upload-success="ocrReverseSideOfCard"
       background-name="back-id-card"
       upload-button-title="点击上传国徽面"
-      @remove="removeReverseSideOfCard"
     />
   </view>
 </template>
 
 <script lang="ts" setup>
+import { useRealNameStore } from '../hooks/useStore';
+
 import { getOcrIdCard } from '@/api/system/ocr';
 import { useVModel } from '@/hooks/useVModel';
-import { setIdCardMessage } from '@/utils/storage';
 
 const props = defineProps({
   modelValue: {
@@ -40,6 +40,8 @@ const props = defineProps({
 const data = useVModel(props, 'modelValue', undefined, {
   passive: true
 });
+
+const { setIdCardFrontInfo } = useRealNameStore();
 
 const ocr = async imageUrl => {
   const params = {
@@ -59,8 +61,9 @@ const ocrFrontOfCard = async ({ httpUrl }) => {
       data.value.workerName = name;
       data.value.idCardNo = idNumber;
       data.value.domicileAddress = address;
-      data.value.ocrSure.front = true;
-      setIdCardMessage({
+
+      // 保存身份证正面 ocr 信息，用于申诉
+      setIdCardFrontInfo({
         name,
         idNumber
       });
@@ -76,32 +79,23 @@ const ocrFrontOfCard = async ({ httpUrl }) => {
 };
 
 const removeFrontOfCard = () => {
-  data.value.ocrSure.front = false;
+  setIdCardFrontInfo(null);
 };
 
 // 身份证反面 ocr 识别
 const ocrReverseSideOfCard = async ({ httpUrl }) => {
-  try {
-    const { back } = await ocr(httpUrl);
+  const { back } = await ocr(httpUrl);
 
-    if (back) {
-      const { validPeriodBegin, validPeriodEnd, issueAuthority } = back;
-      data.value.credentialStartDate = validPeriodBegin;
-      data.value.credentialEndDate = validPeriodEnd;
-      data.value.issuingAuthority = issueAuthority;
-      data.value.ocrSure.reverse = true;
-      return true;
-    } else {
-      uni.showToast({ title: '请上传身份证反面图片', icon: 'none' });
-    }
-  } catch {
-    removeReverseSideOfCard();
+  if (back) {
+    const { validPeriodBegin, validPeriodEnd, issueAuthority } = back;
+    data.value.credentialStartDate = validPeriodBegin;
+    data.value.credentialEndDate = validPeriodEnd;
+    data.value.issuingAuthority = issueAuthority;
+    return true;
+  } else {
+    uni.showToast({ title: '请上传身份证反面图片', icon: 'none' });
   }
   return false;
-};
-
-const removeReverseSideOfCard = () => {
-  data.value.ocrSure.reverse = false;
 };
 </script>
 

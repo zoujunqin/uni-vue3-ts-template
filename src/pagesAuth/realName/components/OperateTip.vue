@@ -76,6 +76,6 @@ const examples = [
 const proPopupRef = shallowRef();
 onMounted(async () => {
   await nextTick();
-  // proPopupRef.value.open();
+  proPopupRef.value.open();
 });
 </script>
