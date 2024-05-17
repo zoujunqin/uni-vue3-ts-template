@@ -66,6 +66,7 @@ export function rewriteUniMpPlugin(
     if (template.filter) {
       const extname = template.filter.extname;
       const filterFiles = getFilterFiles(resolvedConfig, this.getModuleInfo);
+      console.log(filterFiles);
       Object.keys(filterFiles).forEach(filename => {
         const { code } = filterFiles[filename];
         this.emitFile({
