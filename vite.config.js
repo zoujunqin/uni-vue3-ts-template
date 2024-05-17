@@ -2,9 +2,9 @@ import { resolve } from 'path';
 
 import uniAxiosAdapter from '@uni-helper/axios-adapter/vite';
 import { defineConfig } from 'vite';
+import { loadEnv } from 'vite';
 import { UnifiedViteWeappTailwindcssPlugin as uvtw } from 'weapp-tailwindcss/vite';
 
-import { ossServerUrl } from './build/config';
 import uni from './build/packages/vite-plugin-uni/index';
 import { plugins as postcssPlugins } from './postcss.config';
 import { getStaticServer } from './scripts/utils';
@@ -26,7 +26,10 @@ function createAlias() {
     if (process.env.NODE_ENV === 'development') {
       alias['@http'] = getStaticServer();
     } else {
-      alias['@http'] = ossServerUrl[process.env.NODE_ENV];
+      alias['@http'] = loadEnv(
+        process.env.NODE_ENV,
+        process.cwd()
+      ).VITE_OSS_SERVER_URL;
     }
   } else {
     alias['@http'] = resolvePath('../../src/static@http');

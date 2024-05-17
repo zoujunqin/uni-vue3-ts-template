@@ -2,7 +2,6 @@
     |-- tsconfig.json
     |-- vite.config.js
     |-- build
-    |   |-- config.ts                      // 构建配置
     |   |-- packages                       // uni 插件
     |       |-- uni-cli-shared             // 插件公共工具
     |       |-- uni-mp-vite                // 小程序 vite 插件
