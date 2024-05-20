@@ -6,7 +6,7 @@ import {
 } from '@dcloudio/uni-cli-shared';
 import type { UniMiniProgramPluginOptions } from '@dcloudio/uni-mp-vite/dist/plugin/index';
 import debug from 'debug';
-import { Plugin } from 'vite';
+import { Plugin, ResolvedConfig } from 'vite';
 
 import {
   _addMiniProgramAppJson,
@@ -17,6 +17,11 @@ import { uniPagesJsonPluginName } from '../../uni-cli-shared/const';
 
 const debugPagesJson = debug('uni:pages-json');
 
+const nvueCssPathsCache = new Map<ResolvedConfig, string[]>();
+export function getNVueCssPaths(config: ResolvedConfig) {
+  return nvueCssPathsCache.get(config);
+}
+
 export function rewriteUniPagesJsonPlugin(
   options: UniMiniProgramPluginOptions,
   originPlugin: Plugin
@@ -24,10 +29,14 @@ export function rewriteUniPagesJsonPlugin(
   const platform = process.env.UNI_PLATFORM;
   const inputDir = process.env.UNI_INPUT_DIR;
   return defineUniPagesJsonPlugin(opts => {
+    let resolvedConfig: ResolvedConfig;
     // FIXME: 以下部分为源码, 有删减
     return {
       name: uniPagesJsonPluginName,
       enforce: 'pre',
+      configResolved(config) {
+        resolvedConfig = config;
+      },
       transform(code, id) {
         const transformRes = originPlugin.transform?.call(this, code, id);
 
@@ -36,7 +45,7 @@ export function rewriteUniPagesJsonPlugin(
         }
 
         const manifestJson = parseManifestJsonOnce(inputDir);
-        const { appJson, pageJsons } = parseMiniProgramPagesJson(
+        const { appJson, pageJsons, nvuePages } = parseMiniProgramPagesJson(
           code,
           platform,
           {
@@ -46,6 +55,11 @@ export function rewriteUniPagesJsonPlugin(
             subpackages: !!options.app.subpackages,
             ...options.json
           }
+        );
+
+        nvueCssPathsCache.set(
+          resolvedConfig,
+          nvuePages.map(pagePath => pagePath + options.style.extname)
         );
 
         mergeMiniProgramAppJson(appJson, manifestJson[platform]);
