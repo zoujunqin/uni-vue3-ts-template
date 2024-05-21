@@ -1,6 +1,6 @@
 {
   "name": "flexible",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "dev": "pnpm dev:mp-weixin",
     "build": "pnpm build:mp-weixin",
@@ -37,7 +37,7 @@
     "build:mp-lark": "uni build -p mp-lark",
     "build:mp-qq": "uni build -p mp-qq",
     "build:mp-toutiao": "uni build -p mp-toutiao",
-    "build:mp-weixin": "uni build -p mp-weixin",
+    "build:mp-weixin": "node scripts/mp-weixin-build.js",
     "upload:mp-weixin": "node scripts/mp-weixin-upload.js",
     "build_upload:mp-weixin": "pnpm build:mp-weixin & pnpm upload:mp-weixin",
     "build:mp-xhs": "uni build -p mp-xhs",
@@ -97,6 +97,7 @@
     "@vue/runtime-core": "3.3.8",
     "autoprefixer": "10.4.16",
     "chalk": "4.1.2",
+    "commander": "12.1.0",
     "cssnano": "6.0.1",
     "eslint": "8.53.0",
     "eslint-plugin-import": "2.29.0",
@@ -104,6 +105,7 @@
     "eslint-plugin-vue": "9.18.1",
     "http-server": "14.1.1",
     "husky": "8.0.3",
+    "inquirer": "8.2.5",
     "lint-staged": "13.1.4",
     "miniprogram-ci": "1.9.15",
     "postcss": "8.4.31",
