@@ -59,5 +59,5 @@ program.parse(process.argv);
 
 function updateUploadLog(description) {
   uploadLog.push({ version: pkg.version, description });
-  fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
+  fs.writeFileSync('upload-log.json', JSON.stringify(uploadLog, null, 2));
 }
