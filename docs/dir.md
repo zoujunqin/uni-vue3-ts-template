@@ -29,6 +29,7 @@
     |   |-- pagesAuth                      // 分包
     |   |-- pagesPerson                    // 分包
     |   |-- pagesTask                      // 分包
+    |   |-- pagesTransfer                  // 中转页面分包
     |   |-- pinia                          // 状态管理
     |   |-- static                         // 静态资源
     |   |-- static@http                    // 本地服务的静态资源
