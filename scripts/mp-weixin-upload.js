@@ -3,6 +3,7 @@ const fs = require('fs');
 
 const chalk = require('chalk');
 const { Command } = require('commander');
+const dayjs = require('dayjs');
 const inquirer = require('inquirer');
 const ci = require('miniprogram-ci');
 
@@ -58,6 +59,10 @@ program.description('upload mp-weixin').action(async () => {
 program.parse(process.argv);
 
 function updateUploadLog(description) {
-  uploadLog.push({ version: pkg.version, description });
+  uploadLog.unshift({
+    version: pkg.version,
+    createTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+    description
+  });
   fs.writeFileSync('upload-log.json', JSON.stringify(uploadLog, null, 2));
 }
