@@ -114,7 +114,11 @@ export const useHandler = ({ routeParams }) => {
         return;
       }
 
-      if (dayjs(credentialEndDate).isBefore(dayjs(credentialStartDate))) {
+      if (
+        credentialEndDate &&
+        credentialStartDate &&
+        dayjs(credentialEndDate).isBefore(dayjs(credentialStartDate))
+      ) {
         uni.showToast({
           title: '身份证有效期开始时间不能大于结束时间',
           icon: 'none'
@@ -148,7 +152,7 @@ export const useHandler = ({ routeParams }) => {
     }
 
     // 填写的名字、身份证号码和 ocr 识别的不一样 触发申诉逻辑
-    const idCardFrontInfo = useRealNameStore().idCardFrontInfo;
+    const idCardFrontInfo = await useRealNameStore().getIdCardFrontInfo();
 
     if (idCardFrontInfo) {
       const { name, idNumber } = idCardFrontInfo;

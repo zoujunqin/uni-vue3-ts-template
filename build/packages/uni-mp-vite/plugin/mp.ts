@@ -2,8 +2,6 @@ import path from 'path';
 import * as process from 'process';
 
 import {
-  addMiniProgramTemplateFile,
-  findMiniProgramTemplateFiles,
   genNVueCssCode,
   normalizeMiniProgramFilename,
   normalizePath,
@@ -20,9 +18,7 @@ import {
   parseVirtualPagePath
 } from '@dcloudio/uni-mp-vite/dist/plugins/entry';
 import { getNVueCssPaths } from '@dcloudio/uni-mp-vite/dist/plugins/pagesJson';
-import { createConfigResolved } from '@dcloudio/vite-plugin-uni/dist/configResolved';
-import debug from 'debug';
-import { EmittedFile, PreRenderedChunk } from 'rollup';
+import { PreRenderedChunk } from 'rollup';
 import { ResolvedConfig } from 'vite';
 
 import {
@@ -33,13 +29,9 @@ import {
   findReferRoots,
   updateImportersCache
 } from '../../uni-cli-shared/importersCache';
-import {
-  getEasycomCustomDirs,
-  toBuildPath,
-  updateFilename
-} from '../../uni-cli-shared/utils';
-
-const prefix = '__change__';
+import { getEasycomCustomDirs, toBuildPath } from '../../uni-cli-shared/utils';
+import { _getTemplateFiles, emitTemplateFile } from './template';
+import { createConfigResolved } from './configResolved';
 
 export function rewriteUniMpPlugin(
   options: UniMiniProgramPluginOptions,
@@ -49,7 +41,7 @@ export function rewriteUniMpPlugin(
 
   const pluginOptions = {
     ...originPlugin,
-    resolvedConfig(config) {
+    configResolved(config) {
       resolvedConfig = config;
       return (createConfigResolved(options) as Function)(config);
     }
@@ -204,47 +196,4 @@ export function rewriteUniMpPlugin(
   };
 
   return pluginOptions;
-}
-
-// FIXME: 重写了原来的 emitFile 方法, 只是添加了 source 前缀, 其余未变
-const debugTemplate = debug('uni:mp-template');
-const emitTemplateFile: (emittedFile: EmittedFile) => string = emittedFile => {
-  if (emittedFile.type === 'asset') {
-    const filename = emittedFile.fileName!;
-    addMiniProgramTemplateFile(
-      removeExt(
-        normalizeMiniProgramFilename(
-          path.relative(process.env.UNI_INPUT_DIR, filename)
-        )
-      ),
-      // FIXME: 改变的文件添加前缀用于后续判断是否更新
-      `${prefix}${emittedFile.source!.toString()}`
-    );
-    debugTemplate(filename);
-    return filename;
-  }
-  return '';
-};
-
-// 储存 filename 和 updateFilename 的名称映射
-const filenameMap = {};
-// FIXME: 重写 getTemplateFiles 方法
-function _getTemplateFiles(template: UniMiniProgramPluginOptions['template']) {
-  const files = findMiniProgramTemplateFiles(template.filter?.generate);
-  const newFiles = {};
-
-  for (const filename in files) {
-    const code = files[filename];
-    const newFilename = updateFilename(filename);
-
-    if (newFilename !== filenameMap[filename] || code.startsWith(prefix)) {
-      const newCode = code.replace(prefix, '');
-      newFiles[newFilename] = newCode;
-      addMiniProgramTemplateFile(filename, newCode);
-
-      filenameMap[filename] = newFilename;
-    }
-  }
-
-  return newFiles;
 }

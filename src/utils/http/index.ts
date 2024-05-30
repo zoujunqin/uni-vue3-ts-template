@@ -62,8 +62,15 @@ const getQueryString = (params): string => {
   return queryString;
 };
 
-const isNeedDecrypt = response =>
-  response.headers['Enable-Response-Decrypt'] !== 'False';
+const isNeedDecrypt = response => {
+  if (response.headers['Enable-Response-Decrypt']) {
+    return response.headers['Enable-Response-Decrypt'] !== 'False';
+  }
+
+  if (response.headers['enable-response-decrypt']) {
+    return response.headers['enable-response-decrypt'] !== 'False';
+  }
+};
 
 class PureHttp {
   /** 初始化配置对象 */

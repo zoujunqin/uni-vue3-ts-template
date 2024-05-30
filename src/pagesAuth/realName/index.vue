@@ -56,7 +56,7 @@
                 class="hx-mb-[16px]"
                 v-model="formData[prop.fieldCode]"
                 :readonly="nextDisabled"
-                :background-name="1"
+                :background-name="kebabCase(prop.fieldCode)"
                 :upload-button-title="`点击上传${prop.labelName}`"
                 :maxSize="5 * 1024 * 1024"
               />
@@ -141,6 +141,7 @@
 
 <script lang="ts" setup>
 import { onLoad } from '@dcloudio/uni-app';
+import { kebabCase } from 'lodash-es';
 import { computed, onMounted, readonly, shallowRef } from 'vue';
 
 import IDCardUpload from './components/IDCardUpload.vue';
@@ -192,13 +193,6 @@ onMounted(() => {
 const nextDisabled = computed(() => {
   return applyStatusMap.value.appealStatus === APPLY_STATUS.TO_BE_PROCESSED;
 });
-
-// const modeType = {
-//   drivingLicence: 'driving-license',
-//   busineseLicense: 'business-license',
-//   healthCertificate: 'health-certificate',
-//   otherCertification: 'other-certificate'
-// };
 </script>
 
 <style lang="scss" scoped>

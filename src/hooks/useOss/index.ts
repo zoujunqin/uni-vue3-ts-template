@@ -21,7 +21,7 @@ export const useOss = () => {
       const ossConfig: OssUploadConfig = await getOssPolicy({
         module,
         type,
-        fileName: fileName ?? 'mp-' + getUUID()
+        fileName: fileName || 'mp-' + getUUID()
       });
 
       const { accessid, host, key, policy, signature } = ossConfig;
