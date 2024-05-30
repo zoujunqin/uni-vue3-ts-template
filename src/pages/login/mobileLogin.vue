@@ -72,7 +72,7 @@
       <text
         class="hx-text-[15px] hx-font-[400] hx-leading-[24px] hx-text-text-color-tip"
       >
-        微信授权登录
+        手机号快捷登录
       </text>
     </ProButton>
   </ProPage>
