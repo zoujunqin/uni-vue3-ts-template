@@ -1,5 +1,10 @@
 [
   {
+    "version": "1.0.3",
+    "createTime": "2024-06-04 09:27:49",
+    "description": "登录页文案修改"
+  },
+  {
     "version": "1.0.1",
     "description": "内测版测试"
   },
