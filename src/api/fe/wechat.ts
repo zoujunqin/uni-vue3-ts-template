@@ -4,7 +4,7 @@ const baseApi = '/fe/wechat';
 
 export interface IWeChatParma {
   code: string;
-  invitationCodeId?: number;
+  invitationCodeId?: string;
 }
 /* 手机号获取凭证登录 - 微信登录 */
 export const weChatLogin = (data: IWeChatParma): Promise<{ token: string }> => {
@@ -12,7 +12,7 @@ export const weChatLogin = (data: IWeChatParma): Promise<{ token: string }> => {
 };
 
 export interface ISmsParam {
-  invitationCodeId?: number;
+  invitationCodeId?: string;
   mobile: string;
   smsCode: string;
 }
