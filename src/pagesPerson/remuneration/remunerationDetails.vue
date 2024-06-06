@@ -78,8 +78,10 @@ const formDataList = ref([
 ]);
 onLoad(query => {
   getPersonalCenterByIdIncome(query?.id).then(res => {
-    formData.value = { ...res, ...res.extJsonMap };
-    Object.keys(res.extJsonMap).reduce((result, item) => {
+    const keyValue = res.dataList.map(item => [item.header, item.value]);
+    const resultObj = Object.fromEntries(keyValue);
+    formData.value = { ...res, ...resultObj };
+    Object.keys(resultObj).reduce((result, item) => {
       result.push({ label: item, key: item });
       return result;
     }, formDataList.value);
