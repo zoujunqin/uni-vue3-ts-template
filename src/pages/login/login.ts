@@ -20,11 +20,9 @@ export const weChatAuthLogin = (res: IPhoneNumberResult) => {
   const { sceneOption } = useUserStore();
   const { c } = sceneOption;
   const param = {
-    code: code
+    code: code,
+    invitationCodeId: c || undefined
   };
-  if (c) {
-    param['invitationCodeId'] = c;
-  }
   if (errMsg === okMsg) {
     weChatLogin(param).then(callback);
   } else if (errMsg === denyMsg) {
@@ -35,9 +33,7 @@ export const weChatAuthLogin = (res: IPhoneNumberResult) => {
 export const mobileLogin = (param: ISmsParam) => {
   const { sceneOption } = useUserStore();
   const { c } = sceneOption;
-  if (c) {
-    param['invitationCodeId'] = c;
-  }
+  param['invitationCodeId'] = c || undefined;
   smsLogin(param).then(callback);
 };
 function callback(res) {
