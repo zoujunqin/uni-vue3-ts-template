@@ -142,7 +142,7 @@
 <script lang="ts" setup>
 import { onLoad } from '@dcloudio/uni-app';
 import { kebabCase } from 'lodash-es';
-import { computed, onMounted, readonly, shallowRef } from 'vue';
+import { computed, onMounted, shallowRef } from 'vue';
 
 import IDCardUpload from './components/IDCardUpload.vue';
 import OperateTip from './components/OperateTip.vue';

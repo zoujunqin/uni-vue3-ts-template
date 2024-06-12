@@ -53,26 +53,29 @@ export const useHandler = ({ routeParams }) => {
 
       for (const group of propertyGroups) {
         let i = group.properties.length - 1;
-
+        if (group.categoryCode === 'bank_info') {
+          const findIndex = group.properties.findIndex(
+            item => item.fieldCode === 'mobile'
+          );
+          if (findIndex === -1) {
+            delete formData.value['mobile'];
+          }
+        }
         while (i >= 0) {
           const { fieldCode, value, izRequired } = group.properties[i];
-
           formData.value[fieldCode] ||= value;
           formRules.value[fieldCode] = {
             required: izRequired === YES_NO_TYPE.YES,
             trigger: ['blur', 'change']
           };
-
           // 手机号额外需要验证码
           if (fieldCode === 'mobile') {
             formRules.value.smsCode = formRules.value.mobile;
           }
-
           // 身份证正面和方面单独处理
           if (['idCardFront', 'idCardReverse'].includes(fieldCode)) {
             idCardGroup.properties.push(...group.properties.splice(i, 1));
           }
-
           i--;
         }
       }
