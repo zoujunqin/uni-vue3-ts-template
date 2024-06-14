@@ -53,14 +53,7 @@ export const useHandler = ({ routeParams }) => {
 
       for (const group of propertyGroups) {
         let i = group.properties.length - 1;
-        if (group.categoryCode === 'bank_info') {
-          const findIndex = group.properties.findIndex(
-            item => item.fieldCode === 'mobile'
-          );
-          if (findIndex === -1) {
-            delete formData.value['mobile'];
-          }
-        }
+        handleDealOldData(group);
         while (i >= 0) {
           const { fieldCode, value, izRequired } = group.properties[i];
           formData.value[fieldCode] ||= value;
@@ -72,7 +65,7 @@ export const useHandler = ({ routeParams }) => {
           if (fieldCode === 'mobile') {
             formRules.value.smsCode = formRules.value.mobile;
           }
-          // 身份证正面和方面单独处理
+          // 身份证正面和返面单独处理
           if (['idCardFront', 'idCardReverse'].includes(fieldCode)) {
             idCardGroup.properties.push(...group.properties.splice(i, 1));
           }
@@ -85,11 +78,31 @@ export const useHandler = ({ routeParams }) => {
       }
 
       formItemGroups.value = propertyGroups;
-
       proFormRef.value.setRules(formRules.value);
     });
   };
-
+  //特殊校验处理
+  const handleDealOldData = group => {
+    if (group.categoryCode === REAL_TYPE.BANK_INFO) {
+      const findIndex = group.properties.findIndex(
+        item => item.fieldCode === 'mobile'
+      );
+      if (findIndex === -1) {
+        delete formData.value['mobile'];
+      }
+    }
+    if (group.categoryCode === REAL_TYPE.BASE_INFO) {
+      const findIndex = group.properties.findIndex(
+        item =>
+          item.fieldCode === 'credentialStartDate' ||
+          item.fieldCode === 'credentialEndDate'
+      );
+      if (findIndex === -1) {
+        delete formData.value['credentialStartDate'];
+        delete formData.value['credentialEndDate'];
+      }
+    }
+  };
   const validMobile = () => {
     if (!formData.value.mobile) {
       uni.showToast({
@@ -107,7 +120,8 @@ export const useHandler = ({ routeParams }) => {
       credentialStartDate,
       credentialEndDate
     } = formData.value;
-
+    // 表单校验
+    await proFormRef.value.validate();
     // 身份证校验
     const idCardGroup = formItemGroupMap.value[REAL_TYPE.ID_CARD];
 
@@ -130,9 +144,6 @@ export const useHandler = ({ routeParams }) => {
       }
     }
 
-    // 表单校验
-    await proFormRef.value.validate();
-
     // 资质校验
     const certificationGroup =
       formItemGroupMap.value[REAL_TYPE.CERTIFICATION_INFO];
@@ -153,7 +164,6 @@ export const useHandler = ({ routeParams }) => {
         return;
       }
     }
-
     // 填写的名字、身份证号码和 ocr 识别的不一样 触发申诉逻辑
     const idCardFrontInfo = await useRealNameStore().getIdCardFrontInfo();
 
