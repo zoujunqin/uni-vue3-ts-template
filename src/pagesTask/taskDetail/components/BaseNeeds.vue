@@ -1,13 +1,16 @@
 <template>
-  <view class="section-title hx-mb-[10px]"> 基本需求 </view>
+  <view class="section-title hx-mb-[10px]"> 基本信息 </view>
   <view
     class="section-content hx-mb-[16px] hx-rounded-[6px] hx-p-[12px] hx-text-text-color hx-text-[13px] hx-font-[400] hx-leading-[18px]"
   >
+    <view v-if="data.customerName" class="hx-mb-[10px]">
+      企业名称： {{ data.customerName }}
+    </view>
     <view>
       人员要求：
       {{ getPersonRequire }}
     </view>
-    <view class="hx-mt-[10px]" v-if="data.endDate">
+    <view v-if="data.endDate">
       任务时间： {{ hyphenAB(data.beginDate, data.endDate) }}
     </view>
     <view class="hx-mt-[10px]" v-if="data.description">

@@ -35,6 +35,7 @@ export interface ITaskDetail {
   description: string;
   taskDetail: string;
   remark: string;
+  customerName: string;
 }
 /* 获取任务详情 */
 export const getTaskDetail = (params): Promise<ITaskDetail> => {
