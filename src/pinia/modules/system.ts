@@ -24,6 +24,8 @@ export const useSystemStore = defineStore(
   {
     // 开启持久化缓存
     // @ts-ignore
-    unistorage: true
+    unistorage: {
+      paths: ['systemInfo']
+    }
   }
 );
