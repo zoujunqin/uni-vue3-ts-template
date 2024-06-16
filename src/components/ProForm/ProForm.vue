@@ -25,7 +25,6 @@ defineExpose({ ...bridgedMethods });
 export default {
   // 这里 name 为 uv-form 是为了 uv-form-item 内部的查找机制
   name: 'uv-form',
-  nameFake: true,
   options: { name: 'ProForm', virtualHost: true }
 };
 </script>
