@@ -1,5 +1,5 @@
 <template>
-  <uv-form-item ref="parentInstance" v-bind="{ ...$attrs, ...bridgedEvents }">
+  <uv-form-item ref="uvInstance" v-bind="{ ...$attrs, ...bridgedEvents }">
     <template v-slot:[labelSlot]>
       <slot name="label" />
     </template>
@@ -25,7 +25,7 @@ import { useNextedCompatible } from '../../hooks/useNextedCompatible';
 import { uvEvents } from './events';
 
 const { bridgedEvents } = useBridgedEmits(uvEvents);
-const { parentInstance } = useNextedCompatible();
+const { uvInstance } = useNextedCompatible();
 
 const labelSlot = computed(() => (useSlots()?.label ? 'label' : ''));
 const rightSlot = computed(() => (useSlots()?.right ? 'right' : ''));

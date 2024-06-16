@@ -1,6 +1,6 @@
 <template>
   <uv-tabbar
-    ref="parentInstance"
+    ref="uvInstance"
     :border="false"
     :value="value"
     class="!hx-flex-none"
@@ -25,7 +25,7 @@ const props = defineProps({
 });
 const emit = defineEmits(['update:modelValue', 'change']);
 
-const { ctx, parentInstance } = useNextedCompatible();
+const { ctx, uvInstance } = useNextedCompatible();
 
 const value = useVModel(props, 'modelValue', emit);
 
