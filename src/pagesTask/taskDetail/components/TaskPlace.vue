@@ -59,9 +59,3 @@ const getPositionByAddress = () => {
 
 watch(props, getPositionByAddress);
 </script>
-
-<style scoped>
-.section-content {
-  background-color: rgb(61 134 242 / 6%);
-}
-</style>
