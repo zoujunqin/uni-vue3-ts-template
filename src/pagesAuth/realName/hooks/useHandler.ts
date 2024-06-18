@@ -1,8 +1,9 @@
 import dayjs from 'dayjs';
-import { debounce } from 'lodash-es';
+import { cloneDeep, debounce, isEmpty, isEqual } from 'lodash-es';
 import { storeToRefs } from 'pinia';
 import { computed, ref, shallowRef } from 'vue';
 
+import { useRealNameStore } from './useStore';
 import { useRealNameStore } from './useStore';
 
 import { getInvitationCodeScan } from '@/api/fe/wechat/invitation_code';
@@ -14,6 +15,7 @@ import {
 } from '@/api/fe/wechat/worker';
 import {
   APPLY_STATUS_MAP,
+  PROTOCOL_TYPE,
   REAL_STATUS,
   REAL_STATUS_MAP,
   REAL_TYPE,
@@ -24,10 +26,14 @@ import { getRealStatus } from '@/utils';
 
 export const useHandler = ({ routeParams }) => {
   const { formData } = storeToRefs(useRealNameStore());
+  const userRealNameStore = useRealNameStore();
 
   const proFormRef = ref();
-  const formRules = ref({});
+  const formRules = ref(<any>{});
   const formItemGroups = ref();
+  const showSureDataModal = ref(false);
+  const sureModalRef = ref();
+  const backupCopyData = ref<Record<string, any>>({});
 
   const formItemGroupMap = computed(() => {
     return formItemGroups.value.reduce((res, group) => {
@@ -39,9 +45,24 @@ export const useHandler = ({ routeParams }) => {
   const applyStatusMap = shallowRef({ appealStatus: '', rejectCause: '' });
 
   const explainModalRef = ref();
-
+  const handleSureDataConfirm = () => {
+    Object.keys(formData.value).forEach(key => {
+      const remoteValue = formData.value[key];
+      const localValue = backupCopyData.value[key];
+      if (!isEqual(remoteValue, localValue)) {
+        formData.value[key] = localValue;
+      }
+    });
+    sureModalRef.value.close();
+    showSureDataModal.value = false;
+  };
   const handleGetRealNameInfo = () => {
     getRealNameInfo(routeParams.value).then(async res => {
+      if (!isEmpty(formData.value)) {
+        backupCopyData.value = cloneDeep(formData.value);
+        showSureDataModal.value = true;
+      }
+      useRealNameStore().initFormData();
       const { propertyGroups, appealStatus, rejectCause } = res;
       applyStatusMap.value = { appealStatus, rejectCause };
 
@@ -53,10 +74,9 @@ export const useHandler = ({ routeParams }) => {
 
       for (const group of propertyGroups) {
         let i = group.properties.length - 1;
-        handleDealOldData(group);
         while (i >= 0) {
           const { fieldCode, value, izRequired } = group.properties[i];
-          formData.value[fieldCode] ||= value;
+          formData.value[fieldCode] = value;
           formRules.value[fieldCode] = {
             required: izRequired === YES_NO_TYPE.YES,
             trigger: ['blur', 'change']
@@ -79,29 +99,10 @@ export const useHandler = ({ routeParams }) => {
 
       formItemGroups.value = propertyGroups;
       proFormRef.value.setRules(formRules.value);
+      if (showSureDataModal.value) {
+        sureModalRef.value.open();
+      }
     });
-  };
-  //特殊校验处理
-  const handleDealOldData = group => {
-    if (group.categoryCode === REAL_TYPE.BANK_INFO) {
-      const findIndex = group.properties.findIndex(
-        item => item.fieldCode === 'mobile'
-      );
-      if (findIndex === -1) {
-        delete formData.value['mobile'];
-      }
-    }
-    if (group.categoryCode === REAL_TYPE.BASE_INFO) {
-      const findIndex = group.properties.findIndex(
-        item =>
-          item.fieldCode === 'credentialStartDate' ||
-          item.fieldCode === 'credentialEndDate'
-      );
-      if (findIndex === -1) {
-        delete formData.value['credentialStartDate'];
-        delete formData.value['credentialEndDate'];
-      }
-    }
   };
   const validMobile = () => {
     if (!formData.value.mobile) {
@@ -198,8 +199,9 @@ export const useHandler = ({ routeParams }) => {
       const {
         sceneOption: { t, c }
       } = useUserStore();
-
-      if (!t) {
+      userRealNameStore.$reset();
+      const { sourceType } = routeParams.value;
+      if (!t || sourceType === PROTOCOL_TYPE.TASK) {
         // 正常申请任务流程
         applyTask(routeParams.value).then(res => {
           const realStatus = getRealStatus(res);
@@ -207,13 +209,21 @@ export const useHandler = ({ routeParams }) => {
           if (realStatus === REAL_STATUS.ALREADY_REAL) {
             uni.showToast({ title: '申请成功', icon: 'none' });
           }
-          uni.navigateTo({ url: REAL_STATUS_MAP[realStatus].pagePath });
+          uni.navigateTo({
+            url:
+              REAL_STATUS_MAP[realStatus].pagePath +
+              `?taskQueryParams=${JSON.stringify(routeParams.value)}`
+          });
         });
       } else {
         // 邀请码流程
         getInvitationCodeScan(c).then(res => {
           const realStatus = getRealStatus(res);
-          uni.navigateTo({ url: REAL_STATUS_MAP[realStatus].pagePath });
+          uni.navigateTo({
+            url:
+              REAL_STATUS_MAP[realStatus].pagePath +
+              `?taskQueryParams=${JSON.stringify(routeParams.value)}`
+          });
         });
       }
     });
@@ -266,6 +276,8 @@ export const useHandler = ({ routeParams }) => {
     applyTipText,
 
     explainModalRef,
-    handleExplainConfirm
+    handleExplainConfirm,
+    sureModalRef,
+    handleSureDataConfirm
   };
 };
