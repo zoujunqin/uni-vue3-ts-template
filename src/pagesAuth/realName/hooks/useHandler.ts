@@ -30,7 +30,6 @@ export const useHandler = ({ routeParams }) => {
   const proFormRef = ref();
   const formRules = ref(<any>{});
   const formItemGroups = ref();
-  const showSureDataModal = ref(false);
   const sureModalRef = ref();
   const backupCopyData = ref<Record<string, any>>({});
 
@@ -44,6 +43,7 @@ export const useHandler = ({ routeParams }) => {
   const applyStatusMap = shallowRef({ appealStatus: '', rejectCause: '' });
 
   const explainModalRef = ref();
+  //使用缓存数据，比较获取数据与缓存数据
   const handleSureDataConfirm = () => {
     Object.keys(formData.value).forEach(key => {
       const remoteValue = formData.value[key];
@@ -53,13 +53,11 @@ export const useHandler = ({ routeParams }) => {
       }
     });
     sureModalRef.value.close();
-    showSureDataModal.value = false;
   };
   const handleGetRealNameInfo = () => {
     getRealNameInfo(routeParams.value).then(async res => {
       if (!isEmpty(formData.value)) {
         backupCopyData.value = cloneDeep(formData.value);
-        showSureDataModal.value = true;
       }
       useRealNameStore().initFormData();
       nextTick(() => {
@@ -99,7 +97,7 @@ export const useHandler = ({ routeParams }) => {
 
         formItemGroups.value = propertyGroups;
         proFormRef.value.setRules(formRules.value);
-        if (showSureDataModal.value) {
+        if (!isEmpty(backupCopyData.value)) {
           sureModalRef.value.open();
         }
       });
