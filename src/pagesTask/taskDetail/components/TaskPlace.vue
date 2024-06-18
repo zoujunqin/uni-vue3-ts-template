@@ -47,6 +47,9 @@ const getPositionByAddress = () => {
           //可根据需求是否展示经纬度
           content: address,
           color: '#000',
+          bgColor: '#fff',
+          padding: 10,
+          borderRadius: 15,
           display: 'ALWAYS'
         }
       }
@@ -56,9 +59,3 @@ const getPositionByAddress = () => {
 
 watch(props, getPositionByAddress);
 </script>
-
-<style scoped>
-.section-content {
-  background-color: rgb(61 134 242 / 6%);
-}
-</style>

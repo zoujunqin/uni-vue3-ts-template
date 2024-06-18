@@ -2,6 +2,7 @@
 
 import { createUniAppAxiosAdapter } from '@uni-helper/axios-adapter';
 import Axios, {
+  AxiosError,
   AxiosInstance,
   AxiosRequestConfig,
   CustomParamsSerializer
@@ -15,6 +16,7 @@ import {
   RequestMethods
 } from './types.d';
 
+import { useSystemStore } from '@/pinia/modules/system';
 import { useUserStore } from '@/pinia/modules/user';
 import { getUUID } from '@/utils';
 import { decryptString, encryptString } from '@/utils/crypto';
@@ -91,6 +93,16 @@ class PureHttp {
     param?: AxiosRequestConfig,
     axiosConfig?: PureHttpRequestConfig
   ): Promise<T> {
+    const networkConnected = useSystemStore().networkStatus.isConnected;
+
+    if (!networkConnected) {
+      uni.showToast({ title: '当前无网络连接,请刷新重试', icon: 'none' });
+
+      return Promise.reject(
+        new AxiosError('network error', AxiosError.ERR_NETWORK, axiosConfig)
+      );
+    }
+
     const config = {
       method,
       url,
@@ -219,18 +231,12 @@ class PureHttp {
         return responseData;
       },
       (error: PureHttpError) => {
+        uni.hideLoading();
+        console.log(error);
         const $error = error;
 
-        if (!$error.code && $error.message === 'request:fail ') {
-          uni.showToast({ title: '网络错误', icon: 'none' });
-          uni.hideLoading();
-          return;
-        } else if (
-          $error.code === 'ETIMEDOUT' &&
-          $error.message === 'request:fail timeout'
-        ) {
+        if ($error.code === AxiosError.ETIMEDOUT) {
           uni.showToast({ title: '请求超时', icon: 'none' });
-          uni.hideLoading();
           return;
         }
 
@@ -265,7 +271,6 @@ class PureHttp {
         }
 
         $error.isCancelRequest = Axios.isCancel($error);
-        uni.hideLoading();
         // 所有的响应异常 区分来源为取消请求/非取消请求
         return Promise.reject($error);
       }

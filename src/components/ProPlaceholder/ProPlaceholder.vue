@@ -7,7 +7,7 @@
       {{ data.title }}
     </text>
     <text
-      class="hx-mt-[16px] hx-text-text-color-tip hx-text-font-size-base hx-font-[400]"
+      class="hx-mt-[10px] hx-text-text-color-tip hx-text-font-size-base hx-font-[400]"
     >
       {{ data.subTitle }}
     </text>

@@ -1,6 +1,6 @@
 <template>
   <uv-checkbox-group
-    ref="parentInstance"
+    ref="uvInstance"
     v-model="modelValue"
     v-bind="{ ...$attrs, ...bridgedEvents, value: props.value }"
   >
@@ -31,7 +31,7 @@ const modelValue = useVModel(props, 'modelValue', emit);
 
 const { bridgedEvents } = useBridgedEmits(uvEvents);
 
-const { parentInstance } = useNextedCompatible();
+const { uvInstance } = useNextedCompatible();
 </script>
 
 <script lang="ts">
