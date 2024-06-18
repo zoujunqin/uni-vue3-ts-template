@@ -124,7 +124,7 @@ export default { options: { name: 'ProUpload', virtualHost: true } };
 }
 
 /* 其他证 */
-.other-certificate-background {
+.other-certification-background {
   background-image: url($http + '/upload/other-certificate.png');
 }
 
