@@ -24,8 +24,8 @@ import { useUserStore } from '@/pinia/modules/user';
 import { getRealStatus } from '@/utils';
 
 export const useHandler = ({ routeParams }) => {
-  const { formData } = storeToRefs(useRealNameStore());
   const userRealNameStore = useRealNameStore();
+  const { formData } = storeToRefs(userRealNameStore);
 
   const proFormRef = ref();
   const formRules = ref(<any>{});
@@ -200,6 +200,7 @@ export const useHandler = ({ routeParams }) => {
       } = useUserStore();
       userRealNameStore.$reset();
       const { sourceType } = routeParams.value;
+      const params = `?taskQueryParams=${JSON.stringify(routeParams.value)}`;
       if (!t || sourceType === PROTOCOL_TYPE.TASK) {
         // 正常申请任务流程
         applyTask(routeParams.value).then(res => {
@@ -209,9 +210,7 @@ export const useHandler = ({ routeParams }) => {
             uni.showToast({ title: '申请成功', icon: 'none' });
           }
           uni.navigateTo({
-            url:
-              REAL_STATUS_MAP[realStatus].pagePath +
-              `?taskQueryParams=${JSON.stringify(routeParams.value)}`
+            url: REAL_STATUS_MAP[realStatus].pagePath + params
           });
         });
       } else {
@@ -219,9 +218,7 @@ export const useHandler = ({ routeParams }) => {
         getInvitationCodeScan(c).then(res => {
           const realStatus = getRealStatus(res);
           uni.navigateTo({
-            url:
-              REAL_STATUS_MAP[realStatus].pagePath +
-              `?taskQueryParams=${JSON.stringify(routeParams.value)}`
+            url: REAL_STATUS_MAP[realStatus].pagePath + params
           });
         });
       }
