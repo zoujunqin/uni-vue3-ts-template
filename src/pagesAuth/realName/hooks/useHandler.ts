@@ -1,9 +1,8 @@
 import dayjs from 'dayjs';
 import { cloneDeep, debounce, isEmpty, isEqual } from 'lodash-es';
 import { storeToRefs } from 'pinia';
-import { computed, ref, shallowRef } from 'vue';
+import { computed, nextTick, ref, shallowRef } from 'vue';
 
-import { useRealNameStore } from './useStore';
 import { useRealNameStore } from './useStore';
 
 import { getInvitationCodeScan } from '@/api/fe/wechat/invitation_code';
@@ -63,45 +62,47 @@ export const useHandler = ({ routeParams }) => {
         showSureDataModal.value = true;
       }
       useRealNameStore().initFormData();
-      const { propertyGroups, appealStatus, rejectCause } = res;
-      applyStatusMap.value = { appealStatus, rejectCause };
+      nextTick(() => {
+        const { propertyGroups, appealStatus, rejectCause } = res;
+        applyStatusMap.value = { appealStatus, rejectCause };
 
-      const idCardGroup = {
-        categoryCode: REAL_TYPE.ID_CARD,
-        categoryName: '上传身份证',
-        properties: []
-      };
+        const idCardGroup = {
+          categoryCode: REAL_TYPE.ID_CARD,
+          categoryName: '上传身份证',
+          properties: []
+        };
 
-      for (const group of propertyGroups) {
-        let i = group.properties.length - 1;
-        while (i >= 0) {
-          const { fieldCode, value, izRequired } = group.properties[i];
-          formData.value[fieldCode] = value;
-          formRules.value[fieldCode] = {
-            required: izRequired === YES_NO_TYPE.YES,
-            trigger: ['blur', 'change']
-          };
-          // 手机号额外需要验证码
-          if (fieldCode === 'mobile') {
-            formRules.value.smsCode = formRules.value.mobile;
+        for (const group of propertyGroups) {
+          let i = group.properties.length - 1;
+          while (i >= 0) {
+            const { fieldCode, value, izRequired } = group.properties[i];
+            formData.value[fieldCode] = value;
+            formRules.value[fieldCode] = {
+              required: izRequired === YES_NO_TYPE.YES,
+              trigger: ['blur', 'change']
+            };
+            // 手机号额外需要验证码
+            if (fieldCode === 'mobile') {
+              formRules.value.smsCode = formRules.value.mobile;
+            }
+            // 身份证正面和返面单独处理
+            if (['idCardFront', 'idCardReverse'].includes(fieldCode)) {
+              idCardGroup.properties.push(...group.properties.splice(i, 1));
+            }
+            i--;
           }
-          // 身份证正面和返面单独处理
-          if (['idCardFront', 'idCardReverse'].includes(fieldCode)) {
-            idCardGroup.properties.push(...group.properties.splice(i, 1));
-          }
-          i--;
         }
-      }
 
-      if (idCardGroup.properties.length) {
-        propertyGroups.unshift(idCardGroup);
-      }
+        if (idCardGroup.properties.length) {
+          propertyGroups.unshift(idCardGroup);
+        }
 
-      formItemGroups.value = propertyGroups;
-      proFormRef.value.setRules(formRules.value);
-      if (showSureDataModal.value) {
-        sureModalRef.value.open();
-      }
+        formItemGroups.value = propertyGroups;
+        proFormRef.value.setRules(formRules.value);
+        if (showSureDataModal.value) {
+          sureModalRef.value.open();
+        }
+      });
     });
   };
   const validMobile = () => {
