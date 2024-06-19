@@ -1,5 +1,10 @@
 [
   {
+    "version": "1.0.6",
+    "createTime": "2024-06-19 09:26:36",
+    "description": "实名缓存流程修改，增加确认弹窗"
+  },
+  {
     "version": "1.0.5",
     "createTime": "2024-06-18 09:50:04",
     "description": "非重要修复"
