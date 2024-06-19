@@ -17,6 +17,7 @@
           v-model="conditionStatus"
           :title="monthDate"
           name="remunerationType"
+          :disabledClick="isLocked"
           @change="openDate"
         />
       </template>
@@ -115,28 +116,27 @@ const handlePickerCancel = () => {
 };
 
 const datetimePickerRef = ref();
+const isLocked = computed(() => {
+  return !!datetimePickerRef.value;
+});
 const openDate = (bool: boolean) => {
   bool && datetimePickerRef.value.open();
 };
-
 const conditionStatus = ref(false);
 const handleCloseDate = () => {
   conditionStatus.value = false;
 };
+const proScrollListRef = ref();
 const getExtendParams = () => {
   formData.value.salaryIssueMonth =
     monthDate.value.slice(0, 4) + '-' + monthDate.value.slice(5, 7);
   return formData.value;
 };
-const dataList = ref<Array<any>>([]);
 const handleGetPersonalCenterIncomeList = () => {
   nextTick(() => {
     formData.value.salaryIssueMonth =
       monthDate.value.slice(0, 4) + '-' + monthDate.value.slice(5, 7);
-    getPersonalCenterIncomeList(formData.value).then(res => {
-      dataList.value = res;
-      uni.stopPullDownRefresh();
-    });
+    proScrollListRef.value?.reload();
   });
 };
 

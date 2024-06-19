@@ -40,12 +40,17 @@ export const useRealNameStore = defineStore(
       idCardFrontInfo.value = v;
     };
 
+    const initFormData = () => {
+      formData.value = {};
+    };
+
     return {
       formData,
 
       idCardFrontInfo,
       getIdCardFrontInfo,
-      setIdCardFrontInfo
+      setIdCardFrontInfo,
+      initFormData
     };
   },
   {

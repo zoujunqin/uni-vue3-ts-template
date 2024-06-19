@@ -17,18 +17,25 @@ export const weChatAuthLogin = (res: IPhoneNumberResult) => {
   const { code, errMsg } = res;
   const okMsg = 'getPhoneNumber:ok';
   const denyMsg = 'getPhoneNumber:fail user deny';
-
+  const { sceneOption } = useUserStore();
+  const { c } = sceneOption;
+  const param = {
+    code: code,
+    invitationCodeId: c || undefined
+  };
   if (errMsg === okMsg) {
-    weChatLogin({ code }).then(callback);
+    weChatLogin(param).then(callback);
   } else if (errMsg === denyMsg) {
     uni.showToast({ title: '您已取消授权', icon: 'none' });
   }
 };
 
 export const mobileLogin = (param: ISmsParam) => {
+  const { sceneOption } = useUserStore();
+  const { c } = sceneOption;
+  param['invitationCodeId'] = c || undefined;
   smsLogin(param).then(callback);
 };
-
 function callback(res) {
   setToken(res.token);
   setAreaData();

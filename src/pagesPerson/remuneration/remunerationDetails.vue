@@ -57,7 +57,13 @@ import { onLoad } from '@dcloudio/uni-app';
 import { ref } from 'vue';
 
 import { getPersonalCenterByIdIncome } from '@/api/fe/wechat/personal_center';
-const formData = ref();
+const formData = ref({
+  workerName: '',
+  mobile: '',
+  salaryIssueMonth: '',
+  idCardNo: '',
+  finalPayingAmount: 0
+});
 const formDataList = ref([
   {
     label: '姓名',
@@ -78,11 +84,13 @@ const formDataList = ref([
 ]);
 onLoad(query => {
   getPersonalCenterByIdIncome(query?.id).then(res => {
-    formData.value = { ...res, ...res.extJsonMap };
-    Object.keys(res.extJsonMap).reduce((result, item) => {
-      result.push({ label: item, key: item });
-      return result;
-    }, formDataList.value);
+    const { dataList } = res;
+    formData.value = { ...res };
+    dataList.forEach(item => {
+      const { header, value } = item;
+      formData.value[header] = value;
+      formDataList.value.push({ label: header, key: header });
+    });
   });
 });
 </script>
