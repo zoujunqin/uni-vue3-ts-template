@@ -1,6 +1,7 @@
 <template>
-  <view class="hx-flex hx-items-end hx-p-[11px_16px]" @click="handleClick">
+  <view class="hx-flex hx-items-end hx-p-[11px_16px]">
     <text
+      @click="handleClick"
       class="hx-text-[14px] hx-font-[400] hx-leading-[21px] hx-text-text-color-content hx-mr-[3px]"
       :class="activeTextClass"
     >
