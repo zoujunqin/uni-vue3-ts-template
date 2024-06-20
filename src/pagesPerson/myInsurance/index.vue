@@ -25,9 +25,9 @@
             </view>
           </view>
           <ProGap v-if="row?.insuranceName" height="1" bgColor="#F2F2F2" />
-          <ProCollapse v-if="row?.content" :border="false">
+          <ProCollapse v-if="row?.insuranceName" :border="false">
             <ProCollapseItem title="查看详情内容">
-              <text class="uv-collapse-content">{{ row?.content }}</text>
+              <text>{{ row?.insuranceName }}</text>
             </ProCollapseItem>
           </ProCollapse>
         </view>
