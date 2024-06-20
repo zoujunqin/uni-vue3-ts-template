@@ -32,7 +32,7 @@
     </text>
   </view>
 
-  <view class="hx-flex hx-items-center">
+  <view class="hx-flex hx-items-center hx-mb-[10px]">
     <ProTags
       v-if="data.taskTypeCategoryName"
       :text="data.taskTypeCategoryName"
