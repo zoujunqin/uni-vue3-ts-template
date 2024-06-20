@@ -18,7 +18,7 @@ export default function vitePluginUni(...args) {
 
   const platform = process.env.UNI_PLATFORM;
 
-  if (platform === 'mp-weixin') {
+  if (platform === 'mp-weixin' && process.env.NODE_ENV === 'production') {
     uniPlugins.push(rewriteViteCssPostPlugin(options));
 
     const uniEntryPluginIndex = uniPlugins.findIndex(

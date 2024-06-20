@@ -1,5 +1,5 @@
 <template>
-  <uv-form ref="parentInstance" v-bind="$attrs">
+  <uv-form ref="uvInstance" v-bind="$attrs">
     <slot />
   </uv-form>
 </template>
@@ -15,8 +15,8 @@ import { useNextedCompatible } from '../../hooks/useNextedCompatible';
 
 import { uvMethods } from './methods';
 
-const { parentInstance } = useNextedCompatible();
-const { bridgedMethods } = useBridgedMethods(uvMethods, parentInstance);
+const { uvInstance } = useNextedCompatible();
+const { bridgedMethods } = useBridgedMethods(uvMethods, uvInstance);
 
 defineExpose({ ...bridgedMethods });
 </script>
@@ -25,7 +25,6 @@ defineExpose({ ...bridgedMethods });
 export default {
   // 这里 name 为 uv-form 是为了 uv-form-item 内部的查找机制
   name: 'uv-form',
-  nameFake: true,
   options: { name: 'ProForm', virtualHost: true }
 };
 </script>

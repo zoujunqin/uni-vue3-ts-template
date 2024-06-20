@@ -1,5 +1,5 @@
 <template>
-  <uv-steps ref="parentInstance" v-bind="$attrs">
+  <uv-steps ref="uvInstance" v-bind="$attrs">
     <slot />
   </uv-steps>
 </template>
@@ -12,7 +12,7 @@
 
 import { useNextedCompatible } from '@/hooks/useNextedCompatible';
 
-const { parentInstance } = useNextedCompatible();
+const { uvInstance } = useNextedCompatible();
 </script>
 
 <script lang="ts">
