@@ -24,12 +24,12 @@
               </p>
             </view>
           </view>
-          <uv-gap v-if="row?.insuranceName" height="1" bgColor="#F2F2F2" />
-          <uv-collapse v-if="row?.content" :border="false">
-            <uv-collapse-item title="查看详情内容">
+          <ProGap v-if="row?.insuranceName" height="1" bgColor="#F2F2F2" />
+          <ProCollapse v-if="row?.content" :border="false">
+            <ProCollapseItem title="查看详情内容">
               <text class="uv-collapse-content">{{ row?.content }}</text>
-            </uv-collapse-item>
-          </uv-collapse>
+            </ProCollapseItem>
+          </ProCollapse>
         </view>
       </template>
     </ProScrollList>
