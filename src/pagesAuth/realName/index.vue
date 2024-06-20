@@ -137,12 +137,26 @@
     title=""
     @confirm="handleExplainConfirm"
   />
+  <ProModal
+    ref="sureModalRef"
+    confirm-button-text="确认"
+    content="是否显示上次修改内容?"
+    title="提示"
+    @confirm="handleSureDataConfirm"
+  >
+    <template #image>
+      <image
+        :src="import('@http/person/log-out-img.png')"
+        class="hx-w-full hx-h-[94px]"
+      />
+    </template>
+  </ProModal>
 </template>
 
 <script lang="ts" setup>
 import { onLoad } from '@dcloudio/uni-app';
 import { kebabCase } from 'lodash-es';
-import { computed, onMounted, readonly, shallowRef } from 'vue';
+import { computed, onMounted, shallowRef } from 'vue';
 
 import IDCardUpload from './components/IDCardUpload.vue';
 import OperateTip from './components/OperateTip.vue';
@@ -181,7 +195,9 @@ const {
   applyTipText,
 
   explainModalRef,
-  handleExplainConfirm
+  handleExplainConfirm,
+  sureModalRef,
+  handleSureDataConfirm
 } = useHandler({
   routeParams
 });

@@ -83,7 +83,6 @@ const handleApplyTask = () => {
       orderDetailId: orderDetailId,
       sourceType: sourceType
     });
-
     uni.navigateTo({
       url:
         REAL_STATUS_MAP[realStatus].pagePath +

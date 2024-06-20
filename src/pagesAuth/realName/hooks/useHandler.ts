@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
-import { debounce } from 'lodash-es';
+import { cloneDeep, debounce, isEmpty, isEqual } from 'lodash-es';
 import { storeToRefs } from 'pinia';
-import { computed, ref, shallowRef } from 'vue';
+import { computed, nextTick, ref, shallowRef } from 'vue';
 
 import { useRealNameStore } from './useStore';
 
@@ -14,6 +14,7 @@ import {
 } from '@/api/fe/wechat/worker';
 import {
   APPLY_STATUS_MAP,
+  PROTOCOL_TYPE,
   REAL_STATUS,
   REAL_STATUS_MAP,
   REAL_TYPE,
@@ -23,11 +24,14 @@ import { useUserStore } from '@/pinia/modules/user';
 import { getRealStatus } from '@/utils';
 
 export const useHandler = ({ routeParams }) => {
-  const { formData } = storeToRefs(useRealNameStore());
+  const userRealNameStore = useRealNameStore();
+  const { formData } = storeToRefs(userRealNameStore);
 
   const proFormRef = ref();
-  const formRules = ref({});
+  const formRules = ref(<any>{});
   const formItemGroups = ref();
+  const sureModalRef = ref();
+  const backupCopyData = ref<Record<string, any>>({});
 
   const formItemGroupMap = computed(() => {
     return formItemGroups.value.reduce((res, group) => {
@@ -39,54 +43,66 @@ export const useHandler = ({ routeParams }) => {
   const applyStatusMap = shallowRef({ appealStatus: '', rejectCause: '' });
 
   const explainModalRef = ref();
-
+  //使用缓存数据，比较获取数据与缓存数据
+  const handleSureDataConfirm = () => {
+    Object.keys(formData.value).forEach(key => {
+      const remoteValue = formData.value[key];
+      const localValue = backupCopyData.value[key];
+      if (!isEqual(remoteValue, localValue)) {
+        formData.value[key] = localValue;
+      }
+    });
+    sureModalRef.value.close();
+  };
   const handleGetRealNameInfo = () => {
     getRealNameInfo(routeParams.value).then(async res => {
-      const { propertyGroups, appealStatus, rejectCause } = res;
-      applyStatusMap.value = { appealStatus, rejectCause };
+      if (!isEmpty(formData.value)) {
+        backupCopyData.value = cloneDeep(formData.value);
+      }
+      useRealNameStore().initFormData();
+      nextTick(() => {
+        const { propertyGroups, appealStatus, rejectCause } = res;
+        applyStatusMap.value = { appealStatus, rejectCause };
 
-      const idCardGroup = {
-        categoryCode: REAL_TYPE.ID_CARD,
-        categoryName: '上传身份证',
-        properties: []
-      };
+        const idCardGroup = {
+          categoryCode: REAL_TYPE.ID_CARD,
+          categoryName: '上传身份证',
+          properties: []
+        };
 
-      for (const group of propertyGroups) {
-        let i = group.properties.length - 1;
-
-        while (i >= 0) {
-          const { fieldCode, value, izRequired } = group.properties[i];
-
-          formData.value[fieldCode] ||= value;
-          formRules.value[fieldCode] = {
-            required: izRequired === YES_NO_TYPE.YES,
-            trigger: ['blur', 'change']
-          };
-
-          // 手机号额外需要验证码
-          if (fieldCode === 'mobile') {
-            formRules.value.smsCode = formRules.value.mobile;
+        for (const group of propertyGroups) {
+          let i = group.properties.length - 1;
+          while (i >= 0) {
+            const { fieldCode, value, izRequired } = group.properties[i];
+            formData.value[fieldCode] = value;
+            formRules.value[fieldCode] = {
+              required: izRequired === YES_NO_TYPE.YES,
+              trigger: ['blur', 'change']
+            };
+            // 手机号额外需要验证码
+            if (fieldCode === 'mobile') {
+              formRules.value.smsCode = formRules.value.mobile;
+            }
+            // 身份证正面和返面单独处理
+            if (['idCardFront', 'idCardReverse'].includes(fieldCode)) {
+              idCardGroup.properties.push(...group.properties.splice(i, 1));
+            }
+            i--;
           }
-
-          // 身份证正面和方面单独处理
-          if (['idCardFront', 'idCardReverse'].includes(fieldCode)) {
-            idCardGroup.properties.push(...group.properties.splice(i, 1));
-          }
-
-          i--;
         }
-      }
 
-      if (idCardGroup.properties.length) {
-        propertyGroups.unshift(idCardGroup);
-      }
+        if (idCardGroup.properties.length) {
+          propertyGroups.unshift(idCardGroup);
+        }
 
-      formItemGroups.value = propertyGroups;
-
-      proFormRef.value.setRules(formRules.value);
+        formItemGroups.value = propertyGroups;
+        proFormRef.value.setRules(formRules.value);
+        if (!isEmpty(backupCopyData.value)) {
+          sureModalRef.value.open();
+        }
+      });
     });
   };
-
   const validMobile = () => {
     if (!formData.value.mobile) {
       uni.showToast({
@@ -104,7 +120,8 @@ export const useHandler = ({ routeParams }) => {
       credentialStartDate,
       credentialEndDate
     } = formData.value;
-
+    // 表单校验
+    await proFormRef.value.validate();
     // 身份证校验
     const idCardGroup = formItemGroupMap.value[REAL_TYPE.ID_CARD];
 
@@ -127,9 +144,6 @@ export const useHandler = ({ routeParams }) => {
       }
     }
 
-    // 表单校验
-    await proFormRef.value.validate();
-
     // 资质校验
     const certificationGroup =
       formItemGroupMap.value[REAL_TYPE.CERTIFICATION_INFO];
@@ -150,7 +164,6 @@ export const useHandler = ({ routeParams }) => {
         return;
       }
     }
-
     // 填写的名字、身份证号码和 ocr 识别的不一样 触发申诉逻辑
     const idCardFrontInfo = await useRealNameStore().getIdCardFrontInfo();
 
@@ -185,8 +198,10 @@ export const useHandler = ({ routeParams }) => {
       const {
         sceneOption: { t, c }
       } = useUserStore();
-
-      if (!t) {
+      userRealNameStore.$reset();
+      const { sourceType } = routeParams.value;
+      const params = `?taskQueryParams=${JSON.stringify(routeParams.value)}`;
+      if (!t || sourceType === PROTOCOL_TYPE.TASK) {
         // 正常申请任务流程
         applyTask(routeParams.value).then(res => {
           const realStatus = getRealStatus(res);
@@ -194,13 +209,17 @@ export const useHandler = ({ routeParams }) => {
           if (realStatus === REAL_STATUS.ALREADY_REAL) {
             uni.showToast({ title: '申请成功', icon: 'none' });
           }
-          uni.navigateTo({ url: REAL_STATUS_MAP[realStatus].pagePath });
+          uni.navigateTo({
+            url: REAL_STATUS_MAP[realStatus].pagePath + params
+          });
         });
       } else {
         // 邀请码流程
         getInvitationCodeScan(c).then(res => {
           const realStatus = getRealStatus(res);
-          uni.navigateTo({ url: REAL_STATUS_MAP[realStatus].pagePath });
+          uni.navigateTo({
+            url: REAL_STATUS_MAP[realStatus].pagePath + params
+          });
         });
       }
     });
@@ -253,6 +272,8 @@ export const useHandler = ({ routeParams }) => {
     applyTipText,
 
     explainModalRef,
-    handleExplainConfirm
+    handleExplainConfirm,
+    sureModalRef,
+    handleSureDataConfirm
   };
 };
