@@ -25,7 +25,7 @@
         />
       </view>
     </view>
-    <uv-gap
+    <ProGap
       v-if="data.index % 2 === 0 && listLength > 1"
       height="1"
       bgColor="#F2F2F2"
