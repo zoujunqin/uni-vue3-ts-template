@@ -148,14 +148,14 @@ export const useHandler = ({ routeParams }) => {
     const certificationGroup =
       formItemGroupMap.value[REAL_TYPE.CERTIFICATION_INFO];
     if (certificationGroup) {
-      const failedLabels = certificationGroup.properties.filter(group => {
+      const failedLabels = [];
+      certificationGroup.properties.forEach(group => {
         const { izRequired, fieldCode, labelName } = group;
 
-        if (izRequired === YES_NO_TYPE.YES && formData.value[fieldCode]) {
-          return labelName;
+        if (izRequired === YES_NO_TYPE.YES && !formData.value[fieldCode]) {
+          failedLabels.push(labelName);
         }
       });
-
       if (failedLabels.length) {
         uni.showToast({
           title: `请上传${failedLabels.join('，')}`,
