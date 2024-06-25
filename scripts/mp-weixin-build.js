@@ -9,9 +9,12 @@ const program = new Command();
 const pkg = require('../package.json');
 
 // 定义当前版本
-program.version(`v${pkg.version}`);
+program
+  .version(`v${pkg.version}`)
+  .option('-m, --mode <modename>', 'Specify the mode')
+  .parse(process.argv);
 
-program.description('build mp-weixin').action(async () => {
+program.description('build mp-weixin').action(async argv => {
   const { version } = await inquirer.prompt([
     {
       type: 'input',
@@ -49,7 +52,7 @@ program.description('build mp-weixin').action(async () => {
 
   spawnSync(
     /^win/.test(process.platform) ? 'pnpm.cmd' : 'pnpm',
-    ['node_modules/.bin/uni', 'build', '-p', 'mp-weixin'],
+    ['node_modules/.bin/uni', 'build', '-p', 'mp-weixin', '--mode', argv.mode],
     {
       stdio: 'inherit'
     }
