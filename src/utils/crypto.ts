@@ -1,6 +1,6 @@
 import { MD5, AES, enc, mode, pad } from 'crypto-js';
-const key = '2ccdb1306af6476b8a2a289110420502';
-const iv = '138f54643bc146cr';
+const key = import.meta.env.VITE_CRYPTO_KEY;
+const iv = import.meta.env.VITE_CRYPTO_IV;
 
 const SECRET_KEY = enc.Utf8.parse(key);
 const SECRET_IV = enc.Utf8.parse(iv);
