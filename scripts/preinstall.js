@@ -5,9 +5,9 @@ const majorNodeVersion = parseInt(nodeVersion[1]);
 const minorNodeVersion = parseInt(nodeVersion[2]);
 const patchNodeVersion = parseInt(nodeVersion[3]);
 
-if (majorNodeVersion < 16 && minorNodeVersion < 14) {
+if (majorNodeVersion < 18 && minorNodeVersion < 14) {
   console.error(
-    '\x1b[1;31m*** Please use node.js versions >=16.14.x.\x1b[0;0m'
+    '\x1b[1;31m*** Please use node.js versions >=18.14.x.\x1b[0;0m'
   );
   err = true;
 }

@@ -130,7 +130,7 @@
     "weapp-tailwindcss": "2.11.0"
   },
   "engines": {
-    "node": ">=16.14.x",
+    "node": ">=18.14.x",
     "pnpm": ">=8.x"
   }
 }
