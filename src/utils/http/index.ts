@@ -233,12 +233,16 @@ class PureHttp {
       },
       (error: PureHttpError) => {
         uni.hideLoading();
-        console.log(error);
         const $error = error;
 
-        if ($error.code === AxiosError.ETIMEDOUT) {
+        const iosTimeout = $error.code === AxiosError.ETIMEDOUT;
+        const androidTimeout = $error.message === 'request:fail fail:time out';
+        const timeout = iosTimeout || androidTimeout;
+        if (timeout) {
           uni.showToast({ title: '请求超时', icon: 'none' });
-          return;
+
+          $error.isCancelRequest = Axios.isCancel($error);
+          return Promise.reject({ ...$error, code: AxiosError.ETIMEDOUT });
         }
 
         let responseData: any = $error.response.data;
