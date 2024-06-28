@@ -36,6 +36,9 @@ export const useHandler = (props: ExtractPropTypes<typeof scrollListProps>) => {
   };
 
   onMounted(() => {
+    if (!props.autoLoad) {
+      return;
+    }
     useFirst(
       toRef(props, 'initialIndex'),
       toRef(props, 'currentIndex'),
