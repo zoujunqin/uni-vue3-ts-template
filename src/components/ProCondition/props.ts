@@ -12,10 +12,5 @@ export const conditionProps = {
   name: {
     type: String,
     default: new Date().getTime()
-  },
-
-  disabledClick: {
-    type: Boolean,
-    default: true
   }
 };

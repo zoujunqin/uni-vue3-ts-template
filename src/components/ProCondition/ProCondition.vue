@@ -37,16 +37,12 @@ const activeIconStyle = computed(() =>
 );
 
 const handleClick = () => {
-  if (props.disabledClick) {
-    if (parent)
+  if (parent)
       parent?.exposed?.updateActive(!active.value ? props.name : null);
     else {
       active.value = !active.value;
       emit('change', active.value);
     }
-  } else {
-    return uni.showToast({ title: '加载中，请稍后操作', icon: 'none' });
-  }
 };
 
 let parent: ComponentInternalInstance | undefined;
