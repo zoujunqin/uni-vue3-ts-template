@@ -3,9 +3,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useFakerRef } from '@/hooks/useFakerRef';
 
-const uvTooltipRef = ref();
+const { instance: uvTooltipRef } = useFakerRef();
 
 const open = () => {
   uvTooltipRef.value.tooltipTop = 0;

@@ -4,9 +4,10 @@
     :type="type"
     :size="size"
     :class="tagClass"
-    border-color="transparent"
     :bg-color="typeConfig.bgColor"
     :color="typeConfig.color"
+    ref="uvTagsRef"
+    border-color="transparent"
     class="pro-tags"
   />
 </template>
@@ -15,6 +16,8 @@
 import { computed } from 'vue';
 
 import { tagProps } from './props';
+
+import { useFakerRef } from '@/hooks/useFakerRef';
 
 const props = defineProps(tagProps);
 const tagClass = computed(() => {
@@ -48,6 +51,8 @@ const typeMap = {
   }
 };
 const typeConfig = computed(() => typeMap[props.type]);
+
+const { instance: uvTagsRef } = useFakerRef();
 </script>
 
 <script lang="ts">

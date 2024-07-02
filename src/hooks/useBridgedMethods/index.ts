@@ -1,9 +1,11 @@
-import { ComponentInternalInstance, ShallowRef } from 'vue';
+import { ComponentInternalInstance, shallowRef, ShallowRef } from 'vue';
 
 export const useBridgedMethods = <T extends ReadonlyArray<string>>(
   methods: readonly [...T],
   componentInstance: ShallowRef<ComponentInternalInstance>
 ) => {
+  componentInstance ||= shallowRef();
+
   const bridgedMethods = methods.reduce(
     (result, method) => {
       if (method.startsWith('async ')) {
@@ -22,5 +24,5 @@ export const useBridgedMethods = <T extends ReadonlyArray<string>>(
     {} as Record<T[number], Function>
   );
 
-  return { bridgedMethods };
+  return { bridgedMethods, componentInstance };
 };

@@ -10,9 +10,11 @@
  * 修复: 将 pro-steps 仿冒为 uv-steps, 复制 uv-steps 的数据到当前组件供子组件初始化, 然后去更新子组件的 parent 为 uv-steps
  * */
 
+import { useFakerRef } from '@/hooks/useFakerRef';
 import { useNextedCompatible } from '@/hooks/useNextedCompatible';
 
-const { uvInstance } = useNextedCompatible();
+const { instance: uvInstance } = useFakerRef();
+useNextedCompatible(uvInstance);
 </script>
 
 <script lang="ts">

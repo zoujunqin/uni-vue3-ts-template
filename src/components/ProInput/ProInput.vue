@@ -1,6 +1,7 @@
 <template>
   <uv-input
     v-model="inputValue"
+    ref="uvInputRef"
     border="none"
     placeholder="请输入关键词"
     class="!hx-p-[6px_16px] hx-rounded-[6px] hx-h-[36px] hx-text-font-size-regular"
@@ -21,10 +22,12 @@ import { inputEvents, uvEvents } from './events';
 import { inputProps } from './props';
 
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
+import { useFakerRef } from '@/hooks/useFakerRef';
 import { useVModel } from '@/hooks/useVModel';
 
 const emits = defineEmits(inputEvents);
 const props = defineProps(inputProps);
+const { instance: uvInputRef } = useFakerRef();
 const { bridgedEvents } = useBridgedEmits(uvEvents);
 
 const inputValue = useVModel(props, 'modelValue', emits);

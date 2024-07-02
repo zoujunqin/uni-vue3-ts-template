@@ -7,13 +7,12 @@
 </template>
 
 <script setup lang="ts">
-import { shallowRef } from 'vue';
-
 import { uvMethods } from './methods';
 
 import { useBridgedMethods } from '@/hooks/useBridgedMethods';
+import { useFakerRef } from '@/hooks/useFakerRef';
 
-const uvNotifyRef = shallowRef();
+const { instance: uvNotifyRef } = useFakerRef();
 const { bridgedMethods } = useBridgedMethods(uvMethods, uvNotifyRef);
 
 defineExpose({

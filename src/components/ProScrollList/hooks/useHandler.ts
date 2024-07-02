@@ -3,10 +3,12 @@ import { ExtractPropTypes, onMounted, shallowRef, toRef } from 'vue';
 
 import { scrollListProps } from '../props';
 
+import { useFakerRef } from '@/hooks/useFakerRef';
 import { useFirst } from '@/hooks/useFirst';
 
 export const useHandler = (props: ExtractPropTypes<typeof scrollListProps>) => {
-  const zPagingRef = shallowRef();
+  const { instance: zPagingRef } = useFakerRef();
+
   const dataList = shallowRef([]);
 
   const handleQuery = (page: number, pageSize: number) => {

@@ -10,13 +10,15 @@
 <script setup lang="ts">
 import { onReady } from '@dcloudio/uni-app';
 import dayjs from 'dayjs';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
 import { uvEvents } from './events';
 
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
 import { useBridgedMethods } from '@/hooks/useBridgedMethods';
+import { useFakerRef } from '@/hooks/useFakerRef';
 
+const { instance: dataTimePickerRef } = useFakerRef();
 const { bridgedEvents } = useBridgedEmits(uvEvents);
 
 const props = defineProps({
@@ -72,7 +74,6 @@ const formatter = (type: string, value: string) => {
   return props.textShow ? `${value}${textMap[type]}` : value;
 };
 
-const dataTimePickerRef = ref();
 onReady(() => {
   dataTimePickerRef.value.setFormatter(formatter);
 });

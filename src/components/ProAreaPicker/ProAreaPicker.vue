@@ -26,6 +26,7 @@ import { uvEvents } from '@/components/ProPicker/events';
 import { uvMethods } from '@/components/ProPicker/methods';
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
 import { useBridgedMethods } from '@/hooks/useBridgedMethods';
+import { useFakerRef } from '@/hooks/useFakerRef';
 import { useAreaStore } from '@/pinia/modules/area';
 
 interface IRegion {
@@ -41,6 +42,8 @@ const props = defineProps({
   }
 });
 const emit = defineEmits(['update:modelValue', 'confirm']);
+
+const { instance: proPickerRef } = useFakerRef();
 
 const defaultValue = ['110000', '110100', '110101'];
 const pickerValue = shallowRef<Array<number>>([]);
@@ -110,7 +113,6 @@ const open = () => {
 };
 
 const { bridgedEvents } = useBridgedEmits(uvEvents);
-const proPickerRef = shallowRef();
 const { bridgedMethods } = useBridgedMethods(uvMethods, proPickerRef);
 defineExpose({ ...bridgedMethods, open, confirm });
 </script>

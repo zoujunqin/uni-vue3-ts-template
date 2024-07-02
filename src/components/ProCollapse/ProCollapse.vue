@@ -10,9 +10,11 @@ import { uvMethods } from './methods';
 
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
 import { useBridgedMethods } from '@/hooks/useBridgedMethods';
+import { useFakerRef } from '@/hooks/useFakerRef';
 import { useNextedCompatible } from '@/hooks/useNextedCompatible';
 
-const { uvInstance } = useNextedCompatible();
+const { instance: uvInstance } = useFakerRef();
+useNextedCompatible(uvInstance);
 const { bridgedEvents } = useBridgedEmits(uvEvents);
 const { bridgedMethods } = useBridgedMethods(uvMethods, uvInstance);
 

@@ -1,12 +1,14 @@
 <template>
-  <uv-slider v-bind="{ ...$attrs, ...bridgedEvents }" />
+  <uv-slider ref="uvSliderRef" v-bind="{ ...$attrs, ...bridgedEvents }" />
 </template>
 
 <script setup lang="ts">
 import { uvEvents } from './events';
 
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
+import { useFakerRef } from '@/hooks/useFakerRef';
 
+const { instance: uvSliderRef } = useFakerRef();
 const { bridgedEvents } = useBridgedEmits(uvEvents);
 </script>
 

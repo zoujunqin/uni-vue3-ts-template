@@ -7,19 +7,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed, shallowRef, useSlots } from 'vue';
+import { computed, useSlots } from 'vue';
 
 import { uvEvents } from './events';
 import { uvMethods } from './methods';
 
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
 import { useBridgedMethods } from '@/hooks/useBridgedMethods';
+import { useFakerRef } from '@/hooks/useFakerRef';
 
 const { bridgedEvents } = useBridgedEmits(uvEvents);
 
 const loadingSlot = computed(() => (useSlots()?.loading ? 'loading' : ''));
 
-const uvQrcodeRef = shallowRef();
+const { instance: uvQrcodeRef } = useFakerRef();
 const { bridgedMethods } = useBridgedMethods(uvMethods, uvQrcodeRef);
 defineExpose({ ...bridgedMethods });
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <uv-collapse-item v-bind="$attrs">
+  <uv-collapse-item ref="uvCollapseItemRef" v-bind="$attrs">
     <slot />
 
     <template v-slot:[titleSlot]>
@@ -23,12 +23,16 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
 
+import { useFakerRef } from '@/hooks/useFakerRef';
+
 const titleSlot = computed(() => (useSlots()?.title ? 'title' : ''));
 const iconSlot = computed(() => (useSlots()?.icon ? 'icon' : ''));
 const valueSlot = computed(() => (useSlots()?.value ? 'value' : ''));
 const rightIconSlot = computed(() =>
   useSlots()?.['right-icon'] ? 'right-icon' : ''
 );
+
+const { instance: uvCollapseItemRef } = useFakerRef();
 </script>
 
 <script lang="ts">

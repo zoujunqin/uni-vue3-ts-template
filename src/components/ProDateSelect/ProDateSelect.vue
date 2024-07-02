@@ -33,14 +33,16 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue', 'confirm']);
 const modelValue = useVModel(props, 'modelValue', emit);
 
- const dataTime = computed({
-   get() {
-    return modelValue.value ? modelValue.value : handleDealTimestampDate(new Date());
-   },
-   set(val) {
-     emit('update:modelValue',val);
-   }
- })
+const dataTime = computed({
+  get() {
+    return modelValue.value
+      ? modelValue.value
+      : handleDealTimestampDate(new Date());
+  },
+  set(val) {
+    emit('update:modelValue', val);
+  }
+});
 
 const proDateTimePickerRef = ref();
 const openDatePicker = () => {
