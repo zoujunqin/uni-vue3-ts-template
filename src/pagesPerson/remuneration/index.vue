@@ -48,8 +48,7 @@
       </template>
     </ProScrollList>
     <ProDateTimePicker
-      v-model:refer="testRef"
-      ref="datetimePickerRef"
+      v-model:refer="datetimePickerRef"
       v-model="monthDatetime"
       mode="year-month"
       @close="handleCloseDate"
@@ -115,7 +114,6 @@ const handlePickerCancel = () => {
   handleGetPersonalCenterIncomeList();
 };
 
-const testRef = ref();
 const datetimePickerRef = ref();
 const openDate = (bool: boolean) => {
   bool && datetimePickerRef.value?.open();
