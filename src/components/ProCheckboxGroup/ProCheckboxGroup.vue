@@ -1,6 +1,5 @@
 <template>
   <uv-checkbox-group
-    ref="uvInstance"
     v-model="modelValue"
     v-bind="{ ...$attrs, ...bridgedEvents, value: props.value }"
   >
@@ -10,6 +9,7 @@
 
 <script lang="ts" setup>
 import { useBridgedEmits } from '../../hooks/useBridgedEmits';
+import { useFakerRef } from '../../hooks/useFakerRef';
 import { useNextedCompatible } from '../../hooks/useNextedCompatible';
 import { useVModel } from '../../hooks/useVModel';
 
@@ -31,7 +31,8 @@ const modelValue = useVModel(props, 'modelValue', emit);
 
 const { bridgedEvents } = useBridgedEmits(uvEvents);
 
-const { uvInstance } = useNextedCompatible();
+const { instance: uvInstance } = useFakerRef();
+useNextedCompatible(uvInstance);
 </script>
 
 <script lang="ts">

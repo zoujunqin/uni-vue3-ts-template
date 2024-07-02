@@ -20,7 +20,7 @@ const { instance: uvInstance } = useFakerRef();
 useNextedCompatible(uvInstance);
 const { bridgedMethods } = useBridgedMethods(uvMethods, uvInstance);
 
-defineExpose({ ...bridgedMethods });
+defineExpose(bridgedMethods);
 </script>
 
 <script lang="ts">

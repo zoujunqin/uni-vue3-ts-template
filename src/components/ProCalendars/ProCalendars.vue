@@ -14,7 +14,7 @@ const { bridgedEvents } = useBridgedEmits(uvEvents);
 
 const { instance: uvCalendarsRef } = useFakerRef();
 const { bridgedMethods } = useBridgedMethods(uvMethods, uvCalendarsRef);
-defineExpose({ ...bridgedMethods });
+defineExpose(bridgedMethods);
 </script>
 
 <script lang="ts">

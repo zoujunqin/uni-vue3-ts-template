@@ -118,7 +118,6 @@ const handlePickerCancel = () => {
 const testRef = ref();
 const datetimePickerRef = ref();
 const openDate = (bool: boolean) => {
-  console.log(testRef);
   bool && datetimePickerRef.value?.open();
 };
 const conditionStatus = ref(false);

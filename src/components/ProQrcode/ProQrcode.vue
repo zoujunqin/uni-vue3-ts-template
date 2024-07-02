@@ -22,7 +22,7 @@ const loadingSlot = computed(() => (useSlots()?.loading ? 'loading' : ''));
 
 const { instance: uvQrcodeRef } = useFakerRef();
 const { bridgedMethods } = useBridgedMethods(uvMethods, uvQrcodeRef);
-defineExpose({ ...bridgedMethods });
+defineExpose(bridgedMethods);
 </script>
 
 <script lang="ts">

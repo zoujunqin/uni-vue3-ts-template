@@ -76,7 +76,7 @@ const handleChange = text => {
 
 const { bridgedMethods } = useBridgedMethods(uvMethods, uvCodeRef);
 
-defineExpose({ ...bridgedMethods });
+defineExpose(bridgedMethods);
 </script>
 
 <script lang="ts">

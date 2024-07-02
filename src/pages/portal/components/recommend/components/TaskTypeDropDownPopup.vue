@@ -58,7 +58,7 @@ const { bridgedMethods } = useBridgedMethods(
   uvMethods,
   proDropDownPopupWrapperRef
 );
-defineExpose({ ...bridgedMethods });
+defineExpose(bridgedMethods);
 </script>
 
 <script lang="ts">

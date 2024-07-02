@@ -17,7 +17,7 @@ const { bridgedEvents } = useBridgedEmits(uvEvents);
 const { instance: uvDropDownRef } = useFakerRef();
 const { bridgedMethods } = useBridgedMethods(uvMethods, uvDropDownRef);
 
-defineExpose({ ...bridgedMethods });
+defineExpose(bridgedMethods);
 </script>
 
 <script lang="ts">

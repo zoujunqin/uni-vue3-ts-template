@@ -18,7 +18,7 @@ useNextedCompatible(uvInstance);
 const { bridgedEvents } = useBridgedEmits(uvEvents);
 const { bridgedMethods } = useBridgedMethods(uvMethods, uvInstance);
 
-defineExpose({ ...bridgedMethods });
+defineExpose(bridgedMethods);
 </script>
 
 <script lang="ts">

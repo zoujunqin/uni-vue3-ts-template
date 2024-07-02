@@ -14,7 +14,7 @@ const { bridgedEvents } = useBridgedEmits(uvEvents);
 
 const { instance: uvTextareaRef } = useFakerRef();
 const { bridgedMethods } = useBridgedMethods(uvMethods, uvTextareaRef);
-defineExpose({ ...bridgedMethods });
+defineExpose(bridgedMethods);
 </script>
 
 <script lang="ts">

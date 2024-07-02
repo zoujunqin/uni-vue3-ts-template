@@ -82,7 +82,7 @@ const { bridgedMethods } = useBridgedMethods(
   ['open', 'close'],
   dataTimePickerRef
 );
-defineExpose({ ...bridgedMethods });
+defineExpose(bridgedMethods);
 </script>
 <script lang="ts">
 export default { options: { name: 'ProDateTimePicker', virtualHost: true } };
