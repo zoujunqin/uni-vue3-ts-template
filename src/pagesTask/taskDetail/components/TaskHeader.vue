@@ -18,8 +18,8 @@
     <text
       class="skeleton-rect data-2 hx-mt-[3px] hx-flex-1 hx-text-right hx-text-color-primary hx-text-[20px] hx-font-[600] hx-leading-[30px]"
     >
-      {{ hyphenAB(data.salaryMin, data.salaryMax) }}
-      {{ data.costTypeName || '' }}
+      {{ hyphenABEqualityA(data.salaryMin, data.salaryMax) }}
+      元/{{ data.costTypeName || '' }}
     </text>
   </view>
 
@@ -59,7 +59,7 @@ import { PropType } from 'vue';
 
 import { ITaskDetail } from '@/api/fe/wechat/task';
 import { TASK_STATUS_MAP } from '@/constant/taskDetail';
-import { hyphenAB } from '@/utils/text';
+import { hyphenABEqualityA } from '@/utils/text';
 
 defineProps({
   data: {

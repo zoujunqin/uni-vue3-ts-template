@@ -10,6 +10,9 @@
     <view class="hx-mt-[10px]" v-if="data.endDate">
       任务时间： {{ hyphenAB(data.beginDate, data.endDate) }}
     </view>
+    <view class="hx-mt-[10px]" v-if="data.endTime">
+      工作时间： {{ hyphenAB(data.beginTime, data.endTime) }}
+    </view>
     <view class="hx-mt-[10px]" v-if="data.description">
       任务需求： {{ data.description }}
     </view>
