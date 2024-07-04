@@ -1,56 +1,66 @@
 <template>
   <view class="hx-flex hx-mb-[18px]">
-    <text
-      data-skeleton-width="200px"
-      data-skeleton-height="200px"
-      data-skeleton-color="red"
-      class="skeleton-rect hx-text-color-title hx-text-[22px] hx-font-[600] hx-leading-[36px] hx-mr-[8px] hx-max-w-[176px] hx-whitespace-pre-wrap"
-    >
-      {{ data.taskName }}
-    </text>
+    <ProSkeletonRect width="176px" height="36px" margin-right="20px">
+      <text
+        class="hx-text-color-title hx-text-[22px] hx-font-[600] hx-leading-[36px] hx-mr-[8px] hx-max-w-[176px] hx-whitespace-pre-wrap"
+      >
+        {{ data.taskName }}
+      </text>
+    </ProSkeletonRect>
+
     <ProTags
       v-if="statusShow"
       :text="data.undertakingStatusName"
       :type="TASK_STATUS_MAP[data.undertakingStatus]?.type"
-      class="skeleton-rect hx-mt-[8px]"
+      class="hx-mt-[8px]"
       size="mini"
     />
-    <text
-      class="skeleton-rect data-2 hx-mt-[3px] hx-flex-1 hx-text-right hx-text-color-primary hx-text-[20px] hx-font-[600] hx-leading-[30px]"
-    >
-      {{ hyphenABEqualityA(data.salaryMin, data.salaryMax) }}
-      元/{{ data.costTypeName || '' }}
-    </text>
+
+    <ProSkeletonRect width="160px" height="30px">
+      <text
+        class="data-2 hx-mt-[3px] hx-flex-1 hx-text-right hx-text-color-primary hx-text-[20px] hx-font-[600] hx-leading-[30px]"
+      >
+        {{ hyphenABEqualityA(data.salaryMin, data.salaryMax) }}
+        {{ data.costTypeName || '' }}
+      </text>
+    </ProSkeletonRect>
   </view>
 
-  <view
-    class="skeleton-rect hx-flex hx-items-center hx-mb-[16px]"
-    v-if="data.educationName"
-  >
-    <image
-      class="hx-w-[16px] hx-h-[16px] hx-mr-[4px] hx-mb-[1px]"
-      src="@/static/task-detail/education.png"
-    />
-    <text
-      class="hx-text-[14px] hx-font-[400] hx-leading-[14px] hx-text-text-color"
+  <ProSkeletonRect width="30px" height="16px" margin-bottom="16px">
+    <view
+      class="hx-flex hx-items-center hx-mb-[16px]"
+      v-if="data.educationName"
     >
-      {{ data.educationName }}
-    </text>
-  </view>
+      <image
+        class="hx-w-[16px] hx-h-[16px] hx-mr-[4px] hx-mb-[1px]"
+        src="@/static/task-detail/education.png"
+      />
+      <text
+        class="hx-text-[14px] hx-font-[400] hx-leading-[14px] hx-text-text-color"
+      >
+        {{ data.educationName }}
+      </text>
+    </view>
+  </ProSkeletonRect>
 
   <view class="hx-flex hx-items-center">
-    <ProTags
-      v-if="data.taskTypeCategoryName"
-      :text="data.taskTypeCategoryName"
-      class="skeleton-rect hx-mr-[10px]"
-      type="info"
-    />
-    <ProTags
-      v-if="data.taskTypeName"
-      :text="data.taskTypeName"
-      class="skeleton-rect hx-mr-[10px]"
-      type="info"
-    />
+    <ProSkeletonRect width="90px" height="26px" margin-right="8px">
+      <ProTags
+        v-if="data.taskTypeCategoryName"
+        :text="data.taskTypeCategoryName"
+        class="hx-mr-[10px]"
+        type="info"
+      />
+    </ProSkeletonRect>
+
+    <ProSkeletonRect width="90px" height="26px">
+      <ProTags
+        v-if="data.taskTypeName"
+        :text="data.taskTypeName"
+        class="hx-mr-[10px]"
+        type="info"
+      />
+    </ProSkeletonRect>
   </view>
 </template>
 

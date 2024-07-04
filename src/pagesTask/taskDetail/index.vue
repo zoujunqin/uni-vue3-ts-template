@@ -59,9 +59,9 @@ const routeParams = shallowRef<Record<string, any>>({});
 const loading = shallowRef(false);
 
 const handleGetTaskDetail = () => {
+  loading.value = true;
   getTaskDetail(routeParams.value)
     .then(res => {
-      loading.value = true;
       taskDetail.value = res;
     })
     .finally(() => {

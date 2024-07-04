@@ -1,21 +1,32 @@
 <template>
   <view class="section-title hx-mb-[10px]"> 基本需求 </view>
+
   <view
     class="section-content hx-mb-[16px] hx-rounded-[6px] hx-p-[12px] hx-text-text-color hx-text-[13px] hx-font-[400] hx-leading-[18px]"
   >
-    <view>
-      人员要求：
-      {{ getPersonRequire }}
-    </view>
-    <view class="hx-mt-[10px]" v-if="data.endDate">
-      任务时间： {{ hyphenAB(data.beginDate, data.endDate) }}
-    </view>
-    <view class="hx-mt-[10px]" v-if="data.endTime">
+    <ProSkeletonRect width="100%" height="18px">
+      <view>
+        人员要求：
+        {{ getPersonRequire }}
+      </view>
+    </ProSkeletonRect>
+
+    <ProSkeletonRect width="100%" height="18px" margin-top="10px">
+      <view class="hx-mt-[10px]" v-if="data.endDate">
+        任务时间： {{ hyphenAB(data.beginDate, data.endDate) }}
+      </view>
+    </ProSkeletonRect>
+    <ProSkeletonRect width="100%" height="18px" margin-top="10px">
+      <view class="hx-mt-[10px]" v-if="data.endTime">
       工作时间： {{ hyphenAB(data.beginTime, data.endTime) }}
     </view>
-    <view class="hx-mt-[10px]" v-if="data.description">
-      任务需求： {{ data.description }}
-    </view>
+    </ProSkeletonRect>
+
+    <ProSkeletonRect width="100%" height="18px" margin-top="10px">
+      <view class="hx-mt-[10px]" v-if="data.description">
+        任务需求： {{ data.description }}
+      </view>
+    </ProSkeletonRect>
   </view>
 </template>
 
