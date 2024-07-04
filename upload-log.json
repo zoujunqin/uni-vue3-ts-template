@@ -1,5 +1,10 @@
 [
   {
+    "version": "1.1.2",
+    "createTime": "2024-07-04 14:25:41",
+    "description": "更新test环境：任务需求相关调整"
+  },
+  {
     "version": "1.1.1",
     "createTime": "2024-07-01 08:28:50",
     "description": "修复时间选择组件报错问题"
