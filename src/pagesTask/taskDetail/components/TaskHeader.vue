@@ -1,7 +1,10 @@
 <template>
   <view class="hx-flex hx-mb-[18px]">
     <text
-      class="hx-text-color-title hx-text-[22px] hx-font-[600] hx-leading-[36px] hx-mr-[8px] hx-max-w-[176px] hx-whitespace-pre-wrap"
+      data-skeleton-width="200px"
+      data-skeleton-height="200px"
+      data-skeleton-color="red"
+      class="skeleton-rect hx-text-color-title hx-text-[22px] hx-font-[600] hx-leading-[36px] hx-mr-[8px] hx-max-w-[176px] hx-whitespace-pre-wrap"
     >
       {{ data.taskName }}
     </text>
@@ -9,18 +12,21 @@
       v-if="statusShow"
       :text="data.undertakingStatusName"
       :type="TASK_STATUS_MAP[data.undertakingStatus]?.type"
-      class="hx-mt-[8px]"
+      class="skeleton-rect hx-mt-[8px]"
       size="mini"
     />
     <text
-      class="hx-mt-[3px] hx-flex-1 hx-text-right hx-text-color-primary hx-text-[20px] hx-font-[600] hx-leading-[30px]"
+      class="skeleton-rect data-2 hx-mt-[3px] hx-flex-1 hx-text-right hx-text-color-primary hx-text-[20px] hx-font-[600] hx-leading-[30px]"
     >
       {{ hyphenAB(data.salaryMin, data.salaryMax) }}
       {{ data.costTypeName || '' }}
     </text>
   </view>
 
-  <view class="hx-flex hx-items-center hx-mb-[16px]" v-if="data.educationName">
+  <view
+    class="skeleton-rect hx-flex hx-items-center hx-mb-[16px]"
+    v-if="data.educationName"
+  >
     <image
       class="hx-w-[16px] hx-h-[16px] hx-mr-[4px] hx-mb-[1px]"
       src="@/static/task-detail/education.png"
@@ -36,13 +42,13 @@
     <ProTags
       v-if="data.taskTypeCategoryName"
       :text="data.taskTypeCategoryName"
-      class="hx-mr-[10px]"
+      class="skeleton-rect hx-mr-[10px]"
       type="info"
     />
     <ProTags
       v-if="data.taskTypeName"
       :text="data.taskTypeName"
-      class="hx-mr-[10px]"
+      class="skeleton-rect hx-mr-[10px]"
       type="info"
     />
   </view>
@@ -65,4 +71,10 @@ defineProps({
     default: false
   }
 });
+</script>
+
+<script lang="ts">
+export default {
+  options: { virtualHost: true }
+};
 </script>

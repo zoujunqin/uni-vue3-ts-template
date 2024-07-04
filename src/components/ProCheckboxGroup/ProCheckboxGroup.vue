@@ -1,5 +1,6 @@
 <template>
   <uv-checkbox-group
+    ref="uvInstance"
     v-model="modelValue"
     v-bind="{ ...$attrs, ...bridgedEvents, value: props.value }"
   >
