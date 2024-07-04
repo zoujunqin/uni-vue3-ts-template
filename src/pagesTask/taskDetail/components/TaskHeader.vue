@@ -21,7 +21,7 @@
         class="data-2 hx-mt-[3px] hx-flex-1 hx-text-right hx-text-color-primary hx-text-[20px] hx-font-[600] hx-leading-[30px]"
       >
         {{ hyphenABEqualityA(data.salaryMin, data.salaryMax) }}
-        {{ data.costTypeName || '' }}
+        元/{{ data.costTypeName || '' }}
       </text>
     </ProSkeletonRect>
   </view>
