@@ -38,7 +38,7 @@ export interface ITaskDetail {
 }
 /* 获取任务详情 */
 export const getTaskDetail = (params): Promise<ITaskDetail> => {
-  return http.request('get', `${baseApi}`, { params });
+  return http.request('get', `${baseApi}`, { params }, { loading: false });
 };
 
 export interface IApplyReturn {

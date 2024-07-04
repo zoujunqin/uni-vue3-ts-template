@@ -30,7 +30,7 @@ export const getPersonalCenterBankCard = () => {
 
 /** 获取个人信息二级页面 */
 export const getPersonalCenterInfo = () => {
-  return http.request('get', `${baseApi}/info`);
+  return http.request('get', `${baseApi}/info`, {}, { loading: false });
 };
 
 /** 获取我的商保 */
