@@ -24,3 +24,12 @@ export const hyphenAB = (
   if (varA && varB) return varA + hyphen + varB;
   else return varA || varB;
 };
+/* 连字符连接 AB AB 相等为A */
+export const hyphenABEqualityA = (
+  varA: number | string,
+  varB: number | string,
+  hyphen = '~'
+) => {
+  if (varA && varB && varA !== varB) return varA + hyphen + varB;
+  else return varA || varB;
+};

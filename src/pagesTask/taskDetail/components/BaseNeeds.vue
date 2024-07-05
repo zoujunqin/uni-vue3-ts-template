@@ -16,6 +16,11 @@
         任务时间： {{ hyphenAB(data.beginDate, data.endDate) }}
       </view>
     </ProSkeletonRect>
+    <ProSkeletonRect width="100%" height="18px" margin-top="10px">
+      <view class="hx-mt-[10px]" v-if="data.endTime">
+      工作时间： {{ hyphenAB(data.beginTime, data.endTime) }}
+    </view>
+    </ProSkeletonRect>
 
     <ProSkeletonRect width="100%" height="18px" margin-top="10px">
       <view class="hx-mt-[10px]" v-if="data.description">
