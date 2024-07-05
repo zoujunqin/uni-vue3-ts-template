@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { onLaunch, onShow } from '@dcloudio/uni-app';
+import './pack2MainPackage';
 
 import { useSystemStore } from '@/pinia/modules/system';
 
