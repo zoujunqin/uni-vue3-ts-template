@@ -1,62 +1,23 @@
-### node
-
-node >=16.14.x </br>
-pnpm >=8.x
-
-### npm 包
-
-安装包时请指定版本
-
-### css
-
-项目使用 scss + tailwind
-
-### git
-
-- git commit 遵守 Angular 提出的规范. [详情](./.commitlintrc.js) </br>
-  eg: fix: xxxx
-- git commit 之前会做 eslint + stylelint 校验及格式化.
-
-### component
-
-- uv-ui 使用 npm + easycom 方式自动注册组件，页面可以直接使用 kebab-case 的形式 </br>
-  eg: <uv-badge />
-- 自定义组件放在 components 文件夹下都以 Pro 开头，且要符合 [easycom](./src/pages.json) 的方式,无需引入可直接使用 </br>
-  eg: <ProPage />
-
-### unit
-
-- 基准宽度为 750, 目前设计稿宽度为 375.内部已经做了转换，可直接用 px 单位，会自动转为 rpx, 若不想转为 rpx，使用大写px（PX）
-- 直接写在 style 的 px 不会转换, 需要自己转 rpx
-
-### 图片和背景图
-
-- 使用 http 图片：
+- **node >=18.14.x**，**pnpm >=8.x**，安装依赖时指定版本保证依赖稳定
+- [GIT 规范检查](../.commitlintrc.js)
+- [多多使用原子化css tailwind](../tailwind.config.js)
+- [组件定义在 components 可直接引用](../src/components)
+- [已按照750px的设计稿做了px的单位换算](../postcss.config.js), 大写的 PX 和行内样式的 px 不做换算
+- [需要一起打包的图片放在 static 文件夹下](../src/static), [需要放到服务器的图片放在 static@http 文件夹下](../src/static@http)，生产环境只需要将图片扔到生产环境服务器
 
 ```vue
-// @http 指向 static@http 文件夹
-<image :src="import('@http/person/xxx.png')" ></image>
-```
+<template>
+  <!-- 模板中使用 -->
+  <image :src="import('@http/person/xxx.png')"></image>
+</template>
 
-- 使用 http 背景图：<br>
-  **_<text style="color: red;">tip: 放在 static@http 文件夹下</text>_**
-
-```vue
-<view :style="`background-image: ${import('@http/person/xxx.png')}`"></view>
-```
-
-```scss
-// $http 会自动注入
+<style scoped lang="scss">
+/* scss 中使用 */
 page {
   background-image: url($http + '/person/xxx.png');
 }
+</style>
 ```
 
-- 使用本地图片<br>
-  **_<text style="color: red;">tip: 放在 static 文件夹下</text>_**
-
-### 手机预览和调试
-
-请关闭电脑的防火墙
-
-[常见问题](./docs/FAQ.md)
+- 手机调试关闭电脑防火墙，微信小程序需要打开调试
+- [其他文档](./docs)
