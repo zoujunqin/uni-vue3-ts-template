@@ -148,8 +148,20 @@ class PureHttp {
       async (config: PureHttpRequestConfig): Promise<any> => {
         config.loading && uni.showLoading();
         // 验签步骤
-        const formData = config.params || '';
-        const requestBody = config.data || '';
+        let formData = config.params || '';
+        let requestBody = config.data || '';
+
+        if (config.data instanceof FormData) {
+          requestBody = '';
+          const obj = {};
+          config.data.forEach((value, key) => {
+            if (key !== 'file') {
+              obj[key] = value;
+            }
+          });
+
+          formData = { ...formData, ...obj };
+        }
         const queryString = getQueryString(formData);
         const requestBodyString =
           (requestBody && JSON.stringify(requestBody)) || '';
