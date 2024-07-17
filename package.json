@@ -37,6 +37,7 @@
     "build:mp-qq": "uni build -p mp-qq",
     "build:mp-toutiao": "uni build -p mp-toutiao",
     "build:mp-weixin": "node scripts/mp-weixin-build.js --mode production",
+    "build:development:mp-weixin": "node scripts/mp-weixin-build.js --mode development",
     "build:test:mp-weixin": "node scripts/mp-weixin-build.js --mode test",
     "build:staging:mp-weixin": "node scripts/mp-weixin-build.js --mode staging",
     "upload:mp-weixin": "node scripts/mp-weixin-upload.js",
