@@ -27,3 +27,18 @@ export const getRealStatus = val => {
 
   return REAL_STATUS.ALREADY_REAL;
 };
+
+/* 解析 blob 数据 */
+export const parseBlobData = blob => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const text = reader.result;
+      resolve(text as string);
+    };
+    reader.onerror = () => {
+      reject(new Error('解析失败'));
+    };
+    reader.readAsText(blob);
+  });
+};

@@ -17,6 +17,7 @@
  * 修复: 将 pro-tabbar 仿冒为 uv-tabbar, 复制 uv-tabbar 的数据到当前组件供子组件初始化, 然后去更新子组件的 parent 为 uv-tabbar
  * */
 
+import { useFakerRef } from '@/hooks/useFakerRef';
 import { useNextedCompatible } from '@/hooks/useNextedCompatible';
 import { useVModel } from '@/hooks/useVModel';
 
@@ -25,7 +26,8 @@ const props = defineProps({
 });
 const emit = defineEmits(['update:modelValue', 'change']);
 
-const { ctx, uvInstance } = useNextedCompatible();
+const { instance: uvInstance } = useFakerRef();
+const { ctx } = useNextedCompatible(uvInstance);
 
 const value = useVModel(props, 'modelValue', emit);
 

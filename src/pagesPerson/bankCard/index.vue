@@ -7,11 +7,11 @@
     <ProScrollList
       ref="proScrollListRef"
       :fetch="getPersonalCenterBankCard"
-      class="hx-h-full hx-px-[12px] hx-py-[10px] hx-box-border hx-bg-bg-color-grey"
+      class="hx-h-full hx-py-[10px] hx-box-border hx-bg-bg-color-grey"
     >
       <template #default="{ row }">
         <view
-          class="hx-flex hx-items-center hx-bg-white hx-mb-[10px] hx-pl-[15px] hx-py-[24px] hx-rounded-[14px]"
+          class="hx-flex hx-items-center hx-bg-white hx-mb-[10px] hx-mx-[12px] hx-py-[24px] hx-rounded-[14px]"
         >
           <image
             :src="import('@http/person/card-icon.svg')"

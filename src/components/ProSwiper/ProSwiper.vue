@@ -1,5 +1,5 @@
 <template>
-  <uv-swiper v-bind="{ ...$attrs, ...bridgedEvents }">
+  <uv-swiper ref="uvSwiperRef" v-bind="{ ...$attrs, ...bridgedEvents }">
     <slot />
   </uv-swiper>
 </template>
@@ -8,7 +8,9 @@
 import { uvEvents } from './events';
 
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
+import { useFakerRef } from '@/hooks/useFakerRef';
 
+const { instance: uvSwiperRef } = useFakerRef();
 const { bridgedEvents } = useBridgedEmits(uvEvents);
 </script>
 

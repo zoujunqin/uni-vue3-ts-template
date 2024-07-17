@@ -1,17 +1,18 @@
 <template>
   <uv-checkbox v-bind="{ ...$attrs, ...bridgedEvents }">
     <template v-if="$slots.icon">
-      <slot name="icon"></slot>
+      <slot name="icon" />
     </template>
 
     <template v-if="$slots.default">
-      <slot></slot>
+      <slot />
     </template>
   </uv-checkbox>
 </template>
 
 <script lang="ts" setup>
 import { useBridgedEmits } from '../../hooks/useBridgedEmits';
+
 import { uvEvents } from './events';
 
 const { bridgedEvents } = useBridgedEmits(uvEvents);

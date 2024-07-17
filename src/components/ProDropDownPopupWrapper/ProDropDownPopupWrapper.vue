@@ -57,7 +57,7 @@ const handleConfirm = () => {
   emit('confirm');
 };
 
-defineExpose({ ...bridgedMethods });
+defineExpose(bridgedMethods);
 </script>
 
 <script lang="ts">

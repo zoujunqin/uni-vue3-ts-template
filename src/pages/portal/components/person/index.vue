@@ -37,12 +37,12 @@
       class="hx-flex hx-items-center hx-justify-between hx-pl-[8px] hx-pr-[8px] hx-mt-[12px] hx-mb-[20px]"
     >
       <view class="hx-flex hx-flex-1">
-        <div class="img-box">
+        <view class="img-box">
           <image
             :src="import('@http/person/avatar-default.svg')"
             class="hx-w-[54px] hx-h-[54px] hx-rounded-full"
           />
-        </div>
+        </view>
         <view class="hx-flex hx-flex-col hx-justify-center">
           <text
             class="hx-mb-[4px] hx-text-color-title hx-text-font-size-title hx-font-[600] hx-leading-[28px]"

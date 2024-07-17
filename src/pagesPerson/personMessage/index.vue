@@ -4,7 +4,10 @@
     navbar-title="个人信息"
     class="personMessage-container page-pt-with-navbar hx-bg-white"
   >
-    <view class="hx-bg-bg-color-grey hx-h-full hx-pt-[10px]">
+    <ProSkeleton
+      class="hx-bg-bg-color-grey hx-h-full hx-pt-[10px]"
+      :loading="loading"
+    >
       <view class="card-box">
         <view class="hx-flex hx-justify-between hx-mb-[12px]">
           <span class="title-tip"> 证件信息 </span>
@@ -17,53 +20,67 @@
             {{ personData.appealStatusName }}
           </span>
         </view>
+
         <view class="hx-flex hx-justify-between">
-          <view class="hx-flex hx-flex-col hx-items-center">
-            <image
-              class="hx-w-[170px] hx-h-[107px] hx-mb-[8px]"
-              mode="aspectFill"
-              @tap="handleLookImg(0)"
-              :src="
-                personData.idCardFront || import('@http/person/card-front.svg')
-              "
-            />
-            <span class="card-tip"> 证件信息面 </span>
-          </view>
-          <view class="hx-flex hx-flex-col hx-items-center">
-            <image
-              class="hx-w-[170px] hx-h-[107px] hx-mb-[8px]"
-              mode="aspectFill"
-              @tap="handleLookImg(1)"
-              :src="
-                personData.idCardReverse ||
-                import('@http/person/card-reverse.svg')
-              "
-            />
-            <span class="card-tip"> 国徽面 </span>
-          </view>
+          <ProSkeletonRect width="170px" height="107px">
+            <view class="hx-flex hx-flex-col hx-items-center">
+              <image
+                class="hx-w-[170px] hx-h-[107px] hx-mb-[8px]"
+                mode="aspectFill"
+                @tap="handleLookImg(0)"
+                :src="
+                  personData.idCardFront ||
+                  import('@http/person/card-front.svg')
+                "
+              />
+              <span class="card-tip"> 证件信息面 </span>
+            </view>
+          </ProSkeletonRect>
+
+          <ProSkeletonRect width="170px" height="107px">
+            <view class="hx-flex hx-flex-col hx-items-center">
+              <image
+                class="hx-w-[170px] hx-h-[107px] hx-mb-[8px]"
+                mode="aspectFill"
+                @tap="handleLookImg(1)"
+                :src="
+                  personData.idCardReverse ||
+                  import('@http/person/card-reverse.svg')
+                "
+              />
+              <span class="card-tip"> 国徽面 </span>
+            </view>
+          </ProSkeletonRect>
         </view>
       </view>
+
       <view class="card-box">
         <span class="title-tip"> 个人信息 </span>
         <view class="form-row">
           <span class="form-label">姓名</span>
-          <span class="form-text">{{ personData.workerName }}</span>
+          <ProSkeletonRect width="50px" height="20px">
+            <span class="form-text">{{ personData.workerName }}</span>
+          </ProSkeletonRect>
         </view>
         <view class="form-row">
           <span class="form-label">身份证号</span>
-          <span class="form-text">{{ personData.idCardNo }}</span>
+          <ProSkeletonRect width="134px" height="20px">
+            <span class="form-text">{{ personData.idCardNo }}</span>
+          </ProSkeletonRect>
         </view>
         <view class="form-row">
           <span class="form-label">手机号</span>
-          <span class="form-text">{{ personData.mobile }}</span>
+          <ProSkeletonRect width="90px" height="20px">
+            <span class="form-text">{{ personData.mobile }}</span>
+          </ProSkeletonRect>
         </view>
       </view>
-    </view>
+    </ProSkeleton>
   </ProPage>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, shallowRef } from 'vue';
 
 import { getPersonalCenterInfo } from '@/api/fe/wechat/personal_center';
 import { APPLY_STATUS_MAP } from '@/constant/taskDetail';
@@ -87,18 +104,24 @@ onMounted(() => {
   handleGetPersonalCenterInfo();
 });
 
+const loading = shallowRef(false);
 const handleGetPersonalCenterInfo = () => {
-  getPersonalCenterInfo().then(async res => {
-    personData.value = res;
-    if (res.idCardFront) {
-      personData.value.idCardFront = await getPreviewUrl(res.idCardFront);
-      imageList.value.push(personData.value.idCardFront);
-    }
-    if (res.idCardReverse) {
-      personData.value.idCardReverse = await getPreviewUrl(res.idCardReverse);
-      imageList.value.push(personData.value.idCardReverse);
-    }
-  });
+  loading.value = true;
+  getPersonalCenterInfo()
+    .then(async res => {
+      personData.value = res;
+      if (res.idCardFront) {
+        personData.value.idCardFront = await getPreviewUrl(res.idCardFront);
+        imageList.value.push(personData.value.idCardFront);
+      }
+      if (res.idCardReverse) {
+        personData.value.idCardReverse = await getPreviewUrl(res.idCardReverse);
+        imageList.value.push(personData.value.idCardReverse);
+      }
+    })
+    .finally(() => {
+      loading.value = false;
+    });
 };
 
 const handleLookImg = (index: number) => {

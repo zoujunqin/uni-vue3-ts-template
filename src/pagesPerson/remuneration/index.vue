@@ -17,7 +17,6 @@
           v-model="conditionStatus"
           :title="monthDate"
           name="remunerationType"
-          :disabledClick="isLocked"
           @change="openDate"
         />
       </template>
@@ -49,7 +48,7 @@
       </template>
     </ProScrollList>
     <ProDateTimePicker
-      ref="datetimePickerRef"
+      v-model:refer="datetimePickerRef"
       v-model="monthDatetime"
       mode="year-month"
       @close="handleCloseDate"
@@ -116,11 +115,8 @@ const handlePickerCancel = () => {
 };
 
 const datetimePickerRef = ref();
-const isLocked = computed(() => {
-  return !!datetimePickerRef.value;
-});
 const openDate = (bool: boolean) => {
-  bool && datetimePickerRef.value.open();
+  bool && datetimePickerRef.value?.open();
 };
 const conditionStatus = ref(false);
 const handleCloseDate = () => {

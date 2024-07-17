@@ -5,20 +5,19 @@
 </template>
 
 <script setup lang="ts">
-import { shallowRef } from 'vue';
-
 import { uvEvents } from './events';
 import { uvMethods } from './methods';
 
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
 import { useBridgedMethods } from '@/hooks/useBridgedMethods';
+import { useFakerRef } from '@/hooks/useFakerRef';
 
 const { bridgedEvents } = useBridgedEmits(uvEvents);
 
-const uvDropDownRef = shallowRef();
+const { instance: uvDropDownRef } = useFakerRef();
 const { bridgedMethods } = useBridgedMethods(uvMethods, uvDropDownRef);
 
-defineExpose({ ...bridgedMethods });
+defineExpose(bridgedMethods);
 </script>
 
 <script lang="ts">

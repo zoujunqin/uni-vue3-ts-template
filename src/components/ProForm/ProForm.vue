@@ -11,14 +11,16 @@
  * */
 
 import { useBridgedMethods } from '../../hooks/useBridgedMethods';
+import { useFakerRef } from '../../hooks/useFakerRef';
 import { useNextedCompatible } from '../../hooks/useNextedCompatible';
 
 import { uvMethods } from './methods';
 
-const { uvInstance } = useNextedCompatible();
+const { instance: uvInstance } = useFakerRef();
+useNextedCompatible(uvInstance);
 const { bridgedMethods } = useBridgedMethods(uvMethods, uvInstance);
 
-defineExpose({ ...bridgedMethods });
+defineExpose(bridgedMethods);
 </script>
 
 <script lang="ts">

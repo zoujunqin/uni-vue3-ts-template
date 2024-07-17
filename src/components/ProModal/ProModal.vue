@@ -48,7 +48,7 @@
   </ProPopup>
 </template>
 <script lang="ts" setup>
-import { shallowRef } from 'vue';
+import { useFakerRef } from '@/hooks/useFakerRef';
 
 defineProps({
   showCancel: {
@@ -78,7 +78,7 @@ defineProps({
 });
 const emits = defineEmits(['cancel', 'confirm']);
 
-const uniPopupRef = shallowRef();
+const { instance: uniPopupRef } = useFakerRef();
 
 const open = () => {
   uniPopupRef.value.open();

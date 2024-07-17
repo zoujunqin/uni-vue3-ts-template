@@ -4,30 +4,35 @@
     navbar-title="任务详情"
     show-navbar
   >
-    <view class="hx-p-[16px_16px_54px_16px]">
-      <TaskHeader
-        :data="taskDetail"
-        :statusShow="!!taskDetail?.undertakingStatusName"
-      />
-      <ProDivider />
+    <view>
+      <ProSkeleton class="skeleton" :loading="loading">
+        <view class="hx-p-[16px_16px_54px_16px]">
+          <TaskHeader
+            :data="taskDetail"
+            :statusShow="!!taskDetail?.undertakingStatusName"
+          />
+          <ProDivider />
 
-      <BaseNeeds :data="taskDetail" />
+          <BaseNeeds :data="taskDetail" />
 
-      <TaskDescribe :data="taskDetail" />
+          <TaskDescribe :data="taskDetail" />
 
-      <TaskPlace :data="taskDetail" />
+          <TaskPlace :data="taskDetail" />
 
-      <SecurityTip :data="taskDetail" />
-      <ProPageFooter>
-        <ProButton
-          v-if="taskDetail?.izApplied === YES_NO_TYPE.NO"
-          type="primary"
-          @click="handleApplyTask"
-        >
-          申请任务
-        </ProButton>
-      </ProPageFooter>
+          <SecurityTip :data="taskDetail" />
+        </view>
+      </ProSkeleton>
     </view>
+
+    <ProPageFooter>
+      <ProButton
+        v-if="taskDetail?.izApplied === YES_NO_TYPE.NO"
+        type="primary"
+        @click="handleApplyTask"
+      >
+        申请任务
+      </ProButton>
+    </ProPageFooter>
   </ProPage>
 </template>
 
@@ -51,11 +56,17 @@ import { getRealStatus } from '@/utils/index';
 
 const taskDetail = shallowRef<ITaskDetail>();
 const routeParams = shallowRef<Record<string, any>>({});
+const loading = shallowRef(false);
 
 const handleGetTaskDetail = () => {
-  getTaskDetail(routeParams.value).then(res => {
-    taskDetail.value = res;
-  });
+  loading.value = true;
+  getTaskDetail(routeParams.value)
+    .then(res => {
+      taskDetail.value = res;
+    })
+    .finally(() => {
+      loading.value = false;
+    });
 };
 
 onLoad(query => {

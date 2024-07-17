@@ -1,5 +1,5 @@
 import { ITask } from '@/api/fe/wechat/task_center';
-import { hyphenAB } from '@/utils/text';
+import { hyphenABEqualityA } from '@/utils/text';
 
 export const getHandledTaskInfo = (row: ITask) => {
   const {
@@ -12,7 +12,8 @@ export const getHandledTaskInfo = (row: ITask) => {
   } = row;
   return {
     ...row,
-    cost: hyphenAB(taskSalaryMin, taskSalaryMax) + costTypeName,
+    cost:
+      hyphenABEqualityA(taskSalaryMin, taskSalaryMax) + '元/' + costTypeName,
     title: taskName,
     desc: taskDescription,
     tag: taskTypeName

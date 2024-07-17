@@ -1,5 +1,35 @@
 [
   {
+    "version": "1.1.2",
+    "createTime": "2024-07-04 14:25:41",
+    "description": "更新test环境：任务需求相关调整"
+  },
+  {
+    "version": "1.1.1",
+    "createTime": "2024-07-01 08:28:50",
+    "description": "修复时间选择组件报错问题"
+  },
+  {
+    "version": "1.1.0",
+    "createTime": "2024-06-28 16:30:32",
+    "description": "优化请求超时"
+  },
+  {
+    "version": "1.0.9",
+    "createTime": "2024-06-25 10:18:00",
+    "description": "发布预生产环境"
+  },
+  {
+    "version": "1.0.8",
+    "createTime": "2024-06-21 09:23:20",
+    "description": "资质信息校验修复"
+  },
+  {
+    "version": "1.0.7",
+    "createTime": "2024-06-20 09:00:11",
+    "description": ""
+  },
+  {
     "version": "1.0.6",
     "createTime": "2024-06-19 09:26:36",
     "description": "实名缓存流程修改，增加确认弹窗"

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { onLaunch, onShow } from '@dcloudio/uni-app';
+import { onMounted } from 'vue';
 
 import { useSystemStore } from '@/pinia/modules/system';
 
@@ -15,6 +16,13 @@ onShow(() => {
   uni.onNetworkStatusChange(res => {
     setNetworkStatus(res);
   });
+});
+
+onMounted(() => {
+  /* 不想被打入异步分包的组件 */
+  import('@/components/ProSkeleton/ProSkeleton.vue');
+  import('@/components/ProSkeletonRect/ProSkeletonRect.vue');
+  import('@/components/ProSkeletonCircle/ProSkeletonCircle.vue');
 });
 </script>
 

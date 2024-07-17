@@ -14,10 +14,16 @@
       "path": "pages/portal/index"
     },
     {
-      "path": "pages/login/index"
+      "path": "pages/login/index",
+      "style": {
+        "disableScroll": true
+      }
     },
     {
-      "path": "pages/login/mobileLogin"
+      "path": "pages/login/mobileLogin",
+      "style": {
+        "disableScroll": true
+      }
     }
   ],
   "subPackages": [
@@ -97,10 +103,7 @@
   "preloadRule": {
     "pages/portal/index": {
       "network": "all",
-      "packages": [
-        "pagesTask",
-        "pagesPerson"
-      ]
+      "packages": ["pagesTask", "pagesPerson"]
     }
   },
   "globalStyle": {

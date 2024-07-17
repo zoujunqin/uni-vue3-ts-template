@@ -1,6 +1,7 @@
 <template>
   <uv-tabs
     v-bind="{ ...$attrs, ...bridgedEvents }"
+    ref="uvTabsRef"
     class="pro-tabs"
     lineWidth="32rpx"
     lineColor="var(--hx-color-primary)"
@@ -19,7 +20,9 @@
 import { uvEvents } from './events';
 
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
+import { useFakerRef } from '@/hooks/useFakerRef';
 
+const { instance: uvTabsRef } = useFakerRef();
 const { bridgedEvents } = useBridgedEmits(uvEvents);
 </script>
 

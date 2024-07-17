@@ -7,15 +7,16 @@
 </template>
 
 <script lang="ts" setup>
-import { shallowRef, computed, useSlots } from 'vue';
+import { computed, useSlots } from 'vue';
 
 import { uvMethods } from './methods';
 
 import { useBridgedMethods } from '@/hooks/useBridgedMethods';
+import { useFakerRef } from '@/hooks/useFakerRef';
 
 const defaultSlot = computed(() => (useSlots()?.default ? 'default' : ''));
 
-const uvBackTopRef = shallowRef();
+const { instance: uvBackTopRef } = useFakerRef();
 const { bridgedMethods } = useBridgedMethods(uvMethods, uvBackTopRef);
 defineExpose(bridgedMethods);
 </script>

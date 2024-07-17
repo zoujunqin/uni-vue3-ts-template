@@ -5,6 +5,7 @@ import { createSSRApp } from 'vue';
 import App from './App.vue';
 import '@/framework/rewiteFn';
 
+import { fakerRefMixin } from '@/mixins/fakerRef';
 import { shareMixin } from '@/mixins/share';
 
 export function createApp() {
@@ -23,6 +24,7 @@ export function createApp() {
   app.use(store);
 
   app.mixin(shareMixin);
+  app.mixin(fakerRefMixin);
 
   return { app };
 }

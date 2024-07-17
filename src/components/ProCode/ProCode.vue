@@ -30,6 +30,7 @@ import { uvMethods } from './methods';
 
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
 import { useBridgedMethods } from '@/hooks/useBridgedMethods';
+import { useFakerRef } from '@/hooks/useFakerRef';
 
 const { bridgedEvents } = useBridgedEmits(uvEvents);
 
@@ -57,7 +58,8 @@ const props = defineProps({
   readonly: Boolean
 });
 
-const uvCodeRef = shallowRef();
+const { instance: uvCodeRef } = useFakerRef();
+
 const getCode = async () => {
   if (props.readonly) return;
 
@@ -74,9 +76,7 @@ const handleChange = text => {
 
 const { bridgedMethods } = useBridgedMethods(uvMethods, uvCodeRef);
 
-defineExpose({
-  ...bridgedMethods
-});
+defineExpose(bridgedMethods);
 </script>
 
 <script lang="ts">

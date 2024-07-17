@@ -17,5 +17,10 @@ export const scrollListProps = {
   extendParams: {
     type: Object,
     default: () => ({})
+  },
+
+  autoLoad: {
+    type: Boolean,
+    default: true
   }
 };

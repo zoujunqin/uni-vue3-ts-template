@@ -1,8 +1,8 @@
 // 为了 uv 某些组件嵌套问题做兼容, eg: uv-checkbox-group, uv-checkbox
-import { getCurrentInstance, onMounted, shallowRef } from 'vue';
+import { getCurrentInstance, onMounted, ShallowRef, shallowRef } from 'vue';
 
-export const useNextedCompatible = () => {
-  const uvInstance = shallowRef();
+export const useNextedCompatible = (uvInstance?: ShallowRef<any>) => {
+  uvInstance ||= shallowRef();
   const { ctx } = getCurrentInstance();
 
   ctx.children = [];

@@ -1,7 +1,9 @@
 <template>
-  <view v-if="data.content">
-    <view class="section-title hx-mb-[10px]"> 任务描述 </view>
+  <view v-if="data.content" class="section-title hx-mb-[10px]"> 任务描述 </view>
+
+  <ProSkeletonRect width="100%" height="50px" margin-bottom="20px">
     <ProReadMore
+      v-if="data.content"
       show-height="313px"
       :toggle="true"
       close-text="查看更多"
@@ -9,10 +11,13 @@
     >
       <view> {{ data.content }}</view>
     </ProReadMore>
-  </view>
-  <view v-if="data.remark">
-    <view class="section-title hx-mb-[10px]"> 任务成果 </view>
+  </ProSkeletonRect>
+
+  <view v-if="data.remark" class="section-title hx-mb-[10px]"> 任务成果 </view>
+
+  <ProSkeletonRect width="100%" height="186px">
     <ProReadMore
+      v-if="data.remark"
       show-height="313px"
       :toggle="true"
       close-text="查看更多"
@@ -20,7 +25,7 @@
     >
       <view> {{ data.remark }}</view>
     </ProReadMore>
-  </view>
+  </ProSkeletonRect>
 </template>
 
 <script setup lang="ts">

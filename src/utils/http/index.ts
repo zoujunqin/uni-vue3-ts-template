@@ -1,6 +1,7 @@
 // @ts-nocheck
 
 import { createUniAppAxiosAdapter } from '@uni-helper/axios-adapter';
+import { isBlob } from 'ali-oss/lib/common/utils/isBlob';
 import Axios, {
   AxiosError,
   AxiosInstance,
@@ -18,21 +19,29 @@ import {
 
 import { useSystemStore } from '@/pinia/modules/system';
 import { useUserStore } from '@/pinia/modules/user';
-import { getUUID } from '@/utils';
-import { decryptString, encryptString } from '@/utils/crypto';
+import { getUUID, parseBlobData } from '@/utils';
+import {
+  decryptString,
+  dictionarySort,
+  encryptString,
+  getObjectExcludeFile
+} from '@/utils/crypto';
 import { formatToken } from '@/utils/storage';
+import { getQueryString } from '@/utils/text';
 
 const httpNoMessage = ['/fe/wechat/worker_protocol/sign'];
 
 // const baseURL = 'http://218.104.230.173:17054'; // 开发环境
 // const baseURL = 'https://localdev-hro-api.fjhxrl.com'; // 测试环境
 const baseURL = 'https://localtest-hro-api.fjhxrl.com'; // 测试环境
+// const baseURL = 'https://hro-beta-gateway.fjhxrl.com'; // 预生产环境
 // const baseURL = 'http://192.168.3.73:8100'; // 林伦
 // const baseURL = 'http://192.168.117.86:8100'; // 大立
 
+const { DEV, VITE_BASE_URL } = import.meta.env;
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {
-  baseURL: import.meta.env.VITE_BASE_URL || baseURL,
+  baseURL: DEV ? baseURL : VITE_BASE_URL,
   // 请求超时时间
   timeout: 30 * 1000,
   headers: {
@@ -47,21 +56,6 @@ const defaultConfig: AxiosRequestConfig = {
   },
   loading: true,
   adapter: createUniAppAxiosAdapter()
-};
-
-const dictionarySort = list => list.sort();
-
-/** 对参数进行字典序并拼接成字符串 */
-const getQueryString = (params): string => {
-  let queryString = '';
-  const sortedParams = dictionarySort(Object.keys(params));
-  for (const param of sortedParams) {
-    if (params[param] !== undefined) {
-      queryString += param + '=' + params[param] + '&';
-    }
-  }
-  queryString = queryString.slice(0, -1);
-  return queryString;
 };
 
 const isNeedDecrypt = response => {
@@ -147,8 +141,18 @@ class PureHttp {
       async (config: PureHttpRequestConfig): Promise<any> => {
         config.loading && uni.showLoading();
         // 验签步骤
-        const formData = config.params || '';
-        const requestBody = config.data || '';
+        let formData = config.params || '';
+        let requestBody = config.data || '';
+
+        if (
+          config.data instanceof FormData ||
+          config.headers['Content-Type'] === 'application/x-www-form-urlencoded'
+        ) {
+          requestBody = '';
+          formData ||= {};
+          formData = { ...formData, ...getObjectExcludeFile(config.data) };
+        }
+
         const queryString = getQueryString(formData);
         const requestBodyString =
           (requestBody && JSON.stringify(requestBody)) || '';
@@ -181,6 +185,14 @@ class PureHttp {
         const encryptedString = encryptString(fullString);
 
         config.headers['Signature'] = encryptedString;
+
+        /* 参数加密 */
+        // config.params = {
+        //   a: config.params ? encryptUrlParams(config.params) : config.params
+        // };
+        // config.data = {
+        //   b: config.data ? encryptBodyParams(config.data) : config.data
+        // };
 
         // 优先判断post/get等方法是否传入回掉，否则执行初始化设置等回掉
         if (typeof config.beforeRequestCallback === 'function') {
@@ -230,19 +242,26 @@ class PureHttp {
         }
         return responseData;
       },
-      (error: PureHttpError) => {
+      async (error: PureHttpError) => {
         uni.hideLoading();
-        console.log(error);
         const $error = error;
 
-        if ($error.code === AxiosError.ETIMEDOUT) {
+        const iosTimeout = $error.code === AxiosError.ETIMEDOUT;
+        const androidTimeout = $error.message === 'request:fail fail:time out';
+        const timeout = iosTimeout || androidTimeout;
+        if (timeout) {
           uni.showToast({ title: '请求超时', icon: 'none' });
-          return;
+
+          $error.isCancelRequest = Axios.isCancel($error);
+          return Promise.reject({ ...$error, code: AxiosError.ETIMEDOUT });
         }
 
         let responseData: any = $error.response.data;
 
         if (isNeedDecrypt($error.response)) {
+          if (isBlob(responseData)) {
+            responseData = await parseBlobData(responseData);
+          }
           responseData = JSON.parse(decryptString(responseData));
         }
 
