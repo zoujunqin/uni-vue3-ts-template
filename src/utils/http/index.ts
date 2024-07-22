@@ -1,7 +1,6 @@
 // @ts-nocheck
 
 import { createUniAppAxiosAdapter } from '@uni-helper/axios-adapter';
-import { isBlob } from 'ali-oss/lib/common/utils/isBlob';
 import Axios, {
   AxiosError,
   AxiosInstance,
@@ -19,9 +18,9 @@ import {
 
 import { useSystemStore } from '@/pinia/modules/system';
 import { useUserStore } from '@/pinia/modules/user';
-import { getUUID, parseBlobData } from '@/utils';
+import { getUUID } from '@/utils';
 import {
-  decryptString,
+  decryptResponseData,
   dictionarySort,
   encryptString,
   getObjectExcludeFile
@@ -56,16 +55,6 @@ const defaultConfig: AxiosRequestConfig = {
   },
   loading: true,
   adapter: createUniAppAxiosAdapter()
-};
-
-const isNeedDecrypt = response => {
-  if (response.headers['Enable-Response-Decrypt']) {
-    return response.headers['Enable-Response-Decrypt'] !== 'False';
-  }
-
-  if (response.headers['enable-response-decrypt']) {
-    return response.headers['enable-response-decrypt'] !== 'False';
-  }
 };
 
 class PureHttp {
@@ -179,11 +168,8 @@ class PureHttp {
         ].filter(Boolean);
 
         const fullStringList = dictionarySort(list);
-
         const fullString = fullStringList.join(';');
-
         const encryptedString = encryptString(fullString);
-
         config.headers['Signature'] = encryptedString;
 
         /* 参数加密 */
@@ -224,12 +210,10 @@ class PureHttp {
   private httpInterceptorsResponse(): void {
     const instance = PureHttp.axiosInstance;
     instance.interceptors.response.use(
-      (response: PureHttpResponse) => {
+      async (response: PureHttpResponse) => {
         const $config = response.config;
-        let responseData = response.data;
-        if (isNeedDecrypt(response)) {
-          responseData = JSON.parse(decryptString(responseData));
-        }
+        const responseData = await decryptResponseData(response);
+
         uni.hideLoading();
         // 优先判断post/get等方法是否传入回掉，否则执行初始化设置等回掉
         if (typeof $config.beforeResponseCallback === 'function') {
@@ -256,14 +240,8 @@ class PureHttp {
           return Promise.reject({ ...$error, code: AxiosError.ETIMEDOUT });
         }
 
-        let responseData: any = $error.response.data;
-
-        if (isNeedDecrypt($error.response)) {
-          if (isBlob(responseData)) {
-            responseData = await parseBlobData(responseData);
-          }
-          responseData = JSON.parse(decryptString(responseData));
-        }
+        const responseData: any = await decryptResponseData($error.response);
+        $error.response.data = responseData;
 
         const { message, code } = responseData;
 

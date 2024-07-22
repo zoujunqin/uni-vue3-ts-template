@@ -1,6 +1,11 @@
+import { isBlob } from 'ali-oss/lib/common/utils/isBlob';
+import { AxiosResponse } from 'axios';
 import { MD5, AES, enc, mode, pad } from 'crypto-js';
 
+import { PureHttpResponse } from '@/utils/http/types';
+import { parseBlobData } from '@/utils/index';
 import { getQueryString } from '@/utils/text';
+
 const key = import.meta.env.VITE_CRYPTO_KEY;
 const iv = import.meta.env.VITE_CRYPTO_IV;
 
@@ -73,4 +78,41 @@ export const getObjectExcludeFile = (data: FormData | Record<string, any>) => {
 
   result.file = undefined;
   return result;
+};
+
+/*
+ * 根据返回头字段判断是否需要解密
+ * */
+export const isNeedDecrypt = response =>
+  response.headers['enable-response-decrypt'] &&
+  response.headers['enable-response-decrypt'] !== 'False';
+
+/*
+ * 解密接口返回体
+ * 前后端约定：如果是流返回不加密不解密
+ * */
+export const decryptResponseData = async (
+  response: AxiosResponse<string, any> | PureHttpResponse
+): Promise<AxiosResponse<any, any> | AxiosResponse<any, any>> => {
+  let responseData = response.data;
+
+  if (isBlob(responseData)) {
+    /* 前端设置 responseType 为 Blob, 后端正常返回非 Blob 的数据，会导致数据被包在 Blob 对象中 */
+    if ((responseData as Blob)?.type === 'application/json') {
+      responseData = await parseBlobData(responseData);
+    }
+  }
+
+  if (isNeedDecrypt(response)) {
+    const decryptResponseData = decryptString(responseData as string);
+
+    /* 非 JSON 字符串会解析失败，直接返回 */
+    try {
+      responseData = JSON.parse(decryptResponseData);
+    } catch {
+      responseData = decryptResponseData;
+    }
+  }
+
+  return responseData;
 };
