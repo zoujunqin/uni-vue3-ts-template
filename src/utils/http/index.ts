@@ -163,7 +163,7 @@ class PureHttp {
           `Authorization=${authorization}`,
           `Random-String=${randomString}`,
           `Timestamp=${timestamp}`,
-          apiUrl,
+          encodeURI(apiUrl),
           finalString
         ].filter(Boolean);
 
