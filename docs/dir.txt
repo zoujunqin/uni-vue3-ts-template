@@ -2,14 +2,16 @@
     |-- tsconfig.json
     |-- vite.config.js
     |-- build
-    |   |-- packages                          // uni 插件
+    |   |-- packages                       // uni 插件
     |       |-- uni-cli-shared             // 插件公共工具
-    |       |-- uni-mp-vite                 // 小程序 vite 插件
+    |       |-- uni-mp-vite                // 小程序 vite 插件
     |       |-- uni-mp-weixin              // 微信小程序相关配置
     |       |-- vite-plugin-uni            // 插件入口
-    |-- docs                                     // 说明文档
-    |-- h5                                        // 放置 h5 页面, h5 中转页
-    |-- scripts                                 // 脚本文件
+    |-- docs                               // 说明文档
+    |-- hro-webs
+    |   |-- transith5
+    |   |   |-- dist                       // 放置 h5 页面, h5 中转页
+    |-- scripts                            // 脚本文件
     |-- src
     |   |-- App.vue
     |   |-- main.ts
@@ -17,7 +19,7 @@
     |   |-- pages.json
     |   |-- sceneCode.ts                   // 自定义场景值
     |   |-- sceneWeChat.ts                 // 微信场景值
-    |   |-- api                                   // 后端接口
+    |   |-- api                            // 后端接口
     |   |-- components
     |   |   |-- Pro                        // 基础组件
     |   |   |-- business                   // 业务组件
