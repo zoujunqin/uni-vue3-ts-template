@@ -87,9 +87,12 @@ export const getObjectExcludeFile = (data: FormData | Record<string, any>) => {
 /*
  * 根据返回头字段判断是否需要解密
  * */
-export const isNeedDecrypt = response =>
-  response.headers['enable-response-decrypt'] &&
-  response.headers['enable-response-decrypt'] !== 'False';
+export const isNeedDecrypt = response => {
+  return (
+    response.headers['Enable-Response-Decrypt'] &&
+    response.headers['Enable-Response-Decrypt'] !== 'False'
+  );
+};
 
 /*
  * 解密接口返回体
