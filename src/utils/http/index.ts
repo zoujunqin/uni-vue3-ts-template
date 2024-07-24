@@ -133,6 +133,7 @@ class PureHttp {
         let formData = config.params || '';
         let requestBody = config.data || '';
 
+        /* #ifndef MP-WEIXIN */
         if (
           config.data instanceof FormData ||
           config.headers['Content-Type'] === 'application/x-www-form-urlencoded'
@@ -141,6 +142,7 @@ class PureHttp {
           formData ||= {};
           formData = { ...formData, ...getObjectExcludeFile(config.data) };
         }
+        /* #endif */
 
         const queryString = getQueryString(formData);
         const requestBodyString =

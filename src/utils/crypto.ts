@@ -51,9 +51,12 @@ export const encryptUrlParams = (params: Record<string, any>): string => {
 export const encryptBodyParams = (
   params: FormData | Record<string, any>
 ): string | FormData => {
-  return params instanceof FormData
-    ? params
-    : encryptString(JSON.stringify(params));
+  /* #ifndef MP-WEIXIN */
+  if (params instanceof FormData) {
+    return params;
+  }
+  /* #endif */
+  return encryptString(JSON.stringify(params));
 };
 
 /*
@@ -66,18 +69,19 @@ export const dictionarySort = list => list.sort();
  * 普通对象去掉 file 属性
  * */
 export const getObjectExcludeFile = (data: FormData | Record<string, any>) => {
-  let result: Record<string, any> = {};
+  const result: Record<string, any> = {};
 
+  /* #ifndef MP-WEIXIN */
   if (data instanceof FormData) {
     data.forEach((value, key) => {
       result[key] = value;
     });
-  } else {
-    result = { ...data };
   }
-
   result.file = undefined;
   return result;
+  /* #endif */
+
+  return { ...data, file: undefined };
 };
 
 /*
