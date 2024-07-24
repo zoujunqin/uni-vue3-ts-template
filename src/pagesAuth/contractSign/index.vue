@@ -10,7 +10,6 @@ import { postWorkerProtocolSign } from '@/api/fe/wechat/worker';
 import { PROTOCOL_TYPE } from '@/constant/taskDetail';
 
 const signUrl = shallowRef('');
-const callbackPage = 'http://47.96.112.174:8003/';
 
 const getWorkerProtocolSign = query => {
   const { sourceType, orderDetailId, taskId, invitationCodeId } = query;
@@ -20,7 +19,7 @@ const getWorkerProtocolSign = query => {
     [PROTOCOL_TYPE.INVITATION_CODE]: invitationCodeId
   };
   const params = {
-    callbackPage,
+    callbackPage: import.meta.env.VITE_REALNAME_SUCCESS_CALLBACK,
     id: idMap[sourceType],
     sourceType
   };
