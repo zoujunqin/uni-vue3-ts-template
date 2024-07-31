@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
-import { shallowRef } from 'vue';
+import { ref, shallowRef } from 'vue';
 
 import { getPersonInfo } from '@/api/fe/wechat/personal_center';
+import { getEncryptionConfig as getEncryptionConfigApi } from '@/api/system/setting';
 
 export const useUserStore = defineStore(
   'user',
@@ -28,6 +29,15 @@ export const useUserStore = defineStore(
       token.value = val;
     };
 
+    const isFirstFetchEncryption = ref(true);
+    const encryptionConfig = ref({ enableRequestEncrypt: true });
+    const getEncryptionConfig = async () => {
+      encryptionConfig.value = await getEncryptionConfigApi();
+    };
+    const setFirstFetchEncryption = (isFirst: boolean) => {
+      isFirstFetchEncryption.value = isFirst;
+    };
+
     return {
       userInfo,
       setUserInfo,
@@ -36,7 +46,12 @@ export const useUserStore = defineStore(
       setToken,
 
       sceneOption,
-      setSceneOption
+      setSceneOption,
+
+      isFirstFetchEncryption,
+      encryptionConfig,
+      getEncryptionConfig,
+      setFirstFetchEncryption
     };
   },
   {

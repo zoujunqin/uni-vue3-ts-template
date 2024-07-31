@@ -18,9 +18,10 @@ import {
   RequestMethods
 } from './types.d';
 
+import { baseApi } from '@/api/system/setting';
 import { useSystemStore } from '@/pinia/modules/system';
 import { useUserStore } from '@/pinia/modules/user';
-import { decryptResponseData } from '@/utils/crypto';
+import { decryptResponseData, encryptParams } from '@/utils/crypto';
 import { formatToken } from '@/utils/storage';
 
 const httpNoMessage = ['/fe/wechat/worker_protocol/sign'];
@@ -50,6 +51,13 @@ const defaultConfig: AxiosRequestConfig = {
   },
   loading: true,
   adapter: createUniAppAxiosAdapter()
+};
+
+/* 获取加密配置的接口失败，需要重置以便下一个接口请求前重新获取配置 */
+const resetFirstFetchEncryption = url => {
+  if (url === baseApi) {
+    useUserStore().setFirstFetchEncryption(true);
+  }
 };
 
 class PureHttp {
@@ -123,10 +131,24 @@ class PureHttp {
   private httpInterceptorsRequest(): void {
     PureHttp.axiosInstance.interceptors.request.use(
       async (config: PureHttpRequestConfig): Promise<any> => {
+        /* 在所有的请求前先请求一次加密配置的接口 */
+        const {
+          isFirstFetchEncryption,
+          setFirstFetchEncryption,
+          getEncryptionConfig
+        } = useUserStore();
+        if (isFirstFetchEncryption) {
+          setFirstFetchEncryption(false);
+          await getEncryptionConfig();
+        }
+
         config.loading && uni.showLoading();
 
         /* 验签 */
         addSignature(config);
+
+        /* 参数加密 */
+        encryptParams(config);
 
         // 优先判断post/get等方法是否传入回掉，否则执行初始化设置等回掉
         if (typeof config.beforeRequestCallback === 'function') {
@@ -150,6 +172,7 @@ class PureHttp {
             });
       },
       error => {
+        resetFirstFetchEncryption(error.config.url);
         return Promise.reject(error);
       }
     );
@@ -176,6 +199,8 @@ class PureHttp {
         return responseData;
       },
       async (error: PureHttpError) => {
+        resetFirstFetchEncryption(error.config.url);
+
         uni.hideLoading();
         const $error = error;
 
