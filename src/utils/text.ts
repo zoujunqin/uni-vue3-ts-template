@@ -50,14 +50,11 @@ export const getQueryString = (params: Record<string, any>): string => {
 
     if (value === null) {
       newParams.push(sortedKey + '=');
-    }
-
-    if (value !== undefined) {
+    } else if (value !== undefined) {
       const paramsObj = {};
-      const keys = Object.keys(value);
       /* 数组和对象转成 arr[0]=1&arr[1]=2 的格式 */
-      if ((isArray(value) || isObject(value)) && keys.length) {
-        keys.forEach(key => {
+      if ((isArray(value) || isObject(value)) && Object.keys(value).length) {
+        Object.keys(value).forEach(key => {
           paramsObj[`${sortedKey}[${key}]`] = value[key];
         });
         newParams.push(getQueryString(paramsObj));
