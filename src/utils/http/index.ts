@@ -9,6 +9,8 @@ import Axios, {
 } from 'axios';
 import { stringify } from 'qs';
 
+import { addSignature } from '../addSignature';
+
 import {
   PureHttpError,
   PureHttpRequestConfig,
@@ -18,15 +20,8 @@ import {
 
 import { useSystemStore } from '@/pinia/modules/system';
 import { useUserStore } from '@/pinia/modules/user';
-import { getUUID } from '@/utils';
-import {
-  decryptResponseData,
-  dictionarySort,
-  encryptString,
-  getObjectExcludeFile
-} from '@/utils/crypto';
+import { decryptResponseData } from '@/utils/crypto';
 import { formatToken } from '@/utils/storage';
-import { getQueryString } from '@/utils/text';
 
 const httpNoMessage = ['/fe/wechat/worker_protocol/sign'];
 
@@ -129,58 +124,9 @@ class PureHttp {
     PureHttp.axiosInstance.interceptors.request.use(
       async (config: PureHttpRequestConfig): Promise<any> => {
         config.loading && uni.showLoading();
-        // 验签步骤
-        let formData = config.params || '';
-        let requestBody = config.data || '';
 
-        /* #ifndef MP-WEIXIN */
-        if (
-          config.data instanceof FormData ||
-          config.headers['Content-Type'] === 'application/x-www-form-urlencoded'
-        ) {
-          requestBody = '';
-          formData ||= {};
-          formData = { ...formData, ...getObjectExcludeFile(config.data) };
-        }
-        /* #endif */
-
-        const queryString = getQueryString(formData);
-        const requestBodyString =
-          (requestBody && JSON.stringify(requestBody)) || '';
-        let finalString = queryString;
-        if (requestBodyString) {
-          finalString = finalString
-            ? `${finalString}&${requestBodyString}`
-            : requestBodyString;
-        }
-        const apiUrl = config.url;
-        const authorization = useUserStore().token;
-        const randomString = getUUID();
-
-        const timestamp = Date.now().toString();
-        config.headers['Random-String'] = randomString;
-        config.headers['Timestamp'] = timestamp;
-
-        const list = [
-          `Authorization=${authorization}`,
-          `Random-String=${randomString}`,
-          `Timestamp=${timestamp}`,
-          encodeURI(apiUrl),
-          finalString
-        ].filter(Boolean);
-
-        const fullStringList = dictionarySort(list);
-        const fullString = fullStringList.join(';');
-        const encryptedString = encryptString(fullString);
-        config.headers['Signature'] = encryptedString;
-
-        /* 参数加密 */
-        // config.params = {
-        //   a: config.params ? encryptUrlParams(config.params) : config.params
-        // };
-        // config.data = {
-        //   b: config.data ? encryptBodyParams(config.data) : config.data
-        // };
+        /* 验签 */
+        addSignature(config);
 
         // 优先判断post/get等方法是否传入回掉，否则执行初始化设置等回掉
         if (typeof config.beforeRequestCallback === 'function') {
@@ -196,6 +142,7 @@ class PureHttp {
         return whiteList.some(v => config.url.indexOf(v) > -1)
           ? config
           : new Promise(resolve => {
+              const authorization = useUserStore().token;
               if (authorization) {
                 config.headers['Authorization'] = formatToken(authorization);
               }
