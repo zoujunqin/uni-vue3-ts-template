@@ -10,17 +10,20 @@ import { sceneCodeMap } from '@/sceneCode';
 onLoad(option => {
   const { setSceneOption } = useUserStore();
   const hasToken = !!useUserStore().token;
-  // 这里的 scene 不是小程序的场景值, 是自定义的
-  const sceneList = decodeURIComponent(option.scene).split('&');
   const sceneObj = { t: '', c: '' };
-
-  sceneList.forEach(item => {
-    const keyList = item.split('=');
-    sceneObj[keyList[0]] = keyList[1];
-  });
+  if (option && option.type && option.type === 'line') {
+    sceneObj.t = option.t;
+    sceneObj.c = option.c;
+  } else {
+    // 这里的 scene 不是小程序的场景值, 是自定义的
+    const sceneList = decodeURIComponent(option.scene).split('&');
+    sceneList.forEach(item => {
+      const keyList = item.split('=');
+      sceneObj[keyList[0]] = keyList[1];
+    });
+  }
   const { t } = sceneObj;
   setSceneOption(sceneObj);
-
   if (hasToken && t) {
     sceneCodeMap[t]?.(sceneObj);
   } else if (hasToken && !t) {
