@@ -1,5 +1,10 @@
 [
   {
+    "version": "1.1.7",
+    "createTime": "2024-08-12 14:53:50",
+    "description": "v1.3测试环境（实名认证手机号字段修改）"
+  },
+  {
     "version": "1.1.6",
     "createTime": "2024-08-01 16:18:57",
     "description": "发布测试环境"
