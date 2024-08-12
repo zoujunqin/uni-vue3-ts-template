@@ -80,8 +80,8 @@ export const useHandler = ({ routeParams }) => {
               trigger: ['blur', 'change']
             };
             // 手机号额外需要验证码
-            if (fieldCode === 'mobile') {
-              formRules.value.smsCode = formRules.value.mobile;
+            if (fieldCode === 'bankMobile') {
+              formRules.value.smsCode = formRules.value.bankMobile;
             }
             // 身份证正面和返面单独处理
             if (['idCardFront', 'idCardReverse'].includes(fieldCode)) {
@@ -104,13 +104,13 @@ export const useHandler = ({ routeParams }) => {
     });
   };
   const validMobile = () => {
-    if (!formData.value.mobile) {
+    if (!formData.value.bankMobile) {
       uni.showToast({
         title: '请输入手机号码',
         icon: 'none'
       });
     }
-    return !!formData.value.mobile;
+    return !!formData.value.bankMobile;
   };
 
   const handleNext = async () => {
@@ -232,7 +232,7 @@ export const useHandler = ({ routeParams }) => {
       idCardFront,
       bankAccount,
       workerName,
-      mobile,
+      bankMobile,
       bankName
     } = formData.value;
     const params = {
@@ -241,7 +241,7 @@ export const useHandler = ({ routeParams }) => {
       idCardFront,
       bankAccount,
       workerName,
-      mobile,
+      bankMobile,
       bankName
     };
     postAppealSubmit(params)
