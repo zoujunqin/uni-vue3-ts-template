@@ -1,10 +1,11 @@
 {
   "name": "flexible",
-  "version": "1.0.1",
+  "version": "1.0.5",
   "scripts": {
     "dev": "pnpm dev:mp-weixin",
     "build": "pnpm build:mp-weixin",
-    "upload": "pnpm upload:mp-weixin",
+    "upload": "pnpm upload:mp-weixin production",
+    "upload:test-plat": "pnpm upload:mp-weixin test",
     "dev:app": "uni -p app",
     "dev:app-android": "uni -p app-android",
     "dev:app-ios": "uni -p app-ios",

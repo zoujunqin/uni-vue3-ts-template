@@ -1,5 +1,40 @@
 [
   {
+    "version": "1.0.5",
+    "createTime": "2024-08-14 16:14:44",
+    "description": "发布正式环境"
+  },
+  {
+    "version": "1.0.4",
+    "createTime": "2024-08-14 16:13:04",
+    "description": "发布测试环境"
+  },
+  {
+    "version": "1.0.3",
+    "createTime": "2024-08-14 15:53:51",
+    "description": "发布v1.3.0测试环境"
+  },
+  {
+    "version": "1.0.25",
+    "createTime": "2024-08-14 15:35:37",
+    "description": "发布正式环境（测试01）"
+  },
+  {
+    "version": "1.0.25",
+    "createTime": "2024-08-14 15:22:43",
+    "description": "发布正式账号正式环境（测试）"
+  },
+  {
+    "version": "1.0.24",
+    "createTime": "2024-08-14 14:31:37",
+    "description": "发布正式账号正式环境（测试区别账号）"
+  },
+  {
+    "version": "1.0.23",
+    "createTime": "2024-08-14 14:26:26",
+    "description": "发布测试账号测试环境"
+  },
+  {
     "version": "1.0.1",
     "createTime": "2024-08-13 17:05:18",
     "description": "发布v1.3.0正式环境"
