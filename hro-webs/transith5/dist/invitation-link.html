@@ -13,7 +13,8 @@
         const scene = `t=1001&c=${params.get('c')}&type=line`
         const res = encodeURIComponent(scene)
         let a = document.createElement("a");
-        a.href = `weixin://dl/business/?appid=wxebb784f88f01fd50&path=pagesTransfer/index&env_version=develop&query=`+res;
+        //env_version=trial 发布的时候需要删除
+        a.href = `weixin://dl/business/?appid=wxebb784f88f01fd50&path=pagesTransfer/index&env_version=trial&query=`+res;
         a.click();
         // const params = new URLSearchParams(window.location.search);
         // const query = {
