@@ -10,22 +10,31 @@
 <body>
     <script>
         const params = new URLSearchParams(window.location.search);
-        const scene = `t=1001&c=${params.get('c')}&type=line`
+        const c = params.get('c');
+        const env = params.get('env');
+        const scene = `t=1001&c=${c}&type=line`
         const res = encodeURIComponent(scene)
+        const envType = {
+            production: {
+                name: 'release',
+                appid: 'wx9e91fc9f2476e8b3'
+            },
+            development: {
+                name: 'develop',
+                appid: 'wxebb784f88f01fd50'
+            },
+            staging: {
+                name: 'trial',
+                appid: 'wxebb784f88f01fd50'
+            },
+            test: {
+                name: 'trial',
+                appid: 'wxebb784f88f01fd50'
+            },
+        }
         let a = document.createElement("a");
-        //env_version=trial 发布的时候需要删除
-        a.href = `weixin://dl/business/?appid=wxebb784f88f01fd50&path=pagesTransfer/index&env_version=trial&query=`+res;
+        a.href = `weixin://dl/business/?appid=${envType[env].appid}&path=pagesTransfer/index&env_version=${envType[env].name}&query=`+res;
         a.click();
-        // const params = new URLSearchParams(window.location.search);
-        // const query = {
-        //     t: '1001',
-        //     c: params.get('c'),
-        // }
-        // const queryString = Object.keys(query).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(query[key])}`).join('&')
-        // const res = encodeURIComponent(queryString)
-        // let a = document.createElement("a");
-        // a.href = `weixin://dl/business/?appid=wxebb784f88f01fd50&path=pagesTransfer/index&env_version=develop&query=`+res;
-        // a.click();
     </script>
 </body>
 </html>
