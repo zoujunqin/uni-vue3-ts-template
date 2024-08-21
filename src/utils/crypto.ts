@@ -133,23 +133,29 @@ export const isNeedDecrypt = response => {
 export const decryptResponseData = async (
   response: AxiosResponse<string, any> | PureHttpResponse
 ): Promise<AxiosResponse<any, any> | AxiosResponse<any, any>> => {
-  let responseData = response.data;
+  let { data: responseData } = response;
+  const {
+    request: { responseType },
+    status
+  } = response;
 
-  if (isBlob(responseData)) {
+  let isNeedParser = false;
+  if (isBlob(responseData) && responseType === 'blob' && status !== 200) {
     /* 前端设置 responseType 为 Blob, 后端正常返回非 Blob 的数据，会导致数据被包在 Blob 对象中 */
-    if ((responseData as Blob)?.type === 'application/json') {
-      responseData = await parseBlobData(responseData);
-    }
+    responseData = await parseBlobData(responseData);
+    isNeedParser = true;
   }
 
   if (isNeedDecrypt(response)) {
-    const decryptResponseData = decryptString(responseData as string);
-
+    responseData = decryptString(responseData as string);
+    isNeedParser = true;
+  }
+  if (isNeedParser) {
     /* 非 JSON 字符串会解析失败，直接返回 */
     try {
-      responseData = JSON.parse(decryptResponseData);
+      responseData = JSON.parse(responseData);
     } catch {
-      responseData = decryptResponseData;
+      /* empty */
     }
   }
 
