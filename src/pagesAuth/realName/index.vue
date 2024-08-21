@@ -88,7 +88,7 @@
 
               <!-- 手机号需要手机验证码 -->
               <ProFormItem
-                v-if="prop.fieldCode === 'mobile'"
+                v-if="prop.fieldCode === 'bankMobile'"
                 required
                 border-bottom
                 prop="smsCode"
@@ -96,7 +96,7 @@
                 <template #label>
                   <ProCode
                     :fetch="
-                      () => sms({ mobile: formData.mobile, type: 'normal' })
+                      () => sms({ mobile: formData.bankMobile, type: 'normal' })
                     "
                     :valid-phone="validMobile"
                     :readonly="nextDisabled"
