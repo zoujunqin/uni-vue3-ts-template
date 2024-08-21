@@ -30,7 +30,8 @@ const httpNoMessage = ['/fe/wechat/worker_protocol/sign'];
 // const baseURL = 'https://localdev-hro-api.fjhxrl.com'; // 测试环境
 const baseURL = 'https://localtest-hro-api.fjhxrl.com'; // 测试环境
 // const baseURL = 'https://hro-beta-gateway.fjhxrl.com'; // 预生产环境
-// const baseURL = 'http://192.168.3.73:8100'; // 林伦
+// const baseURL = 'http://192.168.3.73:8100'; // 林伦 wifi
+// const baseURL = 'http://192.168.117.87:8100'; // 林伦 网线
 // const baseURL = 'http://192.168.117.86:8100'; // 大立
 
 const { DEV, VITE_BASE_URL } = import.meta.env;
