@@ -37,4 +37,4 @@
     |   |-- static@http                    // 本地服务的静态资源
     |   |-- style
     |   |-- utils
-
+    |-- transith5                          // 小程序 h5 中转页，是个多页面配置
