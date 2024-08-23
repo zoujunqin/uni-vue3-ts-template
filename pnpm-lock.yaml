@@ -118,6 +118,9 @@ devDependencies:
   '@typescript-eslint/parser':
     specifier: 6.11.0
     version: 6.11.0(eslint@8.53.0)(typescript@5.2.2)
+  '@vitejs/plugin-vue':
+    specifier: 5.1.2
+    version: 5.1.2(vite@4.0.3)(vue@3.3.8)
   '@vue/eslint-config-prettier':
     specifier: 8.0.0
     version: 8.0.0(eslint@8.53.0)(prettier@3.1.0)
@@ -163,6 +166,9 @@ devDependencies:
   lint-staged:
     specifier: 13.1.4
     version: 13.1.4
+  minimist:
+    specifier: 1.2.8
+    version: 1.2.8
   miniprogram-ci:
     specifier: 1.9.15
     version: 1.9.15
@@ -5373,6 +5379,17 @@ packages:
     dependencies:
       vite: 4.0.3(@types/node@20.5.1)(sass@1.69.5)(terser@5.24.0)
       vue: 3.3.8(typescript@5.2.2)
+
+  /@vitejs/plugin-vue@5.1.2(vite@4.0.3)(vue@3.3.8):
+    resolution: {integrity: sha512-nY9IwH12qeiJqumTCLJLE7IiNx7HZ39cbHaysEUd+Myvbz9KAqd2yq+U01Kab1R/H1BmiyM2ShTYlNH32Fzo3A==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    peerDependencies:
+      vite: ^5.0.0
+      vue: ^3.2.25
+    dependencies:
+      vite: 4.0.3(@types/node@20.5.1)(sass@1.69.5)(terser@5.24.0)
+      vue: 3.3.8(typescript@5.2.2)
+    dev: true
 
   /@vue/babel-helper-vue-transform-on@1.1.5:
     resolution: {integrity: sha512-SgUymFpMoAyWeYWLAY+MkCK3QEROsiUnfaw5zxOVD/M64KQs8D/4oK6Q5omVA2hnvEOE0SCkH2TZxs/jnnUj7w==}
