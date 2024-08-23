@@ -1,22 +1,26 @@
 // 需要到小程序平台配置本地 ip 白名单
+
 const fs = require('fs');
 
 const chalk = require('chalk');
 const { Command } = require('commander');
 const dayjs = require('dayjs');
 const inquirer = require('inquirer');
+const minimist = require('minimist');
 const ci = require('miniprogram-ci');
 
 const pkg = require('../package.json');
-const manifestJson = require('../src/manifest.json');
 const uploadLog = require('../upload-log.json');
-
+const params = minimist(process.argv.slice(2));
 function upload(desc) {
   const project = new ci.Project({
-    appid: manifestJson.appid,
+    appid: import.meta.env.VITE_MP_WEIXIN_APP_ID,
     type: 'miniProgram',
     projectPath: 'dist/build/mp-weixin', // uniapp打包后的路径
-    privateKeyPath: 'mp-weixin.private.key', // 微信公众平台密钥
+    privateKeyPath:
+      params.mode === 'production'
+        ? 'mp-weixin-formal.private.key'
+        : 'mp-weixin.private.key', // 微信公众平台密钥
     ignores: ['node_modules/**/*'] // 指定需要排除的规则
   });
 
