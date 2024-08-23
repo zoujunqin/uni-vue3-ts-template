@@ -25,7 +25,8 @@ const getWorkerProtocolSign = query => {
   };
   postWorkerProtocolSign(params)
     .then(res => {
-      signUrl.value = res;
+      /* 在正式环境小程序需要配置域名的验证，契约锁无法支持，通过自己的 h5 唤起契约锁的 h5 */
+      signUrl.value = import.meta.env.VITE_QIYUESUO_LINK + `?signUrl=${res}`;
     })
     .catch(err => {
       uni.showModal({
