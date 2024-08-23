@@ -17,26 +17,9 @@
     const scene = `t=1001&c=${c}&type=link`
     const res = encodeURIComponent(scene)
     const envAppid = import.meta.env.VITE_MP_WEIXIN_APP_ID;
-    const envType = {
-      production: {
-        name: 'release',
-        appid: envAppid
-      },
-      development: {
-        name: 'develop',
-        appid: envAppid
-      },
-      staging: {
-        name: 'trial',
-        appid: envAppid
-      },
-      test: {
-        name: 'trial',
-        appid: envAppid
-      },
-    }
+    const weixinEnv = import.meta.env.VITE_MP_WEIXIN_ENV;
     let a = document.createElement("a");
-    a.href = `weixin://dl/business/?appid=${envType[env].appid}&path=pagesTransfer/index&env_version=${envType[env].name}&query=` + res;
+    a.href = `weixin://dl/business/?appid=${envAppid}&path=pagesTransfer/index&env_version=${weixinEnv}&query=` + res;
     a.click();
 </script>
 </body>
