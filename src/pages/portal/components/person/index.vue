@@ -17,9 +17,9 @@
   <ProModal
     ref="contactModalRef"
     confirm-button-text="联系我们"
-    content="0591 - 40006464"
+    content="0591 - 87809851"
     title="联系我们"
-    @confirm="handleContactConfirm('0591 - 40006464')"
+    @confirm="handleContactConfirm('0591 - 87809851')"
   >
     <template #image>
       <image

@@ -1,12 +1,12 @@
 const { spawn } = require('child_process');
 
 const chalk = require('chalk');
-const minimist = require('minimist')
+const minimist = require('minimist');
 
 const { staticServerPort, getStaticServer } = require('./utils.js');
 
 const cmd = /^win/.test(process.platform) ? 'pnpm.cmd' : 'pnpm';
-const params = minimist(process.argv.slice(2))
+const params = minimist(process.argv.slice(2));
 
 const assetsServerController = new AbortController();
 const { signal: assetsServerSignal } = assetsServerController;

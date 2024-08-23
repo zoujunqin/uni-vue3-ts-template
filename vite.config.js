@@ -6,9 +6,9 @@ import { loadEnv } from 'vite';
 import { UnifiedViteWeappTailwindcssPlugin as uvtw } from 'weapp-tailwindcss/vite';
 
 import uni from './build/packages/vite-plugin-uni/index';
+import { modifyManifest } from './modifyManifest';
 import { plugins as postcssPlugins } from './postcss.config';
 import { getStaticServer } from './scripts/utils';
-
 function resolvePath(dir) {
   return resolve(__dirname, '..', dir);
 }
@@ -39,32 +39,34 @@ function createAlias() {
 }
 
 const alias = createAlias();
-
 // https://vitejs.dev/config/
-export default defineConfig({
-  mode: 'strict',
-  resolve: {
-    alias,
-    extensions: ['ts', 'js', 'vue', 'nvue', 'css', 'scss']
-  },
-  plugins: [
-    uni(),
-    uvtw({
-      disabled: ['h5', 'app'].includes(process.env.UNI_PLATFORM)
-    }),
-    uniAxiosAdapter()
-  ],
-
-  css: {
-    postcss: {
-      plugins: postcssPlugins
+export default defineConfig(() => {
+  modifyManifest();
+  return {
+    mode: 'strict',
+    resolve: {
+      alias,
+      extensions: ['ts', 'js', 'vue', 'nvue', 'css', 'scss']
     },
-    preprocessorOptions: {
-      scss: {
-        additionalData: `
+    plugins: [
+      uni(),
+      uvtw({
+        disabled: ['h5', 'app'].includes(process.env.UNI_PLATFORM)
+      }),
+      uniAxiosAdapter()
+    ],
+
+    css: {
+      postcss: {
+        plugins: postcssPlugins
+      },
+      preprocessorOptions: {
+        scss: {
+          additionalData: `
         $http: "${alias['@http']}";
         `
+        }
       }
     }
-  }
+  };
 });
