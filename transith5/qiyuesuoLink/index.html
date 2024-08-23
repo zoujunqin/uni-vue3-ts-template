@@ -7,11 +7,11 @@
 </head>
 
 <body>
-<script>
-  const params = new URLSearchParams(window.location.search);
-  const a = document.createElement('a')
-  a.href=params.signUrl
-  a.click()
-</script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const a = document.createElement('a')
+    a.href=params.get('signUrl')
+    a.click()
+  </script>
 </body>
 </html>
