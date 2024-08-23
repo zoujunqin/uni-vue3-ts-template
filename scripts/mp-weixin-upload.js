@@ -1,6 +1,8 @@
 // 需要到小程序平台配置本地 ip 白名单
 
 const fs = require('fs');
+const path = require('path');
+const dotEnv = require('dotenv')
 
 const chalk = require('chalk');
 const { Command } = require('commander');
@@ -12,9 +14,17 @@ const ci = require('miniprogram-ci');
 const pkg = require('../package.json');
 const uploadLog = require('../upload-log.json');
 const params = minimist(process.argv.slice(2));
+
+// 先构造出.env*文件的绝对路径
+const appDirectory = fs.realpathSync(process.cwd());
+const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
+const pathsDotenv = resolveApp('.env');
+dotEnv.config({ path: `${pathsDotenv}.${params.mode}` }); // 加载.env.*
+
+
 function upload(desc) {
   const project = new ci.Project({
-    appid: import.meta.env.VITE_MP_WEIXIN_APP_ID,
+    appid: process.env.VITE_MP_WEIXIN_APP_ID,
     type: 'miniProgram',
     projectPath: 'dist/build/mp-weixin', // uniapp打包后的路径
     privateKeyPath:
@@ -49,6 +59,12 @@ function upload(desc) {
 }
 
 const program = new Command();
+// 定义当前版本
+program
+  .version(`v${pkg.version}`)
+  .option('-m, --mode <modename>', 'Specify the mode')
+  .parse(process.argv);
+
 program.description('upload mp-weixin').action(async () => {
   const { description } = await inquirer.prompt([
     {
