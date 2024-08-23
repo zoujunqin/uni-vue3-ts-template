@@ -11,7 +11,7 @@ onLoad(option => {
   const { setSceneOption } = useUserStore();
   const hasToken = !!useUserStore().token;
   const sceneObj = { t: '', c: '' };
-  if (option && option.type && option.type === 'line') {
+  if (option && option.type && option.type === 'link') {
     sceneObj.t = option.t;
     sceneObj.c = option.c;
   } else {
