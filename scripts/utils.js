@@ -19,4 +19,5 @@ const getStaticServer = () => {
   return `http://${getLocalIp()}:${staticServerPort}`;
 };
 
+
 module.exports = { staticServerPort, getStaticServer };

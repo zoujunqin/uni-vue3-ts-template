@@ -166,6 +166,9 @@ devDependencies:
   lint-staged:
     specifier: 13.1.4
     version: 13.1.4
+  minimist:
+    specifier: 1.2.8
+    version: 1.2.8
   miniprogram-ci:
     specifier: 1.9.15
     version: 1.9.15
