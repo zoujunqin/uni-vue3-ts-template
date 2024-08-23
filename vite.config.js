@@ -41,8 +41,7 @@ function createAlias() {
 const alias = createAlias();
 // https://vitejs.dev/config/
 export default defineConfig(() => {
-  const envProp = process.argv[process.argv.length - 1];
-  modifyManifest(envProp);
+  modifyManifest();
   return {
     mode: 'strict',
     resolve: {
