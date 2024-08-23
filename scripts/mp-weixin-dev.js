@@ -1,15 +1,12 @@
 const { spawn } = require('child_process');
 
 const chalk = require('chalk');
+const minimist = require('minimist')
 
 const { staticServerPort, getStaticServer } = require('./utils.js');
 
 const cmd = /^win/.test(process.platform) ? 'pnpm.cmd' : 'pnpm';
-const params = process.argv.slice(2).reduce((res, item) => {
-  const splits = item.split('=');
-  res[splits[0].replace(/^--/, '')] = splits[1];
-  return res;
-}, {});
+const params = minimist(process.argv.slice(2))
 
 const assetsServerController = new AbortController();
 const { signal: assetsServerSignal } = assetsServerController;
