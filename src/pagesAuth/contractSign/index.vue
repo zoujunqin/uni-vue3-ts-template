@@ -47,7 +47,11 @@ const getWorkerProtocolSign = query => {
       url: `plugin://qyssdk-plugin/doc?ticket=${pluginUrl.value[0]}&env=${env}&hasCb=true`,
       events: {
         signSuccessCb: () => {
-          handleContinueToSign(eventChannel, env);
+          if (pluginUrl.value.length === 1) {
+            eventChannel.emit('jumpTo', `/pages/portal/index`);
+          } else {
+            handleContinueToSign(eventChannel, env);
+          }
         }
       },
       success(res) {
