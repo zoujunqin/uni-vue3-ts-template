@@ -83,7 +83,7 @@ page {
 
 // 覆盖 uv 样式
 
-.uv-count-down > text {
+.uv-count-down>text {
   color: var(--hx-color-primary);
 }
 
@@ -95,4 +95,8 @@ page {
 
 .uv-steps .uv-steps-item .uv-steps-item__wrapper {
   background-color: transparent;
+}
+
+.uv-steps-item__wrapper--row {
+  line-height: 0px !important;
 }
