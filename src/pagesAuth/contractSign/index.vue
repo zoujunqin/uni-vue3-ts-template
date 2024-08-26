@@ -1,17 +1,17 @@
 <template>
-  <web-view :src="signUrl" />
+  <div />
 </template>
 
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
-import { shallowRef } from 'vue';
+import { ref } from 'vue';
 
 import { postWorkerProtocolSign } from '@/api/fe/wechat/worker';
 import { PROTOCOL_TYPE } from '@/constant/taskDetail';
-
-const signUrl = shallowRef('');
-
 const getWorkerProtocolSign = query => {
+  const pluginUrl = ref([]);
+  //签署份数
+  const count = ref(1);
   const { sourceType, orderDetailId, taskId, invitationCodeId } = query;
   const idMap = {
     [PROTOCOL_TYPE.ORDER_DETAIL]: orderDetailId,
@@ -25,8 +25,8 @@ const getWorkerProtocolSign = query => {
   };
   postWorkerProtocolSign(params)
     .then(res => {
-      /* 在正式环境小程序需要配置域名的验证，契约锁无法支持，通过自己的 h5 唤起契约锁的 h5 */
-      signUrl.value = import.meta.env.VITE_QIYUESUO_LINK + `?signUrl=${res}`;
+      pluginUrl.value = res;
+      handlePlugin();
     })
     .catch(err => {
       uni.showModal({
@@ -40,8 +40,42 @@ const getWorkerProtocolSign = query => {
         }
       });
     });
+  const handlePlugin = () => {
+    let eventChannel = null;
+    const env = 'cn';
+    uni.navigateTo({
+      url: `plugin://qyssdk-plugin/doc?ticket=${pluginUrl.value[0]}&env=${env}&hasCb=true`,
+      events: {
+        signSuccessCb: () => {
+          handleContinueToSign(eventChannel, env);
+        }
+      },
+      success(res) {
+        eventChannel = res.eventChannel;
+      }
+    });
+  };
+  const handleContinueToSign = (eventChannel, env) => {
+    const eventChannelTo = eventChannel;
+    const envTo = env;
+    count.value++;
+    eventChannelTo.emit(
+      'jumpTo',
+      `plugin://qyssdk-plugin/doc?ticket=${
+        pluginUrl.value[count.value - 1]
+      }&env=${envTo}&hasCb=true`,
+      {
+        signSuccessCb: eventChannel => {
+          if (count.value === pluginUrl.value.length) {
+            eventChannel.emit('jumpTo', `/pages/portal/index`);
+          } else {
+            handleContinueToSign(eventChannel, envTo);
+          }
+        }
+      }
+    );
+  };
 };
-
 onLoad(({ taskQueryParams = {} }) => {
   getWorkerProtocolSign(JSON.parse(taskQueryParams));
 });
