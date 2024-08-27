@@ -58,7 +58,13 @@
     "optimization": {
       "subPackages": true
     },
-    "lazyCodeLoading": "requiredComponents"
+    "lazyCodeLoading": "requiredComponents",
+    "plugins": {
+      "qyssdk-plugin": {
+        "version": "1.2.22",
+        "provider": "wxaf8f505686ddf66a"
+      }
+    }
   },
   "mp-alipay": {
     "usingComponents": true

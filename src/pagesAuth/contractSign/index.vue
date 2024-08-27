@@ -1,16 +1,13 @@
 <template>
-  <web-view :src="signUrl" />
+  <div />
 </template>
 
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
-import { shallowRef } from 'vue';
+import { computed, ref } from 'vue';
 
 import { postWorkerProtocolSign } from '@/api/fe/wechat/worker';
 import { PROTOCOL_TYPE } from '@/constant/taskDetail';
-
-const signUrl = shallowRef('');
-
 const getWorkerProtocolSign = query => {
   const { sourceType, orderDetailId, taskId, invitationCodeId } = query;
   const idMap = {
@@ -23,10 +20,14 @@ const getWorkerProtocolSign = query => {
     id: idMap[sourceType],
     sourceType
   };
+  const pluginUrls = ref([]);
+  //签署份数
+  const count = ref(1);
+  const env = import.meta.env.VITE_COMTRACT_LOCK_ENV;
   postWorkerProtocolSign(params)
     .then(res => {
-      /* 在正式环境小程序需要配置域名的验证，契约锁无法支持，通过自己的 h5 唤起契约锁的 h5 */
-      signUrl.value = import.meta.env.VITE_QIYUESUO_LINK + `?signUrl=${res}`;
+      pluginUrls.value = res;
+      handlePlugin();
     })
     .catch(err => {
       uni.showModal({
@@ -40,8 +41,38 @@ const getWorkerProtocolSign = query => {
         }
       });
     });
-};
+  const lockUrl = computed(() => {
+    return `plugin://qyssdk-plugin/doc?ticket=${
+      pluginUrls.value[count.value - 1]
+    }&env=${env}&hasCb=true`;
+  });
+  const signSuccessCb = channel => {
+    if (pluginUrls.value.length === count.value) {
+      channel.emit('jumpTo', `/pages/portal/index`);
+    } else {
+      handleContinueToSign();
+    }
+  };
+  let eventChannel = null;
 
+  const handlePlugin = () => {
+    uni.navigateTo({
+      url: lockUrl.value,
+      events: {
+        signSuccessCb: () => signSuccessCb(eventChannel)
+      },
+      success(res) {
+        eventChannel = res.eventChannel;
+      }
+    });
+  };
+  const handleContinueToSign = () => {
+    count.value++;
+    eventChannel.emit('jumpTo', lockUrl.value, {
+      signSuccessCb
+    });
+  };
+};
 onLoad(({ taskQueryParams = {} }) => {
   getWorkerProtocolSign(JSON.parse(taskQueryParams));
 });

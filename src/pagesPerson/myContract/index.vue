@@ -27,20 +27,16 @@
       </template>
     </ProScrollList>
   </ProPage>
-  <view v-if="pathUrl !== ''">
-    <web-view :src="pathUrl" />
-  </view>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
 
 import { getPersonalCenterContract } from '@/api/fe/wechat/personal_center';
-import { getWorkerProtocolByIdViewUrl } from '@/api/fe/wechat/worker';
+import { getWorkerProtocolByIdViewTicket } from '@/api/fe/wechat/worker';
 import { useOss } from '@/hooks/useOss';
 
 const { getPreviewUrl } = useOss();
-const pathUrl = ref('');
 const path = ref('');
 
 const handleLookContract = val => {
@@ -48,8 +44,8 @@ const handleLookContract = val => {
   if (path.value) {
     handleGetPath();
   } else {
-    getWorkerProtocolByIdViewUrl(val?.id).then(res => {
-      pathUrl.value = res;
+    getWorkerProtocolByIdViewTicket(val?.id).then(res => {
+      handleViewProtocol(res);
     });
   }
 };
@@ -69,6 +65,21 @@ const handleGetPath = async () => {
     },
     complete: () => {
       uni.hideLoading();
+    }
+  });
+};
+const handleViewProtocol = ticket => {
+  let eventChannel = null;
+  const env = import.meta.env.VITE_COMTRACT_LOCK_ENV;
+  uni.navigateTo({
+    url: `plugin://qyssdk-plugin/doc?ticket=${ticket}&env=${env}&hasCb=true`,
+    events: {
+      signSuccessCb: () => {
+        eventChannel.emit('jumpTo'); // 触发跳转逻辑，回调存在时必需调用，url不传默认返回
+      }
+    },
+    success(res) {
+      eventChannel = res.eventChannel;
     }
   });
 };
