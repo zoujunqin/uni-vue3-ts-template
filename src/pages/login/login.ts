@@ -24,7 +24,9 @@ export const weChatAuthLogin = (res: IPhoneNumberResult) => {
     invitationCodeId: c || undefined
   };
   if (errMsg === okMsg) {
-    weChatLogin(param).then(callback);
+    weChatLogin(param).then(res => {
+      callback(res, 1);
+    });
   } else if (errMsg === denyMsg) {
     uni.showToast({ title: '您已取消授权', icon: 'none' });
   }
@@ -34,16 +36,19 @@ export const mobileLogin = (param: ISmsParam) => {
   const { sceneOption } = useUserStore();
   const { c } = sceneOption;
   param['invitationCodeId'] = c || undefined;
-  smsLogin(param).then(callback);
+  smsLogin(param).then(res => {
+    callback(res, 2);
+  });
 };
-function callback(res) {
+
+function callback(res, delta) {
   setToken(res.token);
   setAreaData();
 
   const { sceneOption } = useUserStore();
   const { t } = sceneOption;
   if (!t) {
-    uni.reLaunch({ url: '/pages/portal/index' });
+    uni.navigateBack({ delta });
   } else {
     sceneCodeMap[t]?.(sceneOption);
   }

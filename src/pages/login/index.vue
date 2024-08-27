@@ -1,5 +1,9 @@
 <template>
-  <ProPage class="login hx-p-[128px_24px_0_24px] hx-h-full hx-flex hx-flex-col">
+  <ProPage
+    class="login hx-p-[128px_24px_0_24px] hx-h-full hx-flex hx-flex-col"
+    navbar-title=""
+    show-navbar
+  >
     <text
       class="hx-text-[26px] hx-leading-[30px] hx-font-[600] hx-text-color-title"
     >
@@ -90,6 +94,8 @@ import { computed, ref, shallowRef } from 'vue';
 
 import { weChatAuthLogin } from './login';
 
+import { mobileLoginPagePath } from '@/constant/pagePath';
+
 const isAgree = shallowRef([]);
 const proTooltipPerRef = ref();
 const valid = computed(() => isAgree.value.length === 1);
@@ -102,7 +108,7 @@ const openPopup = () => {
 const navToMobileLogin = () => {
   if (!validate()) return;
   uni.navigateTo({
-    url: '/pages/login/mobileLogin'
+    url: mobileLoginPagePath
   });
 };
 
@@ -115,5 +121,3 @@ const handleIsAgreeChange = () => {
   proTooltipPerRef.value.close();
 };
 </script>
-
-<style lang="scss" scoped></style>

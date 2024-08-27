@@ -1,6 +1,8 @@
 import { shallowRef } from 'vue';
 
+import { loginPagePath } from '@/constant/pagePath';
 import { clearStore } from '@/pinia/index';
+import { useUserStore } from '@/pinia/modules/user';
 
 export const useHandler = () => {
   const contactModalRef = shallowRef();
@@ -54,6 +56,7 @@ export const useHandler = () => {
       type: 'agreement',
       handler: () => {
         uni.navigateTo({
+          auth: false,
           url: '/pagesPerson/agreement/index'
         });
       }
@@ -72,14 +75,18 @@ export const useHandler = () => {
   /* 确认退出登录 */
   const handleLogoutConfirm = () => {
     clearStore();
-    uni.reLaunch({
-      url: '/pages/login/index'
-    });
+    logoutModalRef.value.close();
   };
 
   /* 联系我们 - 拨打电话 */
   const handleContactConfirm = (phoneNumber: string) => {
     uni.makePhoneCall({ phoneNumber });
+  };
+
+  const handleToLoginPage = () => {
+    if (!useUserStore().token) {
+      uni.navigateTo({ url: loginPagePath });
+    }
   };
 
   return {
@@ -89,6 +96,8 @@ export const useHandler = () => {
     contactModalRef,
     logoutModalRef,
     panelItemMap,
-    verticalListItemMap
+    verticalListItemMap,
+
+    handleToLoginPage
   };
 };
