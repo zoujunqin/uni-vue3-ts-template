@@ -4,14 +4,11 @@
 
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import { postWorkerProtocolSign } from '@/api/fe/wechat/worker';
 import { PROTOCOL_TYPE } from '@/constant/taskDetail';
 const getWorkerProtocolSign = query => {
-  const pluginUrl = ref([]);
-  //签署份数
-  const count = ref(1);
   const { sourceType, orderDetailId, taskId, invitationCodeId } = query;
   const idMap = {
     [PROTOCOL_TYPE.ORDER_DETAIL]: orderDetailId,
@@ -23,9 +20,13 @@ const getWorkerProtocolSign = query => {
     id: idMap[sourceType],
     sourceType
   };
+  const pluginUrls = ref([]);
+  //签署份数
+  const count = ref(1);
+  const env = import.meta.env.VITE_COMTRACT_LOCK_ENV;
   postWorkerProtocolSign(params)
     .then(res => {
-      pluginUrl.value = res;
+      pluginUrls.value = res;
       handlePlugin();
     })
     .catch(err => {
@@ -40,44 +41,36 @@ const getWorkerProtocolSign = query => {
         }
       });
     });
+  const lockUrl = computed(() => {
+    return `plugin://qyssdk-plugin/doc?ticket=${
+      pluginUrls.value[count.value - 1]
+    }&env=${env}&hasCb=true`;
+  });
+  const signSuccessCb = channel => {
+    if (pluginUrls.value.length === count.value) {
+      channel.emit('jumpTo', `/pages/portal/index`);
+    } else {
+      handleContinueToSign();
+    }
+  };
+  let eventChannel = null;
+
   const handlePlugin = () => {
-    let eventChannel = null;
-    const env = 'cn';
     uni.navigateTo({
-      url: `plugin://qyssdk-plugin/doc?ticket=${pluginUrl.value[0]}&env=${env}&hasCb=true`,
+      url: lockUrl.value,
       events: {
-        signSuccessCb: () => {
-          if (pluginUrl.value.length === 1) {
-            eventChannel.emit('jumpTo', `/pages/portal/index`);
-          } else {
-            handleContinueToSign(eventChannel, env);
-          }
-        }
+        signSuccessCb: () => signSuccessCb(eventChannel)
       },
       success(res) {
         eventChannel = res.eventChannel;
       }
     });
   };
-  const handleContinueToSign = (eventChannel, env) => {
-    const eventChannelTo = eventChannel;
-    const envTo = env;
+  const handleContinueToSign = () => {
     count.value++;
-    eventChannelTo.emit(
-      'jumpTo',
-      `plugin://qyssdk-plugin/doc?ticket=${
-        pluginUrl.value[count.value - 1]
-      }&env=${envTo}&hasCb=true`,
-      {
-        signSuccessCb: eventChannel => {
-          if (count.value === pluginUrl.value.length) {
-            eventChannel.emit('jumpTo', `/pages/portal/index`);
-          } else {
-            handleContinueToSign(eventChannel, envTo);
-          }
-        }
-      }
-    );
+    eventChannel.emit('jumpTo', lockUrl.value, {
+      signSuccessCb
+    });
   };
 };
 onLoad(({ taskQueryParams = {} }) => {

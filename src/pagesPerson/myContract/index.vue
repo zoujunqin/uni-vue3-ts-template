@@ -70,7 +70,7 @@ const handleGetPath = async () => {
 };
 const handleViewProtocol = ticket => {
   let eventChannel = null;
-  const env = 'cn';
+  const env = import.meta.env.VITE_COMTRACT_LOCK_ENV;
   uni.navigateTo({
     url: `plugin://qyssdk-plugin/doc?ticket=${ticket}&env=${env}&hasCb=true`,
     events: {
