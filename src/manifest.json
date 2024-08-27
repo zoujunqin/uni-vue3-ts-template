@@ -61,7 +61,7 @@
     "lazyCodeLoading": "requiredComponents",
     "plugins": {
       "qyssdk-plugin": {
-        "version": "1.2.22",
+        "version": "1.2.21",
         "provider": "wxaf8f505686ddf66a"
       }
     }
