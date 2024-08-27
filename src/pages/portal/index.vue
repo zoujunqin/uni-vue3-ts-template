@@ -14,9 +14,9 @@
       />
 
       <Person
+        class="hx-flex-1"
         v-if="tabbarList[2].load"
         v-show="tabbarList[2].visible"
-        class="hx-flex-1"
       />
 
       <ProTabbar
@@ -46,37 +46,39 @@
 </template>
 
 <script lang="ts" setup>
-import { onShow } from '@dcloudio/uni-app';
 import { computed, ref, shallowRef } from 'vue';
 
 import Person from '@/pages/portal/components/person/index.vue';
 import Recommend from '@/pages/portal/components/recommend/index.vue';
 import Tasks from '@/pages/portal/components/tasks/index.vue';
-import { useUserStore } from '@/pinia/modules/user';
 
-const tabbarValue = shallowRef('tasks');
+const RECOMMEND_TASK_NAME = 'recommend_task';
+const TASK_CENTER_NAME = 'task_center';
+const PERSON_CENTER_NAME = 'person_center';
+
+const tabbarValue = shallowRef(RECOMMEND_TASK_NAME);
 const tabbarList = ref([
   {
     icon: '/static/tabbar/task.svg',
     activeIcon: '/static/tabbar/task-hl.svg',
     text: '任务中心',
-    name: 'tasks',
-    load: true,
-    visible: true
+    name: TASK_CENTER_NAME,
+    load: false,
+    visible: false
   },
   {
     icon: '/static/tabbar/divide.svg',
     activeIcon: '/static/tabbar/divide-hl.svg',
     text: '推荐任务',
-    name: 'recommend',
-    load: false,
-    visible: false
+    name: RECOMMEND_TASK_NAME,
+    load: true,
+    visible: true
   },
   {
     icon: '/static/tabbar/person.svg',
     activeIcon: '/static/tabbar/person-hl.svg',
     text: '个人中心',
-    name: 'person',
+    name: PERSON_CENTER_NAME,
     load: false,
     visible: false
   }
@@ -95,9 +97,6 @@ const tabbarChange = name => {
     item.visible = flag;
   });
 };
-onShow(() => {
-  useUserStore().setUserInfo();
-});
 </script>
 
 <style>
