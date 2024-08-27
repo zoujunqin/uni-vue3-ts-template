@@ -4,13 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    iframe {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
 </head>
 
 <body>
-<script>
-  wx.miniProgram.navigateTo({
-    url: '/pagesAuth/realNameSuccess/index?code=' + 1
-  })
-</script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const iframe = document.createElement('iframe')
+    iframe.setAttribute('src', params.get('signUrl'))
+    iframe.setAttribute('frameborder', '0');
+
+
+    document.body.appendChild(iframe)
+  </script>
 </body>
 </html>
