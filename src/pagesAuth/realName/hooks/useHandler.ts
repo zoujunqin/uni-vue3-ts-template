@@ -16,12 +16,12 @@ import {
   APPLY_STATUS_MAP,
   PROTOCOL_TYPE,
   REAL_STATUS,
-  REAL_STATUS_MAP,
   REAL_TYPE,
   YES_NO_TYPE
 } from '@/constant/taskDetail';
 import { useUserStore } from '@/pinia/modules/user';
 import { getRealStatus } from '@/utils';
+import { handleRealStatusTo } from '@/utils/lockPlugin';
 
 export const useHandler = ({ routeParams }) => {
   const userRealNameStore = useRealNameStore();
@@ -205,21 +205,16 @@ export const useHandler = ({ routeParams }) => {
         // 正常申请任务流程
         applyTask(routeParams.value).then(res => {
           const realStatus = getRealStatus(res);
-
           if (realStatus === REAL_STATUS.ALREADY_REAL) {
             uni.showToast({ title: '申请成功', icon: 'none' });
           }
-          uni.navigateTo({
-            url: REAL_STATUS_MAP[realStatus].pagePath + params
-          });
+          handleRealStatusTo(realStatus, params);
         });
       } else {
         // 邀请码流程
         getInvitationCodeScan(c).then(res => {
           const realStatus = getRealStatus(res);
-          uni.navigateTo({
-            url: REAL_STATUS_MAP[realStatus].pagePath + params
-          });
+          handleRealStatusTo(realStatus, params);
         });
       }
     });

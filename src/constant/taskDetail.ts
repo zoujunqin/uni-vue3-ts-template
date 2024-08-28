@@ -132,7 +132,7 @@ export const { REAL_STATUS, REAL_STATUS_MAP, REAL_STATUS_LIST } =
       {
         label: '需要合同签署',
         value: 'need_sign',
-        pagePath: '/pagesAuth/contractSign/index'
+        pagePath: ''
       }
     ] as const,
     'REAL_STATUS',

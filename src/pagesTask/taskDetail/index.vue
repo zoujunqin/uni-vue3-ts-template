@@ -47,12 +47,9 @@ import TaskHeader from './components/TaskHeader.vue';
 import TaskPlace from './components/TaskPlace.vue';
 
 import { applyTask, getTaskDetail, ITaskDetail } from '@/api/fe/wechat/task';
-import {
-  REAL_STATUS,
-  REAL_STATUS_MAP,
-  YES_NO_TYPE
-} from '@/constant/taskDetail';
+import { REAL_STATUS, YES_NO_TYPE } from '@/constant/taskDetail';
 import { getRealStatus } from '@/utils/index';
+import { handleRealStatusTo } from '@/utils/lockPlugin';
 
 const taskDetail = shallowRef<ITaskDetail>();
 const routeParams = shallowRef<Record<string, any>>({});
@@ -94,11 +91,8 @@ const handleApplyTask = () => {
       orderDetailId: orderDetailId,
       sourceType: sourceType
     });
-    uni.navigateTo({
-      url:
-        REAL_STATUS_MAP[realStatus].pagePath +
-        `?taskQueryParams=${taskQueryParams}`
-    });
+    const params = `?taskQueryParams=${taskQueryParams}`;
+    handleRealStatusTo(realStatus, params);
   });
 };
 </script>

@@ -41,9 +41,6 @@
       "name": "pagesAuth",
       "pages": [
         {
-          "path": "contractSign/index"
-        },
-        {
           "path": "realName/index"
         },
         {

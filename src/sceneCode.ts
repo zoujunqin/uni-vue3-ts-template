@@ -1,11 +1,8 @@
 import { TYPE_CODE } from './constant/typeCode';
+import { handleRealStatusTo } from './utils/lockPlugin';
 
 import { getInvitationCodeScan } from '@/api/fe/wechat/invitation_code';
-import {
-  PROTOCOL_TYPE,
-  REAL_STATUS,
-  REAL_STATUS_MAP
-} from '@/constant/taskDetail';
+import { PROTOCOL_TYPE, REAL_STATUS } from '@/constant/taskDetail';
 import { getRealStatus } from '@/utils';
 
 export const sceneCodeMap = {
@@ -20,14 +17,11 @@ export const sceneCodeMap = {
         invitationCodeId: code,
         sourceType: PROTOCOL_TYPE.INVITATION_CODE
       });
-
       const routeParams =
         realStatus === REAL_STATUS.ALREADY_REAL
           ? ''
           : `?taskQueryParams=${params}`;
-      uni.redirectTo({
-        url: REAL_STATUS_MAP[realStatus].pagePath + routeParams
-      });
+      handleRealStatusTo(realStatus, routeParams);
     } catch (err) {
       uni.showToast({
         title: err.response.data.message,
