@@ -1,8 +1,8 @@
-import { isBlob } from 'ali-oss/lib/common/utils/isBlob';
 import { AxiosResponse } from 'axios';
 import { MD5, AES, enc, mode, pad } from 'crypto-js';
 
 import { PureHttpResponse } from '@/utils/http/types';
+import { isBlob } from '@/utils/index';
 import { parseBlobData } from '@/utils/index';
 import { getQueryString } from '@/utils/text';
 

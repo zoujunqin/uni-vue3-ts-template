@@ -42,3 +42,8 @@ export const parseBlobData = blob => {
     reader.readAsText(blob);
   });
 };
+
+/* 判断是否 blob 数据 */
+export const isBlob = data => {
+  return data instanceof Blob;
+};
