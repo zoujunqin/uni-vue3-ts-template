@@ -7,7 +7,7 @@ export const getOssPolicy = (params: unknown) => {
   return http.request('get', `${baseApi}/policy`, { params });
 };
 
-/* 临时凭证 */
-export const getOssCredential = () => {
-  return http.request('get', `${baseApi}/credential`);
+/* 获取 oss http 路径 */
+export const getOssHttpPath = data => {
+  return http.request('post', `${baseApi}/presigned_url`, { data });
 };

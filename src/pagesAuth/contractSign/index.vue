@@ -48,7 +48,7 @@ const getWorkerProtocolSign = query => {
   });
   const signSuccessCb = channel => {
     if (pluginUrls.value.length === count.value) {
-      channel.emit('jumpTo', `/pages/portal/index`);
+      channel.emit('jumpTo', `/pagesAuth/realNameSuccess/index`);
     } else {
       handleContinueToSign();
     }

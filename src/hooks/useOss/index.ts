@@ -1,14 +1,10 @@
 // @ts-nocheck
-
-import AliOss from 'ali-oss';
 import axios from 'axios';
 
-import { ModuleType, OSSCredentialConfig, OssUploadConfig } from './types';
+import { ModuleType, OssUploadConfig } from './types';
 
-import { getOssCredential, getOssPolicy } from '@/api/system/oss';
+import { getOssHttpPath, getOssPolicy } from '@/api/system/oss';
 import { getUUID } from '@/utils';
-
-const OSS_CREDENTIAL_KEY = 'oss_creadential_key';
 
 export const useOss = () => {
   const uploadFile = (
@@ -47,11 +43,7 @@ export const useOss = () => {
   };
 
   const getPreviewUrl = async (fileRelativePath: string) => {
-    const client = await getSignatureClient();
-    const response = {};
-    response['Content-Disposition'] = `inline`;
-    const url = client.signatureUrl(fileRelativePath, { response });
-    return url;
+    return await getOssHttpPath({ key: fileRelativePath });
   };
 
   /**
@@ -61,63 +53,9 @@ export const useOss = () => {
    * @return void
    */
 
-  const downloadOSSFile = async (
-    fileRelativePath: string,
-    fileRename?: string
-  ) => {
-    const client = await getSignatureClient();
-    const response = {};
-    if (fileRename) {
-      response['Content-Disposition'] =
-        `attachment; filename=${encodeURIComponent(fileRename)}`;
-    }
-    const url = client.signatureUrl(fileRelativePath, { response });
-    downloadFile(url);
-  };
-
-  const getSignatureClient = async () => {
-    const ossCredentialConfig = await getOssCredentialConfig();
-    const {
-      regionId: region,
-      accessKeyId,
-      accessKeySecret,
-      securityToken: stsToken,
-      bucketName: bucket
-    } = ossCredentialConfig;
-    const params = {
-      region,
-      accessKeyId,
-      accessKeySecret,
-      stsToken,
-      bucket,
-      secure: true,
-      refreshSTSToken: async () => {
-        const refreshToken = await getOssCredential();
-        const { accessKeyId, accessKeySecret, securityToken } = refreshToken;
-        return { accessKeyId, accessKeySecret, stsToken: securityToken };
-      }
-    };
-    const client = new AliOss(params);
-    return client;
-  };
-
-  /**
-   * @description 获取临时凭证
-   */
-
-  const getOssCredentialConfig = async () => {
-    let ossCredentialConfig: OSSCredentialConfig | any =
-      uni.getStorageSync(OSS_CREDENTIAL_KEY);
-    if (ossCredentialConfig && ossCredentialConfig.expiration) {
-      const now = new Date().getTime();
-      const expirationTime = new Date(ossCredentialConfig.expiration).getTime();
-      ossCredentialConfig = now > expirationTime ? null : ossCredentialConfig;
-    }
-    if (!ossCredentialConfig) {
-      ossCredentialConfig = await getOssCredential();
-      uni.setStorageSync(OSS_CREDENTIAL_KEY, ossCredentialConfig);
-    }
-    return ossCredentialConfig;
+  const downloadOSSFile = async (fileRelativePath: string) => {
+    const httpUrl = await getOssHttpPath({ key: fileRelativePath });
+    downloadFile(httpUrl);
   };
 
   const getFileSuffix = (filePath: string): string => {

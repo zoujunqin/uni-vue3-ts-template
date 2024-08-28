@@ -83,7 +83,7 @@
     "lodash-es": "4.17.21",
     "pinia": "2.0.36",
     "pinia-plugin-unistorage": "0.0.19",
-    "qs": "6.11.2",
+    "qs": "6.9.6",
     "vue": "3.3.8",
     "vue-i18n": "9.6.5",
     "z-paging": "2.6.3"
