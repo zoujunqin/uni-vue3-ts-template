@@ -46,7 +46,7 @@ export const { APPLY_STATUS, APPLY_STATUS_MAP, APPLY_STATUS_LIST } =
         value: 'reject',
         className: 'error-fixed-tip',
         textColor: 'error-text-color',
-        getTip: cause => `申诉失败：原因(${cause})`
+        getTip: cause => `申诉失败：${cause}`
       }
     ] as const,
     'APPLY_STATUS',
