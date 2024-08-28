@@ -76,7 +76,6 @@
     "@dcloudio/uni-mp-xhs": "3.0.0-3090920231225001",
     "@dcloudio/uni-quickapp-webview": "3.0.0-3090920231225001",
     "@uni-helper/axios-adapter": "1.5.2",
-    "ali-oss": "6.18.0",
     "axios": "1.4.0",
     "crypto-js": "4.1.1",
     "dayjs": "1.11.11",
