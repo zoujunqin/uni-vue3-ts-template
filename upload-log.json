@@ -1,5 +1,10 @@
 [
   {
+    "version": "1.0.60",
+    "createTime": "2024-08-28 19:48:15",
+    "description": "优化契约锁返回白屏"
+  },
+  {
     "version": "1.0.59",
     "createTime": "2024-08-28 16:19:09",
     "description": "修复 alioss 库和契约锁插件冲突"
