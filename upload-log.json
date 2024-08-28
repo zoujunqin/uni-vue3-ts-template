@@ -1,5 +1,10 @@
 [
   {
+    "version": "1.0.59",
+    "createTime": "2024-08-28 16:19:09",
+    "description": "修复 alioss 库和契约锁插件冲突"
+  },
+  {
     "version": "1.0.5",
     "createTime": "2024-08-14 16:14:44",
     "description": "发布正式环境"

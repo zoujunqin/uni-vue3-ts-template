@@ -25,7 +25,6 @@ export const sceneCodeMap = {
         realStatus === REAL_STATUS.ALREADY_REAL
           ? ''
           : `?taskQueryParams=${params}`;
-
       uni.redirectTo({
         url: REAL_STATUS_MAP[realStatus].pagePath + routeParams
       });

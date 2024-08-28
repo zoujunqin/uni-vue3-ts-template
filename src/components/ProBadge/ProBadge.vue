@@ -1,5 +1,5 @@
 <template>
-  <uv-badge v-bind="$attrs" />
+  <uv-badge v-bind="$attrs" v-if="$attrs.value !== 0 && !!$attrs.value" />
 </template>
 
 <script setup lang="ts"></script>

@@ -17,8 +17,8 @@
     >
       <swiper-item v-for="(item, index) in tabList" :key="index">
         <ProScrollList
-          :key="componentKey + index"
           ref="proScrollListRef"
+          :key="componentKey + index"
           :current-index="swiperIndex"
           :extend-params="getExtendParams(item.type)"
           :fetch="item.fetch"
@@ -44,6 +44,7 @@ import { getHandledTaskInfo } from '../../utils/handleDataStruct';
 import { useHandler } from './hooks/useHandler';
 
 import { useTabLinkSwiper } from '@/hooks/useTabLinkSwiper';
+import { useTokenWatch } from '@/hooks/useTokenWatch';
 
 const { tabIndex, swiperIndex, handleTabChange, handleSwiperChange } =
   useTabLinkSwiper();
@@ -53,10 +54,13 @@ const {
   proPageHeaderRef,
   componentKey,
   tabList,
+  reload,
   navToTaskDetail,
   handleInputConfirm,
   getExtendParams
 } = useHandler();
+
+useTokenWatch(reload);
 </script>
 
 <script lang="ts">

@@ -1,18 +1,18 @@
 import { defineStore } from 'pinia';
-import { shallowRef } from 'vue';
+import { shallowRef, ref } from 'vue';
 
 import { getPersonInfo } from '@/api/fe/wechat/personal_center';
 
 export const useUserStore = defineStore(
   'user',
   () => {
-    const userInfo = shallowRef<{
+    const userInfo = ref<{
       workerName?: string;
       mobile?: string;
       izRealNameAuthenticationName?: string;
       izBindBankCard?: string;
       totalAmount?: number;
-    }>();
+    }>({});
     const setUserInfo = async () => {
       userInfo.value = (await getPersonInfo()) || {};
     };

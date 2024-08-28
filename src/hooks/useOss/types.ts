@@ -26,18 +26,6 @@ export type OssUploadConfig = {
   signature?: string;
 };
 
-/**
- * 临时凭证
- *  */
-export type OSSCredentialConfig = {
-  regionId?: String;
-  accessKeyId?: String;
-  accessKeySecret?: String;
-  securityToken?: String;
-  bucketName?: String;
-  expiration?: number;
-};
-
 //  FD("fd", "财务模块"),
 //   FLOW("flow", "工作流模块"),
 //   PLATFORM("platform", "租户平台模块"),

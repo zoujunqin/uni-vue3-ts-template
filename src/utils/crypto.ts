@@ -1,4 +1,3 @@
-import { isBlob } from 'ali-oss/lib/common/utils/isBlob';
 import { AxiosResponse } from 'axios';
 import { MD5, AES, enc, mode, pad } from 'crypto-js';
 
@@ -108,7 +107,7 @@ export const decryptResponseData = async (
   } = response;
 
   let isNeedParser = false;
-  if (isBlob(responseData) && responseType === 'blob' && status !== 200) {
+  if (responseType === 'blob' && status !== 200) {
     /* 前端设置 responseType 为 Blob, 后端正常返回非 Blob 的数据，会导致数据被包在 Blob 对象中 */
     responseData = await parseBlobData(responseData);
     isNeedParser = true;

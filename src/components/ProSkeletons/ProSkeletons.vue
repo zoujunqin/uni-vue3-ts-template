@@ -52,7 +52,6 @@ const rootNode = shallowRef<UniNamespace.NodeInfo>({});
 
 const getStyle = (rectInfo: UniNamespace.NodeInfo) => {
   const { left, top, width, height, dataset } = rectInfo;
-  console.log(dataset);
   const {
     skeletonColor = DEFAULT_BACKGROUND_COLOR,
     skeletonWidth,

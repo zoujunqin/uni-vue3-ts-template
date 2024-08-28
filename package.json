@@ -1,6 +1,6 @@
 {
   "name": "flexible",
-  "version": "1.0.58",
+  "version": "1.0.59",
   "scripts": {
     "dev": "pnpm dev:mp-weixin",
     "build": "pnpm build:mp-weixin",
@@ -76,14 +76,13 @@
     "@dcloudio/uni-mp-xhs": "3.0.0-3090920231225001",
     "@dcloudio/uni-quickapp-webview": "3.0.0-3090920231225001",
     "@uni-helper/axios-adapter": "1.5.2",
-    "ali-oss": "6.18.0",
     "axios": "1.4.0",
     "crypto-js": "4.1.1",
     "dayjs": "1.11.11",
     "lodash-es": "4.17.21",
     "pinia": "2.0.36",
     "pinia-plugin-unistorage": "0.0.19",
-    "qs": "6.11.2",
+    "qs": "6.9.6",
     "vue": "3.3.8",
     "vue-i18n": "9.6.5",
     "z-paging": "2.6.3"
