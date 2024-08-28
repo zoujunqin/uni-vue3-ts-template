@@ -56,7 +56,7 @@ const getWorkerProtocolSign = query => {
   let eventChannel = null;
 
   const handlePlugin = () => {
-    uni.navigateTo({
+    uni.redirectTo({
       url: lockUrl.value,
       events: {
         signSuccessCb: () => signSuccessCb(eventChannel)
