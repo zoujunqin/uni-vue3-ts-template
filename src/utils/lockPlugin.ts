@@ -14,15 +14,9 @@ export const handleRealStatusTo = paramsQuery => {
     const query = JSON.parse(paramsData);
     getWorkerProtocolSign(query);
   } else {
-    if (jump === 'navigateTo') {
-      uni.navigateTo({
-        url: REAL_STATUS_MAP[realStatus].pagePath + params
-      });
-    } else {
-      uni.redirectTo({
-        url: REAL_STATUS_MAP[realStatus].pagePath + params
-      });
-    }
+    uni[jump]({
+      url: REAL_STATUS_MAP[realStatus].pagePath + params
+    });
   }
 };
 
