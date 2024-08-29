@@ -33,7 +33,11 @@ const reload = () => {
   zPagingRef.value.reload();
 };
 
-defineExpose({ reload });
+const complete = (...args) => {
+  zPagingRef.value.complete(...args);
+};
+
+defineExpose({ reload, complete });
 </script>
 
 <script lang="ts">

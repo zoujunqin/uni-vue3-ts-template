@@ -60,7 +60,12 @@ const {
   getExtendParams
 } = useHandler();
 
-useTokenWatch(reload);
+useTokenWatch({
+  hasTokenCb: reload,
+  noTokenCb: () => {
+    proScrollListRef.value?.complete?.();
+  }
+});
 </script>
 
 <script lang="ts">
