@@ -56,8 +56,9 @@ export const useHandler = ({ routeParams }) => {
   };
   const handleGetRealNameInfo = () => {
     getRealNameInfo(routeParams.value).then(async res => {
-      if (!isEmpty(formData.value)) {
-        backupCopyData.value = cloneDeep(formData.value);
+      const storageFormData = useRealNameStore().getStorageFormData();
+      if (!isEmpty(storageFormData)) {
+        backupCopyData.value = cloneDeep(storageFormData);
       }
       useRealNameStore().initFormData();
       nextTick(() => {
@@ -198,7 +199,8 @@ export const useHandler = ({ routeParams }) => {
       const {
         sceneOption: { t, c }
       } = useUserStore();
-      userRealNameStore.$reset();
+      useRealNameStore().clearStorageFormData();
+
       const { sourceType } = routeParams.value;
       const params = `?taskQueryParams=${JSON.stringify(routeParams.value)}`;
       if (!t || sourceType === PROTOCOL_TYPE.TASK) {
