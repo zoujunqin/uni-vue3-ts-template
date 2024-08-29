@@ -7,15 +7,22 @@ import {
   REAL_STATUS
 } from '@/constant/taskDetail';
 
-export const handleRealStatusTo = (realStatus, params) => {
+export const handleRealStatusTo = paramsQuery => {
+  const { realStatus, params, jump } = paramsQuery;
   if (realStatus === REAL_STATUS.NEED_SIGN) {
     const paramsData = params.split('=')[1];
     const query = JSON.parse(paramsData);
     getWorkerProtocolSign(query);
   } else {
-    uni.navigateTo({
-      url: REAL_STATUS_MAP[realStatus].pagePath + params
-    });
+    if (jump === 'navigateTo') {
+      uni.navigateTo({
+        url: REAL_STATUS_MAP[realStatus].pagePath + params
+      });
+    } else {
+      uni.redirectTo({
+        url: REAL_STATUS_MAP[realStatus].pagePath + params
+      });
+    }
   }
 };
 

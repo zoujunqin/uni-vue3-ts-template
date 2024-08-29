@@ -92,7 +92,12 @@ const handleApplyTask = () => {
       sourceType: sourceType
     });
     const params = `?taskQueryParams=${taskQueryParams}`;
-    handleRealStatusTo(realStatus, params);
+    const paramsQuery = {
+      realStatus,
+      params,
+      jump: 'navigateTo'
+    };
+    handleRealStatusTo(paramsQuery);
   });
 };
 </script>
