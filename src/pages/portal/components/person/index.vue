@@ -209,7 +209,7 @@ const getUserInfo = () => {
   }
 };
 
-useTokenWatch(getUserInfo);
+useTokenWatch({ hasTokenCb: getUserInfo });
 
 onMounted(() => {
   getUserInfo();

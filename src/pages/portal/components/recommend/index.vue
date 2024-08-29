@@ -53,6 +53,7 @@ import TaskTypeDropDownPopup from './components/TaskTypeDropDownPopup.vue';
 import { useHandler } from './hooks/useHandler';
 
 import { getRecommendTaskList } from '@/api/fe/wechat';
+import { useTokenWatch } from '@/hooks/useTokenWatch';
 
 const {
   proScrollListRef,
@@ -71,6 +72,8 @@ const {
   resetConditionActive,
   navToTaskDetail
 } = useHandler();
+
+useTokenWatch({ hasTokenCb: reload, noTokenCb: reload });
 </script>
 
 <script lang="ts">

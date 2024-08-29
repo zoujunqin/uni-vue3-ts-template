@@ -3,12 +3,14 @@ import { watch } from 'vue';
 
 import { useUserStore } from '@/pinia/modules/user';
 
-export const useTokenWatch = callback => {
+export const useTokenWatch = ({ hasTokenCb, noTokenCb }) => {
   const { token } = storeToRefs(useUserStore());
 
-  watch(token, (newToken, oldToken) => {
-    if (!oldToken && !!newToken) {
-      callback();
+  watch(token, newToken => {
+    if (newToken) {
+      hasTokenCb?.();
+    } else {
+      noTokenCb?.();
     }
   });
 };
