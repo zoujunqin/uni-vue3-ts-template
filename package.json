@@ -1,6 +1,6 @@
 {
   "name": "flexible",
-  "version": "1.0.61",
+  "version": "1.0.64",
   "scripts": {
     "dev": "pnpm dev:mp-weixin",
     "build": "pnpm build:mp-weixin",
