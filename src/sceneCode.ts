@@ -21,7 +21,12 @@ export const sceneCodeMap = {
         realStatus === REAL_STATUS.ALREADY_REAL
           ? ''
           : `?taskQueryParams=${params}`;
-      handleRealStatusTo(realStatus, routeParams);
+      const paramsQuery = {
+        realStatus,
+        params: routeParams,
+        jump: 'redirectTo'
+      };
+      handleRealStatusTo(paramsQuery);
     } catch (err) {
       uni.showToast({
         title: err.response.data.message,

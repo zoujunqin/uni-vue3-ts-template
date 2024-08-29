@@ -210,13 +210,23 @@ export const useHandler = ({ routeParams }) => {
           if (realStatus === REAL_STATUS.ALREADY_REAL) {
             uni.showToast({ title: '申请成功', icon: 'none' });
           }
-          handleRealStatusTo(realStatus, params);
+          const paramsQuery = {
+            realStatus,
+            params,
+            jump: 'navigateTo'
+          };
+          handleRealStatusTo(paramsQuery);
         });
       } else {
         // 邀请码流程
         getInvitationCodeScan(c).then(res => {
           const realStatus = getRealStatus(res);
-          handleRealStatusTo(realStatus, params);
+          const paramsQuery = {
+            realStatus,
+            params,
+            jump: 'navigateTo'
+          };
+          handleRealStatusTo(paramsQuery);
         });
       }
     });
