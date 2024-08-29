@@ -1,6 +1,6 @@
 {
   "name": "flexible-staffing",
-  "appid": "wxebb784f88f01fd50",
+  "appid": "wx9e91fc9f2476e8b3",
   "description": "",
   "versionName": "1.0.0",
   "versionCode": "100",
@@ -48,7 +48,7 @@
   },
   "quickapp": {},
   "mp-weixin": {
-    "appid": "wxebb784f88f01fd50",
+    "appid": "wx9e91fc9f2476e8b3",
     "setting": {
       "urlCheck": false
     },
