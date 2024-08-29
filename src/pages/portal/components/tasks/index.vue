@@ -63,7 +63,9 @@ const {
 useTokenWatch({
   hasTokenCb: reload,
   noTokenCb: () => {
-    proScrollListRef.value?.complete?.();
+    proScrollListRef.value.forEach(item => {
+      item?.complete?.();
+    });
   }
 });
 </script>
