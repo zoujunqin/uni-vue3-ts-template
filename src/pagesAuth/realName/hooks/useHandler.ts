@@ -98,7 +98,18 @@ export const useHandler = ({ routeParams }) => {
 
         formItemGroups.value = propertyGroups;
         proFormRef.value.setRules(formRules.value);
-        if (!isEmpty(backupCopyData.value)) {
+
+        let isOpenSureModal = false;
+        /* 基于 formData 的 key 做对比，如果 backupCopyData 里对应的 key 有值且和 formData 不相同，弹出确认使用缓存数据弹窗 */
+        for (const key in formData.value) {
+          const hasBackup =
+            backupCopyData.value[key] === 0 || !!backupCopyData.value[key];
+          if (hasBackup) {
+            return (isOpenSureModal = true);
+          }
+        }
+
+        if (isOpenSureModal) {
           sureModalRef.value.open();
         }
       });
