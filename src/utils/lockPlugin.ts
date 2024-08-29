@@ -1,14 +1,26 @@
-<template>
-  <div />
-</template>
-
-<script setup lang="ts">
-import { onLoad } from '@dcloudio/uni-app';
 import { computed, ref } from 'vue';
 
 import { postWorkerProtocolSign } from '@/api/fe/wechat/worker';
-import { PROTOCOL_TYPE } from '@/constant/taskDetail';
-const getWorkerProtocolSign = query => {
+import {
+  PROTOCOL_TYPE,
+  REAL_STATUS_MAP,
+  REAL_STATUS
+} from '@/constant/taskDetail';
+
+export const handleRealStatusTo = paramsQuery => {
+  const { realStatus, params, jump } = paramsQuery;
+  if (realStatus === REAL_STATUS.NEED_SIGN) {
+    const paramsData = params.split('=')[1];
+    const query = JSON.parse(paramsData);
+    getWorkerProtocolSign(query);
+  } else {
+    uni[jump]({
+      url: REAL_STATUS_MAP[realStatus].pagePath + params
+    });
+  }
+};
+
+export const getWorkerProtocolSign = query => {
   const { sourceType, orderDetailId, taskId, invitationCodeId } = query;
   const idMap = {
     [PROTOCOL_TYPE.ORDER_DETAIL]: orderDetailId,
@@ -56,7 +68,7 @@ const getWorkerProtocolSign = query => {
   let eventChannel = null;
 
   const handlePlugin = () => {
-    uni.redirectTo({
+    uni.navigateTo({
       url: lockUrl.value,
       events: {
         signSuccessCb: () => signSuccessCb(eventChannel)
@@ -73,7 +85,3 @@ const getWorkerProtocolSign = query => {
     });
   };
 };
-onLoad(({ taskQueryParams = {} }) => {
-  getWorkerProtocolSign(JSON.parse(taskQueryParams));
-});
-</script>
