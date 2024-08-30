@@ -1,5 +1,10 @@
 [
   {
+    "version": "1.0.64",
+    "createTime": "2024-08-29 22:43:44",
+    "description": "优化实名认证缓存数据的应用"
+  },
+  {
     "version": "1.0.61",
     "createTime": "2024-08-28 20:48:35",
     "description": "登录隐私协议修改"
