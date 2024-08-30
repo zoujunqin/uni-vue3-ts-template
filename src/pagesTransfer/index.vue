@@ -7,8 +7,19 @@ import { onLoad } from '@dcloudio/uni-app';
 import { loginPagePath } from '@/constant/pagePath';
 import { useUserStore } from '@/pinia/modules/user';
 import { sceneCodeMap } from '@/sceneCode';
+const pages = getCurrentPages();
 
 onLoad(option => {
+  wx.onAppRoute(res => {
+    const { openType } = res;
+    if (openType === 'navigateBack') {
+      let url = '/pages/portal/index';
+      if (pages.length > 1) {
+        url = pages[pages.length - 2].route;
+      }
+      uni.redirectTo({ url });
+    }
+  });
   const { setSceneOption } = useUserStore();
   const hasToken = !!useUserStore().token;
   // 这里的 scene 不是小程序的场景值, 是自定义的
