@@ -4,6 +4,7 @@
 <script lang="ts" setup>
 import { onLoad } from '@dcloudio/uni-app';
 
+import { loginPagePath } from '@/constant/pagePath';
 import { useUserStore } from '@/pinia/modules/user';
 import { sceneCodeMap } from '@/sceneCode';
 
@@ -32,7 +33,7 @@ onLoad(option => {
     });
   } else {
     uni.redirectTo({
-      url: '/pages/login/index'
+      url: loginPagePath
     });
   }
 });

@@ -31,29 +31,31 @@ const getPositionByAddress = () => {
   const { address } = props.data;
 
   getGeo({ address: address }).then(res => {
-    const { location } = res.data.geocodes[0];
-    const [lng, lat] = location.split(',');
-    longitude.value = lng;
-    latitude.value = lat;
-    markers.value = [
-      {
-        id: 0,
-        latitude: lat,
-        longitude: lng,
-        // iconPath: './resources/placeholder.png', //图标路径
-        width: 20,
-        height: 20,
-        callout: {
-          //可根据需求是否展示经纬度
-          content: address,
-          color: '#000',
-          bgColor: '#fff',
-          padding: 10,
-          borderRadius: 15,
-          display: 'ALWAYS'
+    if (res?.data?.geocodes?.[0]) {
+      const { location } = res.data.geocodes[0];
+      const [lng, lat] = location.split(',');
+      longitude.value = lng;
+      latitude.value = lat;
+      markers.value = [
+        {
+          id: 0,
+          latitude: lat,
+          longitude: lng,
+          // iconPath: './resources/placeholder.png', //图标路径
+          width: 20,
+          height: 20,
+          callout: {
+            //可根据需求是否展示经纬度
+            content: address,
+            color: '#000',
+            bgColor: '#fff',
+            padding: 10,
+            borderRadius: 15,
+            display: 'ALWAYS'
+          }
         }
-      }
-    ];
+      ];
+    }
   });
 };
 

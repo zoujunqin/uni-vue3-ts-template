@@ -1,22 +1,36 @@
 // 需要到小程序平台配置本地 ip 白名单
+
 const fs = require('fs');
+const path = require('path');
+const dotEnv = require('dotenv')
 
 const chalk = require('chalk');
 const { Command } = require('commander');
 const dayjs = require('dayjs');
 const inquirer = require('inquirer');
+const minimist = require('minimist');
 const ci = require('miniprogram-ci');
 
 const pkg = require('../package.json');
-const manifestJson = require('../src/manifest.json');
 const uploadLog = require('../upload-log.json');
+const params = minimist(process.argv.slice(2));
+
+// 先构造出.env*文件的绝对路径
+const appDirectory = fs.realpathSync(process.cwd());
+const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
+const pathsDotenv = resolveApp('.env');
+dotEnv.config({ path: `${pathsDotenv}.${params.mode}` }); // 加载.env.*
+
 
 function upload(desc) {
   const project = new ci.Project({
-    appid: manifestJson.appid,
+    appid: process.env.VITE_MP_WEIXIN_APP_ID,
     type: 'miniProgram',
     projectPath: 'dist/build/mp-weixin', // uniapp打包后的路径
-    privateKeyPath: 'mp-weixin.private.key', // 微信公众平台密钥
+    privateKeyPath:
+      params.mode === 'production'
+        ? 'mp-weixin-formal.private.key'
+        : 'mp-weixin.private.key', // 微信公众平台密钥
     ignores: ['node_modules/**/*'] // 指定需要排除的规则
   });
 
@@ -45,6 +59,12 @@ function upload(desc) {
 }
 
 const program = new Command();
+// 定义当前版本
+program
+  .version(`v${pkg.version}`)
+  .option('-m, --mode <modename>', 'Specify the mode')
+  .parse(process.argv);
+
 program.description('upload mp-weixin').action(async () => {
   const { description } = await inquirer.prompt([
     {

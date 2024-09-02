@@ -30,6 +30,13 @@ export const useHandler = () => {
     shallowRef<Array<InstanceType<typeof ProScrollList>>>();
   const proPageHeaderRef = shallowRef<InstanceType<typeof ProPageHeader>>();
 
+  /* 重新加载已经挂载过的 tab 的数据 */
+  const reload = () => {
+    for (const index in tabList) {
+      proScrollListRef.value?.[index]?.reload();
+    }
+  };
+
   const confirmedInputSearchValue = shallowRef('');
   const handleInputConfirm = (value: string, tabIndex: number) => {
     confirmedInputSearchValue.value = value;
@@ -60,6 +67,7 @@ export const useHandler = () => {
     proScrollListRef,
     componentKey,
     tabList,
+    reload,
     navToTaskDetail,
     handleInputConfirm,
     getExtendParams

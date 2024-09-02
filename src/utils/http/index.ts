@@ -18,19 +18,21 @@ import {
   RequestMethods
 } from './types.d';
 
+import { baseApi } from '@/api/system/setting';
+import { loginPagePath } from '@/constant/pagePath';
 import { useSystemStore } from '@/pinia/modules/system';
 import { useUserStore } from '@/pinia/modules/user';
-import { decryptResponseData } from '@/utils/crypto';
+import { decryptResponseData, encryptParams } from '@/utils/crypto';
 import { formatToken } from '@/utils/storage';
 
 const httpNoMessage = ['/fe/wechat/worker_protocol/sign'];
 
 // const baseURL = 'http://218.104.230.173:17054'; // 开发环境
 // const baseURL = 'https://localdev-hro-api.fjhxrl.com'; // 测试环境
-const baseURL = 'https://localtest-hro-api.fjhxrl.com'; // 测试环境
+// const baseURL = 'https://localtest-hro-api.fjhxrl.com'; // 测试环境
 // const baseURL = 'https://hro-beta-gateway.fjhxrl.com'; // 预生产环境
 // const baseURL = 'http://192.168.3.73:8100'; // 林伦 wifi
-// const baseURL = 'http://192.168.117.87:8100'; // 林伦 网线
+const baseURL = 'http://192.168.117.87:8100'; // 林伦 网线
 // const baseURL = 'http://192.168.117.86:8100'; // 大立
 
 const { DEV, VITE_BASE_URL } = import.meta.env;
@@ -51,6 +53,13 @@ const defaultConfig: AxiosRequestConfig = {
   },
   loading: true,
   adapter: createUniAppAxiosAdapter()
+};
+
+/* 获取加密配置的接口失败，需要重置以便下一个接口请求前重新获取配置 */
+const resetFirstFetchEncryption = url => {
+  if (url === baseApi) {
+    useUserStore().setFirstFetchEncryption(true);
+  }
 };
 
 class PureHttp {
@@ -124,10 +133,24 @@ class PureHttp {
   private httpInterceptorsRequest(): void {
     PureHttp.axiosInstance.interceptors.request.use(
       async (config: PureHttpRequestConfig): Promise<any> => {
+        /* 在所有的请求前先请求一次加密配置的接口 */
+        const {
+          isFirstFetchEncryption,
+          setFirstFetchEncryption,
+          getEncryptionConfig
+        } = useUserStore();
+        if (isFirstFetchEncryption) {
+          setFirstFetchEncryption(false);
+          await getEncryptionConfig();
+        }
+
         config.loading && uni.showLoading();
 
         /* 验签 */
         addSignature(config);
+
+        /* 参数加密 */
+        encryptParams(config);
 
         // 优先判断post/get等方法是否传入回掉，否则执行初始化设置等回掉
         if (typeof config.beforeRequestCallback === 'function') {
@@ -151,6 +174,7 @@ class PureHttp {
             });
       },
       error => {
+        resetFirstFetchEncryption(error.config.url);
         return Promise.reject(error);
       }
     );
@@ -177,6 +201,8 @@ class PureHttp {
         return responseData;
       },
       async (error: PureHttpError) => {
+        resetFirstFetchEncryption(error.config.url);
+
         uni.hideLoading();
         const $error = error;
 
@@ -202,11 +228,7 @@ class PureHttp {
 
         if (loginFailureCodeList.includes(code)) {
           uni.clearStorageSync();
-          uni.reLaunch({ url: '/pages/login/index' });
-          uni.showToast({
-            title: message || '授权过期，请重新登录',
-            icon: 'none'
-          });
+          uni.navigateTo({ url: loginPagePath });
         } else if (!customDealCodes.includes(code)) {
           // FIXME: 接口统一需要返回 code 70001
           if (!httpNoMessage.includes($error.config.url)) {

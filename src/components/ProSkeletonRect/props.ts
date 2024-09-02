@@ -25,7 +25,7 @@ export const rectProps = {
   },
   bgColor: {
     type: String,
-    default: '#e6e6e6'
+    default: '#f1f0f0'
   },
   animate: {
     type: Boolean,

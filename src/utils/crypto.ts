@@ -1,7 +1,8 @@
-import { isBlob } from 'ali-oss/lib/common/utils/isBlob';
-import { AxiosResponse } from 'axios';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { MD5, AES, enc, mode, pad } from 'crypto-js';
+import qs from 'qs';
 
+import { useUserStore } from '@/pinia/modules/user';
 import { PureHttpResponse } from '@/utils/http/types';
 import { parseBlobData } from '@/utils/index';
 import { getQueryString } from '@/utils/text';
@@ -60,6 +61,38 @@ export const encryptBodyParams = (
 };
 
 /*
+ * 参数加密
+ * */
+export const encryptParams = (config: AxiosRequestConfig) => {
+  if (useUserStore().encryptionConfig?.enableRequestEncrypt) {
+    const urlSplits = config.url.split('?');
+
+    /* config.params 有值或者直接 url 带 ？xx */
+    const hasUrlParams =
+      Object.keys(config.params || {}).length > 0 || urlSplits[1];
+    if (hasUrlParams) {
+      config.url = urlSplits[0];
+
+      const encryptedParams = {
+        ...qs.parse(urlSplits[1]),
+        ...config.params
+      };
+
+      config.params = {
+        _query_string: encryptUrlParams(encryptedParams)
+      };
+    }
+
+    const hasBodyParams = Object.keys(config.data || {}).length > 0;
+    if (hasBodyParams) {
+      config.data = {
+        _body: encryptBodyParams(config.data)
+      };
+    }
+  }
+};
+
+/*
  * 词典排序，在加密前需要把对象转为字符串时排序
  * */
 export const dictionarySort = list => list.sort();
@@ -77,8 +110,6 @@ export const getObjectExcludeFile = (data: FormData | Record<string, any>) => {
       result[key] = value;
     });
   }
-  result.file = undefined;
-  return result;
   /* #endif */
 
   return { ...data, file: undefined };
@@ -108,7 +139,7 @@ export const decryptResponseData = async (
   } = response;
 
   let isNeedParser = false;
-  if (isBlob(responseData) && responseType === 'blob' && status !== 200) {
+  if (responseType === 'blob' && status !== 200) {
     /* 前端设置 responseType 为 Blob, 后端正常返回非 Blob 的数据，会导致数据被包在 Blob 对象中 */
     responseData = await parseBlobData(responseData);
     isNeedParser = true;

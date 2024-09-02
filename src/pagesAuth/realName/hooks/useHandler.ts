@@ -16,12 +16,12 @@ import {
   APPLY_STATUS_MAP,
   PROTOCOL_TYPE,
   REAL_STATUS,
-  REAL_STATUS_MAP,
   REAL_TYPE,
   YES_NO_TYPE
 } from '@/constant/taskDetail';
 import { useUserStore } from '@/pinia/modules/user';
 import { getRealStatus } from '@/utils';
+import { handleRealStatusTo } from '@/utils/lockPlugin';
 
 export const useHandler = ({ routeParams }) => {
   const userRealNameStore = useRealNameStore();
@@ -56,8 +56,9 @@ export const useHandler = ({ routeParams }) => {
   };
   const handleGetRealNameInfo = () => {
     getRealNameInfo(routeParams.value).then(async res => {
-      if (!isEmpty(formData.value)) {
-        backupCopyData.value = cloneDeep(formData.value);
+      const storageFormData = useRealNameStore().getStorageFormData();
+      if (!isEmpty(storageFormData)) {
+        backupCopyData.value = cloneDeep(storageFormData);
       }
       useRealNameStore().initFormData();
       nextTick(() => {
@@ -97,7 +98,18 @@ export const useHandler = ({ routeParams }) => {
 
         formItemGroups.value = propertyGroups;
         proFormRef.value.setRules(formRules.value);
-        if (!isEmpty(backupCopyData.value)) {
+
+        let isOpenSureModal = false;
+        /* 基于 formData 的 key 做对比，如果 backupCopyData 里对应的 key 有值且和 formData 不相同，弹出确认使用缓存数据弹窗 */
+        for (const key in formData.value) {
+          const hasBackup =
+            backupCopyData.value[key] === 0 || !!backupCopyData.value[key];
+          if (hasBackup) {
+            return (isOpenSureModal = true);
+          }
+        }
+
+        if (isOpenSureModal) {
           sureModalRef.value.open();
         }
       });
@@ -198,28 +210,34 @@ export const useHandler = ({ routeParams }) => {
       const {
         sceneOption: { t, c }
       } = useUserStore();
-      userRealNameStore.$reset();
+      useRealNameStore().clearStorageFormData();
+
       const { sourceType } = routeParams.value;
       const params = `?taskQueryParams=${JSON.stringify(routeParams.value)}`;
       if (!t || sourceType === PROTOCOL_TYPE.TASK) {
         // 正常申请任务流程
         applyTask(routeParams.value).then(res => {
           const realStatus = getRealStatus(res);
-
           if (realStatus === REAL_STATUS.ALREADY_REAL) {
             uni.showToast({ title: '申请成功', icon: 'none' });
           }
-          uni.navigateTo({
-            url: REAL_STATUS_MAP[realStatus].pagePath + params
-          });
+          const paramsQuery = {
+            realStatus,
+            params,
+            jump: 'navigateTo'
+          };
+          handleRealStatusTo(paramsQuery);
         });
       } else {
         // 邀请码流程
         getInvitationCodeScan(c).then(res => {
           const realStatus = getRealStatus(res);
-          uni.navigateTo({
-            url: REAL_STATUS_MAP[realStatus].pagePath + params
-          });
+          const paramsQuery = {
+            realStatus,
+            params,
+            jump: 'navigateTo'
+          };
+          handleRealStatusTo(paramsQuery);
         });
       }
     });
