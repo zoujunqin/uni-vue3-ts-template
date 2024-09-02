@@ -17,9 +17,9 @@
   <ProModal
     ref="contactModalRef"
     confirm-button-text="联系我们"
-    content="0591 - 40006464"
+    content="0591 - 87809851"
     title="联系我们"
-    @confirm="handleContactConfirm('0591 - 40006464')"
+    @confirm="handleContactConfirm('0591 - 87809851')"
   >
     <template #image>
       <image
@@ -36,7 +36,7 @@
     <view
       class="hx-flex hx-items-center hx-justify-between hx-pl-[8px] hx-pr-[8px] hx-mt-[12px] hx-mb-[20px]"
     >
-      <view class="hx-flex hx-flex-1">
+      <view class="hx-flex hx-flex-1" @click="handleToLoginPage">
         <view class="img-box">
           <image
             :src="import('@http/person/avatar-default.svg')"
@@ -58,6 +58,7 @@
       </view>
       <view
         class="hx-h-[30px] hx-w-[98px] hx-flex hx-items-center hx-justify-between hx-p-[8px_16px] hx-rounded-[15px] hx-shadow-button"
+        v-if="token"
         @click="logout"
       >
         <image
@@ -81,7 +82,7 @@
       >
         <view class="hx-relative">
           <image :src="item.icon" class="hx-w-[36px] hx-h-[36px] hx-mb-[8px]" />
-          <uv-badge :value="item.badge" absolute />
+          <ProBadge :value="item.badge" absolute />
         </view>
 
         <text
@@ -121,12 +122,13 @@
 
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 
 import VerticalListItem from './components/VerticalListItem.vue';
 import { useHandler } from './hooks/useHandler';
 
 import { YES_NO_TYPE_MAP } from '@/constant/taskDetail';
+import { useTokenWatch } from '@/hooks/useTokenWatch';
 import { useUserStore } from '@/pinia/modules/user';
 
 const { token, userInfo } = storeToRefs(useUserStore());
@@ -138,7 +140,9 @@ const {
   handleLogoutConfirm,
   handleContactConfirm,
   panelItemMap,
-  verticalListItemMap
+  verticalListItemMap,
+
+  handleToLoginPage
 } = useHandler();
 
 const panelItemList = computed(() => {
@@ -147,13 +151,15 @@ const panelItemList = computed(() => {
       type: panelItemMap.personInfo.type,
       icon: import('@http/person/info-icon.svg'),
       name: '个人信息',
-      badge: `${userInfo.value?.izRealNameAuthenticationName}`
+      badge: `${userInfo.value?.izRealNameAuthenticationName || ''}`
     },
     {
       type: panelItemMap.bankCard.type,
       icon: import('@http/person/bank-card-icon.svg'),
       name: '银行卡',
-      badge: `${YES_NO_TYPE_MAP[userInfo.value?.izBindBankCard]?.bindLabel}`
+      badge: `${
+        YES_NO_TYPE_MAP[userInfo.value?.izBindBankCard]?.bindLabel || ''
+      }`
     },
     {
       type: panelItemMap.contract.type,
@@ -196,6 +202,18 @@ const secondVerticalList = [
     desc: '联系我们'
   }
 ];
+
+const getUserInfo = () => {
+  if (token.value) {
+    useUserStore().setUserInfo();
+  }
+};
+
+useTokenWatch({ hasTokenCb: getUserInfo });
+
+onMounted(() => {
+  getUserInfo();
+});
 </script>
 <script lang="ts">
 export default {

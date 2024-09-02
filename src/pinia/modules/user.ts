@@ -7,13 +7,13 @@ import { getEncryptionConfig as getEncryptionConfigApi } from '@/api/system/sett
 export const useUserStore = defineStore(
   'user',
   () => {
-    const userInfo = shallowRef<{
+    const userInfo = ref<{
       workerName?: string;
       mobile?: string;
       izRealNameAuthenticationName?: string;
       izBindBankCard?: string;
       totalAmount?: number;
-    }>();
+    }>({});
     const setUserInfo = async () => {
       userInfo.value = (await getPersonInfo()) || {};
     };

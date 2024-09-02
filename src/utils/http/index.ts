@@ -19,6 +19,7 @@ import {
 } from './types.d';
 
 import { baseApi } from '@/api/system/setting';
+import { loginPagePath } from '@/constant/pagePath';
 import { useSystemStore } from '@/pinia/modules/system';
 import { useUserStore } from '@/pinia/modules/user';
 import { decryptResponseData, encryptParams } from '@/utils/crypto';
@@ -28,10 +29,10 @@ const httpNoMessage = ['/fe/wechat/worker_protocol/sign'];
 
 // const baseURL = 'http://218.104.230.173:17054'; // 开发环境
 // const baseURL = 'https://localdev-hro-api.fjhxrl.com'; // 测试环境
-const baseURL = 'https://localtest-hro-api.fjhxrl.com'; // 测试环境
+// const baseURL = 'https://localtest-hro-api.fjhxrl.com'; // 测试环境
 // const baseURL = 'https://hro-beta-gateway.fjhxrl.com'; // 预生产环境
 // const baseURL = 'http://192.168.3.73:8100'; // 林伦 wifi
-// const baseURL = 'http://192.168.117.87:8100'; // 林伦 网线
+const baseURL = 'http://192.168.117.87:8100'; // 林伦 网线
 // const baseURL = 'http://192.168.117.86:8100'; // 大立
 
 const { DEV, VITE_BASE_URL } = import.meta.env;
@@ -227,11 +228,7 @@ class PureHttp {
 
         if (loginFailureCodeList.includes(code)) {
           uni.clearStorageSync();
-          uni.reLaunch({ url: '/pages/login/index' });
-          uni.showToast({
-            title: message || '授权过期，请重新登录',
-            icon: 'none'
-          });
+          uni.navigateTo({ url: loginPagePath });
         } else if (!customDealCodes.includes(code)) {
           // FIXME: 接口统一需要返回 code 70001
           if (!httpNoMessage.includes($error.config.url)) {
