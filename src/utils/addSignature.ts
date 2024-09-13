@@ -33,7 +33,7 @@ export const addSignature = (config: AxiosRequestConfig) => {
   }
   /* #endif */
 
-  const queryString = getQueryString(queryParams);
+  const queryString = getQueryString(queryParams, true);
   const requestBodyString = requestBody && JSON.stringify(requestBody);
 
   const finalString = [queryString, requestBodyString]

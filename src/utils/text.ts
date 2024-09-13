@@ -41,7 +41,7 @@ export const hyphenABEqualityA = (
 /*
  * 对参数进行字典序并拼接成字符串
  * */
-export const getQueryString = (params: Record<string, any>): string => {
+export const getQueryString = (params: Record<string, any>, isSignature: boolean = false): string => {
   const sortedKeys = dictionarySort(Object.keys(params));
   const newParams = [];
 
@@ -60,7 +60,9 @@ export const getQueryString = (params: Record<string, any>): string => {
         newParams.push(getQueryString(paramsObj));
       }
       if (!isArray(value) && !isObject(value)) {
-        newParams.push(sortedKey + '=' + value);
+        newParams.push(
+          `${sortedKey}=${isSignature ? value : encodeURIComponent(value)}`
+        );
       }
     }
   });
