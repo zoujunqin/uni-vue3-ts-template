@@ -83,6 +83,9 @@
           "path": "agreement/index"
         },
         {
+          "path": "agreement/userAgreement"
+        },
+        {
           "path": "remuneration/remunerationDetails"
         }
       ]
