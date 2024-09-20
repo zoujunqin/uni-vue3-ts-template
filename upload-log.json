@@ -1,5 +1,15 @@
 [
   {
+    "version": "1.0.63",
+    "createTime": "2024-09-20 16:55:01",
+    "description": "分享页面修改"
+  },
+  {
+    "version": "1.0.62",
+    "createTime": "2024-09-20 16:09:37",
+    "description": "用户协议、隐私政策修改"
+  },
+  {
     "version": "1.0.61",
     "createTime": "2024-08-28 20:48:35",
     "description": "登录隐私协议修改"
