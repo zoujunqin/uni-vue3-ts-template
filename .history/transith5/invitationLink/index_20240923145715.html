@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>跳转小程序</title>
+  <title>Document</title>
 </head>
 
 <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
@@ -14,14 +14,10 @@
     const params = new URLSearchParams(window.location.search);
     const c = params.get('c');
     const env = params.get('env');
-    alert(`c:${c},env${env}`)
     const scene = `t=1001&c=${c}&type=link`
-    alert(`scene:${scene}`)
     const res = encodeURIComponent(scene)
     const envAppid = import.meta.env.VITE_MP_WEIXIN_APP_ID;
     const weixinEnv = import.meta.env.VITE_MP_WEIXIN_ENV;
-    alert(`envAppid:${envAppid}`)
-    alert(`weixinEnv:${weixinEnv}`)
     let a = document.createElement("a");
     a.href = `weixin://dl/business/?appid=${envAppid}&path=pagesTransfer/index&env_version=${weixinEnv}&query=` + res;
     a.click();
