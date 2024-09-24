@@ -32,6 +32,21 @@ export const encryptString = (
   return encryptedStr;
 };
 
+export const decryptString = (text: string) => {
+  const bytes = AES.decrypt(
+    <any>{
+      ciphertext: enc.Hex.parse(text)
+    },
+    SECRET_KEY,
+    {
+      iv: SECRET_IV,
+      mode: mode.CBC,
+      padding: pad.Pkcs7
+    }
+  );
+  return bytes.toString(enc.Utf8);
+};
+
 /*
  * 对 url 参数加密
  * */
