@@ -1,5 +1,10 @@
 [
   {
+    "version": "1.0.66",
+    "createTime": "2024-09-24 14:49:47",
+    "description": "加密修复"
+  },
+  {
     "version": "1.0.64",
     "createTime": "2024-09-23 17:02:06",
     "description": "h5调试"
