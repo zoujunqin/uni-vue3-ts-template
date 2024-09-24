@@ -9,6 +9,17 @@ import { useUserStore } from '@/pinia/modules/user';
 import { sceneCodeMap } from '@/sceneCode';
 
 onLoad(option => {
+  const pages = getCurrentPages();
+  wx.onAppRoute(res => {
+    const { openType } = res;
+    if (openType === 'navigateBack') {
+      let url = '/pages/portal/index';
+      if (pages.length > 1) {
+        url = `/${pages[pages.length - 2].route}`;
+      }
+      uni.redirectTo({ url });
+    }
+  });
   const { setSceneOption } = useUserStore();
   const hasToken = !!useUserStore().token;
   const sceneObj = { t: '', c: '' };
