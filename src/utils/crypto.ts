@@ -14,36 +14,29 @@ const SECRET_KEY = enc.Utf8.parse(key);
 const SECRET_IV = enc.Utf8.parse(iv);
 
 /** AES加密 */
-export const encryptString = (text: string): string => {
+export const encryptString = (
+  text: string,
+  options = { md5: true }
+): string => {
   const dataHex = enc.Utf8.parse(text);
   const encrypted = AES.encrypt(dataHex, SECRET_KEY, {
     iv: SECRET_IV,
     mode: mode.CBC,
     padding: pad.Pkcs7
   });
-  return MD5(encrypted.ciphertext.toString().toLocaleUpperCase()).toString();
-};
 
-export const decryptString = (text: string) => {
-  const bytes = AES.decrypt(
-    <any>{
-      ciphertext: enc.Hex.parse(text)
-    },
-    SECRET_KEY,
-    {
-      iv: SECRET_IV,
-      mode: mode.CBC,
-      padding: pad.Pkcs7
-    }
-  );
-  return bytes.toString(enc.Utf8);
+  const encryptedStr = encrypted.ciphertext.toString().toLocaleUpperCase();
+  if (options.md5) {
+    return MD5(encryptedStr).toString();
+  }
+  return encryptedStr;
 };
 
 /*
  * 对 url 参数加密
  * */
 export const encryptUrlParams = (params: Record<string, any>): string => {
-  return encryptString(getQueryString(params));
+  return encryptString(getQueryString(params), { md5: false });
 };
 
 /*
@@ -57,7 +50,7 @@ export const encryptBodyParams = (
     return params;
   }
   /* #endif */
-  return encryptString(JSON.stringify(params));
+  return encryptString(JSON.stringify(params), { md5: false });
 };
 
 /*
