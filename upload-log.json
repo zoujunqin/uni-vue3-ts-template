@@ -1,5 +1,20 @@
 [
   {
+    "version": "1.0.70",
+    "createTime": "2024-09-29 17:32:19",
+    "description": "邀请码增加复制链接"
+  },
+  {
+    "version": "1.0.69",
+    "createTime": "2024-09-29 17:22:58",
+    "description": "灵工"
+  },
+  {
+    "version": "1.0.68",
+    "createTime": "2024-09-29 16:07:03",
+    "description": "生产环境"
+  },
+  {
     "version": "1.0.67",
     "createTime": "2024-09-29 15:10:09",
     "description": "协议修改"
