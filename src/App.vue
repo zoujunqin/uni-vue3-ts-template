@@ -21,9 +21,11 @@ onLaunch(() => {
   wx.onAppRoute(({ openType }) => {
     const pages = getCurrentPages();
     const currentRoute = pages[pages.length - 1];
-
     /* 通过小程序的中转页跳转三方插件，从三方插件返回 */
-    if (openType === 'navigateBack' && currentRoute === 'pagesTransfer/index') {
+    if (
+      openType === 'navigateBack' &&
+      currentRoute.route === 'pagesTransfer/index'
+    ) {
       if (pages.length === 1) {
         uni.redirectTo({ url: '/pages/portal/index' });
       } else {
