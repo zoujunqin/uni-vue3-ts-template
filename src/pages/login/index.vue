@@ -56,7 +56,7 @@
         class="hx-text-font-size-base hx-leading-[24px] hx-text-text-color-tip"
       >
         已阅读并同意
-        <text class="hx-text-color-primary" @click="handleGoAgreement">
+        <text class="hx-text-color-primary" @click="handleGoUserAgreement">
           《用户协议》
         </text>
         和
@@ -83,6 +83,12 @@ const handleGoAgreement = () => {
   uni.navigateTo({
     auth: false,
     url: '/pagesPerson/agreement/index'
+  });
+};
+const handleGoUserAgreement = () => {
+  uni.navigateTo({
+    auth: false,
+    url: '/pagesPerson/agreement/userAgreement'
   });
 };
 

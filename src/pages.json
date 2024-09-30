@@ -83,6 +83,9 @@
           "path": "agreement/index"
         },
         {
+          "path": "agreement/userAgreement"
+        },
+        {
           "path": "remuneration/remunerationDetails"
         }
       ]
@@ -100,7 +103,16 @@
   "preloadRule": {
     "pages/portal/index": {
       "network": "all",
-      "packages": ["pagesTask", "pagesPerson"]
+      "packages": [
+        "pagesTask",
+        "pagesPerson"
+      ]
+    },
+    "pages/login/index": {
+      "network": "all",
+      "packages": [
+        "pagesPerson"
+      ]
     }
   },
   "globalStyle": {
