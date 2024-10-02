@@ -132,8 +132,8 @@
 
   <ProModal
     ref="explainModalRef"
-    confirm-button-text="申述"
-    content="您的身份证图片识别的姓名与身份证号与填写的不一致，请重新上传图片或进行申述处理?"
+    confirm-button-text="申诉"
+    content="您的身份证图片识别的姓名与身份证号与填写的不一致，请重新上传图片或进行申诉处理?"
     title=""
     @confirm="handleExplainConfirm"
   />

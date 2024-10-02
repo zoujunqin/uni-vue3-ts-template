@@ -23,16 +23,16 @@ export const { TASK_STATUS, TASK_STATUS_MAP, TASK_STATUS_LIST } =
     'value'
   );
 
-//申述处理状态
+//申诉处理状态
 export const { APPLY_STATUS, APPLY_STATUS_MAP, APPLY_STATUS_LIST } =
   defineConstants(
     [
       {
-        label: '申述中',
+        label: '申诉中',
         value: 'to_be_processed',
         className: 'warning-fixed-tip',
         textColor: 'warning-text-color',
-        getTip: () => '申述中：正在申述请耐心等待～'
+        getTip: () => '申诉中：正在申诉请耐心等待～'
       },
       {
         label: '通过',
