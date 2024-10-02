@@ -265,6 +265,7 @@ export const useHandler = ({ routeParams }) => {
     postAppealSubmit(params)
       .then(() => {
         uni.showToast({ title: '申诉成功，请耐心等待', icon: 'none' });
+        uni.navigateBack();
       })
       .finally(() => {
         explainModalRef.value.close();
