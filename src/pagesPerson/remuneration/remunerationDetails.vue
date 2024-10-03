@@ -36,12 +36,12 @@
           :key="item.key"
           class="hx-flex hx-mt-[12px]"
         >
-          <view class="hx-w-[95px] hx-truncate hx-mr-[24px]">
+          <view class="hx-w-[95px] hx-mr-[24px]">
             <span class="hx-text-text-color-tip hx-text-[14px]">
               {{ item.label }}
             </span>
           </view>
-          <view class="hx-w-[195px] hx-truncate">
+          <view class="hx-w-[195px]">
             <span class="hx-text-text-color-main hx-text-[14px]">
               {{ formData[item.key] }}
             </span>
