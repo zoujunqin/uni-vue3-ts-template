@@ -1,5 +1,10 @@
 [
   {
+    "version": "1.0.71",
+    "createTime": "2024-10-03 20:29:34",
+    "description": "国庆期间更新"
+  },
+  {
     "version": "1.0.70",
     "createTime": "2024-09-29 17:32:19",
     "description": "邀请码增加复制链接"

@@ -127,10 +127,13 @@ export const getObjectExcludeFile = (data: FormData | Record<string, any>) => {
  * 根据返回头字段判断是否需要解密
  * */
 export const isNeedDecrypt = response => {
-  return (
+  const situationOne =
     response.headers['Enable-Response-Decrypt'] &&
-    response.headers['Enable-Response-Decrypt'] !== 'False'
-  );
+    response.headers['Enable-Response-Decrypt'] !== 'False';
+  const situationTwo =
+    response.headers['enable-response-decrypt'] &&
+    response.headers['enable-response-decrypt'] !== 'False';
+  return situationOne || situationTwo;
 };
 
 /*
