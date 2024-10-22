@@ -2,11 +2,11 @@
 
 const fs = require('fs');
 const path = require('path');
-const dotEnv = require('dotenv')
 
 const chalk = require('chalk');
 const { Command } = require('commander');
 const dayjs = require('dayjs');
+const dotEnv = require('dotenv');
 const inquirer = require('inquirer');
 const minimist = require('minimist');
 const ci = require('miniprogram-ci');
@@ -21,16 +21,16 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 const pathsDotenv = resolveApp('.env');
 dotEnv.config({ path: `${pathsDotenv}.${params.mode}` }); // 加载.env.*
 
-
 function upload(desc) {
   const project = new ci.Project({
     appid: process.env.VITE_MP_WEIXIN_APP_ID,
     type: 'miniProgram',
     projectPath: 'dist/build/mp-weixin', // uniapp打包后的路径
-    privateKeyPath:
-      params.mode === 'production'
-        ? 'mp-weixin-formal.private.key'
-        : 'mp-weixin.private.key', // 微信公众平台密钥
+    privateKeyPath: 'mp-weixin-formal.private.key', // 微信
+    // privateKeyPath:
+    //   params.mode === 'production'
+    //     ? 'mp-weixin-formal.private.key'
+    //     : 'mp-weixin.private.key', // 微信公众平台密钥
     ignores: ['node_modules/**/*'] // 指定需要排除的规则
   });
 

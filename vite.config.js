@@ -6,7 +6,7 @@ import { loadEnv } from 'vite';
 import { UnifiedViteWeappTailwindcssPlugin as uvtw } from 'weapp-tailwindcss/vite';
 
 import uni from './build/packages/vite-plugin-uni/index';
-import { modifyManifest } from './modifyManifest';
+// import { modifyManifest } from './modifyManifest';
 import { plugins as postcssPlugins } from './postcss.config';
 import { getStaticServer } from './scripts/utils';
 function resolvePath(dir) {
@@ -41,7 +41,7 @@ function createAlias() {
 const alias = createAlias();
 // https://vitejs.dev/config/
 export default defineConfig(() => {
-  modifyManifest();
+  // modifyManifest();
   return {
     mode: 'strict',
     resolve: {
