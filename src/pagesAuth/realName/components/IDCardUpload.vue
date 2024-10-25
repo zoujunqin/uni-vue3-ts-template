@@ -64,7 +64,6 @@ const ocrFrontOfCard = async ({ httpUrl }) => {
       data.value.workerName = name;
       data.value.idCardNo = idNumber;
       data.value.domicileAddress = address;
-
       // 保存身份证正面 ocr 信息，用于申诉
       setIdCardFrontInfo({
         name,
@@ -73,6 +72,9 @@ const ocrFrontOfCard = async ({ httpUrl }) => {
 
       return true;
     } else {
+      data.value.workerName = '';
+      data.value.idCardNo = '';
+      data.value.domicileAddress = '';
       uni.showToast({ title: '请上传身份证正面图片', icon: 'none' });
     }
   } catch {
@@ -96,6 +98,9 @@ const ocrReverseSideOfCard = async ({ httpUrl }) => {
     data.value.issuingAuthority = issueAuthority;
     return true;
   } else {
+    data.value.credentialStartDate = '';
+    data.value.credentialEndDate = '';
+    data.value.issuingAuthority = '';
     uni.showToast({ title: '请上传身份证反面图片', icon: 'none' });
   }
   return false;

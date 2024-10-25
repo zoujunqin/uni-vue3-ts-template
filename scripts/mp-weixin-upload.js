@@ -2,11 +2,11 @@
 
 const fs = require('fs');
 const path = require('path');
-const dotEnv = require('dotenv')
 
 const chalk = require('chalk');
 const { Command } = require('commander');
 const dayjs = require('dayjs');
+const dotEnv = require('dotenv');
 const inquirer = require('inquirer');
 const minimist = require('minimist');
 const ci = require('miniprogram-ci');
@@ -20,7 +20,6 @@ const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 const pathsDotenv = resolveApp('.env');
 dotEnv.config({ path: `${pathsDotenv}.${params.mode}` }); // 加载.env.*
-
 
 function upload(desc) {
   const project = new ci.Project({
