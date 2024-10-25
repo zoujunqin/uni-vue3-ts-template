@@ -26,11 +26,10 @@ function upload(desc) {
     appid: process.env.VITE_MP_WEIXIN_APP_ID,
     type: 'miniProgram',
     projectPath: 'dist/build/mp-weixin', // uniapp打包后的路径
-    privateKeyPath: 'mp-weixin-formal.private.key', // 微信
-    // privateKeyPath:
-    //   params.mode === 'production'
-    //     ? 'mp-weixin-formal.private.key'
-    //     : 'mp-weixin.private.key', // 微信公众平台密钥
+    privateKeyPath:
+      params.mode === 'production'
+        ? 'mp-weixin-formal.private.key'
+        : 'mp-weixin.private.key', // 微信公众平台密钥
     ignores: ['node_modules/**/*'] // 指定需要排除的规则
   });
 
