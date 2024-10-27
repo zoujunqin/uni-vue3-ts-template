@@ -1,7 +1,7 @@
 <template>
   <view class="hx-h-full hx-flex hx-flex-col">
     <ProPageHeader />
-    1
+    <BizComponent />
   </view>
 </template>
 <script lang="ts" setup></script>

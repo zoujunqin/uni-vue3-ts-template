@@ -8,9 +8,9 @@
 import { onLaunch, onShow } from '@dcloudio/uni-app';
 
 /* 不想被打入异步分包的组件 */
-import ProSkeleton from '@/components/Pro/ProSkeleton/ProSkeleton.vue';
-import ProSkeletonCircle from '@/components/Pro/ProSkeletonCircle/ProSkeletonCircle.vue';
-import ProSkeletonRect from '@/components/Pro/ProSkeletonRect/ProSkeletonRect.vue';
+import ProSkeleton from '@/components/pro/ProSkeleton/ProSkeleton.vue';
+import ProSkeletonCircle from '@/components/pro/ProSkeletonCircle/ProSkeletonCircle.vue';
+import ProSkeletonRect from '@/components/pro/ProSkeletonRect/ProSkeletonRect.vue';
 import { useSystemStore } from '@/pinia/modules/system';
 
 onLaunch(() => {

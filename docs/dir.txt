@@ -22,8 +22,8 @@
     |   |-- sceneWeChat.ts                 // 微信场景值
     |   |-- api                            // 后端接口
     |   |-- components
-    |   |   |-- Pro                        // 基础组件,命名：ProComponent/ProComponent.vue
-    |   |   |-- business                   // 业务组件,命名：ProComponent/ProComponent.vue
+    |   |   |-- pro                        // 基础组件,命名：ProComponent/ProComponent.vue
+    |   |   |-- biz                        // 业务组件,命名：BizComponent/BizComponent.vue
     |   |-- constant                       // 常量
     |   |-- framework                      // uni 框架相关
     |   |-- hooks
@@ -34,5 +34,6 @@
     |   |-- static                         // 静态资源
     |   |-- static@http                    // 本地服务的静态资源
     |   |-- style
+    |   |-- uni                            // 重写 uni 方法
     |   |-- utils
     |-- transith5                          // 小程序 h5 中转页，是个多页面配置

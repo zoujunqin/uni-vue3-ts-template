@@ -127,7 +127,6 @@ import { computed, onMounted } from 'vue';
 import VerticalListItem from './components/VerticalListItem.vue';
 import { useHandler } from './hooks/useHandler';
 
-import { YES_NO_TYPE_MAP } from '@/constant/taskDetail';
 import { useTokenWatch } from '@/hooks/useTokenWatch';
 import { useUserStore } from '@/pinia/modules/user';
 
@@ -157,9 +156,7 @@ const panelItemList = computed(() => {
       type: panelItemMap.bankCard.type,
       icon: import('@http/person/bank-card-icon.svg'),
       name: '银行卡',
-      badge: `${
-        YES_NO_TYPE_MAP[userInfo.value?.izBindBankCard]?.bindLabel || ''
-      }`
+      badge: '已绑定'
     },
     {
       type: panelItemMap.contract.type,
