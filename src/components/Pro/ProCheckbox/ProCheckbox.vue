@@ -1,0 +1,25 @@
+<template>
+  <uv-checkbox v-bind="{ ...$attrs, ...bridgedEvents }">
+    <template v-if="$slots.icon">
+      <slot name="icon" />
+    </template>
+
+    <template v-if="$slots.default">
+      <slot />
+    </template>
+  </uv-checkbox>
+</template>
+
+<script lang="ts" setup>
+import { uvEvents } from './events';
+
+import { useBridgedEmits } from '@/hooks/useBridgedEmits';
+
+const { bridgedEvents } = useBridgedEmits(uvEvents);
+</script>
+
+<script lang="ts">
+export default {
+  options: { name: 'ProCheckbox', virtualHost: true }
+};
+</script>

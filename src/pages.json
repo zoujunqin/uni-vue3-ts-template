@@ -4,6 +4,7 @@
     "custom": {
       "^uv-(.*)": "@climblee/uv-ui/components/uv-$1/uv-$1.vue",
       "^Pro(.*)": "@/components/Pro$1/Pro$1.vue",
+      "^Pro(.*)": "@/components/Business/Pro$1/Pro$1.vue",
       "^Pro(.*)": "@/components/Pro/Pro$1/Pro$1.vue",
       "^(?!z-paging-refresh|z-paging-load-more)z-paging(.*)": "z-paging/components/z-paging$1/z-paging$1.vue"
     }
@@ -28,69 +29,6 @@
   ],
   "subPackages": [
     {
-      "root": "pagesTask",
-      "name": "pagesTask",
-      "pages": [
-        {
-          "path": "taskDetail/index"
-        }
-      ]
-    },
-    {
-      "root": "pagesAuth",
-      "name": "pagesAuth",
-      "pages": [
-        {
-          "path": "realName/index"
-        },
-        {
-          "path": "realNameSuccess/index"
-        }
-      ]
-    },
-    {
-      "root": "pagesPerson",
-      "name": "pagesPerson",
-      "pages": [
-        {
-          "path": "personMessage/index"
-        },
-        {
-          "path": "bankCard/index",
-          "style": {
-            "enablePullDownRefresh": false
-          }
-        },
-        {
-          "path": "myContract/index",
-          "style": {
-            "enablePullDownRefresh": false
-          }
-        },
-        {
-          "path": "myInsurance/index",
-          "style": {
-            "enablePullDownRefresh": false
-          }
-        },
-        {
-          "path": "remuneration/index",
-          "style": {
-            "enablePullDownRefresh": false
-          }
-        },
-        {
-          "path": "agreement/index"
-        },
-        {
-          "path": "agreement/userAgreement"
-        },
-        {
-          "path": "remuneration/remunerationDetails"
-        }
-      ]
-    },
-    {
       "root": "pagesTransfer",
       "name": "pagesTransfer",
       "pages": [
@@ -100,21 +38,7 @@
       ]
     }
   ],
-  "preloadRule": {
-    "pages/portal/index": {
-      "network": "all",
-      "packages": [
-        "pagesTask",
-        "pagesPerson"
-      ]
-    },
-    "pages/login/index": {
-      "network": "all",
-      "packages": [
-        "pagesPerson"
-      ]
-    }
-  },
+  "preloadRule": {},
   "globalStyle": {
     "navigationStyle": "custom"
   }

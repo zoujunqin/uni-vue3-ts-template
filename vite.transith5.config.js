@@ -35,9 +35,9 @@ export default {
     vue(),
     copy({
       targets: [
-        /* OEC开头的是微信小程序开发 + 体验环境的域名校验， OEQ开头的是微信小程序生产环境域名校验 */
+        /* 小程序中接入 h5, 需要在 h5 域名下添加校验文件 */
         {
-          src: ['./transith5/OecOFjpmum.txt', './transith5/OEQvf27uaM.txt'],
+          src: ['./transith5/**.txt'],
           dest: outDir
         }
       ],

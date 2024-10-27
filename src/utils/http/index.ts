@@ -25,15 +25,7 @@ import { useUserStore } from '@/pinia/modules/user';
 import { decryptResponseData, encryptParams } from '@/utils/crypto';
 import { formatToken } from '@/utils/storage';
 
-const httpNoMessage = ['/fe/wechat/worker_protocol/sign'];
-
 const baseURL = 'http://218.104.230.173:17054'; // 开发环境
-// const baseURL = 'https://localdev-hro-api.fjhxrl.com'; // 测试环境
-// const baseURL = 'https://localtest-hro-api.fjhxrl.com'; // 测试环境
-// const baseURL = 'https://hro-beta-gateway.fjhxrl.com'; // 预生产环境
-// const baseURL = 'http://172.16.114.64:8100'; // 林伦
-// const baseURL = 'http://192.168.117.86:8100'; // 大立
-// const baseURL = 'http://172.16.114.70:8100'; //
 
 const { DEV, VITE_BASE_URL } = import.meta.env;
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
@@ -67,7 +59,6 @@ class PureHttp {
   private static initConfig: PureHttpRequestConfig = {};
   /** 保存当前Axios实例对象 */
   private static axiosInstance: AxiosInstance = Axios.create(defaultConfig);
-  public baseUrl = defaultConfig.baseURL;
 
   constructor() {
     this.httpInterceptorsRequest();
@@ -221,8 +212,8 @@ class PureHttp {
 
         const { message, code } = responseData;
 
-        //邀请码已失效70001
-        const customDealCodes = ['70001'];
+        // 自定义处理
+        const customDealCodes = [];
         // 跳转到登录页面 401
         const loginFailureCodeList = ['401', '40102', '40103', '40104'];
 
@@ -230,13 +221,10 @@ class PureHttp {
           uni.clearStorageSync();
           uni.navigateTo({ url: loginPagePath });
         } else if (!customDealCodes.includes(code)) {
-          // FIXME: 接口统一需要返回 code 70001
-          if (!httpNoMessage.includes($error.config.url)) {
-            uni.showToast({
-              title: message || '接口异常',
-              icon: 'none'
-            });
-          }
+          uni.showToast({
+            title: message || '接口异常',
+            icon: 'none'
+          });
         }
 
         $error.isCancelRequest = Axios.isCancel($error);

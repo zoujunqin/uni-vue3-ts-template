@@ -1,7 +1,6 @@
-import { ITask } from '@/api/fe/wechat/task_center';
 import { hyphenABEqualityA } from '@/utils/text';
 
-export const getHandledTaskInfo = (row: ITask) => {
+export const getHandledTaskInfo = row => {
   const {
     taskSalaryMin,
     taskSalaryMax,
