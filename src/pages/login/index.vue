@@ -56,13 +56,9 @@
         class="hx-text-font-size-base hx-leading-[24px] hx-text-text-color-tip"
       >
         已阅读并同意
-        <text class="hx-text-color-primary" @click="handleGoUserAgreement">
-          《用户协议》
-        </text>
+        <text class="hx-text-color-primary"> 《用户协议》 </text>
         和
-        <text class="hx-text-color-primary" @click="handleGoAgreement">
-          《隐私政策》
-        </text>
+        <text class="hx-text-color-primary"> 《隐私政策》 </text>
       </text>
     </view>
   </ProPage>
@@ -78,19 +74,6 @@ import { mobileLoginPagePath } from '@/constant/pagePath';
 const isAgree = shallowRef([]);
 const proTooltipPerRef = ref();
 const valid = computed(() => isAgree.value.length === 1);
-
-const handleGoAgreement = () => {
-  uni.navigateTo({
-    auth: false,
-    url: '/pagesPerson/agreement/index'
-  });
-};
-const handleGoUserAgreement = () => {
-  uni.navigateTo({
-    auth: false,
-    url: '/pagesPerson/agreement/userAgreement'
-  });
-};
 
 const navToMobileLogin = () => {
   if (!validate()) return;

@@ -11,55 +11,30 @@ export const useHandler = () => {
   const panelItemMap = {
     personInfo: {
       type: 'personInfo',
-      handler: () => {
-        uni.navigateTo({
-          url: '/pagesPerson/personMessage/index'
-        });
-      }
+      handler: () => {}
     },
     bankCard: {
       type: 'bankCard',
-      handler: () => {
-        uni.navigateTo({
-          url: '/pagesPerson/bankCard/index'
-        });
-      }
+      handler: () => {}
     },
     contract: {
       type: 'contract',
-      handler: () => {
-        uni.navigateTo({
-          url: '/pagesPerson/myContract/index'
-        });
-      }
+      handler: () => {}
     },
     myInsurance: {
       type: 'myInsurance',
-      handler: () => {
-        uni.navigateTo({
-          url: '/pagesPerson/myInsurance/index'
-        });
-      }
+      handler: () => {}
     }
   } as const;
 
   const verticalListItemMap = {
     remuneration: {
       type: 'remuneration',
-      handler: () => {
-        uni.navigateTo({
-          url: '/pagesPerson/remuneration/index'
-        });
-      }
+      handler: () => {}
     },
     agreement: {
       type: 'agreement',
-      handler: () => {
-        uni.navigateTo({
-          auth: false,
-          url: '/pagesPerson/agreement/index'
-        });
-      }
+      handler: () => {}
     },
     contact: {
       type: 'contact',
