@@ -1,5 +1,5 @@
 <template>
-  <uv-navbar v-bind="{ ...$attrs, ...bridgedEvents }">
+  <uv-navbar bg-color="transparent" v-bind="{ ...$attrs, ...bridgedEvents }">
     <template v-slot:[leftSlot]>
       <slot name="left" />
     </template>

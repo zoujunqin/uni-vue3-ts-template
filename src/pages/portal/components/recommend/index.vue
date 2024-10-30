@@ -1,8 +1,6 @@
 <template>
-  <view class="hx-h-full hx-flex hx-flex-col">
-    <ProLayout>
-      <template #header />
-
+  <ProLayout>
+    <ProContent>
       <ProScrollList
         ref="proScrollListRef"
         :fetch="getRecommendTaskList"
@@ -16,8 +14,8 @@
           />
         </template>
       </ProScrollList>
-    </ProLayout>
-  </view>
+    </ProContent>
+  </ProLayout>
 </template>
 
 <script lang="ts" setup>
@@ -27,6 +25,7 @@ import TaskCard from './components/TaskCard/index.vue';
 import { useHandler } from './hooks/useHandler';
 
 import { getRecommendTaskList } from '@/api/fe/wechat';
+import ProLayout from '@/components/pro/ProLayout/ProLayout.vue';
 import { useTokenWatch } from '@/hooks/useTokenWatch';
 
 const { proScrollListRef, reload } = useHandler();

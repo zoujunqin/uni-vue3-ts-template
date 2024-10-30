@@ -1,23 +1,22 @@
 <template>
-  <view class="hx-h-full hx-flex hx-flex-col">
-    <ProLayout
-      safe-area-inset-top
-      showHeader
-      :header-fixed="false"
-      :navbar-props="{
-        title: '哈哈哈',
-        bgColor: 'red',
-        fixed: false,
-        autoBack: false,
-        titleWidth: 50
-      }"
-      :header-props="{
-        style: 'color: blue;'
-      }"
-    >
-      <template #navbarLeft>213</template>
-      <template #navbarCenter>213213213213213213213213213213213</template>
-      <template #header>123213214dashfpiashfoidsahgoajhsgojsad0j</template>
+  <ProLayout>
+    <ProContent>
+      <ProHeader
+        safe-area
+        show-navbar
+        :navbar-props="{
+          title: '哈哈哈',
+          fixed: false,
+          autoBack: false,
+          titleWidth: 50
+        }"
+        style="color: blue;"
+      >
+        <template #navbarLeft>213</template>
+        <template #navbarCenter>213213213213213213213213213213213</template>
+        123213214dashfpiashfoidsahgoajhsgojsad0j
+      </ProHeader>
+
       <BizComponent />
       <BizComponent />
       <BizComponent />
@@ -67,8 +66,10 @@
       <BizComponent />
       <BizComponent />
       <BizComponent />
-    </ProLayout>
-  </view>
+    </ProContent>
+
+    <ProFooter> 11232131313 </ProFooter>
+  </ProLayout>
 </template>
 <script lang="ts" setup></script>
 

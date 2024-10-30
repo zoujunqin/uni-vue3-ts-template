@@ -3,6 +3,8 @@
     ref="uvInstance"
     :border="false"
     :value="value"
+    :fixed="false"
+    :placeholder="false"
     class="!hx-flex-none"
     v-bind="$attrs"
     @change="tabbarChange"

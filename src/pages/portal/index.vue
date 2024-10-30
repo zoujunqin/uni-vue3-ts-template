@@ -1,29 +1,29 @@
 <template>
   <ProPage :navbar-title="activeTabbar.text" show-navbar>
-    <ProLayout show-footer>
-      <Tasks
-        v-if="tabbarList[0].load"
-        v-show="tabbarList[0].visible"
-        class="hx-flex-1"
-      />
+    <ProLayout>
+      <ProContent>
+        <Tasks
+          v-if="tabbarList[0].load"
+          v-show="tabbarList[0].visible"
+          class="hx-flex-1"
+        />
 
-      <Recommend
-        v-if="tabbarList[1].load"
-        v-show="tabbarList[1].visible"
-        class="hx-flex-1"
-      />
+        <Recommend
+          v-if="tabbarList[1].load"
+          v-show="tabbarList[1].visible"
+          class="hx-flex-1"
+        />
 
-      <Person
-        class="hx-flex-1"
-        v-if="tabbarList[2].load"
-        v-show="tabbarList[2].visible"
-      />
+        <Person
+          class="hx-flex-1"
+          v-if="tabbarList[2].load"
+          v-show="tabbarList[2].visible"
+        />
+      </ProContent>
 
-      <template #footer>
+      <ProFooter>
         <ProTabbar
           v-model="tabbarValue"
-          :fixed="false"
-          :placeholder="false"
           class="portal-tabbar"
           @change="tabbarChange"
         >
@@ -42,7 +42,7 @@
             </template>
           </ProTabbarItem>
         </ProTabbar>
-      </template>
+      </ProFooter>
     </ProLayout>
   </ProPage>
 </template>

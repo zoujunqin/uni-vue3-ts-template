@@ -1,11 +1,8 @@
 <template>
-  <view
-    :style="{ ...headerStyle, ...props.headerProps.style }"
-    :class="props.headerProps.class"
-    class="pro-page-header"
-  >
+  <view :style="headerStyle" class="pro-header">
     <ProNavbar
       v-if="showNavbar"
+      :fixed="false"
       :style="props.navbarProps.style"
       :class="props.navbarProps.class"
       v-bind="props.navbarProps"
@@ -34,17 +31,21 @@ import { computed, useSlots } from 'vue';
 import { useSystemStore } from '@/pinia/modules/system';
 
 const props = defineProps({
-  safeAreaInsetTop: Boolean,
+  fixed: Boolean,
+  offsetTop: { type: Number, default: 0 },
+  safeArea: Boolean,
   showNavbar: Boolean,
-  headerProps: { type: Object, default: () => ({}) },
   navbarProps: { type: Object, default: () => ({}) }
 });
 
 const { systemInfo } = storeToRefs(useSystemStore());
 const headerStyle = computed(() => {
   const statusBarHeight = systemInfo.value.statusBarHeight || 0;
+  const { safeArea, showNavbar, fixed, offsetTop } = props;
   return {
-    'padding-top': (props.safeAreaInsetTop ? statusBarHeight : 0) + 'PX'
+    position: fixed ? 'sticky' : 'static',
+    top: offsetTop,
+    'padding-top': (safeArea && !showNavbar ? statusBarHeight : 0) + 'PX'
   };
 });
 
@@ -54,11 +55,11 @@ const rightSlot = computed(() => (useSlots()?.navbarRight ? 'right' : ''));
 </script>
 
 <style scoped>
-.pro-page-header {
+.pro-header {
   box-shadow: 0 6px 6px 0 rgb(0 33 81 / 3%);
 }
 </style>
 
 <script lang="ts">
-export default { options: { name: 'ProPageHeader', virtualHost: true } };
+export default { options: { name: 'ProHeader', virtualHost: true } };
 </script>
