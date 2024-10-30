@@ -1,5 +1,9 @@
 <template>
-  <view :style="headerStyle" class="pro-header">
+  <view
+    :style="headerStyle"
+    :class="{ 'pro-header-shadow': shadow }"
+    class="pro-header"
+  >
     <ProNavbar
       v-if="showNavbar"
       :fixed="false"
@@ -31,6 +35,7 @@ import { computed, useSlots } from 'vue';
 import { useSystemStore } from '@/pinia/modules/system';
 
 const props = defineProps({
+  shadow: Boolean,
   fixed: Boolean,
   offsetTop: { type: Number, default: 0 },
   safeArea: Boolean,
@@ -55,7 +60,7 @@ const rightSlot = computed(() => (useSlots()?.navbarRight ? 'right' : ''));
 </script>
 
 <style scoped>
-.pro-header {
+.pro-header-shadow {
   box-shadow: 0 6px 6px 0 rgb(0 33 81 / 3%);
 }
 </style>
