@@ -1,6 +1,6 @@
 <template>
   <ProPage :navbar-title="activeTabbar.text" show-navbar>
-    <view class="hx-h-full hx-flex hx-flex-col">
+    <ProLayout show-footer>
       <Tasks
         v-if="tabbarList[0].load"
         v-show="tabbarList[0].visible"
@@ -19,29 +19,31 @@
         v-show="tabbarList[2].visible"
       />
 
-      <ProTabbar
-        v-model="tabbarValue"
-        :fixed="false"
-        :placeholder="false"
-        class="portal-tabbar"
-        @change="tabbarChange"
-      >
-        <ProTabbarItem
-          v-for="item in tabbarList"
-          :key="item.name"
-          :name="item.name"
-          :text="item.text"
+      <template #footer>
+        <ProTabbar
+          v-model="tabbarValue"
+          :fixed="false"
+          :placeholder="false"
+          class="portal-tabbar"
+          @change="tabbarChange"
         >
-          <template #active-icon>
-            <image :src="item.activeIcon" class="hx-h-[24px] hx-w-[24px]" />
-          </template>
+          <ProTabbarItem
+            v-for="item in tabbarList"
+            :key="item.name"
+            :name="item.name"
+            :text="item.text"
+          >
+            <template #active-icon>
+              <image :src="item.activeIcon" class="hx-h-[24px] hx-w-[24px]" />
+            </template>
 
-          <template #inactive-icon>
-            <image :src="item.icon" class="hx-h-[24px] hx-w-[24px]" />
-          </template>
-        </ProTabbarItem>
-      </ProTabbar>
-    </view>
+            <template #inactive-icon>
+              <image :src="item.icon" class="hx-h-[24px] hx-w-[24px]" />
+            </template>
+          </ProTabbarItem>
+        </ProTabbar>
+      </template>
+    </ProLayout>
   </ProPage>
 </template>
 

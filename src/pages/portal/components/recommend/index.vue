@@ -1,20 +1,22 @@
 <template>
   <view class="hx-h-full hx-flex hx-flex-col">
-    <ProPageHeader />
+    <ProLayout>
+      <template #header />
 
-    <ProScrollList
-      ref="proScrollListRef"
-      :fetch="getRecommendTaskList"
-      class="hx-flex-1"
-    >
-      <template #default="{ row }">
-        <TaskCard
-          id="card"
-          :card-info="getHandledTaskInfo(row)"
-          class="hx-mt-[10px]"
-        />
-      </template>
-    </ProScrollList>
+      <ProScrollList
+        ref="proScrollListRef"
+        :fetch="getRecommendTaskList"
+        class="hx-flex-1"
+      >
+        <template #default="{ row }">
+          <TaskCard
+            id="card"
+            :card-info="getHandledTaskInfo(row)"
+            class="hx-mt-[10px]"
+          />
+        </template>
+      </ProScrollList>
+    </ProLayout>
   </view>
 </template>
 
