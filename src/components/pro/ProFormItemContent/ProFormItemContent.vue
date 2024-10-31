@@ -29,9 +29,9 @@
 </template>
 
 <script setup lang="ts">
-import { uvEvents as uvDatePickerEvents } from '@/components/ProDateTimePicker/events';
-import { uvEvents as uvInputEvents } from '@/components/ProInput/events';
-import { uvEvents as uvPickerEvents } from '@/components/ProPicker/events';
+import { uvEvents as uvDatePickerEvents } from '@/components/pro/ProDateTimePicker/events';
+import { uvEvents as uvInputEvents } from '@/components/pro/ProInput/events';
+import { uvEvents as uvPickerEvents } from '@/components/pro/ProPicker/events';
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
 import { useVModel } from '@/hooks/useVModel';
 

@@ -1,6 +1,6 @@
 import { shallowRef } from 'vue';
 
-import ProScrollList from '@/components/ProScrollList/ProScrollList.vue';
+import ProScrollList from '@/components/pro/ProScrollList/ProScrollList.vue';
 
 export const useHandler = () => {
   const proScrollListRef = shallowRef<InstanceType<typeof ProScrollList>>();
