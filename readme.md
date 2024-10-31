@@ -1,4 +1,6 @@
 - **node >=18.14.x**，**pnpm >=8.x**，安装依赖时指定版本保证依赖稳定
+- pnpm dev 需要使用其他环境的配置,在命令后面添加 --mode **(test,staging,production)
+- 手机调试关闭电脑防火墙，微信小程序需要打开调试
 - [GIT 规范检查](./.commitlintrc.js)
 - [eslint](./.eslintrc.js),[prettier](./.prettierrc.js),[stylelint](./.stylelintrc.js),
 - [多多使用原子化css tailwind](./tailwind.config.js)
@@ -9,9 +11,7 @@
 - [内置了h5中转页的多页面配置,可以和本项目共享构建时的环境变量](./vite.transith5.config.js)
 - [dev 下不使用异步分包的优化,只在 build 时才会优化分包,如果出现分包页面组件闪动或不生效,极大可能是异步分包组件占位问题(无解，除非将组件打入主包)](./build/packages/vite-plugin-uni/index.ts)
 - [重写了 uni 的导航方法，如果用户没有登录，则重定向到登录页](./src/uni/rewiteUniFunction.ts)
-- pnpm dev 需要使用其他环境的配置,在命令后面添加 --mode **(test,staging,production)
-- 手机调试关闭电脑防火墙，微信小程序需要打开调试
-
+- [可以使用布局组件，ProPage、ProLayout、ProHeader、ProContent、ProFooter](./docs/layout.md)
 - [需要一起打包的图片放在 static 文件夹下](./src/static), [需要放到服务器的图片放在 static@http 文件夹下](../src/static@http)，生产环境只需要将图片扔到生产环境服务器
 ```vue
 <template>
