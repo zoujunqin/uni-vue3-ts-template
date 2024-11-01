@@ -22,8 +22,8 @@ import {
   watch
 } from 'vue';
 
-import { uvEvents } from '@/components/ProPicker/events';
-import { uvMethods } from '@/components/ProPicker/methods';
+import { uvEvents } from '@/components/pro/ProPicker/events';
+import { uvMethods } from '@/components/pro/ProPicker/methods';
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
 import { useBridgedMethods } from '@/hooks/useBridgedMethods';
 import { useFakerRef } from '@/hooks/useFakerRef';

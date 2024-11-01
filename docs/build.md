@@ -12,9 +12,9 @@
    
     <script setup lang="ts">
       /* 不想被打入异步分包的组件 */
-      import ProSkeleton from '@/components/ProSkeleton/ProSkeleton.vue';
-      import ProSkeletonCircle from '@/components/ProSkeletonCircle/ProSkeletonCircle.vue';
-      import ProSkeletonRect from '@/components/ProSkeletonRect/ProSkeletonRect.vue';
+      import ProSkeleton from '@/components/pro/ProSkeleton/ProSkeleton.vue';
+      import ProSkeletonCircle from '@/components/pro/ProSkeletonCircle/ProSkeletonCircle.vue';
+      import ProSkeletonRect from '@/components/pro/ProSkeletonRect/ProSkeletonRect.vue';
     </script>
     ```
 
