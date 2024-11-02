@@ -2,7 +2,7 @@
   <view v-if="loadingVisible" class="pro-loading">
     <view class="pro-loading__wrapper">
       <image
-        :src="import('@http/loading.gif')"
+        :src="getAssetsResource('@http/loading.gif')"
         class="hx-w-[54px] hx-h-[54px]"
       />
       <text
@@ -18,6 +18,7 @@
 import { storeToRefs } from 'pinia';
 
 import { useLoadingStore } from '@/pinia/modules/loading';
+import { getAssetsResource } from '@/utils';
 
 const { loadingVisible, loadingText } = storeToRefs(useLoadingStore());
 </script>

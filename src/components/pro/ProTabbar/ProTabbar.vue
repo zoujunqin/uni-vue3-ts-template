@@ -28,22 +28,29 @@ const props = defineProps({
 });
 const emit = defineEmits(['update:modelValue', 'change']);
 
+/* #ifdef MP-WEIXIN */
 const { instance: uvInstance } = useFakerRef();
 const { ctx } = useNextedCompatible(uvInstance);
+/* #endif */
 
 const value = useVModel(props, 'modelValue', emit);
 
 const tabbarChange = name => {
-  value.value = name;
+  /* #ifdef MP-WEIXIN */
   ctx.value = name;
+  /* #endif */
+
+  value.value = name;
   emit('change', name);
 };
 </script>
 
 <script lang="ts">
 export default {
+  /* #ifdef MP-WEIXIN */
   // 这里 name 为 uv-tabbar 是为了 uv-tabbar-item 内部的查找机制
   name: 'uv-tabbar',
+  /* #endif */
   options: { name: 'ProTabbar', virtualHost: true }
 };
 </script>

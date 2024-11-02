@@ -17,36 +17,31 @@ function isMiniProgram() {
   return process.env.UNI_PLATFORM.includes('mp-');
 }
 
-function createAlias() {
-  const alias = {
-    '@': resolvePath('../../src')
-  };
-
+function getAssetsResourcePath() {
   if (isMiniProgram()) {
     if (process.env.NODE_ENV === 'development') {
-      alias['@http'] = getStaticServer();
+      return getStaticServer();
     } else {
-      alias['@http'] = loadEnv(
-        process.env.NODE_ENV,
-        process.cwd()
-      ).VITE_OSS_SERVER_URL;
+      return loadEnv(process.env.NODE_ENV, process.cwd()).VITE_OSS_SERVER_URL;
     }
   } else {
-    alias['@http'] = resolvePath('../../src/static@http');
+    return 'static@http';
   }
-
-  return alias;
 }
 
-const alias = createAlias();
 // https://vitejs.dev/config/
 export default defineConfig(() => {
   modifyManifest();
   return {
     mode: 'strict',
     resolve: {
-      alias,
+      alias: {
+        '@': resolvePath('../../src')
+      },
       extensions: ['ts', 'js', 'vue', 'nvue', 'css', 'scss']
+    },
+    define: {
+      __ASSETS_RESOURCE_PATH__: JSON.stringify(getAssetsResourcePath())
     },
     plugins: [
       uni(),
@@ -63,7 +58,7 @@ export default defineConfig(() => {
       preprocessorOptions: {
         scss: {
           additionalData: `
-        $http: "${alias['@http']}";
+        $http: "${getAssetsResourcePath()}";
         `
         }
       }

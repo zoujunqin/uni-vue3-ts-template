@@ -15,8 +15,9 @@
 - [需要一起打包的图片放在 static 文件夹下](./src/static), [需要放到服务器的图片放在 static@http 文件夹下](../src/static@http)，生产环境只需要将图片扔到生产环境服务器
 ```vue
 <template>
+  import { getAssetsResource } from '@/utils/index.ts'
   <!-- 模板中使用 -->
-  <image :src="import('@http/person/xxx.png')"></image>
+  <image :src="getAssetsResource('@http/person/xxx.png')"></image>
 </template>
 
 <style scoped lang="scss">

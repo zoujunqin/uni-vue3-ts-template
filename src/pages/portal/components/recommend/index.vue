@@ -6,22 +6,13 @@
         :fetch="getRecommendTaskList"
         class="hx-flex-1"
       >
-        <template #default="{ row }">
-          <TaskCard
-            id="card"
-            :card-info="getHandledTaskInfo(row)"
-            class="hx-mt-[10px]"
-          />
-        </template>
+        <template #default="{ row }"> {{ row.taskContent }} </template>
       </ProScrollList>
     </ProContent>
   </ProLayout>
 </template>
 
 <script lang="ts" setup>
-import { getHandledTaskInfo } from '../../utils/handleDataStruct';
-
-import TaskCard from './components/TaskCard/index.vue';
 import { useHandler } from './hooks/useHandler';
 
 import { getRecommendTaskList } from '@/api/fe/wechat';
@@ -35,6 +26,6 @@ useTokenWatch({ hasTokenCb: reload, noTokenCb: reload });
 
 <script lang="ts">
 export default {
-  options: { name: 'TaskRecommend', virtualHost: false }
+  options: { name: 'TaskRecommend', virtualHost: true }
 };
 </script>

@@ -20,7 +20,7 @@
           </text>
         </slot>
         <image
-          :src="import('@http/person/arrow-right.svg')"
+          :src="getAssetsResource('@http/person/arrow-right.svg')"
           class="hx-w-[14px] hx-h-[14px]"
         />
       </view>
@@ -35,6 +35,8 @@
 </template>
 <script setup lang="ts">
 import { PropType } from 'vue';
+
+import { getAssetsResource } from '@/utils';
 
 interface IDataType {
   index: number;

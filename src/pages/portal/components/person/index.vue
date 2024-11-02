@@ -8,7 +8,7 @@
   >
     <template #image>
       <image
-        :src="import('@http/person/log-out-img.png')"
+        :src="getAssetsResource('@http/person/log-out-img.png')"
         class="hx-w-full hx-h-[94px]"
       />
     </template>
@@ -23,14 +23,16 @@
   >
     <template #image>
       <image
-        :src="import('@http/person/connection-bg.png')"
+        :src="getAssetsResource('@http/person/connection-bg.png')"
         class="hx-w-full hx-h-[116px]"
       />
     </template>
   </ProModal>
 
   <view
-    :style="`background-image: url(${import('@http/person/nav-bar-bg.svg')});`"
+    :style="`background-image: url(${getAssetsResource(
+      '@http/person/nav-bar-bg.svg'
+    )});`"
     class="page-pt-with-navbar hx-pl-[8px] hx-pr-[8px] hx-bg-[length:100%_432px] hx-bg-no-repeat"
   >
     <view
@@ -39,7 +41,7 @@
       <view class="hx-flex hx-flex-1" @click="handleToLoginPage">
         <view class="img-box">
           <image
-            :src="import('@http/person/avatar-default.svg')"
+            :src="getAssetsResource('@http/person/avatar-default.svg')"
             class="hx-w-[54px] hx-h-[54px] hx-rounded-full"
           />
         </view>
@@ -62,7 +64,7 @@
         @click="logout"
       >
         <image
-          :src="import('@http/person/exit.svg')"
+          :src="getAssetsResource('@http/person/exit.svg')"
           class="hx-w-[14px] hx-h-[14px] hx-mr-[4px]"
         />
         <text class="hx-text-font-size-sm hx-leading-[20px] hx-text-text-color">
@@ -127,8 +129,10 @@ import { computed, onMounted } from 'vue';
 import VerticalListItem from './components/VerticalListItem.vue';
 import { useHandler } from './hooks/useHandler';
 
+// import { useTokenWatch } from '@/hooks/useTokenWatch';
 import { useTokenWatch } from '@/hooks/useTokenWatch';
 import { useUserStore } from '@/pinia/modules/user';
+import { getAssetsResource } from '@/utils';
 
 const { token, userInfo } = storeToRefs(useUserStore());
 
@@ -148,25 +152,25 @@ const panelItemList = computed(() => {
   return [
     {
       type: panelItemMap.personInfo.type,
-      icon: import('@http/person/info-icon.svg'),
+      icon: getAssetsResource('@http/person/info-icon.svg'),
       name: '个人信息',
       badge: `${userInfo.value?.izRealNameAuthenticationName || ''}`
     },
     {
       type: panelItemMap.bankCard.type,
-      icon: import('@http/person/bank-card-icon.svg'),
+      icon: getAssetsResource('@http/person/bank-card-icon.svg'),
       name: '银行卡',
       badge: '已绑定'
     },
     {
       type: panelItemMap.contract.type,
-      icon: import('@http/person/contract-icon.svg'),
+      icon: getAssetsResource('@http/person/contract-icon.svg'),
       name: '我的合同',
       badge: ''
     },
     {
       type: panelItemMap.myInsurance.type,
-      icon: import('@http/person/security-icon.svg'),
+      icon: getAssetsResource('@http/person/security-icon.svg'),
       name: '我的商保',
       badge: ''
     }
@@ -178,14 +182,14 @@ const firstVerticalList = computed(() => {
     {
       index: 0,
       type: verticalListItemMap.remuneration.type,
-      icon: import('@http/person/remuneration-icon.svg'),
+      icon: getAssetsResource('@http/person/remuneration-icon.svg'),
       desc: '累计报酬(元)',
       text: `¥${userInfo.value?.totalAmount || 0}`
     },
     {
       index: 1,
       type: verticalListItemMap.agreement.type,
-      icon: import('@http/person/agreement-icon.svg'),
+      icon: getAssetsResource('@http/person/agreement-icon.svg'),
       desc: '用户隐私协议'
     }
   ];
@@ -195,7 +199,7 @@ const secondVerticalList = [
   {
     index: 0,
     type: verticalListItemMap.contact.type,
-    icon: import('@http/person/contact-icon.svg'),
+    icon: getAssetsResource('@http/person/contact-icon.svg'),
     desc: '联系我们'
   }
 ];

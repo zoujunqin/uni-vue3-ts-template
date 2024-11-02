@@ -31,6 +31,8 @@ httpServer.on('request', (request, response) => {
 });
 
 httpServerStart(httpServer).then(() => {
+  const content = `export const httpStaticServer = '${getStaticServer()}';`;
+  fs.writeFileSync('./src/httpStaticServer.js', content);
   console.log(
     chalk.green('[http-server] ') +
       chalk.yellow(`static server available on ${getStaticServer()}`)

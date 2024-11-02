@@ -17,7 +17,11 @@ import { useFakerRef } from '@/hooks/useFakerRef';
 import { useNextedCompatible } from '@/hooks/useNextedCompatible';
 
 const { instance: uvInstance } = useFakerRef();
+
+/* #ifdef MP-WEIXIN */
 useNextedCompatible(uvInstance);
+/* #endif */
+
 const { bridgedMethods } = useBridgedMethods(uvMethods, uvInstance);
 
 defineExpose(bridgedMethods);
@@ -25,8 +29,10 @@ defineExpose(bridgedMethods);
 
 <script lang="ts">
 export default {
+  /* #ifdef MP-WEIXIN */
   // 这里 name 为 uv-form 是为了 uv-form-item 内部的查找机制
   name: 'uv-form',
+  /* #endif */
   options: { name: 'ProForm', virtualHost: true }
 };
 </script>

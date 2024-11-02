@@ -1,3 +1,5 @@
+import { httpStaticServer } from '@/httpStaticServer';
+
 export const getUUID = (len = 32) => {
   const characters =
     'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -25,4 +27,17 @@ export const parseBlobData = blob => {
     };
     reader.readAsText(blob);
   });
+};
+
+export const getAssetsResource = (url: string) => {
+  let path;
+  /* #ifndef H5 || APP-PLUS || APP-PLUS-NVUE || APP-NVUE */
+  path = url.replace(/^@http/, httpStaticServer);
+  /* #endif */
+
+  /* #ifdef H5 */
+  path = import.meta.resolve(url.replace(/^@http/, '../static@http'));
+  /* #endif */
+
+  return path;
 };
