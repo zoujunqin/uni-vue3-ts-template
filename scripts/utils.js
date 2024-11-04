@@ -1,7 +1,7 @@
 const os = require('os');
 const path = require('path');
 
-let staticServerPort = '5713';
+let staticServerPort = '9000';
 
 const getHttpServerPost = () => staticServerPort;
 

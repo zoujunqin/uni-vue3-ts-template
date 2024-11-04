@@ -36,7 +36,13 @@ export const getAssetsResource = (url: string) => {
   /* #endif */
 
   /* #ifdef H5 */
-  path = import.meta.resolve(url.replace(/^@http/, '../static@http'));
+  if (import.meta.DEV) {
+    path = import.meta.resolve(url.replace(/^@http/, '../static@http'));
+  } else {
+    path = import.meta.resolve(
+      url.replace(/^@http/, import.meta.env.VITE_OSS_SERVER_URL)
+    );
+  }
   /* #endif */
 
   return path;

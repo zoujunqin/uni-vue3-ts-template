@@ -56,6 +56,8 @@ export function _findChangedJsonFiles(
       newJson.usingComponents = {};
     }
     extend(newJson.usingComponents, findUsingComponents(filename));
+
+    const componentPlaceholder = {};
     // 格式化为相对路径，这样作为分包也可以直接运行
     // app.json mp-baidu 在 win 不支持相对路径。所有平台改用绝对路径
     if (filename !== 'app') {
@@ -71,8 +73,6 @@ export function _findChangedJsonFiles(
           ...newJson.usingComponents
         };
       }
-
-      const componentPlaceholder = {};
 
       Object.keys(usingComponents).forEach(name => {
         const componentFilename = usingComponents[name];
@@ -102,10 +102,12 @@ export function _findChangedJsonFiles(
         ...newJson.componentPlaceholder
       };
     } else {
-      newJson.subPackages.unshift({
-        root: ASYNC_PACKAGE_NAME,
-        pages: []
-      });
+      if (componentPlaceholder.length) {
+        newJson.subPackages.unshift({
+          root: ASYNC_PACKAGE_NAME,
+          pages: []
+        });
+      }
     }
 
     const newFilename = updateFilename(filename);

@@ -1,8 +1,10 @@
 const { spawnSync } = require('child_process');
 const fs = require('fs');
+const path = require('path');
 
 const chalk = require('chalk');
 const { Command } = require('commander');
+const dotEnv = require('dotenv');
 const inquirer = require('inquirer');
 
 const program = new Command();
@@ -49,6 +51,15 @@ program.description('build mp-weixin').action(async argv => {
       }
     }
   ]);
+
+  // 先构造出.env*文件的绝对路径
+  const appDirectory = fs.realpathSync(process.cwd());
+  const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
+  const pathsDotenv = resolveApp('.env');
+  dotEnv.config({ path: `${pathsDotenv}.${argv.mode}` }); // 加载.env.*
+
+  const content = `export const httpStaticServer = '${process.env.VITE_OSS_SERVER_URL}';`;
+  fs.writeFileSync('./src/httpStaticServer.js', content);
 
   spawnSync(
     /^win/.test(process.platform) ? 'pnpm.cmd' : 'pnpm',
