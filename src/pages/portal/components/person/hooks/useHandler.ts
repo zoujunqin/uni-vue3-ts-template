@@ -1,8 +1,8 @@
 import { shallowRef } from 'vue';
 
-import { loginPagePath } from '@/constant/pagePath';
 import { clearStore } from '@/pinia/index';
 import { useUserStore } from '@/pinia/modules/user';
+import { useRouter } from '@/router/router';
 
 export const useHandler = () => {
   const contactModalRef = shallowRef();
@@ -60,7 +60,8 @@ export const useHandler = () => {
 
   const handleToLoginPage = () => {
     if (!useUserStore().token) {
-      uni.navigateTo({ url: loginPagePath });
+      const { router } = useRouter();
+      router.push({ name: 'Login' });
     }
   };
 

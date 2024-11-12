@@ -61,6 +61,8 @@
         <text class="hx-text-color-primary"> 《隐私政策》 </text>
       </text>
     </view>
+
+    <ProButton @click="handleBack"> 后退 </ProButton>
   </ProPage>
 </template>
 
@@ -70,6 +72,7 @@ import { computed, ref, shallowRef } from 'vue';
 import { weChatAuthLogin } from './login';
 
 import { mobileLoginPagePath } from '@/constant/pagePath';
+import { useRouter } from '@/router/router';
 
 const isAgree = shallowRef([]);
 const proTooltipPerRef = ref();
@@ -89,5 +92,10 @@ const validate = () => {
 };
 const handleIsAgreeChange = () => {
   proTooltipPerRef.value.close();
+};
+
+const handleBack = () => {
+  const { router } = useRouter();
+  router.back();
 };
 </script>

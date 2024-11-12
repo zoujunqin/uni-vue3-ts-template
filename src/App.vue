@@ -8,6 +8,7 @@
 
 <script lang="ts" setup>
 import { onLaunch, onShow } from '@dcloudio/uni-app';
+import qs from 'qs';
 
 /* #ifdef MP-WEIXIN */
 /* 不想被打入异步分包的组件 */
@@ -16,6 +17,7 @@ import ProSkeletonCircle from '@/components/pro/ProSkeletonCircle/ProSkeletonCir
 import ProSkeletonRect from '@/components/pro/ProSkeletonRect/ProSkeletonRect.vue';
 /* #endif */
 import { useSystemStore } from '@/pinia/modules/system';
+import { RouteStack, useRouter } from '@/router/router';
 
 onLaunch(() => {
   uni.getSystemInfo().then(data => {
@@ -35,6 +37,31 @@ onShow(() => {
     setNetworkStatus(res);
   });
 });
+
+/* #ifdef MP-WEIXIN */
+const { router } = useRouter();
+const pathname = router.routes[0].path;
+const search = '';
+
+const navOptions = {
+  path: pathname,
+  query: qs.parse(search.slice(1)),
+  type: null
+};
+const routeStack = new RouteStack(navOptions);
+router.routeStacks.push(routeStack);
+router.createRouteStacksMap();
+router.currentRoute = routeStack;
+
+const next = option => {
+  if (option && routeStack.name !== option?.name) {
+    router.routeStacks.pop();
+    router.createRouteStacksMap();
+    router.next(option);
+  }
+};
+router.beforeEachCb(routeStack, null, next);
+/* #endif */
 </script>
 
 <style lang="scss">

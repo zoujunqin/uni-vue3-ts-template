@@ -26,6 +26,6 @@ useTokenWatch({ hasTokenCb: reload, noTokenCb: reload });
 
 <script lang="ts">
 export default {
-  options: { name: 'TaskRecommend', virtualHost: true }
+  options: { name: 'TaskRecommend', virtualHost: false }
 };
 </script>
