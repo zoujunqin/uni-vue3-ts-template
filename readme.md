@@ -32,6 +32,7 @@ page {
 - [目录说明](./docs/dir.txt)
 - [常见问题](./docs/FAQ.md)
 - [骨架屏使用](./docs/skeleton.md)
+- [路由](./docs/route.md)
 
 - <font color=red>tip1: 小程序 dev 时关闭了域名检查保证前后端对接通畅，生产环境需注意第三方域名校验问题</font>
 - <font color=red>tip2: 小程序插件有可能与第三方库产生冲突，排查困难</font>
