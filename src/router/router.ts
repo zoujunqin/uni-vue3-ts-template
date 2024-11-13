@@ -61,7 +61,6 @@ export class Router {
   routerBeforeCallback = () => {};
   routerAfterCallback = () => {};
   routeStacks = [];
-  routeStacksMap = {};
   routes = [];
   routesMap = {};
   currentRoute = null;
@@ -77,7 +76,6 @@ export class Router {
 
   constructor({ routes } = { routes: [] }) {
     this.routeStacks = [];
-    this.routeStacksMap = {};
     this.routes = routes;
     this.createRoutesMap();
   }
@@ -90,15 +88,6 @@ export class Router {
       return res;
     }, {});
     this.routesMap['/'] = this.routes[0];
-  }
-
-  createRouteStacksMap() {
-    this.routeStacksMap = this.routeStacks.reduce((res, item) => {
-      res[item.name] = item;
-      res[item.route] = item;
-      res[item.path] = item;
-      return res;
-    }, {});
   }
 
   back(step = 1) {
@@ -141,11 +130,15 @@ export class Router {
   }
 
   getRouteStack(path) {
-    if (path === '/') {
-      return this.routeStacksMap[this.routes[0].name];
-    } else {
-      return this.routeStacksMap[path];
+    path = path === '/' ? this.routes[0].name : path;
+
+    for (let i = this.routeStacks.length - 1; i >= 0; i--) {
+      const item = this.routeStacks[i];
+      if ([item.name, item.path].includes(path)) {
+        return item;
+      }
     }
+    return null;
   }
 
   next(options: {
@@ -172,7 +165,6 @@ export class Router {
           newRouteStack.from = lastRouteStack;
 
           this.routeStacks.push(newRouteStack);
-          this.createRouteStacksMap();
           this.currentRoute = newRouteStack;
 
           Router.uniNavigateTo({
@@ -196,7 +188,6 @@ export class Router {
 
           this.routeStacks.pop();
           this.routeStacks.push(newRouteStack);
-          this.createRouteStacksMap();
           this.currentRoute = newRouteStack;
 
           Router.uniRedirectTo({
@@ -221,7 +212,6 @@ export class Router {
 
           this.routeStacks = [];
           this.routeStacks.push(newRouteStack);
-          this.createRouteStacksMap();
           this.currentRoute = newRouteStack;
 
           Router.uniRelaunch({
@@ -276,7 +266,6 @@ export class Router {
         0,
         this.routeStacks.length - this.backDelta
       );
-      this.createRouteStacksMap();
       this.backDelta = 1;
       this.currentRoute = this.routeStacks.slice(-1)[0];
     };
@@ -303,20 +292,27 @@ export class Router {
         state: { back, current, forward, position: toPosition }
       } = e;
 
-      const toRoute = new RouteStack({ path: current, type: 'push' });
+      const backs = back?.split('?');
+      const currents = current.split('?');
+      const forwards = forward?.split('?');
+
+      const toRoute = new RouteStack({
+        path: currents[0],
+        query: qs.parse(currents[1]),
+        type: 'push'
+      });
       if (!this.getRouteStack(toRoute.name)) {
         const next = option => {
           if (option && toRoute.name !== option.name) {
             this.next(option);
           } else {
             if (fromPosition > toPosition) {
-              toRoute.from = this.getRouteStack(forward);
+              toRoute.from = this.getRouteStack(forwards[0]);
               this.routeStacks.unshift(toRoute);
             } else {
-              toRoute.from = this.getRouteStack(back);
+              toRoute.from = this.getRouteStack(backs[0]);
               this.routeStacks.push(toRoute);
             }
-            this.createRouteStacksMap();
             this.currentRoute = toRoute;
           }
         };

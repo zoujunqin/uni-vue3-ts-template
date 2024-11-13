@@ -5,11 +5,11 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.name === 'Login') {
-    next({ name: 'Portal', type: 'replace' });
-  } else {
-    next();
-  }
+  // if (to.name === 'Login') {
+  //   next({ name: 'Portal', type: 'replace' });
+  // } else {
+  next();
+  // }
 });
 
 router.afterEach(() => {});

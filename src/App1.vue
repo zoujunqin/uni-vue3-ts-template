@@ -26,13 +26,11 @@ onMounted(() => {
   };
   const routeStack = new RouteStack(navOptions);
   router.routeStacks.push(routeStack);
-  router.createRouteStacksMap();
   router.currentRoute = routeStack;
 
   const next = option => {
     if (option && routeStack.name !== option?.name) {
       router.routeStacks.pop();
-      router.createRouteStacksMap();
       router.next(option);
     }
   };
