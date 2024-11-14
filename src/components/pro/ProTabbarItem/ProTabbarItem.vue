@@ -14,7 +14,7 @@
     <template #text>
       <text
         :style="getSelectedConfig.textStyle"
-        class="hx-text-[12px] hx-font-[600] hx-leading-[16px]"
+        class="text-[12px] font-[600] leading-[16px]"
       >
         {{ props.text }}
       </text>
@@ -39,8 +39,8 @@ const getSelectedConfig = computed(() => {
   return {
     textStyle: {
       color: uvTabbarItemRef.value?.isActive
-        ? 'var(--hx-text-color-theme)'
-        : 'var(--hx-text-color-tip)'
+        ? 'var(--text-color-theme)'
+        : 'var(--text-color-tip)'
     }
   };
 });

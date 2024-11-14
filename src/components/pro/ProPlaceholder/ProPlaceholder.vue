@@ -1,20 +1,18 @@
 <template>
-  <view class="hx-flex hx-flex-col hx-items-center hx-mt-[30%]">
-    <image :src="data.image" class="hx-w-[140px] hx-h-[140px]" />
+  <view class="flex flex-col items-center mt-[30%]">
+    <image :src="data.image" class="w-[140px] h-[140px]" />
     <text
-      class="hx-mt-[20px] hx-text-text-color hx-text-font-size-regular hx-font-[500] hx-leading-[16px]"
+      class="mt-[20px] text-text-color text-font-size-regular font-[500] leading-[16px]"
     >
       {{ data.title }}
     </text>
-    <text
-      class="hx-mt-[10px] hx-text-text-color-tip hx-text-font-size-base hx-font-[400]"
-    >
+    <text class="mt-[10px] text-text-color-tip text-font-size-base font-[400]">
       {{ data.subTitle }}
     </text>
 
     <ProButton
       v-if="buttonMap.refresh(type)"
-      class="hx-mt-[20px] hx-w-[108px]"
+      class="mt-[20px] w-[108px]"
       type="primary"
       @click="handleRefresh"
     >
@@ -22,7 +20,7 @@
     </ProButton>
     <ProButton
       v-if="buttonMap.checkNetwork(type)"
-      class="hx-mt-[16px] hx-w-[108px]"
+      class="mt-[16px] w-[108px]"
       plain
       type="primary"
     >

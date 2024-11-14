@@ -1,23 +1,23 @@
 <template>
-  <view class="pro-skeleton hx-relative">
+  <view class="pro-skeleton relative">
     <view v-if="props.loading">
       <view
         v-for="(rectInfo, index) in rects"
-        class="hx-absolute hx-bg-white hx-rounded-[6px] hx-shadow-card"
+        class="absolute bg-white rounded-[6px] shadow-card"
         :key="index"
         :class="openAnimate(rectInfo.dataset) ? 'pro-skeleton--animation' : ''"
         :style="getStyle(rectInfo)"
       />
       <view
         v-for="(rectInfo, index) in circles"
-        class="hx-absolute hx-bg-white hx-rounded-full hx-shadow-card"
+        class="absolute bg-white rounded-full shadow-card"
         :key="index"
         :class="openAnimate(rectInfo.dataset) ? 'pro-skeleton--animation' : ''"
         :style="getStyle(rectInfo)"
       />
     </view>
 
-    <view :class="props.loading ? 'hx-opacity-0' : ''">
+    <view :class="props.loading ? 'opacity-0' : ''">
       <slot />
     </view>
   </view>

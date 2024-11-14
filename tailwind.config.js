@@ -1,8 +1,8 @@
 const cssMacro = require('weapp-tailwindcss/css-macro');
 
 module.exports = {
-  prefix: 'hx-',
-  darkMode: 'hx-dark',
+  prefix: '',
+  darkMode: 'dark',
   corePlugins: {
     preflight: false
   },
@@ -31,65 +31,65 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'color-primary': 'var(--hx-color-primary)',
-        'color-primary-disable': 'var(--hx-color-primary-disable)',
-        'color-primary-hover': 'var(--hx-color-primary-hover)',
-        'color-primary-active': 'var(--hx-color-primary-active)',
-        'color-success': 'var(--hx-color-success)',
-        'color-success-disable': 'var(--hx-color-success-disable)',
-        'color-success-hover': 'var(--hx-color-success-hover)',
-        'color-success-active': 'var(--hx-color-success-active)',
-        'color-warning': 'var(--hx-color-warning)',
-        'color-warning-disable': 'var(--hx-color-warning-disable)',
-        'color-warning-hover': 'var(--hx-color-warning-hover)',
-        'color-warning-active': 'var(--hx-color-warning-active)',
-        'color-error': 'var(--hx-color-error)',
-        'color-error-disable': 'var(--hx-color-error-disable)',
-        'color-error-hover': 'var(--hx-color-error-hover)',
-        'color-error-active': 'var(--hx-color-error-active)',
-        'text-color': 'var(--hx-text-color)',
-        'text-color-regular': 'var(--hx-text-color-regular)',
-        'text-color-inverse': 'var(--hx-text-color-inverse)',
-        'text-color-grey': 'var(--hx-text-color-grey)',
-        'text-color-placeholder': 'var(--hx-text-color-placeholder)',
-        'text-color-disable': 'var(--hx-text-color-disable)',
-        'text-color-tip': 'var(--hx-text-color-tip)',
-        'text-color-content': 'var(  --hx-text-color-content)',
-        'text-color-main': 'var(--hx-text-color-main)',
-        'text-color-success': 'var(--hx-text-color-success)',
-        'text-color-theme': 'var(--hx-text-color-theme)',
-        'bg-color': 'var(--hx-bg-color)',
-        'bg-color-grey': 'var(--hx-bg-color-grey)',
-        'bg-color-hover': 'var(--hx-bg-color-hover)',
-        'bg-color-mask': 'var(--hx-bg-color-mask)',
-        'bg-color-primary': 'var(--hx-bg-color-primary)',
-        'bg-color-success': 'var(--hx-bg-color-success)',
-        'bg-color-warning': 'var(--hx-bg-color-warning)',
-        'bg-color-error': 'var(--hx-bg-color-error)',
-        'border-color': 'var(--hx-border-color)',
-        'shadow-button-color': 'var(--hx-shadow-button-color)',
-        'shadow-card-color': 'var(--hx-shadow-card-color)',
-        'color-title': 'var(--hx-color-title)',
-        'color-subtitle': 'var(--hx-color-subtitle)',
-        'color-paragraph:': 'var(--hx-color-paragraph:)'
+        'color-primary': 'var(--color-primary)',
+        'color-primary-disable': 'var(--color-primary-disable)',
+        'color-primary-hover': 'var(--color-primary-hover)',
+        'color-primary-active': 'var(--color-primary-active)',
+        'color-success': 'var(--color-success)',
+        'color-success-disable': 'var(--color-success-disable)',
+        'color-success-hover': 'var(--color-success-hover)',
+        'color-success-active': 'var(--color-success-active)',
+        'color-warning': 'var(--color-warning)',
+        'color-warning-disable': 'var(--color-warning-disable)',
+        'color-warning-hover': 'var(--color-warning-hover)',
+        'color-warning-active': 'var(--color-warning-active)',
+        'color-error': 'var(--color-error)',
+        'color-error-disable': 'var(--color-error-disable)',
+        'color-error-hover': 'var(--color-error-hover)',
+        'color-error-active': 'var(--color-error-active)',
+        'text-color': 'var(--text-color)',
+        'text-color-regular': 'var(--text-color-regular)',
+        'text-color-inverse': 'var(--text-color-inverse)',
+        'text-color-grey': 'var(--text-color-grey)',
+        'text-color-placeholder': 'var(--text-color-placeholder)',
+        'text-color-disable': 'var(--text-color-disable)',
+        'text-color-tip': 'var(--text-color-tip)',
+        'text-color-content': 'var(  --text-color-content)',
+        'text-color-main': 'var(--text-color-main)',
+        'text-color-success': 'var(--text-color-success)',
+        'text-color-theme': 'var(--text-color-theme)',
+        'bg-color': 'var(--bg-color)',
+        'bg-color-grey': 'var(--bg-color-grey)',
+        'bg-color-hover': 'var(--bg-color-hover)',
+        'bg-color-mask': 'var(--bg-color-mask)',
+        'bg-color-primary': 'var(--bg-color-primary)',
+        'bg-color-success': 'var(--bg-color-success)',
+        'bg-color-warning': 'var(--bg-color-warning)',
+        'bg-color-error': 'var(--bg-color-error)',
+        'border-color': 'var(--border-color)',
+        'shadow-button-color': 'var(--shadow-button-color)',
+        'shadow-card-color': 'var(--shadow-card-color)',
+        'color-title': 'var(--color-title)',
+        'color-subtitle': 'var(--color-subtitle)',
+        'color-paragraph:': 'var(--color-paragraph:)'
       },
       fontSize: {
-        'font-size-sm': 'var(--hx-font-size-sm)',
-        'font-size-base': 'var(--hx-font-size-base)',
-        'font-size-regular': 'var(--hx-font-size-regular)',
-        'font-size-lg': 'var(--hx-font-size-lg)',
-        'font-size-20': 'var(--hx-font-size-20)',
-        'font-size-title': 'var(--hx-font-size-title)',
-        'font-size-subtitle': 'var(--hx-font-size-subtitle)',
-        'font-size-paragraph': 'var(--hx-font-size-paragraph)'
+        'font-size-sm': 'var(--font-size-sm)',
+        'font-size-base': 'var(--font-size-base)',
+        'font-size-regular': 'var(--font-size-regular)',
+        'font-size-lg': 'var(--font-size-lg)',
+        'font-size-20': 'var(--font-size-20)',
+        'font-size-title': 'var(--font-size-title)',
+        'font-size-subtitle': 'var(--font-size-subtitle)',
+        'font-size-paragraph': 'var(--font-size-paragraph)'
       },
       height: {
-        'navbar-height': 'var(--hx-navbar-height)'
+        'navbar-height': 'var(--navbar-height)'
       }
     },
     boxShadow: {
-      button: '0 4px 6px var(--hx-shadow-button-color)',
-      card: '0 6px 20px 0 var(--hx-shadow-card-color)'
+      button: '0 4px 6px var(--shadow-button-color)',
+      card: '0 6px 20px 0 var(--shadow-card-color)'
     }
   }
 };

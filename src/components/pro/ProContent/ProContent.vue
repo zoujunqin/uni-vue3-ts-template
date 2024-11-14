@@ -1,5 +1,5 @@
 <template>
-  <view class="pro-content hx-flex-1 hx-overflow-y-auto">
+  <view class="pro-content flex-1 overflow-y-auto">
     <slot />
   </view>
 </template>

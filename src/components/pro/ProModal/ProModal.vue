@@ -1,42 +1,40 @@
 <template>
   <ProPopup ref="uniPopupRef" :safe-area-inset-bottom="false" bg-color="none">
     <view
-      class="hx-flex hx-flex-col hx-justify-between hx-w-[302px] hx-rounded-[8px] hx-overflow-hidden"
+      class="flex flex-col justify-between w-[302px] rounded-[8px] overflow-hidden"
     >
       <slot name="image" />
 
-      <view class="hx-text-center hx-p-[24px] hx-bg-white">
+      <view class="text-center p-[24px] bg-white">
         <slot name="title">
-          <view
-            class="hx-mb-[4px] hx-text-[17px] hx-font-bold hx-leading-[26px]"
-          >
+          <view class="mb-[4px] text-[17px] font-bold leading-[26px]">
             {{ title }}
           </view>
         </slot>
 
         <slot name="content">
           <view
-            class="hx-mb-[24px] hx-text-[15px] hx-leading-[24px] hx-text-text-color-tip"
+            class="mb-[24px] text-[15px] leading-[24px] text-text-color-tip"
           >
             {{ content }}
           </view>
         </slot>
 
-        <view class="hx-flex">
+        <view class="flex">
           <ProButton
             v-if="showCancel"
-            class="hx-w-[122px] hx-mr-[10px]"
+            class="w-[122px] mr-[10px]"
             color="rgb(61 134 242 / 10%)"
             type="primary"
             @click="handleCancel"
           >
-            <span class="hx-text-text-color-theme">
+            <span class="text-text-color-theme">
               {{ cancelButtonText }}
             </span>
           </ProButton>
           <ProButton
             v-if="showConfirm"
-            class="hx-w-[122px]"
+            class="w-[122px]"
             type="primary"
             @click="handleConfirm"
           >

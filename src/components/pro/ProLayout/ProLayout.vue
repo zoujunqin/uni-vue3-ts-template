@@ -1,8 +1,5 @@
 <template>
-  <view
-    :style="layoutStyle"
-    class="pro-layout hx-h-full hx-flex hx-flex-col hx-h-full"
-  >
+  <view :style="layoutStyle" class="pro-layout h-full flex flex-col h-full">
     <slot />
   </view>
 </template>

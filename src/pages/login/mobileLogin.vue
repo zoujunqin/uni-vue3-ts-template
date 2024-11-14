@@ -1,16 +1,14 @@
 <template>
   <ProPage
-    class="login hx-p-[128px_24px_0_24px] hx-h-full hx-flex hx-flex-col"
+    class="login p-[128px_24px_0_24px] h-full flex flex-col"
     navbar-title=""
     show-navbar
   >
-    <text
-      class="hx-text-[26px] hx-leading-[30px] hx-font-[600] hx-text-color-title"
-    >
+    <text class="text-[26px] leading-[30px] font-[600] text-color-title">
       欢迎登录
     </text>
     <text
-      class="hx-mt-[20px] hx-text-font-size-regular hx-text-text-color hx-font-[400] hx-leading-[16px]"
+      class="mt-[20px] text-font-size-regular text-text-color font-[400] leading-[16px]"
     >
       未注册的手机号将自动注册
     </text>
@@ -19,13 +17,13 @@
       ref="proFormRef"
       :model="formData"
       :rules="formRules"
-      class="hx-mt-[24px]"
+      class="mt-[24px]"
       error-type="toast"
     >
       <ProFormItem prop="mobile">
         <ProInput
           v-model="formData.mobile"
-          class="hx-bg-white hx-h-[44px] !hx-flex-none"
+          class="bg-white h-[44px] !flex-none"
           clearable
           placeholder="输入手机号"
           type="number"
@@ -34,23 +32,21 @@
       <ProFormItem prop="captcha">
         <ProInput
           v-model="formData.captcha"
-          class="hx-bg-white hx-h-[44px] !hx-flex-none"
+          class="bg-white h-[44px] !flex-none"
           clearable
           placeholder="输入验证码"
           type="number"
         >
           <template #suffix>
-            <view class="hx-min-w-[84px] hx-flex hx-items-center">
-              <view
-                class="hx-mr-[12px] hx-w-[2px] hx-h-[16px] hx-bg-[#f2f2f2]"
-              />
+            <view class="min-w-[84px] flex items-center">
+              <view class="mr-[12px] w-[2px] h-[16px] bg-[#f2f2f2]" />
               <ProCode
                 :fetch="fetchCaptcha"
                 :valid-phone="validMobile"
                 ref="proCodeRef"
                 change-text="xs重新获取"
                 end-text="获取验证码"
-                text-class="hx-text-color-primary hx-text-font-size-base hx-font-[400] hx-leading-[21px]"
+                text-class="text-color-primary text-font-size-base font-[400] leading-[21px]"
               />
             </view>
           </template>
@@ -58,20 +54,18 @@
       </ProFormItem>
     </ProForm>
 
-    <ProButton class="hx-mt-[40px]" type="primary" @click="fetchMobileLogin">
-      <text class="hx-text-[15px]">立即登录</text>
+    <ProButton class="mt-[40px]" type="primary" @click="fetchMobileLogin">
+      <text class="text-[15px]">立即登录</text>
     </ProButton>
 
     <ProButton
       :hairline="false"
-      class="login-with-wechat hx-mt-[24px]"
+      class="login-with-wechat mt-[24px]"
       hover-start-time="50000"
       open-type="getPhoneNumber"
       @getphonenumber="weChatAuthLogin"
     >
-      <text
-        class="hx-text-[15px] hx-font-[400] hx-leading-[24px] hx-text-text-color-tip"
-      >
+      <text class="text-[15px] font-[400] leading-[24px] text-text-color-tip">
         手机号快捷登录
       </text>
     </ProButton>
@@ -144,18 +138,19 @@ const fetchMobileLogin = async () => {
 
 <style lang="scss" scoped>
 .login {
-  background: linear-gradient(
-    180deg,
-    #fff 0%,
-    #eef8ff 46.47%,
-    #e8efff 73.17%,
-    #e7e6fd 100%
-  );
+  background:
+    linear-gradient(
+      180deg,
+      #fff 0%,
+      #eef8ff 46.47%,
+      #e8efff 73.17%,
+      #e7e6fd 100%
+    );
 }
 
 :deep(.pro-count-down text) {
-  font-size: var(--hx-font-size-base) !important;
-  color: var(--hx-color-primary) !important;
+  font-size: var(--font-size-base) !important;
+  color: var(--color-primary) !important;
 }
 
 .login-with-wechat {

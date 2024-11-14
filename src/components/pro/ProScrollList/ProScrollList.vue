@@ -16,7 +16,7 @@
 
     <template #empty>
       <slot name="empty">
-        <ProPlaceholder class="hx-mt-[30%]" type="noData" @refresh="reload" />
+        <ProPlaceholder class="mt-[30%]" type="noData" @refresh="reload" />
       </slot>
     </template>
   </z-paging>

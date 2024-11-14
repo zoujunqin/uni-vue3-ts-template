@@ -5,7 +5,7 @@
     :value="value"
     :fixed="false"
     :placeholder="false"
-    class="!hx-flex-none"
+    class="!flex-none"
     v-bind="$attrs"
     @change="tabbarChange"
   >

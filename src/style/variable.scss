@@ -1,70 +1,70 @@
 :root {
   /* 行为相关颜色 */
-  --hx-color-primary: #0c88fa;
-  --hx-color-primary-disable: #baddff;
-  --hx-color-primary-hover: #69aaff;
-  --hx-color-primary-active: #2662c9;
-  --hx-color-success: #00b42a;
-  --hx-color-success-disable: #4cd263;
-  --hx-color-success-hover: #23c343;
-  --hx-color-success-active: #009a29;
-  --hx-color-warning: #ff7d00;
-  --hx-color-warning-disable: #faac7b;
-  --hx-color-warning-hover: #ff9a2e;
-  --hx-color-warning-active: #cc5120;
-  --hx-color-error: #e51a1a;
-  --hx-color-error-disable: #fba399;
-  --hx-color-error-hover: #f8524d;
-  --hx-color-error-active: #cc181e;
+  --color-primary: #0c88fa;
+  --color-primary-disable: #baddff;
+  --color-primary-hover: #69aaff;
+  --color-primary-active: #2662c9;
+  --color-success: #00b42a;
+  --color-success-disable: #4cd263;
+  --color-success-hover: #23c343;
+  --color-success-active: #009a29;
+  --color-warning: #ff7d00;
+  --color-warning-disable: #faac7b;
+  --color-warning-hover: #ff9a2e;
+  --color-warning-active: #cc5120;
+  --color-error: #e51a1a;
+  --color-error-disable: #fba399;
+  --color-error-hover: #f8524d;
+  --color-error-active: #cc181e;
 
   /* 文字基本颜色 */
-  --hx-text-color: #595865; // 基本色
-  --hx-text-color-regular: #636363;
-  --hx-text-color-inverse: #fff; // 反色
-  --hx-text-color-grey: #999; // 辅助灰色
-  --hx-text-color-placeholder: #c0c4cc;
-  --hx-text-color-disable: #c0c0c0;
-  --hx-text-color-tip: #909399; // 提示文本颜色
-  --hx-text-color-content: #606266;
-  --hx-text-color-main: #141731; //文字加重色
-  --hx-text-color-success: #00b7bb; //成功字体颜色
-  --hx-text-color-theme: #3d86f2; //主题字体颜色
+  --text-color: #595865; // 基本色
+  --text-color-regular: #636363;
+  --text-color-inverse: #fff; // 反色
+  --text-color-grey: #999; // 辅助灰色
+  --text-color-placeholder: #c0c4cc;
+  --text-color-disable: #c0c0c0;
+  --text-color-tip: #909399; // 提示文本颜色
+  --text-color-content: #606266;
+  --text-color-main: #141731; //文字加重色
+  --text-color-success: #00b7bb; //成功字体颜色
+  --text-color-theme: #3d86f2; //主题字体颜色
 
   /* 背景颜色 */
-  --hx-bg-color: #fff;
-  --hx-bg-color-grey: #f7f8fa; //页面背景色
-  --hx-bg-color-hover: #f1f1f1; // 点击状态颜色
-  --hx-bg-color-mask: rgb(33 33 33 / 50%); // 遮罩颜色
-  --hx-bg-color-primary: rgb(61 134 242 / 10%);
-  --hx-bg-color-success: rgb(0 183 0 / 10%);
-  --hx-bg-color-warning: rgb(255 50 50 / 10%);
-  --hx-bg-color-error: rgb(255 50 50 / 10%);
+  --bg-color: #fff;
+  --bg-color-grey: #f7f8fa; //页面背景色
+  --bg-color-hover: #f1f1f1; // 点击状态颜色
+  --bg-color-mask: rgb(33 33 33 / 50%); // 遮罩颜色
+  --bg-color-primary: rgb(61 134 242 / 10%);
+  --bg-color-success: rgb(0 183 0 / 10%);
+  --bg-color-warning: rgb(255 50 50 / 10%);
+  --bg-color-error: rgb(255 50 50 / 10%);
 
   /* 边框颜色 */
-  --hx-border-color: #f2f2f2;
+  --border-color: #f2f2f2;
 
   /* 阴影颜色 */
-  --hx-shadow-button-color: rgb(0 72 157 / 10%);
-  --hx-shadow-card-color: rgb(0 60 116 / 6%);
+  --shadow-button-color: rgb(0 72 157 / 10%);
+  --shadow-card-color: rgb(0 60 116 / 6%);
 
   /* 尺寸变量 */
 
   /* 文字尺寸 */
-  --hx-font-size-sm: 12px;
-  --hx-font-size-base: 14px;
-  --hx-font-size-regular: 16px;
-  --hx-font-size-lg: 18px;
-  --hx-font-size-20: 20px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-regular: 16px;
+  --font-size-lg: 18px;
+  --font-size-20: 20px;
 
   /* 透明度 */
-  --hx-opacity-disabled: 0.3; // 组件禁用态的透明度
+  --opacity-disabled: 0.3; // 组件禁用态的透明度
 
   /* 文章场景相关 */
-  --hx-color-title: #141731; // 文章标题颜色
-  --hx-font-size-title: 22px;
-  --hx-color-subtitle: #555; // 二级标题颜色
-  --hx-font-size-subtitle: 18px;
-  --hx-color-paragraph: #3f536e; // 文章段落颜色
-  --hx-font-size-paragraph: 16px;
-  --hx-navbar-height: 44px;
+  --color-title: #141731; // 文章标题颜色
+  --font-size-title: 22px;
+  --color-subtitle: #555; // 二级标题颜色
+  --font-size-subtitle: 18px;
+  --color-paragraph: #3f536e; // 文章段落颜色
+  --font-size-paragraph: 16px;
+  --navbar-height: 44px;
 }

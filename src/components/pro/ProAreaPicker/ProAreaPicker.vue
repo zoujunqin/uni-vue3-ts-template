@@ -2,7 +2,7 @@
   <ProPicker
     ref="proPickerRef"
     :columns="addressList"
-    active-color="var(--hx-color-primary)"
+    active-color="var(--color-primary)"
     key-name="name"
     round="20rpx"
     v-bind="{ ...$attrs, ...bridgedEvents }"

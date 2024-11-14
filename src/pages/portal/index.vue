@@ -5,17 +5,17 @@
         <Tasks
           v-if="tabbarList[0].load"
           v-show="tabbarList[0].visible"
-          class="hx-flex-1"
+          class="flex-1"
         />
 
         <Recommend
           v-if="tabbarList[1].load"
           v-show="tabbarList[1].visible"
-          class="hx-flex-1"
+          class="flex-1"
         />
 
         <Person
-          class="hx-flex-1"
+          class="flex-1"
           v-if="tabbarList[2].load"
           v-show="tabbarList[2].visible"
         />
@@ -34,11 +34,11 @@
             :text="item.text"
           >
             <template #active-icon>
-              <image :src="item.activeIcon" class="hx-h-[24px] hx-w-[24px]" />
+              <image :src="item.activeIcon" class="h-[24px] w-[24px]" />
             </template>
 
             <template #inactive-icon>
-              <image :src="item.icon" class="hx-h-[24px] hx-w-[24px]" />
+              <image :src="item.icon" class="h-[24px] w-[24px]" />
             </template>
           </ProTabbarItem>
         </ProTabbar>

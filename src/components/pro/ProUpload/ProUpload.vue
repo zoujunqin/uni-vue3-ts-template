@@ -2,11 +2,11 @@
   <view
     :class="backgroundImageClass"
     :style="style"
-    class="pro-upload hx-relative hx-flex hx-justify-center hx-items-center hx-w-[250px] hx-h-[158px] hx-rounded-[6px] hx-bg-contain hx-bg-no-repeat"
+    class="pro-upload relative flex justify-center items-center w-[250px] h-[158px] rounded-[6px] bg-contain bg-no-repeat"
   >
     <view
       v-if="previewUrl && !props.readonly"
-      class="pro-remove-button hx-absolute hx-top-0 hx-right-0 hx-rounded-[0_6px_0_8px] hx-p-[2px] hx-flex hx-items-center hx-justify-center"
+      class="pro-remove-button absolute top-0 right-0 rounded-[0_6px_0_8px] p-[2px] flex items-center justify-center"
     >
       <ProIcon
         color="#fff"

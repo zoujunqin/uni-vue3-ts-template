@@ -27,7 +27,7 @@ page {
   font-size: 18px;
   font-weight: 500;
   line-height: 27px;
-  color: var(--hx-color-title);
+  color: var(--color-title);
 }
 
 /* 固定提示 */
@@ -58,7 +58,7 @@ page {
 .error-fixed-tip {
   @extend .fixed-tip;
 
-  color: var(--hx-color-error);
+  color: var(--color-error);
   background-color: rgb(255 50 50 / 10%);
 
   &::before {
@@ -71,7 +71,7 @@ page {
 .warning-fixed-tip {
   @extend .fixed-tip;
 
-  color: var(--hx-color-warning);
+  color: var(--color-warning);
   background-color: rgb(255 115 0 / 10%);
 
   &::before {
@@ -84,7 +84,7 @@ page {
 // 覆盖 uv 样式
 
 .uv-count-down > text {
-  color: var(--hx-color-primary);
+  color: var(--color-primary);
 }
 
 .uv-drop-down {

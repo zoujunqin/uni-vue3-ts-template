@@ -1,8 +1,5 @@
 <template>
-  <view
-    :style="footerStyle"
-    class="pro-footer hx-z-10 hx-p-[6px_16px] hx-bg-white"
-  >
+  <view :style="footerStyle" class="pro-footer z-10 p-[6px_16px] bg-white">
     <slot />
   </view>
 </template>

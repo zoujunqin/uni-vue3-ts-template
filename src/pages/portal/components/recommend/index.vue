@@ -4,7 +4,7 @@
       <ProScrollList
         ref="proScrollListRef"
         :fetch="getRecommendTaskList"
-        class="hx-flex-1"
+        class="flex-1"
       >
         <template #default="{ row }"> {{ row.taskContent }} </template>
       </ProScrollList>

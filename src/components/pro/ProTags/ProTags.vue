@@ -26,27 +26,27 @@ const tagClass = computed(() => {
 
 const typeMap = {
   primary: {
-    color: 'var(--hx-color-primary)',
+    color: 'var(--color-primary)',
     bgColor: 'rgb(12 136 250 / 10%)'
   },
   success: {
-    color: 'var(--hx-color-success)',
+    color: 'var(--color-success)',
     bgColor: 'rgb(0 183 0 / 10%)'
   },
   warning: {
-    color: 'var(--hx-color-warning)',
+    color: 'var(--color-warning)',
     bgColor: 'rgb(255 50 50 / 10%)'
   },
   error: {
-    color: 'var(--hx-color-error)',
+    color: 'var(--color-error)',
     bgColor: 'rgb(229 26 26 / 10%)'
   },
   disabled: {
-    color: 'var(--hx-text-color-placeholder)',
+    color: 'var(--text-color-placeholder)',
     bgColor: 'rgb(192 196 204 / 10%)'
   },
   info: {
-    color: 'var(--hx-text-color-tip)',
+    color: 'var(--text-color-tip)',
     bgColor: '#F7F8FA'
   }
 };
@@ -61,6 +61,6 @@ export default { options: { name: 'ProTags', virtualHost: true } };
 
 <style lang="scss">
 .pro-medium-tags {
-  @apply hx-text-font-size-sm;
+  @apply text-font-size-sm;
 }
 </style>

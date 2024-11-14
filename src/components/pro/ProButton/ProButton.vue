@@ -3,7 +3,7 @@
     class="pro-button"
     throttle-time="500"
     custom-style="border-radius: 6px; height: 40px;"
-    custom-text-style="font-size: var(--hx-font-size-regular)"
+    custom-text-style="font-size: var(--font-size-regular)"
     v-bind="{ ...$attrs, ...bridgedEvents }"
   >
     <slot />

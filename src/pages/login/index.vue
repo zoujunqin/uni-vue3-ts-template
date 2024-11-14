@@ -1,64 +1,60 @@
 <template>
   <ProPage
-    class="login hx-p-[128px_24px_0_24px] hx-h-full hx-flex hx-flex-col"
+    class="login p-[128px_24px_0_24px] h-full flex flex-col"
     navbar-title=""
     show-navbar
   >
-    <text
-      class="hx-text-[26px] hx-leading-[30px] hx-font-[600] hx-text-color-title"
-    >
+    <text class="text-[26px] leading-[30px] font-[600] text-color-title">
       欢迎登录
     </text>
     <text
-      class="hx-mt-[20px] hx-text-font-size-regular hx-text-text-color hx-font-[400] hx-leading-[16px]"
+      class="mt-[20px] text-font-size-regular text-text-color font-[400] leading-[16px]"
     >
       未注册的手机号将自动注册
     </text>
 
     <ProButton
-      :class="[valid && '!hx-hidden']"
+      :class="[valid && '!hidden']"
       :hairline="false"
-      class="hx-text-[white] hx-mt-[56px] hx-bg-color-success hx-flex hx-items-center hx-justify-center hx-rounded-[6px]"
+      class="text-[white] mt-[56px] bg-color-success flex items-center justify-center rounded-[6px]"
       type="success"
       @click="validate"
     >
-      <text class="hx-text-[15px]"> 手机号快捷登录 </text>
+      <text class="text-[15px]"> 手机号快捷登录 </text>
     </ProButton>
     <ProButton
-      :class="[!valid && '!hx-hidden']"
+      :class="[!valid && '!hidden']"
       :hairline="false"
-      class="hx-text-[white] hx-mt-[56px] hx-bg-color-success hx-flex hx-items-center hx-justify-center hx-rounded-[6px]"
+      class="text-[white] mt-[56px] bg-color-success flex items-center justify-center rounded-[6px]"
       open-type="getPhoneNumber"
       type="success"
       @getphonenumber="weChatAuthLogin"
     >
-      <text class="hx-text-[15px]"> 手机号快捷登录 </text>
+      <text class="text-[15px]"> 手机号快捷登录 </text>
     </ProButton>
 
     <ProButton
-      class="hx-text-[white] hx-mt-[18px] hx-bg-color-primary hx-flex hx-items-center hx-justify-center hx-rounded-[6px]"
+      class="text-[white] mt-[18px] bg-color-primary flex items-center justify-center rounded-[6px]"
       type="primary"
       @tap="navToMobileLogin"
     >
-      <text class="hx-text-[15px]"> 手机号登录 </text>
+      <text class="text-[15px]"> 手机号登录 </text>
     </ProButton>
 
-    <view class="hx-mt-[24px] hx-flex hx-items-center hx-justify-center">
+    <view class="mt-[24px] flex items-center justify-center">
       <ProCheckboxGroup
         v-model="isAgree"
-        class="!hx-flex-none hx-relative"
+        class="!flex-none relative"
         @change="handleIsAgreeChange"
       >
         <ProCheckbox name="true" shape="circle" size="mini" />
         <ProTooltipPer ref="proTooltipPerRef" text="请阅读并勾选用户协议" />
       </ProCheckboxGroup>
-      <text
-        class="hx-text-font-size-base hx-leading-[24px] hx-text-text-color-tip"
-      >
+      <text class="text-font-size-base leading-[24px] text-text-color-tip">
         已阅读并同意
-        <text class="hx-text-color-primary"> 《用户协议》 </text>
+        <text class="text-color-primary"> 《用户协议》 </text>
         和
-        <text class="hx-text-color-primary"> 《隐私政策》 </text>
+        <text class="text-color-primary"> 《隐私政策》 </text>
       </text>
     </view>
 

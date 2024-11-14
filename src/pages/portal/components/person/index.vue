@@ -10,7 +10,7 @@
       <template #image>
         <image
           :src="getAssetsResource('@http/person/log-out-img.png')"
-          class="hx-w-full hx-h-[94px]"
+          class="w-full h-[94px]"
         />
       </template>
     </ProModal>
@@ -25,7 +25,7 @@
       <template #image>
         <image
           :src="getAssetsResource('@http/person/connection-bg.png')"
-          class="hx-w-full hx-h-[116px]"
+          class="w-full h-[116px]"
         />
       </template>
     </ProModal>
@@ -34,67 +34,62 @@
       :style="`background-image: url(${getAssetsResource(
         '@http/person/nav-bar-bg.svg'
       )});`"
-      class="page-pt-with-navbar hx-pl-[8px] hx-pr-[8px] hx-bg-[length:100%_432px] hx-bg-no-repeat"
+      class="page-pt-with-navbar pl-[8px] pr-[8px] bg-[length:100%_432px] bg-no-repeat"
     >
       <view
-        class="hx-flex hx-items-center hx-justify-between hx-pl-[8px] hx-pr-[8px] hx-mt-[12px] hx-mb-[20px]"
+        class="flex items-center justify-between pl-[8px] pr-[8px] mt-[12px] mb-[20px]"
       >
-        <view class="hx-flex hx-flex-1" @click="handleToLoginPage">
+        <view class="flex flex-1" @click="handleToLoginPage">
           <view class="img-box">
             <image
               :src="getAssetsResource('@http/person/avatar-default.svg')"
-              class="hx-w-[54px] hx-h-[54px] hx-rounded-full"
+              class="w-[54px] h-[54px] rounded-full"
             />
           </view>
-          <view class="hx-flex hx-flex-col hx-justify-center">
+          <view class="flex flex-col justify-center">
             <text
-              class="hx-mb-[4px] hx-text-color-title hx-text-font-size-title hx-font-[600] hx-leading-[28px]"
+              class="mb-[4px] text-color-title text-font-size-title font-[600] leading-[28px]"
             >
               {{ token ? userInfo?.workerName : '未登录' }}
             </text>
             <text
-              class="hx-text-text-color hx-text-font-size-base hx-leading-[20px] hx-font-[500]"
+              class="text-text-color text-font-size-base leading-[20px] font-[500]"
             >
               {{ token ? userInfo?.mobile : '点击登录，查看更多信息' }}
             </text>
           </view>
         </view>
         <view
-          class="hx-h-[30px] hx-w-[98px] hx-flex hx-items-center hx-justify-between hx-p-[8px_16px] hx-rounded-[15px] hx-shadow-button"
+          class="h-[30px] w-[98px] flex items-center justify-between p-[8px_16px] rounded-[15px] shadow-button"
           v-if="token"
           @click="logout"
         >
           <image
             :src="getAssetsResource('@http/person/exit.svg')"
-            class="hx-w-[14px] hx-h-[14px] hx-mr-[4px]"
+            class="w-[14px] h-[14px] mr-[4px]"
           />
-          <text
-            class="hx-text-font-size-sm hx-leading-[20px] hx-text-text-color"
-          >
+          <text class="text-font-size-sm leading-[20px] text-text-color">
             退出登录
           </text>
         </view>
       </view>
 
       <view
-        class="hx-h-[88px] hx-p-[16px] hx-flex hx-items-center hx-justify-between hx-bg-white hx-rounded-[8px] hx-shadow-card hx-mb-[10px]"
+        class="h-[88px] p-[16px] flex items-center justify-between bg-white rounded-[8px] shadow-card mb-[10px]"
       >
         <view
           v-for="(item, index) in panelItemList"
           :key="index"
-          class="hx-h-[56px] hx-flex hx-flex-col hx-items-center"
+          class="h-[56px] flex flex-col items-center"
           @click="panelItemMap[item.type]?.handler"
         >
-          <view class="hx-relative">
-            <image
-              :src="item.icon"
-              class="hx-w-[36px] hx-h-[36px] hx-mb-[8px]"
-            />
+          <view class="relative">
+            <image :src="item.icon" class="w-[36px] h-[36px] mb-[8px]" />
             <ProBadge :value="item.badge" absolute />
           </view>
 
           <text
-            class="hx-text-font-size-base hx-text-color-title hx-font-[500] hx-leading-[20px]"
+            class="text-font-size-base text-color-title font-[500] leading-[20px]"
           >
             {{ item.name }}
           </text>
@@ -102,26 +97,24 @@
       </view>
 
       <view
-        class="hx-bg-white hx-rounded-[8px] hx-pl-[12px] hx-pr-[12px] hx-mb-[10px] hx-pt-[16px]"
+        class="bg-white rounded-[8px] pl-[12px] pr-[12px] mb-[10px] pt-[16px]"
       >
         <vertical-list-item
           v-for="(item, index) in firstVerticalList"
           :key="index"
           :data="item"
           :listLength="firstVerticalList.length"
-          class="hx-pb-[16px]"
+          class="pb-[16px]"
           @click="verticalListItemMap[item.type]?.handler"
         />
       </view>
-      <view
-        class="hx-bg-white hx-rounded-[8px] hx-pl-[12px] hx-pr-[12px] hx-pt-[16px]"
-      >
+      <view class="bg-white rounded-[8px] pl-[12px] pr-[12px] pt-[16px]">
         <vertical-list-item
           v-for="(item, index) in secondVerticalList"
           :key="index"
           :data="item"
           :listLength="secondVerticalList.length"
-          class="hx-pb-[16px]"
+          class="pb-[16px]"
           @click="verticalListItemMap[item.type]?.handler"
         />
       </view>
@@ -234,7 +227,7 @@ export default {
 </script>
 
 <style scoped>
-:deep(.hx-relative .uv-badge) {
+:deep(.relative .uv-badge) {
   top: 0 !important;
   right: 0 !important;
   height: unset;

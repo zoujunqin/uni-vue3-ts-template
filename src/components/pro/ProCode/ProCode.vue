@@ -1,5 +1,5 @@
 <template>
-  <view class="hx-h-full hx-flex hx-items-center">
+  <view class="h-full flex items-center">
     <uv-code
       ref="uvCodeRef"
       v-bind="{ ...$attrs, ...bridgedEvents, onChange: handleChange }"
@@ -12,8 +12,8 @@
       v-else
       :class="[
         props.textClass,
-        props.readonly ? 'hx-text-text-color-disable' : 'hx-text-color-primary',
-        'hx-text-font-size-base hx-font-[400] hx-leading-[21px]'
+        props.readonly ? 'text-text-color-disable' : 'text-color-primary',
+        'text-font-size-base font-[400] leading-[21px]'
       ]"
       @click="getCode"
     >

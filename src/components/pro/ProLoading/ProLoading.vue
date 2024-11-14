@@ -3,10 +3,10 @@
     <view class="pro-loading__wrapper">
       <image
         :src="getAssetsResource('@http/loading.gif')"
-        class="hx-w-[54px] hx-h-[54px]"
+        class="w-[54px] h-[54px]"
       />
       <text
-        class="hx-text-[14px] hx-leading-[14px] hx-font-[600] hx-mt-[16px] hx-text-text-color-tip"
+        class="text-[14px] leading-[14px] font-[600] mt-[16px] text-text-color-tip"
       >
         {{ loadingText }}
       </text>

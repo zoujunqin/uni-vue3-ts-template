@@ -1,7 +1,7 @@
 <template>
   <view
     v-if="loading"
-    class="pro-skeleton-rect hx-rounded-full hx-shadow-card"
+    class="pro-skeleton-rect rounded-full shadow-card"
     :class="openAnimate ? 'pro-skeleton--animation' : ''"
     :style="skeletonCircleStyle"
   />

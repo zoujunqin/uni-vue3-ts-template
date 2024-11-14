@@ -1,5 +1,5 @@
 <template>
-  <view class="hx-h-full hx-overflow-auto">
+  <view class="h-full overflow-auto">
     <ProNetworkTip />
 
     <slot />

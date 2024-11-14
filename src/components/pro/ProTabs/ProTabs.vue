@@ -4,14 +4,14 @@
     ref="uvTabsRef"
     class="pro-tabs"
     lineWidth="32rpx"
-    lineColor="var(--hx-color-primary)"
+    lineColor="var(--color-primary)"
     :activeStyle="{
-      color: 'var(--hx-text-color-title)',
+      color: 'var(--text-color-title)',
       fontWeight: 'bold',
       fontSize: '18px'
     }"
     :inactiveStyle="{
-      color: 'var(--hx-text-text-color-regular)'
+      color: 'var(--text-text-color-regular)'
     }"
     itemStyle="padding: 12px 14px; height: 40px; line-height: 21px;"
   />
