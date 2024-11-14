@@ -8,7 +8,6 @@
 
 <script lang="ts" setup>
 import { onLaunch, onShow } from '@dcloudio/uni-app';
-import qs from 'qs';
 
 /* #ifdef MP-WEIXIN */
 /* 不想被打入异步分包的组件 */
@@ -39,13 +38,12 @@ onShow(() => {
 });
 
 /* #ifdef MP-WEIXIN */
-const { router } = useRouter();
+const router = useRouter();
 const pathname = router.routes[0].path;
-const search = '';
 
 const navOptions = {
   path: pathname,
-  query: qs.parse(search.slice(1)),
+  query: {},
   type: null
 };
 const routeStack = new RouteStack(navOptions);

@@ -91,7 +91,7 @@ const handleIsAgreeChange = () => {
 };
 
 const handleBack = () => {
-  const { router } = useRouter();
+  const router = useRouter();
   router.back();
 };
 </script>

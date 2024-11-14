@@ -160,7 +160,7 @@ export class Router {
 
       switch (options.type) {
         case 'push': {
-          const { route: lastRouteStack } = useRoute();
+          const lastRouteStack = useRoute();
           const newRouteStack = new RouteStack({ ...options, ...route });
           newRouteStack.from = lastRouteStack;
 
@@ -182,7 +182,7 @@ export class Router {
         }
 
         case 'replace': {
-          const { route: lastRouteStack } = useRoute();
+          const lastRouteStack = useRoute();
           const newRouteStack = new RouteStack({ ...options, ...route });
           newRouteStack.from = lastRouteStack;
 
@@ -206,7 +206,7 @@ export class Router {
         }
 
         case 'relaunch': {
-          const { route: lastRouteStack } = useRoute();
+          const lastRouteStack = useRoute();
           const newRouteStack = new RouteStack({ ...options, ...route });
           newRouteStack.from = lastRouteStack;
 
@@ -242,7 +242,7 @@ export class Router {
       };
 
       const toRoute = new RouteStack(navOptions);
-      const { route: fromRoute } = useRoute();
+      const fromRoute = useRoute();
       cb(toRoute, fromRoute, callbackNext || next);
     };
   }
@@ -272,7 +272,7 @@ export class Router {
 
     Vue.mixin({
       onLoad: () => {
-        const { route } = useRoute();
+        const route = useRoute();
         this.routerAfterCallback(route, route && route.from, this.next);
       },
 
@@ -317,7 +317,7 @@ export class Router {
           }
         };
 
-        const { route: fromRoute } = useRoute();
+        const fromRoute = useRoute();
         this.beforeEachCb(toRoute, fromRoute, next);
       } else {
         handleBack();
@@ -346,10 +346,9 @@ export const createRouter = ({ routes }) => {
 };
 
 export const useRouter = () => {
-  return { router: Router.routerInstance };
+  return Router.routerInstance;
 };
 
 export const useRoute = () => {
-  const route = Router.routerInstance.currentRoute || null;
-  return { route };
+  return Router.routerInstance.currentRoute || null;
 };

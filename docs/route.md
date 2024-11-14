@@ -2,7 +2,7 @@
 - push
 ```vue
 import { useRouter } from ‘@/router/router’ 
-const { router } = useRouter()
+const router = useRouter()
 router.push({ name: 'Portal', query: {} })
 router.push({ path: '/pages/portal/index', query: {} })
 ```
@@ -10,7 +10,7 @@ router.push({ path: '/pages/portal/index', query: {} })
 - back
 ```vue
 import { useRouter } from ‘@/router/router’
-const { router } = useRouter()
+const router = useRouter()
 router.back(1)
 router.back(2)
 ```
@@ -18,7 +18,7 @@ router.back(2)
 - replace
 ```vue
 import { useRouter } from ‘@/router/router’ 
-const { router } = useRouter()
+const router = useRouter()
 router.replace({ name: 'Portal', query: {} })
 router.replace({ path: '/pages/portal/index', query: {} })
 ```
@@ -26,7 +26,7 @@ router.replace({ path: '/pages/portal/index', query: {} })
 - relaunch
 ```vue
 import { useRouter } from ‘@/router/router’
-const { router } = useRouter()
+const router = useRouter()
 router.relaunch({ name: 'Portal', query: {} })
 router.relaunch({ path: '/pages/portal/index', query: {} })
 ```

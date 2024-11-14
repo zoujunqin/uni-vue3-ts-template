@@ -14,7 +14,7 @@ const show = ref(false);
 onMounted(() => {
   show.value = true;
 
-  const { router } = useRouter();
+  const router = useRouter();
   router.historyState = window.history.state;
 
   const { pathname, search } = location;

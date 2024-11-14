@@ -60,7 +60,7 @@ export const useHandler = () => {
 
   const handleToLoginPage = () => {
     if (!useUserStore().token) {
-      const { router } = useRouter();
+      const router = useRouter();
       router.push({ name: 'Login' });
     }
   };
