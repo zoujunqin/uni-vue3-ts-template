@@ -23,10 +23,10 @@ router.replace({ name: 'Portal', query: {} })
 router.replace({ path: '/pages/portal/index', query: {} })
 ```
 
-- relaunch
+- reLaunch | replaceAll
 ```vue
 import { useRouter } from ‘@/router/router’
 const router = useRouter()
-router.relaunch({ name: 'Portal', query: {} })
-router.relaunch({ path: '/pages/portal/index', query: {} })
+router.reLaunch({ name: 'Portal', query: {} })
+router.replaceAll({ path: '/pages/portal/index', query: {} })
 ```
