@@ -2,6 +2,18 @@ import qs from 'qs';
 
 import pagesJson from '@/pages.json';
 
+const getHandledOptions = options => {
+  const paths = options.path?.split('?') || [];
+  return {
+    ...options,
+    path: paths[0],
+    query: {
+      ...(options.query || {}),
+      ...(qs.parse(paths[1]) || {})
+    }
+  };
+};
+
 export class Route {
   path;
   name;
@@ -103,7 +115,7 @@ export class Router {
   }
 
   push(options) {
-    options = { ...options, type: 'push' };
+    options = getHandledOptions({ ...options, type: 'push' });
     if (this.routerBeforeCallback) {
       this.routerBeforeCallback(options);
     } else {
@@ -112,7 +124,7 @@ export class Router {
   }
 
   replace(options) {
-    options = { ...options, type: 'replace' };
+    options = getHandledOptions({ ...options, type: 'replace' });
     if (this.routerBeforeCallback) {
       this.routerBeforeCallback(options);
     } else {
@@ -124,7 +136,7 @@ export class Router {
     this.reLaunch(options);
   }
   reLaunch(options) {
-    options = { ...options, type: 'reLaunch' };
+    options = getHandledOptions({ ...options, type: 'reLaunch' });
     if (this.routerBeforeCallback) {
       this.routerBeforeCallback(options);
     } else {
