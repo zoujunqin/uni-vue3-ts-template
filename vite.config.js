@@ -28,7 +28,9 @@ function getAssetsResourcePath() {
 
 // https://vitejs.dev/config/
 export default defineConfig(() => {
+  /* #ifdef MP-WEIXIN */
   modifyManifest();
+  /* #endif */
   return {
     mode: 'strict',
     resolve: {
