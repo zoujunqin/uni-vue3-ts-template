@@ -120,8 +120,11 @@ export class Router {
     }
   }
 
-  relaunch(options) {
-    options = { ...options, type: 'relaunch' };
+  replaceAll(options) {
+    this.reLaunch(options);
+  }
+  reLaunch(options) {
+    options = { ...options, type: 'reLaunch' };
     if (this.routerBeforeCallback) {
       this.routerBeforeCallback(options);
     } else {
@@ -205,7 +208,7 @@ export class Router {
           break;
         }
 
-        case 'relaunch': {
+        case 'reLaunch': {
           const lastRouteStack = useRoute();
           const newRouteStack = new RouteStack({ ...options, ...route });
           newRouteStack.from = lastRouteStack;
@@ -259,7 +262,7 @@ export class Router {
     Router.uniNavigateBack = uni.navigateBack;
     uni.navigateBack = this.back;
     Router.uniRelaunch = uni.reLaunch;
-    uni.reLaunch = this.relaunch;
+    uni.reLaunch = this.reLaunch;
 
     const handleBack = () => {
       this.routeStacks = this.routeStacks.slice(

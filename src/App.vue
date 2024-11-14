@@ -22,11 +22,6 @@ onLaunch(() => {
   uni.getSystemInfo().then(data => {
     useSystemStore().setSystemInfo(data);
   });
-
-  /* #ifdef MP-WEIXIN */
-  /* 监听路由变化 */
-  wx.onAppRoute(() => {});
-  /* #endif */
 });
 
 onShow(() => {
@@ -39,10 +34,9 @@ onShow(() => {
 
 /* #ifdef MP-WEIXIN */
 const router = useRouter();
-const pathname = router.routes[0].path;
 
 const navOptions = {
-  path: pathname,
+  path: router.routes[0].path,
   query: {},
   type: null
 };

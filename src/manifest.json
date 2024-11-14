@@ -1,6 +1,6 @@
 {
   "name": "uni",
-  "appid": "undefined",
+  "appid": "",
   "description": "",
   "versionName": "1.0.0",
   "versionCode": "100",
@@ -53,7 +53,7 @@
     }
   },
   "mp-weixin": {
-    "appid": "undefined",
+    "appid": "",
     "setting": {
       "urlCheck": false
     },

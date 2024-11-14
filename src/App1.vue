@@ -12,12 +12,10 @@ import { useRouter, RouteStack } from '@/router/router';
 
 const show = ref(false);
 onMounted(() => {
-  show.value = true;
-
   const router = useRouter();
   router.historyState = window.history.state;
 
-  const { pathname, search } = location;
+  const { pathname, search } = window.location;
 
   const navOptions = {
     path: pathname,
@@ -33,6 +31,8 @@ onMounted(() => {
       router.routeStacks.pop();
       router.next(option);
     }
+
+    show.value = true;
   };
   router.beforeEachCb(routeStack, null, next);
 });
