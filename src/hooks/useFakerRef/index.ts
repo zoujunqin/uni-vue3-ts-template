@@ -1,11 +1,11 @@
-import { ShallowRef, getCurrentInstance } from 'vue';
-
-import { useVModel } from '@/hooks/useVModel/index';
+import { getCurrentInstance, onMounted, ref } from 'vue';
 
 export const useFakerRef = () => {
-  const currentInstance = getCurrentInstance();
-  const instance = useVModel(currentInstance.props, 'refer', undefined, {
-    passive: true
-  }) as ShallowRef<any>;
+  const instance = ref();
+
+  onMounted(() => {
+    getCurrentInstance().props['refer'] = instance.value;
+  });
+
   return { instance };
 };
