@@ -2,13 +2,13 @@ import qs from 'qs';
 
 import pagesJson from '@/pages.json';
 
-const getHandledOptions = options => {
-  const paths = options.path?.split('?') || [];
+const getHandledOption = option => {
+  const paths = option.path?.split('?') || [];
   return {
-    ...options,
+    ...option,
     path: paths[0],
     query: {
-      ...(options.query || {}),
+      ...(option.query || {}),
       ...(qs.parse(paths[1]) || {})
     }
   };
@@ -114,33 +114,33 @@ export class Router {
     });
   }
 
-  push(options) {
-    options = getHandledOptions({ ...options, type: 'push' });
+  push(option) {
+    option = getHandledOption({ ...option, type: 'push' });
     if (this.routerBeforeCallback) {
-      this.routerBeforeCallback(options);
+      this.routerBeforeCallback(option);
     } else {
-      this.next(options);
+      this.next(option);
     }
   }
 
-  replace(options) {
-    options = getHandledOptions({ ...options, type: 'replace' });
+  replace(option) {
+    option = getHandledOption({ ...option, type: 'replace' });
     if (this.routerBeforeCallback) {
-      this.routerBeforeCallback(options);
+      this.routerBeforeCallback(option);
     } else {
-      this.next(options);
+      this.next(option);
     }
   }
 
-  replaceAll(options) {
-    this.reLaunch(options);
+  replaceAll(option) {
+    this.reLaunch(option);
   }
-  reLaunch(options) {
-    options = getHandledOptions({ ...options, type: 'reLaunch' });
+  reLaunch(option) {
+    option = getHandledOption({ ...option, type: 'reLaunch' });
     if (this.routerBeforeCallback) {
-      this.routerBeforeCallback(options);
+      this.routerBeforeCallback(option);
     } else {
-      this.next(options);
+      this.next(option);
     }
   }
 
@@ -156,104 +156,113 @@ export class Router {
     return null;
   }
 
-  next(options: {
+  next(option: {
     path?: string;
     name?: string;
     type?: string;
     query?: Object;
     events?: Object;
+    animationType?: string;
+    animationDuration?: number;
+    success?: Function;
+    fail?: Function;
+    complete?: Function;
   }) {
-    const route = this.routesMap[options.name] || this.routesMap[options.path];
+    const route = this.routesMap[option.name] || this.routesMap[option.path];
     if (!route) {
       throw new Error('未找到对应的路由');
     }
 
-    return new Promise((resolve, reject) => {
-      const path = [route.path, qs.stringify(options.query || {})]
-        .filter(Boolean)
-        .join('?');
+    const path = [route.path, qs.stringify(option.query || {})]
+      .filter(Boolean)
+      .join('?');
 
-      switch (options.type) {
-        case 'push': {
-          const lastRouteStack = useRoute();
-          const newRouteStack = new RouteStack({ ...options, ...route });
-          newRouteStack.from = lastRouteStack;
+    switch (option.type) {
+      case 'push': {
+        const lastRouteStack = useRoute();
+        const newRouteStack = new RouteStack({ ...option, ...route });
+        newRouteStack.from = lastRouteStack;
 
-          this.routeStacks.push(newRouteStack);
-          this.currentRoute = newRouteStack;
+        this.routeStacks.push(newRouteStack);
+        this.currentRoute = newRouteStack;
 
-          Router.uniNavigateTo({
-            url: path,
-            events: options.events,
-            success: () => {
-              /* #ifdef H5 */
-              this.historyState = window.history.state;
-              /* #endIf */
-              resolve();
-            },
-            fail: reject
-          });
-          break;
-        }
-
-        case 'replace': {
-          const lastRouteStack = useRoute();
-          const newRouteStack = new RouteStack({ ...options, ...route });
-          newRouteStack.from = lastRouteStack;
-
-          this.routeStacks.pop();
-          this.routeStacks.push(newRouteStack);
-          this.currentRoute = newRouteStack;
-
-          Router.uniRedirectTo({
-            url: path,
-            events: options.events,
-            success: () => {
-              /* #ifdef H5 */
-              this.historyState = window.history.state;
-              /* #endIf */
-
-              resolve();
-            },
-            fail: reject
-          });
-          break;
-        }
-
-        case 'reLaunch': {
-          const lastRouteStack = useRoute();
-          const newRouteStack = new RouteStack({ ...options, ...route });
-          newRouteStack.from = lastRouteStack;
-
-          this.routeStacks = [];
-          this.routeStacks.push(newRouteStack);
-          this.currentRoute = newRouteStack;
-
-          Router.uniRelaunch({
-            url: path,
-            events: options.events,
-            success: () => {
-              /* #ifdef H5 */
-              this.historyState = window.history.state;
-              /* #endIf */
-
-              resolve();
-            },
-            fail: reject
-          });
-          break;
-        }
+        Router.uniNavigateTo({
+          url: path,
+          events: option.events,
+          animationType: option.animationType,
+          animationDuration: option.animationDuration,
+          success: (...args) => {
+            /* #ifdef H5 */
+            this.historyState = window.history.state;
+            /* #endIf */
+            option.success?.(...args);
+          },
+          fail: option.fail,
+          complete: option.complete
+        });
+        break;
       }
-    });
+
+      case 'replace': {
+        const lastRouteStack = useRoute();
+        const newRouteStack = new RouteStack({ ...option, ...route });
+        newRouteStack.from = lastRouteStack;
+
+        this.routeStacks.pop();
+        this.routeStacks.push(newRouteStack);
+        this.currentRoute = newRouteStack;
+
+        Router.uniRedirectTo({
+          url: path,
+          events: option.events,
+          success: (...args) => {
+            /* #ifdef H5 */
+            this.historyState = window.history.state;
+            /* #endIf */
+
+            option.success?.(...args);
+          },
+          fail: option.fail,
+          complete: option.complete
+        });
+        break;
+      }
+
+      case 'reLaunch':
+      case 'replaceAll': {
+        const lastRouteStack = useRoute();
+        const newRouteStack = new RouteStack({ ...option, ...route });
+        newRouteStack.from = lastRouteStack;
+
+        this.routeStacks = [];
+        this.routeStacks.push(newRouteStack);
+        this.currentRoute = newRouteStack;
+
+        Router.uniRelaunch({
+          url: path,
+          events: option.events,
+          success: (...args) => {
+            /* #ifdef H5 */
+            this.historyState = window.history.state;
+            /* #endIf */
+
+            option.success?.(...args);
+          },
+          fail: option.fail,
+          complete: option.complete
+        });
+        break;
+      }
+    }
   }
 
   beforeEach(cb) {
     this.beforeEachCb = cb;
     this.routerBeforeCallback = (navOptions, callbackNext) => {
-      const next = options => {
-        if (options === false) return;
+      const next = option => {
+        if (option === false) return;
 
-        this.next(options || navOptions);
+        this.next(option || navOptions);
       };
 
       const toRoute = new RouteStack(navOptions);
@@ -268,13 +277,13 @@ export class Router {
 
   install(Vue) {
     Router.uniNavigateTo = uni.navigateTo;
-    uni.navigateTo = this.push;
+    uni.navigateTo = option => this.push({ ...option, path: option.url });
     Router.uniRedirectTo = uni.redirectTo;
-    uni.redirectTo = this.replace;
+    uni.redirectTo = option => this.replace({ ...option, path: option.url });
     Router.uniNavigateBack = uni.navigateBack;
-    uni.navigateBack = this.back;
+    uni.navigateBack = option => this.back(option?.delta);
     Router.uniRelaunch = uni.reLaunch;
-    uni.reLaunch = this.reLaunch;
+    uni.reLaunch = option => this.reLaunch({ ...option, path: option.url });
 
     const handleBack = () => {
       this.routeStacks = this.routeStacks.slice(
