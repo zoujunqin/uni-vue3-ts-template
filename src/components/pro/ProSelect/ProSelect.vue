@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full" @click="openPicker">
+  <view class="w-full" @click="openPicker">
     <ProInput readonly v-bind="$attrs" v-model="pickerName" />
-  </div>
+  </view>
 
   <ProPicker
     ref="proPickerRef"

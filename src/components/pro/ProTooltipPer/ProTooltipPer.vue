@@ -1,8 +1,8 @@
 <template>
-  <div class="tip-box" v-if="tipShow">
-    <div class="tip-text">请阅读并勾选用户协议</div>
-    <div class="triangle-div" />
-  </div>
+  <view class="tip-box" v-if="tipShow">
+    <view class="tip-text">请阅读并勾选用户协议</view>
+    <view class="triangle-div" />
+  </view>
 </template>
 
 <script setup lang="ts">
