@@ -13,7 +13,6 @@
   />
 
   <ProSelect
-    readonly
     v-if="props.type === 'select'"
     v-bind="{ ...$attrs, ...bridgedEvents }"
     v-model="modelValue"
@@ -21,7 +20,6 @@
   />
 
   <ProDateSelect
-    readonly
     v-if="props.type === 'date'"
     v-bind="{ ...$attrs, ...bridgedEvents }"
     v-model="modelValue"
