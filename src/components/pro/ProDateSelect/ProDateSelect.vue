@@ -1,7 +1,7 @@
 <template>
-  <div @click="openDatePicker">
+  <view @click="openDatePicker">
     <ProInput readonly v-bind="$attrs" v-model="modelValue" />
-  </div>
+  </view>
 
   <ProDateTimePicker
     ref="proDateTimePickerRef"
