@@ -1,6 +1,7 @@
 import path from 'path';
 
 import uniAxiosAdapter from '@uni-helper/axios-adapter/vite';
+import defineOptions from 'unplugin-vue-define-options/vite';
 import { defineConfig } from 'vite';
 import { loadEnv } from 'vite';
 import { UnifiedViteWeappTailwindcssPlugin as uvtw } from 'weapp-tailwindcss/vite';
@@ -44,7 +45,8 @@ export default defineConfig(() => {
       uvtw({
         disabled: ['h5', 'app'].includes(process.env.UNI_PLATFORM)
       }),
-      uniAxiosAdapter()
+      uniAxiosAdapter(),
+      defineOptions()
     ],
 
     css: {
