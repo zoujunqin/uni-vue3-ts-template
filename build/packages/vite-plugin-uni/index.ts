@@ -1,7 +1,7 @@
 import uni from '@dcloudio/vite-plugin-uni';
 
 import {
-  rewirteUniEntryPlugin,
+  rewriteUniEntryPlugin,
   rewriteUniMpPlugin,
   rewriteUniPagesJsonPlugin,
   rewriteViteCssPostPlugin
@@ -18,13 +18,15 @@ export default function vitePluginUni(...args) {
 
   const platform = process.env.UNI_PLATFORM;
 
-  if (platform === 'mp-weixin' && process.env.NODE_ENV === 'production') {
-    uniPlugins.push(rewriteViteCssPostPlugin(options));
-
+  if (platform === 'mp-weixin') {
     const uniEntryPluginIndex = uniPlugins.findIndex(
       uniPlugin => uniPlugin.name === uniEntryPluginName
     );
-    uniPlugins.splice(uniEntryPluginIndex, 1, rewirteUniEntryPlugin(options));
+    uniPlugins.splice(uniEntryPluginIndex, 1, rewriteUniEntryPlugin(options));
+  }
+
+  if (platform === 'mp-weixin' && process.env.NODE_ENV === 'production') {
+    uniPlugins.push(rewriteViteCssPostPlugin(options));
 
     const pagesJsonPluginIndex = uniPlugins.findIndex(
       uniPlugin => uniPlugin.name === uniPagesJsonPluginName

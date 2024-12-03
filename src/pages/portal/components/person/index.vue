@@ -217,8 +217,8 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
-:deep(.relative .uv-badge) {
+<style lang="scss" scoped>
+:deep(.uv-badge) {
   top: 0 !important;
   right: 0 !important;
   height: unset;
@@ -230,9 +230,7 @@ onMounted(() => {
   border-radius: 6px 0 4px !important;
   transform: translate(80%, -50%);
 }
-</style>
 
-<style lang="scss" scoped>
 .img-box {
   display: flex;
   align-items: center;

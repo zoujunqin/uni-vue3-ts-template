@@ -31,7 +31,7 @@ function parseComponentStyleIsolation(file: string) {
   }
 }
 
-export function rewirteUniEntryPlugin({
+export function rewriteUniEntryPlugin({
   global
 }: UniMiniProgramPluginOptions): Plugin {
   const inputDir = process.env.UNI_INPUT_DIR;
