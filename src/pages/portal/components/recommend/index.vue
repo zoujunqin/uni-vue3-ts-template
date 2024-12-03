@@ -23,9 +23,3 @@ const { proScrollListRef, reload } = useHandler();
 
 useTokenWatch({ hasTokenCb: reload, noTokenCb: reload });
 </script>
-
-<script lang="ts">
-export default {
-  options: { name: 'TaskRecommend', virtualHost: false }
-};
-</script>

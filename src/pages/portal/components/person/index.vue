@@ -216,15 +216,6 @@ onMounted(() => {
   getUserInfo();
 });
 </script>
-<script lang="ts">
-export default {
-  options: {
-    name: 'PersonCenter',
-    virtualHost: false,
-    styleIsolation: 'shared'
-  }
-};
-</script>
 
 <style scoped>
 :deep(.relative .uv-badge) {

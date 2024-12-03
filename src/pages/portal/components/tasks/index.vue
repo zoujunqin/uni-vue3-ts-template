@@ -72,9 +72,3 @@
   </ProLayout>
 </template>
 <script lang="ts" setup></script>
-
-<script lang="ts">
-export default {
-  options: { name: 'TaskCenter', virtualHost: false }
-};
-</script>
