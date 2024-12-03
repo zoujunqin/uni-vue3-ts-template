@@ -2,8 +2,7 @@ import path from 'path';
 
 import uniAxiosAdapter from '@uni-helper/axios-adapter/vite';
 import defineOptions from 'unplugin-vue-define-options/vite';
-import { defineConfig } from 'vite';
-import { loadEnv } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import { UnifiedViteWeappTailwindcssPlugin as uvtw } from 'weapp-tailwindcss/vite';
 
 import uni from './build/packages/vite-plugin-uni/index';
