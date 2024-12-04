@@ -1,9 +1,11 @@
 <template>
-  <uv-icon v-bind="$attrs" />
+  <uv-icon v-bind="{ ...$attrs, ...bridgedEvents }" />
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { uvEvents } from './uvEvents';
 
-<script lang="ts">
-export default { options: { name: 'ProIcon', virtualHost: true } };
+import { useBridgedEmits } from '@/hooks/useBridgedEmits';
+
+const { bridgedEvents } = useBridgedEmits(uvEvents);
 </script>
