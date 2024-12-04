@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onLaunch, onShow } from '@dcloudio/uni-app';
+import { onShow } from '@dcloudio/uni-app';
 
 /* #ifdef MP-WEIXIN */
 /* 不想被打入异步分包的组件 */
@@ -17,12 +17,6 @@ import ProSkeletonRect from '@/components/pro/ProSkeletonRect/ProSkeletonRect.vu
 /* #endif */
 import { useSystemStore } from '@/pinia/modules/system';
 import { RouteStack, useRouter } from '@/router/router';
-
-onLaunch(() => {
-  uni.getSystemInfo().then(data => {
-    useSystemStore().setSystemInfo(data);
-  });
-});
 
 onShow(() => {
   const { setNetworkStatus } = useSystemStore();

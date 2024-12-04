@@ -2,23 +2,11 @@
   <ProPage :navbar-title="activeTabbar.text" show-navbar>
     <ProLayout>
       <ProContent>
-        <Tasks
-          v-if="tabbarList[0].load"
-          v-show="tabbarList[0].visible"
-          class="flex-1"
-        />
+        <Tasks v-if="tabbarList[0].load" v-show="tabbarList[0].visible" />
 
-        <Recommend
-          v-if="tabbarList[1].load"
-          v-show="tabbarList[1].visible"
-          class="flex-1"
-        />
+        <Recommend v-if="tabbarList[1].load" v-show="tabbarList[1].visible" />
 
-        <Person
-          class="flex-1"
-          v-if="tabbarList[2].load"
-          v-show="tabbarList[2].visible"
-        />
+        <Person v-if="tabbarList[2].load" v-show="tabbarList[2].visible" />
       </ProContent>
 
       <ProFooter>

@@ -4,8 +4,6 @@
   </view>
 </template>
 
-<script lang="ts">
-export default {
-  options: { name: 'ProContent', virtualHost: true }
-};
+<script setup lang="ts">
+defineOptions({ options: { virtualHost: true } });
 </script>

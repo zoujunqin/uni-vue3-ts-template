@@ -5,6 +5,7 @@
     :value="value"
     :fixed="false"
     :placeholder="false"
+    :safeAreaInsetBottom="false"
     class="!flex-none"
     v-bind="$attrs"
     @change="tabbarChange"

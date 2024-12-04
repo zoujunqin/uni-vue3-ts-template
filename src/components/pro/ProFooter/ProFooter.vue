@@ -1,30 +1,11 @@
 <template>
-  <view :style="footerStyle" class="pro-footer z-10 p-[6px_16px] bg-white">
+  <view class="pro-footer z-10 p-[6px_16px] bg-white">
     <slot />
   </view>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-
-const props = defineProps({
-  fixed: Boolean,
-  offsetBottom: { type: Number, default: 0 },
-  safeArea: Boolean
-});
-
-const footerStyle = computed(() => {
-  const { safeArea, fixed, offsetBottom } = props;
-  return {
-    position: fixed ? 'sticky' : 'static',
-    bottom: offsetBottom,
-    'padding-bottom': 0 + 'PX'
-  };
-});
-</script>
-
-<script lang="ts">
-export default { options: { name: 'ProFooter', virtualHost: true } };
+defineOptions({ options: { virtualHost: true } });
 </script>
 
 <style scoped>

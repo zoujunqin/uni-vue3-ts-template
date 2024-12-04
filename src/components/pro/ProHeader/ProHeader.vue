@@ -25,6 +25,8 @@
 <script lang="ts" setup>
 import { computed, useSlots } from 'vue';
 
+defineOptions({ options: { virtualHost: true } });
+
 const props = defineProps({
   shadow: Boolean,
   showNavbar: Boolean,

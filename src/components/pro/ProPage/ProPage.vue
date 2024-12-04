@@ -1,13 +1,15 @@
 <template>
-  <view class="h-full overflow-auto">
+  <view class="flex flex-col h-full">
     <ProNetworkTip />
-
-    <slot />
-
     <ProLoading />
+
+    <view class="flex-1 overflow-hidden">
+      <slot />
+    </view>
+    <uv-safe-bottom />
   </view>
 </template>
 
-<script lang="ts">
-export default { options: { name: 'ProPage', virtualHost: true } };
+<script setup lang="ts">
+defineOptions({ options: { virtualHost: true } });
 </script>

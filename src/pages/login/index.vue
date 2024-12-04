@@ -1,9 +1,5 @@
 <template>
-  <ProPage
-    class="login p-[128px_24px_0_24px] h-full flex flex-col"
-    navbar-title=""
-    show-navbar
-  >
+  <ProPage class="login p-[128px_24px_0_24px] h-full flex flex-col">
     <text class="text-[26px] leading-[30px] font-[600] text-color-title">
       欢迎登录
     </text>
