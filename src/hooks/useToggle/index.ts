@@ -1,4 +1,4 @@
-import { isBoolean } from 'lodash-es';
+import { isBoolean } from 'lodash';
 import { ref } from 'vue';
 
 /**

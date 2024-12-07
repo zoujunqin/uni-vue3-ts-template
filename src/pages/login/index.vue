@@ -63,8 +63,9 @@ import { computed, ref, shallowRef } from 'vue';
 
 import { weChatAuthLogin } from './login';
 
-import { mobileLoginPagePath } from '@/constant/pagePath';
 import { useRouter } from '@/router/router';
+
+const router = useRouter();
 
 const isAgree = shallowRef([]);
 const proTooltipPerRef = ref();
@@ -72,9 +73,7 @@ const valid = computed(() => isAgree.value.length === 1);
 
 const navToMobileLogin = () => {
   if (!validate()) return;
-  uni.navigateTo({
-    url: mobileLoginPagePath
-  });
+  router.push({ name: 'MobileLogin' });
 };
 
 const validate = () => {
@@ -87,7 +86,6 @@ const handleIsAgreeChange = () => {
 };
 
 const handleBack = () => {
-  const router = useRouter();
   router.back();
 };
 </script>

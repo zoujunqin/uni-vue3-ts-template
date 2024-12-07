@@ -1,5 +1,5 @@
 // 处理银行卡号码显示6212 6723 8322 673
-import { isArray, isObject } from 'lodash-es';
+import { isArray, isObject } from 'lodash';
 
 import { dictionarySort } from '@/utils/crypto';
 
@@ -41,7 +41,10 @@ export const hyphenABEqualityA = (
 /*
  * 对参数进行字典序并拼接成字符串
  * */
-export const getQueryString = (params: Record<string, any>, isSignature: boolean = false): string => {
+export const getQueryString = (
+  params: Record<string, any>,
+  isSignature: boolean = false
+): string => {
   const sortedKeys = dictionarySort(Object.keys(params));
   const newParams = [];
 

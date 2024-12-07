@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { snakeCase } from 'lodash-es';
+import { snakeCase } from 'lodash';
 
 /**
  * @name 通过一个数组生成对象和数组

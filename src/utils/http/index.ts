@@ -19,13 +19,14 @@ import {
 } from './types.d';
 
 import { baseApi } from '@/api/system/setting';
-import { loginPagePath } from '@/constant/pagePath';
 import { useSystemStore } from '@/pinia/modules/system';
 import { useUserStore } from '@/pinia/modules/user';
+import { useRouter } from '@/router/router';
 import { decryptResponseData, encryptParams } from '@/utils/crypto';
 import { formatToken } from '@/utils/storage';
 
-const baseURL = 'http://218.104.230.173:17054'; // 开发环境
+// const baseURL = 'http://218.104.230.173:17054'; // 开发环境
+const baseURL = 'https://localtest-hro-api.fjhxrl.com'; // 测试环境
 
 const { DEV, VITE_BASE_URL } = import.meta.env;
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
@@ -219,7 +220,7 @@ class PureHttp {
 
         if (loginFailureCodeList.includes(code)) {
           uni.clearStorageSync();
-          uni.navigateTo({ url: loginPagePath });
+          useRouter().push({ name: 'Login' });
         } else if (!customDealCodes.includes(code)) {
           uni.showToast({
             title: message || '接口异常',

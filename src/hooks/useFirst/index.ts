@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash-es';
+import { isFunction } from 'lodash';
 import { Ref, shallowRef, watch } from 'vue';
 
 function useFirst(

@@ -1,4 +1,4 @@
-import { upperFirst } from 'lodash-es';
+import { upperFirst } from 'lodash';
 import { ComponentInternalInstance, getCurrentInstance } from 'vue';
 
 interface VM extends ComponentInternalInstance {

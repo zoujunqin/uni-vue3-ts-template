@@ -13,12 +13,17 @@ export const useOss = () => {
     fileName?: string
   ): Promise<string> => {
     return new Promise(async (resolve, reject) => {
-      const type = getFileSuffix(filePath);
-      const ossConfig: OssUploadConfig = await getOssPolicy({
-        module,
-        type,
-        fileName: fileName || 'mp-' + getUUID()
-      });
+      let ossConfig: OssUploadConfig;
+      try {
+        const type = getFileSuffix(filePath);
+        ossConfig = await getOssPolicy({
+          module,
+          type,
+          fileName: fileName || 'mp-' + getUUID()
+        });
+      } catch (error) {
+        return reject(error);
+      }
 
       const { accessid, host, key, policy, signature } = ossConfig;
       uni.uploadFile({

@@ -7,5 +7,7 @@ import { uvEvents } from './uvEvents';
 
 import { useBridgedEmits } from '@/hooks/useBridgedEmits';
 
+defineOptions({ options: { virtualHost: true } });
+
 const { bridgedEvents } = useBridgedEmits(uvEvents);
 </script>
