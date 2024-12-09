@@ -277,13 +277,9 @@ export class Router {
 
   install(Vue) {
     Router.uniNavigateTo = uni.navigateTo;
-    uni.navigateTo = option => this.push({ ...option, path: option.url });
     Router.uniRedirectTo = uni.redirectTo;
-    uni.redirectTo = option => this.replace({ ...option, path: option.url });
     Router.uniNavigateBack = uni.navigateBack;
-    uni.navigateBack = option => this.back(option?.delta);
     Router.uniRelaunch = uni.reLaunch;
-    uni.reLaunch = option => this.reLaunch({ ...option, path: option.url });
 
     const handleBack = () => {
       this.routeStacks = this.routeStacks.slice(
