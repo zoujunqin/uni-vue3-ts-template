@@ -100,6 +100,7 @@ export const useOss = () => {
    * @param { fileName } 文件名
    */
   const downloadFile = (filePath: string, fileName?: string): void => {
+    /* #ifdef H5 */
     if (fileName) {
       axios
         .get(filePath, {
@@ -123,6 +124,27 @@ export const useOss = () => {
       downloadLink.click();
       document.body.removeChild(downloadLink);
     }
+    /* #endif */
+
+    /* #ifndef H5 */
+    uni.downloadFile({
+      url: filePath,
+      success(res) {
+        uni.saveFile({
+          tempFilePath: res.tempFilePath,
+          success() {
+            uni.showToast({ title: '保存成功', icon: 'none' });
+          },
+          fail() {
+            uni.showToast({ title: '保存失败', icon: 'none' });
+          }
+        });
+      },
+      fail() {
+        uni.showToast({ title: '下载失败', icon: 'none' });
+      }
+    });
+    /* #endif */
   };
 
   return {
