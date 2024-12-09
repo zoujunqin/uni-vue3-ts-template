@@ -70,7 +70,7 @@
     </view>
 
     <view
-      v-if="!disabled"
+      v-if="!disabled && fileList.length < maxFilesLength"
       class="pro-upload__button flex flex-col justify-center gap-y-[10px] items-center bg-[#F4F5F7]"
       :class="{
         'border-gray-400 border-[1px] border-dashed': border,
@@ -216,7 +216,10 @@ const handleChooseFile = throttle(() => {
     maxDuration: props.maxDuration,
     sizeType: props.sizeType,
     camera: props.camera,
-    maxCount: props.maxCount,
+    maxCount: Math.min(
+      props.maxCount,
+      props.maxFilesLength - fileList.value.length
+    ),
     extension: props.extension,
     crop: props.crop
   }).then(async list => {
