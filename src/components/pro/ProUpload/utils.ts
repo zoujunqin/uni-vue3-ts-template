@@ -168,20 +168,3 @@ export function pdf(value = '') {
   const PDF_REGEXP = /\.pdf/i;
   return PDF_REGEXP.test(newValue);
 }
-
-export function openDocument(url) {
-  uni.downloadFile({
-    url,
-    success(res) {
-      uni.openDocument({
-        filePath: res.tempFilePath,
-        fail() {
-          uni.showToast({ title: '文件打开失败', icon: 'none' });
-        }
-      });
-    },
-    fail() {
-      uni.showToast({ title: '文件下载失败', icon: 'none' });
-    }
-  });
-}

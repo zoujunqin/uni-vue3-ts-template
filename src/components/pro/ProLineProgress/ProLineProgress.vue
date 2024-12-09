@@ -1,13 +1,14 @@
 <template>
   <uv-line-progress v-bind="$attrs">
-    <slot />
+    <template v-slot:[defaultSlot]>
+      <slot />
+    </template>
   </uv-line-progress>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { computed, useSlots } from 'vue';
 
-<script lang="ts">
-export default {
-  options: { name: 'ProLineProgress', virtualHost: true }
-};
+defineOptions({ options: { name: 'ProLineProgress', virtualHost: true } });
+const defaultSlot = computed(() => (useSlots().default ? 'default' : ''));
 </script>

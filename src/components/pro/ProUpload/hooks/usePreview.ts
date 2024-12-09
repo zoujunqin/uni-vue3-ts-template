@@ -4,7 +4,6 @@ import { ref } from 'vue';
 import {
   excel,
   image,
-  openDocument,
   pdf,
   video,
   word
@@ -29,6 +28,35 @@ export const usePreview = ({ fileList, props }) => {
   const handlePreviewVideo = throttle(file => {
     previewVideoRef.value.open(file.url);
   }, 1000);
+
+  const downloadProgressPopupRef = ref();
+  const downloadProgress = ref(0);
+  function openDocument(url) {
+    downloadProgressPopupRef.value.open();
+    let downloadTask = uni.downloadFile({
+      url,
+      success(res) {
+        uni.openDocument({
+          filePath: res.tempFilePath,
+          fail() {
+            uni.showToast({ title: '文件打开失败', icon: 'none' });
+          }
+        });
+      },
+      fail() {
+        uni.showToast({ title: '文件下载失败', icon: 'none' });
+      },
+      complete() {
+        downloadTask = null;
+        downloadProgress.value = 0;
+        downloadProgressPopupRef.value.close();
+      }
+    });
+
+    downloadTask?.onProgressUpdate(({ progress }) => {
+      downloadProgress.value = progress;
+    });
+  }
 
   const handlePreviewOffice = throttle(file => openDocument(file.url), 1000);
 
@@ -73,8 +101,12 @@ export const usePreview = ({ fileList, props }) => {
   };
 
   return {
+    downloadProgress,
+    downloadProgressPopupRef,
+
     fileTypeMap,
     getFileTypeMapItem,
+
     previewVideoRef,
     handlePreviewVideo
   };

@@ -6,7 +6,7 @@
 
   ```ts
   // 自定义组件合并虚拟节点
-  export default { options: { virtualHost: true } };
+  defineOptions({ options: { virtualHost: true } });
   ```
 
 - Q: swiper 和 tab 的 current 属性是同一个变量导致的问题 <br/>
@@ -31,7 +31,7 @@
     <slot v-slot:[defaultSlot] />
   </template>
   
-  <script>
+  <script setup lang="ts">
   ...
   const defaultSlot = computed(() => useSlots().default ? 'default' : '')
   </script>
@@ -45,7 +45,7 @@
     <ProDateTimePicker v-model:refer="proDateTimeRef" />
   </template>
 
-  <script>
+  <script setup lang="ts">
   import {shallowRef} from "vue";
   ...
   const proDateTimeRef = shallowRef()

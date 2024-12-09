@@ -71,7 +71,7 @@
 
     <view
       v-if="!disabled"
-      class="pro-upload__button flex flex-col justify-center items-center bg-[#F4F5F7]"
+      class="pro-upload__button flex flex-col justify-center gap-y-[10px] items-center bg-[#F4F5F7]"
       :class="{
         'border-gray-400 border-[1px] border-dashed': border,
         'rounded-[6px]': borderRadius
@@ -90,6 +90,22 @@
     </view>
 
     <uv-preview-video ref="previewVideoRef" />
+
+    <ProPopup
+      ref="downloadProgressPopupRef"
+      mode="bottom"
+      round="10"
+      :closeOnClickOverlay="false"
+    >
+      <view class="p-[20px]">
+        <text class="text-[12px]"> 文件下载中... </text>
+        <ProLineProgress
+          class="mt-[10px]"
+          showText
+          :percentage="downloadProgress"
+        />
+      </view>
+    </ProPopup>
   </view>
 </template>
 
@@ -99,8 +115,7 @@
  * */
 
 import { throttle, noop } from 'lodash';
-import { computed, watch } from 'vue';
-import { nextTick } from 'vue-demi';
+import { computed, watch, nextTick } from 'vue';
 
 import { chooseFile, video } from './utils';
 
@@ -142,7 +157,7 @@ const props = defineProps({
     type: Array,
     default: () => []
   },
-  maxSize: { type: Number, default: 10 * 1024 * 1024 },
+  maxSize: { type: Number, default: 10 * 1024 * 1024 }, // 单个文件大小
   maxFilesLength: { type: Number, default: 100 } // 文件列表最大个数
 });
 const emits = defineEmits(['remove', 'change']);
@@ -178,7 +193,14 @@ const handleRemoveFile = (file, index) => {
   emits('remove', file, index);
 };
 
-const { getFileTypeMapItem, previewVideoRef, handlePreviewVideo } = usePreview({
+const {
+  downloadProgress,
+  downloadProgressPopupRef,
+
+  getFileTypeMapItem,
+  previewVideoRef,
+  handlePreviewVideo
+} = usePreview({
   fileList,
   props
 });
@@ -209,9 +231,8 @@ const handleChooseFile = throttle(() => {
       return;
     } else if (overSize && list.length > 1) {
       uni.showToast({
-        title: `已自动过滤大小超过${(props.maxSize / 1024 / 1024).toFixed(
-          2
-        )}M的文件`,
+        title: `已自动过滤大小超过
+        ${(props.maxSize / 1024 / 1024).toFixed(2)}M的文件`,
         icon: 'none'
       });
       list = list.filter(item => item.size > props.maxSize);
