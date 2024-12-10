@@ -47,7 +47,7 @@ export class RouteStack {
 }
 
 export const pagesJsonToRoutes = () => {
-  const { pages, subPackages } = pagesJson;
+  const { pages = [], subPackages = [] } = pagesJson;
   return pages
     .map(item => {
       return new Route({ ...item, path: '/' + item.path, route: item.path });
