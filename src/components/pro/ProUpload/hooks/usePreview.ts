@@ -29,36 +29,11 @@ export const usePreview = ({ fileList, props }) => {
     previewVideoRef.value.open(file.url);
   }, 1000);
 
-  const downloadProgressPopupRef = ref();
-  const downloadProgress = ref(0);
-  function openDocument(url) {
-    downloadProgressPopupRef.value.open();
-    let downloadTask = uni.downloadFile({
-      url,
-      success(res) {
-        uni.openDocument({
-          filePath: res.tempFilePath,
-          fail() {
-            uni.showToast({ title: '文件打开失败', icon: 'none' });
-          }
-        });
-      },
-      fail() {
-        uni.showToast({ title: '文件下载失败', icon: 'none' });
-      },
-      complete() {
-        downloadTask = null;
-        downloadProgress.value = 0;
-        downloadProgressPopupRef.value.close();
-      }
-    });
-
-    downloadTask?.onProgressUpdate(({ progress }) => {
-      downloadProgress.value = progress;
-    });
-  }
-
-  const handlePreviewOffice = throttle(file => openDocument(file.url), 1000);
+  const proOfficePreviewRef = ref();
+  const handlePreviewOffice = throttle(
+    file => proOfficePreviewRef.value?.openDocument(file.url),
+    1000
+  );
 
   const fileTypeMap = new Map([
     [
@@ -101,8 +76,7 @@ export const usePreview = ({ fileList, props }) => {
   };
 
   return {
-    downloadProgress,
-    downloadProgressPopupRef,
+    proOfficePreviewRef,
 
     fileTypeMap,
     getFileTypeMapItem,

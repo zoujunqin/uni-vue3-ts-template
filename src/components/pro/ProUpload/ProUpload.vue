@@ -90,22 +90,7 @@
     </view>
 
     <uv-preview-video ref="previewVideoRef" />
-
-    <ProPopup
-      ref="downloadProgressPopupRef"
-      mode="bottom"
-      round="10"
-      :closeOnClickOverlay="false"
-    >
-      <view class="p-[20px]">
-        <text class="text-[12px]"> 文件下载中... </text>
-        <ProLineProgress
-          class="mt-[10px]"
-          showText
-          :percentage="downloadProgress"
-        />
-      </view>
-    </ProPopup>
+    <ProOfficePreview ref="proOfficePreviewRef" />
   </view>
 </template>
 
@@ -194,8 +179,7 @@ const handleRemoveFile = (file, index) => {
 };
 
 const {
-  downloadProgress,
-  downloadProgressPopupRef,
+  proOfficePreviewRef,
 
   getFileTypeMapItem,
   previewVideoRef,
