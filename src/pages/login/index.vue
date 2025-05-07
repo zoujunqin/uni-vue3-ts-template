@@ -59,7 +59,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, shallowRef } from 'vue';
+import { computed, onMounted, ref, shallowRef } from 'vue';
 
 import { weChatAuthLogin } from './login';
 
@@ -88,4 +88,8 @@ const handleIsAgreeChange = () => {
 const handleBack = () => {
   router.back();
 };
+
+onMounted(() => {
+  console.log(getCurrentPages());
+});
 </script>

@@ -65,6 +65,7 @@ program.description('build mp-weixin').action(async argv => {
     /^win/.test(process.platform) ? 'pnpm.cmd' : 'pnpm',
     ['node_modules/.bin/uni', 'build', '-p', 'mp-weixin', '--mode', argv.mode],
     {
+      shell: true,
       stdio: 'inherit'
     }
   );

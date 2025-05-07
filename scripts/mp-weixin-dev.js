@@ -54,6 +54,7 @@ spawn(
     params.mode || 'development'
   ],
   {
+    shell: true,
     signal: uniSignal,
     stdio: 'inherit'
   }

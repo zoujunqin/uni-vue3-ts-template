@@ -2,11 +2,11 @@
   <ProPage :navbar-title="activeTabbar.text" show-navbar>
     <ProLayout>
       <ProContent>
-        <Tasks v-if="tabbarList[0].load" v-show="tabbarList[0].visible" />
+        <Tasks v-show="activeTabbar.name === TASK_CENTER_NAME" />
 
-        <Recommend v-if="tabbarList[1].load" v-show="tabbarList[1].visible" />
+        <Recommend v-show="activeTabbar.name === RECOMMEND_TASK_NAME" />
 
-        <Person v-if="tabbarList[2].load" v-show="tabbarList[2].visible" />
+        <Person v-show="activeTabbar.name === PERSON_CENTER_NAME" />
       </ProContent>
 
       <ProFooter>
@@ -41,12 +41,14 @@ import { computed, ref, shallowRef } from 'vue';
 import Person from '@/pages/portal/components/person/index.vue';
 import Recommend from '@/pages/portal/components/recommend/index.vue';
 import Tasks from '@/pages/portal/components/tasks/index.vue';
+import { useRoute, useRouter } from '@/router/router';
 
 const RECOMMEND_TASK_NAME = 'recommend_task';
 const TASK_CENTER_NAME = 'task_center';
 const PERSON_CENTER_NAME = 'person_center';
 
-const tabbarValue = shallowRef(RECOMMEND_TASK_NAME);
+const route = useRoute();
+const tabbarValue = shallowRef(route.query.test || RECOMMEND_TASK_NAME);
 const tabbarList = ref([
   {
     icon: '/static/tabbar/task.svg',
@@ -78,13 +80,13 @@ const activeTabbar = computed(() => {
   return tabbarList.value.find(item => item.name === tabbarValue.value);
 });
 
+const router = useRouter();
 const tabbarChange = name => {
-  tabbarList.value.forEach(item => {
-    const flag = item.name === name;
-    if (!item.load) {
-      item.load = flag;
+  router.replace({
+    name: 'Portal',
+    query: {
+      test: name
     }
-    item.visible = flag;
   });
 };
 </script>
